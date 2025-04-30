@@ -75,49 +75,49 @@ website:
 
       - section: "Unidad 2"
         icon: file-earmark-bar-graph
-        contents:
-          - unidad_2/est_epidemio.qmd
-          - unidad_2/est_transversales.qmd
-          - unidad_2/dist_muestrales.qmd
-          - unidad_2/normalidad_heterocedasticidad.qmd
-          - unidad_2/muestreo.qmd
-          - unidad_2/fun_condicionales.qmd
-          - unidad_2/IC_complejos.qmd
+        # contents:
+          # - unidad_2/est_epidemio.qmd
+          # - unidad_2/est_transversales.qmd
+          # - unidad_2/dist_muestrales.qmd
+          # - unidad_2/normalidad_heterocedasticidad.qmd
+          # - unidad_2/muestreo.qmd
+          # - unidad_2/fun_condicionales.qmd
+          # - unidad_2/IC_complejos.qmd
 
       - section: "Unidad 3"
         icon: file-earmark-bar-graph
-        contents:
-          - unidad_3/est_ecologicos.qmd
-          - unidad_3/mod_estadistico.qmd
-          - unidad_3/covarianza_correlacion.qmd
-          - unidad_3/reg_lineal.qmd
-          - unidad_3/anova.qmd
-          - unidad_3/confusion_interaccion.qmd
-          - unidad_3/reg_lineal_multiple.qmd
+        # contents:
+          # - unidad_3/est_ecologicos.qmd
+          # - unidad_3/mod_estadistico.qmd
+          # - unidad_3/covarianza_correlacion.qmd
+          # - unidad_3/reg_lineal.qmd
+          # - unidad_3/anova.qmd
+          # - unidad_3/confusion_interaccion.qmd
+          # - unidad_3/reg_lineal_multiple.qmd
 
       - section: "Unidad 4"
         icon: file-earmark-bar-graph
-        contents:
-          - unidad_4/est_caso_control.qmd
-          - unidad_4/reg_logistica.qmd
-          - unidad_4/sep_datos.qmd
-          - unidad_4/reg_logistica_cond.qmd
-          - unidad_4/mod_predict.qmd
+        # contents:
+          # - unidad_4/est_caso_control.qmd
+          # - unidad_4/reg_logistica.qmd
+          # - unidad_4/sep_datos.qmd
+          # - unidad_4/reg_logistica_cond.qmd
+          # - unidad_4/mod_predict.qmd
 
       - section: "Unidad 5"
         icon: file-earmark-bar-graph
-        contents:
-          - unidad_5/est_cohortes.qmd
-          - unidad_5/reg_poisson.qmd
-          - unidad_5/dispersion.qmd
+        # contents:
+          # - unidad_5/est_cohortes.qmd
+          # - unidad_5/reg_poisson.qmd
+          # - unidad_5/dispersion.qmd
 
       - section: "Unidad 6"
         icon: file-earmark-bar-graph
-        contents:
-          - unidad_6/est_experimentales.qmd
-          - unidad_6/analisis_superv.qmd
-          - unidad_6/metodos_analisis.qmd
-          - unidad_6/reg_cox.qmd
+        # contents:
+          # - unidad_6/est_experimentales.qmd
+          # - unidad_6/analisis_superv.qmd
+          # - unidad_6/metodos_analisis.qmd
+          # - unidad_6/reg_cox.qmd
 
 # Formato HTML
 format:

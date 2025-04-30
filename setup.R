@@ -1,10 +1,3 @@
-# # opciones globales
-# knitr::opts_chunk$set(
-#   out.width = "85%",
-#   dpi = 300
-# )
-
-
 # paquetes
 pacman::p_load(
   patchwork,
