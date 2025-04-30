@@ -3,8 +3,8 @@
 ### recomienda instalarlos todos de una vez apretando el botón Source, de lo
 ### contrario ejecutar solamente las líneas de aquellos que no estén instalados.
 
-# Paquetes a instalar -----------------------------------------------------
-## Unidad 1
+
+# Unidad 1 ----------------------------------------------------------------
 install.packages("tidyverse", dependencies = TRUE)
 
 install.packages("esquisse", dependencies = TRUE)
@@ -15,11 +15,10 @@ install.packages("dlookr", dependencies = TRUE)
 
 install.packages("skimr", dependencies = TRUE)
 
-# Paletas de colores accesibles para daltonismo
-install.packages("scico", dependencies = TRUE)
+install.packages("scico", dependencies = TRUE) # Paletas accesibles (opcional)
 
 
-## Unidad 2
+# Unidad 2 ----------------------------------------------------------------
 install.packages("samplingbook", dependencies = TRUE)
 
 install.packages("pwr", dependencies = TRUE)
@@ -30,9 +29,12 @@ install.packages("ggpubr", dependencies = TRUE)
 
 install.packages("moments", dependencies = TRUE)
 
-install.packages("srvyr", dependencies = T)
+install.packages("srvyr", dependencies = TRUE)
+
+install.packages("epikit", dependencies = TRUE) # Herramientas epidemiología (opcional)
 
 
+# Unidad 3 ----------------------------------------------------------------
 ## Unidad 3
 # Evaluación de supuestos en modelos de regresión:
 install.packages("easystats", dependencies = TRUE)
@@ -53,7 +55,7 @@ install.packages("GGally", dependencies = TRUE)
 install.packages("emmeans", dependencies = TRUE)
 
 
-## Unidad 4
+# Unidad 4 ----------------------------------------------------------------
 install.packages("detectseparation", dependencies = TRUE)
 
 install.packages("MatchIt", dependencies = TRUE)
@@ -62,8 +64,11 @@ install.packages("epiR", dependencies = TRUE)
 
 install.packages("flextable", dependencies = TRUE)
 
-# Unidad 5
+
+
+# Unidad 5 ----------------------------------------------------------------
 install.packages("glmmTMB", dependencies = TRUE)
 
-# Unidad 6
+
+# Unidad 6 ----------------------------------------------------------------
 install.packages("survminer", dependencies = TRUE)

@@ -57,12 +57,9 @@ website:
             icon: terminal
             target: _blank
             href: https://cran.r-project.org/bin/windows/Rtools/
-          - text: "Paquetes de R necesarios"
+          - text: "Paquetes y datos para el curso"
             icon: file-zip
-            href: files/paquetes_curso.zip
-          - text: "Archivos de datos"
-            icon: file-zip
-            href: files/datos_ejemplo.zip
+            href: files/datos_y_paquetes.zip
 
   # Barra lateral
   sidebar:
