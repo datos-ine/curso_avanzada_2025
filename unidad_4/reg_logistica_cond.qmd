@@ -1,0 +1,242 @@
+---
+title: "Regresión logística condicional"
+author:
+  - name: Tamara Ricardo
+    orcid: 0000-0002-0921-2611
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+En algunos estudios de casos y controles, se utiliza un diseño apareado para controlar la influencia de factores de confusión como la edad, el sexo o el lugar de residencia. La regresión logística condicional (RLC) es una extensión de la regresión logística clásica que incorpora el apareamiento de los datos, estratificando el análisis por grupos definidos por las variables de emparejamiento (**estratos**).
+
+Este modelo permite estimar el efecto de las covariables sobre una variable dependiente binaria mientras controla de manera efectiva los efectos de las variables de emparejamiento o agrupamiento. Es especialmente útil en estudios de casos y controles apareados, investigaciones multicéntricas y estudios observacionales que abarcan múltiples ubicaciones geográficas, proporcionando un enfoque robusto para manejar la heterogeneidad dentro de los datos.
+
+## Modelo logístico condicional
+
+El modelo logístico condicional utiliza una función de verosimilitud condicional que elimina la necesidad de estimar los efectos de los factores de emparejamiento como interceptos adicionales. Este enfoque resulta especialmente útil cuando hay un gran número de grupos o estratos, ya que permite concentrarse exclusivamente en los coeficientes de las covariables de interés.
+
+Se modela la probabilidad de que un evento ocurra en función de las covariables dentro de cada estrato, definido por las variables de emparejamiento. La función de verosimilitud condicional se puede expresar matemáticamente como:
+
+$$
+logit(p) = \alpha_1 + \alpha_2 z_2 + ... + \alpha_s z_s + \beta_1 x_1 + ... + \beta_p x_p
+$$
+
+donde:
+
+-   $\alpha_1 + \alpha_2 z_2 + ... + \alpha_s z_s$: Coeficientes asociados a las variables de estratificación $z_s$, que identifican los estratos.
+
+-   $z_1, z_2, ..., z_s$: Variables de emparejamiento o estratos.
+
+-   $\beta_1, ..., \beta_p$: Efectos de las variables independientes ajustadas por los estratos.
+
+-   $x_1, ... x_p$: Variables independientes incluídas en el modelo.
+
+El uso de la verosimilitud condicional simplifica el modelo al evitar la estimación de un gran número de interceptos y reduce el sesgo en situaciones con pocos datos por estrato.
+
+### Supuestos de la regresión logística condicional
+
+-   **Independencia dentro de los estratos:** Las observaciones son independientes entre los diferentes estratos o grupos definidos por el emparejamiento, pero pueden estar correlacionadas dentro de los mismos.
+
+-   **Relación logit-lineal:** Existe una relación lineal entre el logit de la probabilidad del evento y las covariables explicativas.
+
+-   **No existencia de confusión residual:** Las variables de emparejamiento deben ser suficientes para controlar por los factores de confusión.
+
+-   **Tamaño adecuado del estrato:** Cada estrato debe tener al menos un caso y un control.
+
+## Ejemplo práctico en R
+
+En R podemos ajustar modelos de regresión logística condicional usando la función `clogit()` del paquete `survival` [@survival].
+
+Cargamos los paquetes necesarios:
+
+```{r}
+# Análisis estadístico
+library(gtsummary)
+library(survival)
+
+# Chequeo de supuestos
+library(easystats)
+
+# Apareamiento de datos
+library(MatchIt)
+
+# Manejo y exploración de datos
+library(skimr)
+library(janitor)
+library(tidyverse)
+```
+
+Usaremos la base "`higado_graso.txt`" que contiene datos de un estudio de casos y controles apareados por sexo y edad para muertes por hígado graso no alcohólico:
+
+```{r}
+# Carga datos
+datos <- read_delim("datos/higado_graso.txt")|> 
+  
+  # Cambia nivel de referencia de fib4
+  mutate(fib4_cat = fct_rev(fib4_cat))
+
+# Explora datos
+glimpse(datos)
+```
+
+El dataset tiene `r nrow(datos)` observaciones y `r ncol(datos)` columnas. Las variables de interés son las siguientes:
+
+-   `id`: identificador único del paciente.
+
+-   `tipo`: Indica si el paciente tiene hígado graso no alcohólico (caso: 1) o no presenta la condición (control: 0).
+
+-   `edad`: Edad del paciente al momento de su ingreso al hospital.
+
+-   `sexo`: Sexo biológico del paciente (1: masculino, 0: femenino).
+
+-   `bmi`: Índice de masa corporal del paciente al momento de la hospitalización.
+
+-   `hdl`: Nivel de lipoproteínas de alta densidad (HDL) en sangre.
+
+-   `p_sistolica`: Presión sistólica en milímetros de mercurio (mmHg).
+
+-   `p_diastolica`: Presión diastólica en milímetros de mercurio (mmHg).
+
+-   `fib4_cat`: Índice de fibrosis hepática categorizado (bajo riesgo, alto riesgo).
+
+-   `fuma`: Tabaquismo (0: no, 1: sí).
+
+-   `status`: Variable dependiente que toma el valor de 0 si la persona sobrevivió y 1 si falleció.
+
+Exploremos más en profundidad los datos usando la función `tabyl()` del paquete `janitor` y la función `skim()` del paquete `skimr`:
+
+```{r}
+# Número de casos y controles
+tabyl(datos$tipo) |> 
+  adorn_pct_formatting()
+
+# Niveles fib4
+tabyl(datos$fib4_cat)
+
+# Explora valores ausentes
+skim(datos)
+```
+
+Las variables `p_sistolica` y `p_diastolica` tienen gran cantidad de valores ausentes, por lo que no serán consideradas para el análisis.
+
+Como no tenemos definido a que caso corresponde cada control, vamos a aparear casos y controles usando la función `matchit()` del paquete `MatchIt` [@MatchIt], especificando que queremos dos controles por caso con el argumento `ratio = 2`:
+
+```{r}
+# Aparea casos y controles por sexo y edad
+match <- matchit(tipo ~ edad + sexo, 
+                 data = datos, 
+                 exact = "sexo",
+                 ratio = 2)
+
+# Resumen del apareamiento
+summary(match)
+```
+
+Obtenemos los datos apareados:
+
+```{r}
+datos <- match.data(match, drop.unmatched = T) 
+
+names(datos)
+```
+
+Ajustamos el modelo de regresión logística condicional, usando la variable `subclass` como variable de estratificación:
+
+```{r}
+mod_cond <- clogit(status ~ bmi + hdl + fuma + fib4_cat +
+                     strata(subclass),
+                   data = datos)
+```
+
+Revisemos la salida del modelo:
+
+```{r}
+summary(mod_cond)
+```
+
+Probemos eliminar una de las variables explicativas no significativas a la vez:
+
+```{r}
+# (-) Tabaquismo
+mod_cond1 <- clogit(status ~ bmi + hdl + fib4_cat +
+                     strata(subclass),
+                   data = datos)
+
+# (-) IMC
+mod_cond2 <- clogit(status ~ hdl + fuma + fib4_cat +
+                     strata(sexo, edad),
+                   data = datos)
+
+# (-) HDL
+mod_cond3 <- clogit(status ~ bmi + fuma +  fib4_cat +
+                     strata(sexo, edad),
+                   data = datos)
+
+```
+
+Comparamos los modelos
+
+```{r}
+# Compara modelos
+compare_performance(mod_cond, mod_cond1, mod_cond2, mod_cond3,
+                    metrics = "common")
+
+# Compara modelos y ordena según performance
+compare_performance(mod_cond, mod_cond1, mod_cond2, mod_cond3,
+                    metrics = "common", rank = T)
+```
+
+El modelo sin `fuma` tiene mejor performance que el modelo saturado:
+
+```{r}
+# Salida modelo condicional 1
+summary(mod_cond1)
+
+# (-) BMI
+mod_cond1a <- clogit(status ~ hdl + fib4_cat +
+                     strata(subclass),
+                   data = datos)
+
+# (-) HDL
+mod_cond1b <- clogit(status ~ bmi + fib4_cat +
+                     strata(subclass),
+                   data = datos)
+
+# Compara modelos y ordena según performance
+compare_performance(mod_cond1, mod_cond1a, mod_cond1b, 
+                    metrics = "common", rank = T)
+
+# Salida modelo condicional 1b
+summary(mod_cond1b)
+
+# (-) bmi
+mod_cond1c <- clogit(status ~ fib4_cat +
+                     strata(subclass),
+                   data = datos)
+
+# Compara modelos
+compare_performance(mod_cond1b, mod_cond1c,
+                    metrics = "common")
+```
+
+Nos quedamos con el modelo que tiene solo `fib4_cat` como variable explicativa.
+
+```{r}
+tbl_regression(mod_cond1c, exponentiate = T)
+```
+
+En el modelo final, las personas con alto riesgo de fibrosis hepática presentan 3,7 veces más probabilidades de morir (95% IC: 2,45-5,57) que aquellas sin la condición.
+
+::: hidden
+@agresti2015
+
+@tidyverse
+
+@easystats
+:::

@@ -1,0 +1,523 @@
+---
+title: "Regresión de Poisson"
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+La distribución de Poisson es una distribución de probabilidad que se utiliza para modelar situaciones en las que contamos eventos discretos (número de accidentes, personas que sufren un infarto, visitas a una consulta médica, número de hijos, etc.). Estas situaciones comparten la característica de involucrar números finitos, relativamente pequeños y siempre positivos. Los eventos ocurren dentro de un intervalo definido, que suele ser de tiempo, aunque también puede referirse a otros tipos de intervalos, como el tamaño de la población. En esencia, la distribución de Poisson busca modelar el número de veces en que ocurre un evento durante un intervalo determinado.
+
+La distribución de Poisson toma valores enteros no negativos: 0, 1, 2, 3, 4, etc. Tiene un único parámetro, lambda ($\lambda$), que representa tanto la media como la varianza en la distribución. Es decir, que cuanto más grande es el valor esperado, mayor dispersión tienen los valores.
+
+Veamos cómo se aplica la regresión de Poisson en un estudio de cohortes. Supongamos que tenemos un estudio de cohortes clásico con dos grupos de comparación: un grupo expuesto y otro no expuesto. Para cada grupo se dispone el número de eventos ($d$) y la cantidad de personas-tiempo seguidas ($n$). Como recordarán, la tasa de incidencia ($\lambda$), la podemos calcular como el cociente:
+
+$$
+\lambda = \frac{d}{n}
+$$
+
+Se asume que el número de eventos observados en cada grupo sigue una distribución de Poisson, con un valor esperado igual al producto de la tasa de incidencia por las personas-tiempo.
+
+$$
+E(d) = \lambda * n
+$$
+
+Así, la probabilidad de observar $d$ eventos se calcula como:
+
+$$
+P(x=d)= \frac{(\lambda n)^d e^{-\lambda n}}{d}  
+$$
+
+Omitiendo el desarrollo matemático, la regresión de Poisson consiste en establecer un modelo en el que diferentes covariables tienen un efecto lineal sobre el logaritmo de la tasa de incidencia del subgrupo correspondiente. Generalmente, el modelo de Poisson se expresa como:
+
+$$ 
+ln\lambda = \alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n \qquad (*) 
+$$
+
+En forma equivalente, podemos expresar la tasa de incidencia como:
+
+$$ 
+\lambda=e^{\beta_0+\beta_1x_1+\dots+\beta_nx_n} 
+$$ Siguiendo un razonamiento análogo al de la **regresión logística**, los parámetros del modelo pueden interpretarse como riesgos relativos (cocientes de tasas), representados como potencias de base $e$. Formalmente, el riesgo relativo entre dos niveles de exposición se expresa como:\
+$$ 
+RR_{x*/x}=e^{\sum^k_i=1\beta_i(x^*_i-x_i)}=\prod^k_{i=1}e^{\beta_i(x^*_i-x_i)}  
+$$Donde el símbolo $\prod$ (productoria) implica una secuencia de productos.
+
+Volviendo a la ecuación de la tasa de incidencia:
+
+$$ 
+\lambda = \frac{d}{n} 
+$$
+
+Si aplicamos logaritmo natural:
+
+$$ 
+ln(\lambda)=ln \frac{d}{n}=ln(d)-ln(n) 
+$$ Igualando con la ecuación $(*)$ tenemos:
+
+$$ 
+ln\lambda=\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n 
+$$ $$ 
+ln(d)=ln(n)+\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n  
+$$Al término $ln(n)$ se lo denomina ***offset***. En general, es un valor que debemos proporcionale al *software* para ajustar un modelo de Poisson y no se estima a partir de los datos.
+
+Con la ecuación del modelo establecida, el siguiente paso es estimar los coeficientes y evaluar la calidad del ajuste. Los coeficientes se calculan utilizando métodos como la Estimación de Máxima Verosimilitud (MLE). A partir de estos coeficientes, podemos realizar inferencias, como el test de Wald para evaluar la hipótesis nula ($H_0 : \beta_i = 0$), calcular los intervalos de confianza (IC), y obtener los riesgos relativos (RR) con sus respectivos IC. La bondad de ajuste del modelo se evaluará a través de la función Deviance siguiendo el mismo esquema jerárquico de evaluación que en el caso de la regresión logística.
+
+## Supuestos del modelo de Poisson
+
+A modo de resumen: el modelo de Poisson se utiliza para modelar el conteo de eventos que ocurren en intervalos de tiempo, en poblaciones, o incluso en espacios geográficos. La variable respuesta en este modelo toma valores enteros y positivos, y depende de un solo parámetro ($\lambda$).
+
+Los principales supuestos del modelo son:
+
+1.  **Independencia de las observaciones:** Cada observación debe ser independiente de las demás. Esto significa que la ocurrencia de un evento no debe influir en la probabilidad de que ocurran otros eventos.
+
+2.  **Constancia del parámetro** $\lambda$ **a lo largo del tiempo:** Para que se cumpla este supuesto, la media y la varianza deben ser iguales (equidispersión). Si $\lambda$ no es constante, el modelo puede no ser adecuado.
+
+3.  **Proporcionalidad de eventos al tamaño del intervalo:** La cantidad de eventos en un intervalo dado debe ser proporcional al tamaño del intervalo. Esto significa que si duplicamos el intervalo, esperaríamos aproximadamente el doble de eventos.
+
+4.  **Mutuamente excluyentes en el tiempo:** No pueden ocurrir dos o más eventos en el mismo instante puntual. Cada evento debe ser individual y ocurrir en un momento distinto.
+
+Una característica fundamental de la distribución de Poisson es que la media y la varianza deben ser iguales, lo que se conoce como el supuesto de **equidispersión**. Cuando la varianza observada en los datos excede la varianza esperada bajo este modelo, se enfrenta a un problema de **sobredispersión**. Un método común para detectar sobredispersión es calcular el **coeficiente de variación** (CV), definido como el cociente entre la varianza y la media estimadas. La sobredispersión es frecuente en la práctica y puede afectar la precisión de las estimaciones de los errores estándar de los coeficientes, por lo que es fundamental diagnosticarla y tratarla adecuadamente.
+
+Otra situación en la que el modelo de Poisson puede no ser adecuado es cuando hay un número excesivo de ceros en los datos, es decir, cuando la frecuencia observada de ceros es mayor de lo que predice el modelo. Esto se debe a que el $ln(0)$ no está definido. De manera particular, es posible que el mecanismo aleatorio que dio origen a los datos de conteo muestre una mayor concentración para algún valor específico, que puede ser el cero (como ocurre con algunas variables vinculadas a salud) o cualquier otro valor positivo. Esto implica que dicho valor tiene una mayor probabilidad de ocurrencia que la especificada por la distribución Poisson o cualquier otra distribución.
+
+En el [siguiente capítulo](dispersion.qmd) de esta unidad, exploraremos cómo detectar y manejar tanto la sobredispersión de los datos como el exceso de ceros, para asegurar que el modelo elegido sea el más adecuado para los datos analizados.
+
+## Construcción de un modelo de Poisson en R
+
+La regresión de Poisson está implementada en R como parte de la familia de **Modelos Lineales Generalizados (GLM)**. Esta técnica permite modelar variables de respuesta que representan conteos, asegurando que los valores predichos permanezcan dentro de límites razonables.
+
+Un criterio importante en la selección de la función de enlace dentro de los GLM es garantizar que los valores ajustados del modelo sean coherentes con la naturaleza de la variable respuesta. Para la distribución de Poisson, la función de enlace predeterminada es el **logaritmo** natural. Esta elección asegura que los recuentos ajustados sean siempre mayores o iguales a cero, lo cual es esencial en el contexto de datos de conteo.
+
+En la práctica, esto significa que el modelo ajustado con errores de Poisson y una función de enlace logarítmica linealiza la relación entre la variable respuesta (conteos) y las variables independientes, permitiendo una interpretación clara y coherente de los resultados.
+
+Como es de imaginar utilizaremos la misma función general `glm()`, cambiando los argumentos en familia y enlace. La sintaxis básica de esta función, contenida en el paquete `stats` de R, es:
+
+```{r}
+#| eval: false
+glm(formula, family = poisson(link = "log"), data = datos)
+```
+
+Dado que el enlace logarítmico es el predeterminado para la familia de Poisson, podemos omitir su especificación:
+
+```{r}
+#| eval: false
+glm(formula, family = poisson, data = datos)
+```
+
+donde:
+
+-   **formula**: al igual que en los casos anteriores, describe la fórmula del modelo a ajustar con la estructura:
+
+$$ 
+variable\_dependiente \sim variable\_indepen_1 + variable\_indepen_2 +\dots+ variable\_indepen_n 
+$$
+
+-   **family**: indica la familia de distribuciones utilizadas y su función de enlace.
+
+-   **data**: especifica el nombre de la base de datos (*dataframe*) que contiene las variables del modelo.
+
+Para obtener un resumen de los resultados del modelo se utiliza la función `summary()`:
+
+```{r}
+#| eval: false
+
+summary(modelo)
+```
+
+El resumen del objeto de regresión de Poisson incluye:
+
+-   **Call**: fórmula del modelo
+
+-   **Deviance Residuals**: muestra la distribución de los residuos (mediana, mínimo, máximo y percentilos 25-75) obtenidos en la última iteración
+
+-   **Coefficients**: Incluye los coeficientes del intercepto y de las variables independientes, junto con los errores estándar, el valor *z* (estadístico de Wald) y el *p*-valor correspondiente.
+
+-   **Dispersion parameter for poisson family taken to be 1**: indica que el modelo asume el supuesto de equidispersión (media igual a varianza).
+
+-   **Null deviance**: devianza del modelo nulo, que solo incluye al intercepto.
+
+-   **Residual deviance**: devianza del modelo ajustado.
+
+-   **AIC**: criterio de información de Akaike.
+
+-   **Number of Fisher Scoring iterations**: cantidad de iteraciones realizadas.
+
+El objeto de regresión creado con `glm()` pertenece a las clases `"glm"` y `"lm"` y está compuesto por varios componentes que pueden ser accedidos usando el nombre del modelo seguido del signo `$`. Algunos de los componentes más relevantes son:
+
+-   `modelo$coefficients`: Vector de coeficientes del modelo, también accesible mediante `coef(modelo)`.
+
+-   `modelo$residuals`: Vector de residuos obtenidos en la última iteración.
+
+-   `modelo$fitted.values`: Valores ajustados medios, obtenidos mediante la transformación de los predictores lineales usando la inversa de la función de enlace.
+
+-   `modelo$family`: Familia de distribuciones utilizada en la construcción del modelo.
+
+-   `modelo$deviance`: Devianza del modelo ajustado.
+
+-   `modelo$aic`: Criterio de información de Akaike (AIC).
+
+-   `modelo$null.deviance`: Devianza del modelo nulo.
+
+## Ejemplo práctico en R
+
+Para ilustrar las funciones y la metodología de análisis en R, utilizaremos el archivo de datos "`cohorte_ocupacional.txt`", que contiene resultados de un estudio de cohortes que investiga la asociación entre las muertes respiratorias y la exposición al arsénico en la industria, ajustando por varios otros factores de riesgo.
+
+Comenzaremos activando los paquetes necesarios:
+
+```{r}
+# chequeo de supuestos
+library(easystats)
+
+# tablas regresión
+library(gtsummary)
+
+# manejo de datos
+library(tidyverse)
+```
+
+Cargamos la base de datos y exploramos su estructura:
+
+```{r}
+### Carga datos
+datos <- read_csv2("datos/cohorte_ocupacional.txt")
+
+### Explora datos
+glimpse(datos)
+```
+
+Las variables de estudio son:
+
+-   `muertes`: Número de muertes por persona-años (**persona_anio**) en cada categoría. Nuestra variable de interés es la tasa de incidencia de mortalidad.
+
+-   `grupo_edad`: Grupo de edad de los sujetos.
+
+-   `periodo`: Período de empleo de los sujetos.
+
+-   `comienzo`: Año de inicio del empleo.
+
+-   `arsenico:` Nivel de exposición al arsénico durante el período de estudio.
+
+Las variables `grupo_edad`, `periodo`, `comienzo` y `arsenico` son de tipo caracter y debemos convertirlas a factor. Podemos hacer esto manualmente para cada variable, o usar el comando `across()` que permite modificar varias columnas a la vez:
+
+```{r}
+datos <- datos |> 
+  mutate(across(.cols = grupo_edad:arsenico, 
+                .fns = ~ as.factor(.x)))
+```
+
+Revisemos como quedaron los niveles de cada factor:
+
+```{r}
+# grupo etario
+levels(datos$grupo_edad)
+
+# periodo
+levels(datos$periodo)
+
+# comienzo
+levels(datos$comienzo)
+
+# arsenico
+levels(datos$arsenico)
+```
+
+Ahora vamos a explorar los datos de la base organizando la información de persona-años por edad y período:
+
+```{r}
+## Creo tabla
+datos  |>  
+  count(periodo, grupo_edad, wt = persona_anio) |> 
+  pivot_wider(names_from = grupo_edad, values_from = n) |>
+  
+  # formato de tabla
+  tibble()
+```
+
+Ahora hacemos lo mismo para el número de muertes y calculamos la incidencia por 10000 personas-año para cada celda:
+
+```{r}
+## Creo objeto para personas-años
+personas_anios <- datos |> 
+  count(periodo, grupo_edad,
+        wt = persona_anio,
+        name = "p.a")
+
+### Creo tabla
+datos |> 
+  count(periodo, grupo_edad, wt = muertes) |> 
+  left_join(personas_anios) |> 
+  mutate(incidencia = round(n/p.a*10000,2)) |> 
+  select(-n, -p.a) |> 
+  
+  tibble()
+```
+
+Podemos visualizar la incidencia de muertes ajustadas por periodo y grupo de edad mediante un gráfico. Aunque el código exacto se omite por razones de extensión, los interesados pueden solicitarlo al equipo docente.
+
+```{r}
+#| echo: false
+### Creo tabla
+datos |> 
+  count(periodo, grupo_edad, wt = muertes) |> 
+  left_join(personas_anios) |> 
+  mutate(incidencia = round(n/p.a*10000,2)) |> 
+  select(-n, -p.a) |> 
+  
+  ## Creo gráfico
+  ggplot(aes(x = periodo, y = incidencia, 
+             color = grupo_edad, group = grupo_edad)) +
+  geom_point() +
+  geom_line(lwd = 1) +
+  labs(title = "Incidencia de muertes (mortalidad) por edad y período") +
+  
+  scico::scale_color_scico_d(palette = "batlow") +
+ 
+  xlab(label = "Período") +
+  ylab(label = "10.000 personas-año") +
+  
+  theme_minimal()
+```
+
+En el gráfico anterior, podemos observar que el grupo de mayor edad tiende a tener una incidencia más alta, lo que es consistente con la expectativa de que el riesgo de muerte aumenta con la edad. Sin embargo, para obtener una comprensión más precisa de esta relación, es crucial ajustar por otras covariables. La regresión de Poisson nos permitirá examinar cómo la exposición al arsénico y otros factores afectan la mortalidad, controlando simultáneamente por la edad y otros posibles factores de confusión.
+
+### Offset
+
+Dado que en este ejemplo nos interesa modelar la tasa de incidencia vamos a necesitar incorporar dentro del modelo un termino de desplazamiento (en inglés *"offset"*).
+
+Creamos el modelo saturado para trazar iteraciones *backward*:
+
+```{r}
+modelo <- glm(muertes ~ periodo + grupo_edad + arsenico, 
+              offset = log(persona_anio),
+              family = poisson,
+              data = datos)
+```
+
+El término `offset = log(persona_anio)` en el modelo de regresión de Poisson permite que la variable **persona_anio** actúe como el denominador en el cálculo de las tasas de mortalidad. La transformación logarítmica es necesaria porque la función de enlace del modelo de Poisson es el logaritmo.
+
+Para obtener un resumen del modelo ajustado, utilizamos la función `summary()`, que proporciona una visión detallada de los resultados del modelo:
+
+```{r}
+summary(modelo)
+```
+
+Este primer modelo, que incluye todas las covariables, muestra que casi todos los niveles de las variables son significativos respecto a las categorías de referencia.
+
+### Bondad de ajuste
+
+Para evaluar la bondad de ajuste del modelo y verificar la presencia de sobredispersión, podemos utilizar la función `check_overdispersion()` del paquete `performance`. Esta función ayuda a identificar si los errores del modelo presentan una dispersión excesiva en comparación con la esperada bajo la distribución de Poisson:
+
+```{r}
+check_overdispersion(modelo)
+```
+
+El componente de `Pearson's Chi-Squared` se calcula a partir de la devianza del modelo. En las pruebas de bondad de ajuste, buscamos que el valor de *p* sea mayor a 0,05, lo cual indica que el modelo se ajusta adecuadamente a los datos.
+
+### Selección de variables explicativas
+
+Para mejorar el modelo anterior y asegurarnos de que incluimos solo las variables significativas, procederemos a eliminar variables una por una en una primera ronda de iteración mediante un proceso *backwards* manual.
+
+```{r}
+# (-) arsénico
+mod1 <- glm(muertes ~ periodo + grupo_edad, 
+            offset = log(persona_anio),
+              family = poisson,
+              data = datos)
+
+# (-) grupo etario
+mod2 <- glm(muertes ~ periodo + arsenico, 
+            offset = log(persona_anio),
+              family = poisson,
+              data = datos)
+         
+# (-) periodo
+mod3 <- glm(muertes ~ grupo_edad + arsenico, 
+            offset = log(persona_anio),
+              family = poisson,
+              data = datos)     
+```
+
+Para comparar los modelos podemos usar la función `compare_perfomance()` del paquete `performance`.
+
+```{r}
+compare_performance(mod1, mod2, mod3, metrics = "common")
+```
+
+Buscamos el menor AIC, que en este caso es `mod3` (modelo con variables `grupo_edad` y `arsenico`).
+
+En la segunda fase de iteración partimos de este modelo y quitamos otra variable, lo que signica en nuestro ejemplo construir regresiones simples:
+
+```{r}
+# (-) arsénico
+mod4.1 <- glm(muertes ~ grupo_edad, 
+              offset = log(persona_anio),
+              family = poisson,
+              data = datos) 
+
+# (-) grupo etario
+mod4.2 <- glm(muertes ~ arsenico, 
+              offset = log(persona_anio),
+              family = poisson,
+              data = datos) 
+```
+
+Volvemos a comparar:
+
+```{r}
+compare_performance(mod3, mod4.1, mod4.2, metrics = "common")
+```
+
+El mejor modelo continúa siendo `mod3`, por lo que vamos a probar su bondad de ajuste:
+
+```{r}
+check_overdispersion(mod3)
+```
+
+El *p* valor del test confirma un buen ajuste. Procedemos a chequear significancia de las variables explicativas:
+
+```{r}
+summary(mod3)
+```
+
+Todos los niveles de las variables son significativos respecto a sus niveles de referencia:
+
+```{r}
+tbl_regression(mod3, exponentiate = T)
+```
+
+Traducidos a riesgo, mediante la exponenciación de los coeficientes, observamos que los diferentes categorías de años de exposición al arsénico no varían entre sí. Esto nos hace pensar que puede valer la pena agruparlo en solo dos niveles:
+
+```{r}
+## Recategoriza arsénico
+datos <- datos %>% 
+  mutate(arsenico_cat = if_else(
+    arsenico == "<1 año", "<1 año", "1+ años") |> 
+      as.factor())
+
+## Modelo con arsénico recategorizado
+mod5 <- glm(muertes ~ grupo_edad + arsenico_cat,
+                offset = log(persona_anio), 
+               family = poisson, 
+               data = datos)
+
+## Compara modelos
+compare_performance(mod3, mod5, metrics = "common")
+```
+
+El `mod5` tiene mejor *performance* que el modelo anterior. Chequeamos sobredispersión:
+
+```{r}
+check_overdispersion(mod5)
+```
+
+El ajuste continúa siendo bueno.
+
+Chequeamos significancia:
+
+```{r}
+summary(mod5)
+```
+
+Las variables incluídas son significativas.
+
+En esta etapa, aceptaríamos el `mod5` como el mejor modelo, ya que tiene el AIC más pequeño entre todos los modelos que hemos probado.
+
+```{r}
+tbl_regression(mod5, exponentiate = T)
+```
+
+### Interpretación de los resultados
+
+Concluimos que las personas expuestas al arsénico durante al menos un año tienen un riesgo 2,25 veces mayor de muerte por enfermedad respiratoria en comparación con aquellas no expuestas. Para entender cómo se obtiene este cálculo, consideremos que en los modelos de Poisson, la estructura de compensación (*offset*) definida como `log(persona_anio)` transforma el resultado en el logaritmo de la densidad de incidencia.
+
+El término `offset = log(persona_anio)` en el modelo de Poisson convierte el recuento de eventos en una densidad de incidencia, ajustada por el tiempo de seguimiento. Esto permite que el modelo estime tasas de incidencia de acuerdo con el tiempo de exposición.
+
+Los coeficientes del modelo de Poisson se interpretan en términos de tasas de incidencia. En particular, el coeficiente asociado a la variable de exposición al arsénico se transforma mediante la exponenciación para obtener el riesgo relativo. Si el coeficiente de la variable **arsenico** es $\beta$, el riesgo relativo (RR) se calcula como $e^\beta$. En nuestro caso, si $e^\beta = 2,25$, esto indica que las personas expuestas al arsénico durante al menos un año tienen un riesgo 2,25 veces mayor de muerte por enfermedad respiratoria en comparación con las no expuestas.
+
+### Densidad de incidencia
+
+Para calcular la densidad de incidencia esperada en una población específica, utilizamos el modelo ajustado. Por ejemplo, para una población de 100.000 personas de entre 40 y 49 años expuestas al arsénico durante menos de un año, podemos usar el modelo `mod5`. En R, esto se hace creando un nuevo conjunto de datos con las características deseadas y utilizando la función `predict()` para obtener la tasa de incidencia ajustada:
+
+```{r}
+## Genera nuevos datos
+newdata <- tibble(grupo_edad = "40-49",
+                  arsenico_cat = "<1 año",
+                  persona_anio = 100000)
+
+## Predice datos
+predict(object = mod5, newdata = newdata, type = "response") 
+```
+
+Esta población tendría una densidad de incidencia estimada de 33,26 por 100.000 personas-año.
+
+**Riesgo relativo**
+
+En un estudio de casos y controles, como los vistos en la Unidad 4, el OR se utiliza para comparar la prevalencia de exposición entre casos y controles. En un estudio de cohorte, este valor es igual a la relación entre las probabilidades de contraer una enfermedad entre el grupo expuesto y el no expuesto. La razón de los riesgos para los dos grupos se denomina entonces "razón de riesgo" o **riesgo relativo** (**RR**).
+
+En un estudio de cohorte real, los sujetos no siempre tienen la misma duración de seguimiento. El riesgo relativo ignora la duración del seguimiento. Por tanto, no es una buena medida de comparación del riesgo entre los dos grupos.
+
+**Razón de densidad de incidencia**
+
+En este ejercicio, todos los sujetos agrupan sus tiempos de seguimiento y este número se denomina "tiempo-persona", que luego se utiliza como denominador del evento, lo que da como resultado una "densidad de incidencia".
+
+Comparar la densidad de incidencia entre dos grupos de sujetos por su estado de exposición es más justo que comparar los riesgos crudos. La relación entre las densidades de incidencia de dos grupos se denomina **razón de densidades de incidencia** (**RDI**), que es una forma mejorada de riesgo relativo.
+
+En el `mod5`, para calcular la razón de densidad de incidencia entre los sujetos expuestos al arsénico durante uno o más años frente a los expuestos durante menos de un año, podemos dividir la incidencia entre los primeros por la del segundo grupo.
+
+```{r}
+## Genera nuevos datos
+newdata <- tibble(grupo_edad = rep("40-49", 2),
+                  arsenico_cat = c("<1 año", "1+ años"),
+                  persona_anio = rep(100000, 2))
+
+## Densidad de incidencia
+di <- predict(object = mod5, newdata = newdata, type = "response") 
+
+## Razón densidad de incidencia
+rdi.arsenico <- di[2] / di[1]
+
+rdi.arsenico
+```
+
+El código anterior comienza agregando una nueva fila al dataframe `newdata` que tiene lo mismo que la primera fila, excepto que la variable `arsenico_cat` es **"1+ años"**.
+
+A continuación, se calculan las respuestas o densidades de incidencia de las dos condiciones.
+
+La RDI se obtiene luego de la división de las densidades de incidencia para `arsenico_cat` **= "\<1 año"** con `arsenico_cat` **= "1+ años"**. Una forma más corta de obtenerla es mediante el coeficiente de la variable específica `arsenico`, utilizando R `base` o el paquete `gtsummary`.
+
+```{r}
+tbl_regression(mod5, exponentiate = T,                
+               include = "arsenico_cat")
+```
+
+También podemos mostrar la salida mediante un gráfico usando el ecosistema de paquetes `easystats`, tal como vimos en la **unidad anterior**:
+
+```{r}
+model_parameters(mod5, exponentiate = T) |> 
+  plot()
+```
+
+::: hidden
+@deirala2001
+
+@gordis2017
+
+@hernández-ávila2011
+
+@kim2019
+
+@kleinbaum1988
+
+@nolasco2016
+
+@pérezhoyos2001
+
+@salinas-rodríguez2009
+
+[@tidyverse; @easystats; @gtsummary]
+:::

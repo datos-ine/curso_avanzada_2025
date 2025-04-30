@@ -1,0 +1,329 @@
+---
+title: "Funciones condicionales en R"
+author: 
+  - name: Christian Ballejo
+    orcid: 0000-0002-7346-5701
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+Continuamos incorporando funciones útiles para el manejo de datos, enfocándonos en la creación de nuevas variables y en la transformación de variables cuantitativas a variables categóricas, ya sean nominales u ordinales.
+
+Algunas de estas operaciones serán necesarias para alcanzar los objetivos del trabajo práctico grupal de esta unidad, y seguramente también se utilizarán en las unidades siguientes.
+
+Como vimos dentro del universo **tidyverse**, para crear nuevas variables a partir de cálculos utilizamos la función-verbo `mutate()`:
+
+```{r}
+#| eval: false
+datos <- datos %>%  mutate(variable_nueva = funcion(var1))
+```
+
+Frecuentemente necesitaremos agrupar, resumir o **discretizar variables continuas**, dividiendo su rango en categorías que pueden ser **dicotómicas** o **politómicas**, según los objetivos del análisis.
+
+## **Condicional simple:** `if_else()`
+
+Para obtener salidas dicotómicas, podemos usar la función condicional `if_else()` del paquete `dplyr`. Esta función es una versión simplificada y segura del clásico condicional `if` que existe en la mayoría de los lenguajes de programación, así como en hojas de cálculo como *Microsoft Excel®* y *Google Sheets®*, entre otras.
+
+Supongamos que creamos una nueva variable cualitativa dentro del dataframe `datos` que se llama `variable_nueva` y queremos que la misma tome valores a partir del cumplimiento de una condición de una variable cuantitativa existente denominada `var1`.
+
+Por ejemplo, si los valores de `var1` son mayores a 10, entonces `variable_nueva`, tomará el valor `“mayor a 10”`, en caso contrario, tomará el valor `“menor o igual a 10”`:
+
+```{r}
+#| eval: false
+datos <- datos |>   
+  mutate(variable_nueva = if_else(condition = var1 > 10,  
+                                  true = "mayor a 10",  
+                                  false = "menor o igual a 10"))
+```
+
+La función `if_else()` tiene tres argumentos obligatorios:
+
+-   `condition`: la condición a evaluar.
+
+-   `true`: valor que tomará la nueva variable si se cumple la condición.
+
+-   `false`: valor que tomará la nueva variable si no se cumple la condición.
+
+Este proceso se conoce como **dicotomización** de una variable, ya que el resultado posible consta de solo dos categorías.
+
+Los valores de salida pueden ser de distintos tipos (carácter, numérico o lógico). Sin embargo, cuando discretizamos una variable cuantitativa, habitualmente generamos una variable cualitativa de tipo **ordinal**, con categorías expresadas como texto (tipo `character`).
+
+Ahora bien, al ser ordinal estas categorías de la `variable_nueva` deben “ordenarse” en la forma de los valores de la variable, pero el lenguaje R no sabe con que estamos trabajando y respeta siempre el ordenamiento alfanumérico. Por lo tanto, en este ejemplo las categorías se van a estar ordenando al reves del orden numérico natural (de menor a mayor).
+
+La categoría *`"mayor a 10”`* se ordena alfabéticamente antes de `“menor o igual a 10”`, porque luego del empate de las letras `m`, le siguen la `a` en el primer caso y la `e` en el segundo.
+
+Para ordenar estas categorías debemos transformar la variable de `character` a `factor`. Esto se puede hacer en un solo paso dentro del `mutate()`:
+
+```{r}
+#| eval: false
+datos <- datos |>   
+  mutate(variable_nueva = if_else(condition = var1 > 10,  
+                                  true = "mayor a 10",  
+                                  false = "menor o igual a 10"),
+         
+         variable_nueva = factor(variable_nueva,
+                                 levels = c("menor o igual a 10", 
+                                            "mayor a 10")))
+```
+
+Otra forma más artesanal, igualmente válido, es “forzar” el ordenamiento con las categorías así:
+
+```{r}
+#| eval: false
+datos <- datos |>   
+  mutate(variable_nueva = if_else(condition = var1 > 10,  
+                                  true = "2.mayor a 10",  
+                                  false = "1.menor o igual a 10"))
+```
+
+Aquí agregamos números iniciales a las etiquetas de las categorías para darle el orden que deseamos, sin necesidad de convertir a factor.
+
+### Función **`cut_interval()`**
+
+**tidyverse** ofrece la función `cut_interval()` para la creación de intervalos regulares.
+
+Es una adptación de la función `cut()` de R base para tidy data y sus argumentos son similares.
+
+```{r, eval=F}
+datos <- datos %>% 
+  mutate(grupo_var = cut_interval(x = var1, 
+                                  length = 10,
+                                  right = T,
+                                  labels = T,
+                                  ordered_result = F))
+```
+
+Los argumentos obligatorios y opcionales de la función `cut()` son:
+
+-   **x**: \[obligatorio\] El conjunto de datos numéricos de entrada (variable cuantitativa continua)
+
+-   **length**: \[obligatorio\] la longitud de cada intervalo regular
+
+-   **right**: \[opcional\] Indica si los intervalos son cerrados a la derecha o viceversa. Por defecto vale TRUE (cerrados a derecha)
+
+-   **labels**: \[opcional\] Etiquetas de los intervalos automáticas o numéricas. Valor predeterminado TRUE (intervalos matemáticos)
+
+-   **ordered_result**: \[opcional\] - determina si el resultado es un factor ordenado. Por defecto vale FALSE (la salida es tipo caracter)
+
+Los argumentos opcionales no son necesarios definirlos siempre y cuando los valores por defecto son los que sirven para la tarea.
+
+## Función case_when()
+
+Cuando las condiciones no son simples, es decir, el resultado no es dicotómico y además los intervalos son irregulares, utilizamos la función `case_when()` que es una vectorización de la función `if_else()`.
+
+Supongamos que no queremos agrupar la variable en dos valores, sino en 3 grupos irregulares.
+
+Esquema básico de funcionamiento:
+
+```{r, eval=F}
+# var1 es una variable cuantitativa de números enteros 
+
+datos <- datos %>% 
+  mutate(grupo_var = case_when( 
+    var1 >= 0 & var1 < 25  ~  "Grupo1", 
+    var1 > 24 & var1 < 65  ~ 	"Grupo 2", 
+    var1 >= 65             ~ 	"Grupo 3"))
+```
+
+Existe una condición por cada grupo creado, como si fuese un `if_else()` donde el valor declarado siempre es el verdadero. Se utilizan operadores de comparación como mayor ( \> ), menor ( \< ) y/o igual ( = ) y conectores lógicos como & ( AND ). En cada línea va una virgulilla similar a la usada en la sintaxis formula ( \~ ) y luego la etiqueta que tomarán las observaciones que cumplan con esa condición en la nueva variable (grupo_var).
+
+Esta evaluación es secuencial y su funcionamiento provoca que el usuario del lenguaje tenga el control de lo que esta sucediendo, por lo que cualquier mala definición de las condiciones puede provocar resultados incorrectos.
+
+Si incorporamos el argumento **.default** podemos indicar que valor toma si no se cumple ninguna de las condiciones anteriores.
+
+Por ejemplo, podríamos tener algun valor perdido (NA) en `var1` y queremos que la variable `grupo_var` etiquete esos valores perdidos como "Sin dato":
+
+```{r, eval=F}
+# var1 es una variable cuantitativa de números enteros con algun valor NA
+
+datos <- datos %>% 
+  mutate(grupo_var = case_when( 
+		var1 >= 0 & var1 < 25  ~  "Grupo1", 
+		var1 > 24 & var1 < 65  ~ 	"Grupo 2", 
+		var1 >= 65             ~ 	"Grupo 3",
+		.default = "Sin dato"))
+```
+
+Las salidas son de tipo ***carácter*** (chr) y debemos manejar el ordenamiento de las etiquetas como vimos anteriormente, por medio de factores o comenzando con caracteres ordenados alfabeticamente.
+
+Para simplificar el trabajo de estos intervalos de clase irregulares y no provocar errores en la confección de las condiciones, tidyverse tiene a la función `between()`.
+
+### Intervalos - función between()
+
+Báicamente opera como un atajo para condiciones de intervalos. Define dentro de los argumentos los límites inferior y superior de un intervalo y se utiliza dentro de una función de condición tipo `if_else()` o `case_when()`.
+
+Aplicado sobre el ejemplo anterior se vería así:
+
+```{r, eval=F}
+# var1 es una variable cuantitativa de números enteros con algun valor NA
+
+datos <- datos %>% 
+  mutate(grupo_var = case_when( 
+    between(var1, 0, 24)   ~  "Grupo1", 
+		between(var1, 25, 64)  ~ 	"Grupo 2", 
+		between(var1, 65, Inf) ~ 	"Grupo 3",
+		.default = "Sin dato"))
+```
+
+Los valores declarados como límites quedan incluídos siempre dentro del intervalo (son cerrados ambos). También podemos utilizar valores reservados como `Inf` o `-Inf` cuando desconocemos con que valor máximo o mínimo nos vamos a encontrar en la variable cuantitativa original.
+
+## Ejemplos
+
+Tomemos un caso clásico como la variable edad medida en años, variable que generalmente tenemos en toda tabla de datos vinculada a personas. En este ejemplo la variable tiene 106 observaciones.
+
+```{r, echo=F, message=F, warning=F}
+library(tidyverse)
+
+
+datos <- read_csv2("edad.txt", locale = locale(encoding = "ISO-8859-1"))
+
+datos <- datos |> mutate(fecha_nacimiento = dmy(fecha_nacimiento),
+                fecha_test = dmy(fecha_test),
+                edad = round(as.duration(fecha_test - fecha_nacimiento) / dyears(1))) |> select(edad)
+
+```
+
+Una posibilidad es dicotomizarla usando el valor de la mediana que divide 2 dos partes toda la distribución.
+
+```{r}
+
+datos %>% 
+  summarise(mediana = median(edad))
+
+```
+
+Aplicando el valor 56 dentro de un if_else podriamos hacer:
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo_edad1 = if_else(condition = edad > 56, 
+                                  true = "mayor a la mediana", 
+                                  false = "menor o igual a la mediana"))
+
+datos %>% 
+  count(grupo_edad1)
+```
+
+Observamos en el conteo que `grupo_edad1` se construyó adecuadamente pero el orden de los niveles no es correcto si queremos que siga el ordenamiento natural de edad (de menor a mayor).
+
+Una de las formas que vimos es convertir a factor:
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo_edad1 = if_else(condition = edad > 56, 
+                                  true = "mayor a la mediana", 
+                                  false = "menor o igual a la mediana"),
+         grupo_edad1 = factor(grupo_edad1, 
+                                 levels = c("menor o igual a la mediana",
+                                            "mayor a la mediana")))
+
+datos %>% 
+  count(grupo_edad1)
+```
+
+Vemos que en el conteo el formato de la variable ya no es `chr` sino `fct` y el orden de las etiquetas siguen la forma *"menor a mayor"*.
+
+Otra forma es:
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo_edad1 = if_else(condition = edad > 56, 
+                                  true = "2.mayor a la mediana", 
+                                  false = "1.menor o igual a la mediana"))
+
+datos %>% 
+  count(grupo_edad1)
+```
+
+Si en cambio necesitamos que los grupos sean mas de dos y que estos intervalos de clase sean regulares, podemos usar `cut_interval`
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo_edad2 = cut_interval(x = edad, 
+                                    length = 10))
+
+datos %>% 
+  count(grupo_edad2)
+```
+
+La salida muestra 8 grupos etarios con etiquetas ordenadas con notación matemática, donde un corchete indica que el límite del intervalo es cerrado, es decir contiene el valor y un paréntesis es abierto y no lo hace.Así es que el primer grupo va de 0 a 10 años y el segundo de 11 a 20.
+
+Estos sucede así porque en forma predeterminada el argumento **right** está en `TRUE`. Veamos que pasa si lo cambiamos a `FALSE`:
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo_edad2 = cut_interval(x = edad, 
+                                    length = 10,
+                                    right = F))
+
+datos %>% 
+  count(grupo_edad2)
+```
+
+En esta salida el primer grupo va de 0 a 9 y el segundo de 10 a 19.
+
+Hasta ahora la variable grupo_edad2 es de tipo caracter, pero si deseamos que la salida sea factor podemos incorporar el argumento **ordered_result** en `TRUE`.
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo_edad2 = cut_interval(x = edad, 
+                                    length = 10,
+                                    ordered_result = T))
+
+datos %>% 
+  count(grupo_edad2)
+```
+
+Construimos así una variable factor ordenada <ord>.
+
+Por último, con el argumento **labels** en `FALSE` hacemos que las etiquetas de los 8 grupos sean numéricas.
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo_edad2 = cut_interval(x = edad, 
+                                    length = 10,
+                                    labels = F))
+
+datos %>% 
+  count(grupo_edad2)
+```
+
+Otro ejemplo, podría ser aplicando `case_when()` donde discretizamos la edad en 4 grupos irregulares, forzando sus etiquetas para lograr el orden adecuado.
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo3 = case_when(
+    edad < 13              ~ "1.Niño",
+    edad > 12 & edad < 26  ~ "2.Adolescente",
+    edad > 25 & edad < 65  ~ "3.Adulto_joven",
+    edad > 64              ~ "4.Adulto_mayor"
+  ))
+
+datos %>% 
+  count(grupo3)   
+```
+
+Si no hubiesemos etiquetado con los numeros por delante el orden alfabético hacía que Niño fuese a parar al final del conteo.
+
+De la misma forma pero más sencillo y controlado es:
+
+```{r}
+datos <- datos %>% 
+  mutate(grupo3 = case_when(
+    between(edad, 0, 12)   ~ "1.Niño",
+    between(edad, 13, 25)  ~ "2.Adolescente",
+    between(edad, 26, 64)  ~ "3.Adulto_joven",
+    between(edad, 65, Inf) ~ "4.Adulto_mayor"
+  ))
+
+datos %>% 
+  count(grupo3)  
+```
+
+Estas funciones condicionales que tratamos en este documento no se limitan a la tarea de construir agrupamientos de variables cuantitati

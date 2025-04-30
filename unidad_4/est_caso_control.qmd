@@ -1,0 +1,92 @@
+---
+title: "Estudios de casos y controles"
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+Un estudio de casos y controles (CC) es un estudio analítico observacional que comienza con la identificación de dos grupos:
+
+-   Casos: individuos que presentan algún evento particular de salud.
+
+-   Controles: individuos que no presentan el evento.
+
+El objetivo es comparar la frecuencia de exposición a un factor de interés entre ambos grupos. La hipótesis subyacente es que si la exposición es más frecuente en los casos que en los controles, podría tratarse de un **factor de riesgo**. En cambio, si la exposición es menos frecuente en los casos, podría actuar como un **factor protector**.
+
+Los principales aspectos metodológicos a tener en cuenta para llevar adelante un estudio de casos y controles son:
+
+-   Definición precisa de la variable dependiente (evento de interés).
+-   Definición de las variables independientes (factores de exposición).
+-   Criterios de selección de los casos (fuente y definición).
+-   Criterios de selección de los controles (fuente y criterios de inclusión/exclusión).
+-   Análisis estadístico.
+
+Es fundamental tener criterios precisos para la definición de caso. Los criterios pueden estar basados en resultados de pruebas de laboratorio o pueden estar basados en la historia clínica o en encuestas.
+
+Según la definición de casos, se diferencian dos tipos importantes de estudios de casos y controles:
+
+-   **Estudios de casos y controles con casos incidentes**: Incluyen solo casos nuevos de la enfermedad durante el período de estudio.
+
+-   **Estudios de casos y controles con casos prevalentes**: Consideran todos los individuos que tienen la enfermedad en un momento determinado.
+
+Algunos autores consideran los estudios de CC como una estrategia alternativa para estudiar una cohorte. Esto permite diferenciar dos enfoques:
+
+-   **Casos en cohortes de densidad de incidencia**: Los casos se reclutan conforme aparecen (incidentes). Este enfoque es útil cuando la exposición tiene períodos de latencia prolongados.
+-   **Casos en cohortes de incidencia acumulada**: Los casos se seleccionan al final del estudio, con un período de seguimiento previamente definido.
+
+### Selección de los controles
+
+La fuente de los controles quedará definida en la medida en que se definan claramente los criterios de selección de casos, así como la población hipotética de origen. Algunos puntos a considerar son los siguientes:
+
+a)  Los controles deben seleccionarse de la misma base poblacional (de la cohorte hipotética) de donde se originaron los casos. Si uno de estos controles desarrollara el evento en cuestión, pasaría a formar parte del grupo de los casos. Esto último implica que los controles estuvieron en riesgo de desarrollar el evento en forma simultánea a los casos.
+b)  Los controles deben seleccionarse independientemente de su condición de expuestos o no expuestos.
+c)  La probabilidad de selección para los controles debe ser proporcional al tiempo que el sujeto estuvo en riesgo de desarrollar el evento o enfermedad en estudio.
+d)  Para minimizar confusión, se pueden emparejar controles con casos en función de variables confusoras.
+e)  Los procedimientos para medir la exposición, deben ser los mismos, tanto en casos como en controles.
+
+Las fuentes de controles pueden incluir población general, hospitales, vecindarios, registros de mortalidad, entre otros.
+
+## Clasificación de los estudios de casos y controles
+
+En los últimos tiempos, se ha profundizado en los aspectos metodológicos de los estudios de casos y controles; y también se ha clarificado la estrecha relación que existe con los estudios de cohorte, lo que ha permitido el desarrollo de diferentes variantes. Describiremos brevemente algunas de ellas a continuación:
+
+-   **Estudios caso-cohorte**. En esta variante, la definición de casos y controles se encuentra anidada en una cohorte fija, se utiliza un enfoque de incidencia acumulada.
+
+-   **Estudios de casos y controles anidado o de grupo de riesgo**. Es similar al anterior, sólo que se trata de una cohorte dinámica, y un enfoque de densidad de incidencia.
+
+-   **Estudios caso-autocontrol**. Esta variante utiliza al mismo sujeto que se consideró como caso, como su propio control. Este tipo de estrategia se suele utilizar para exposiciones que son de corta duración y que cambian en el tiempo y con eventos que son fáciles de detectar.
+
+-   **Estudios de mortalidad proporcional**. Tanto los casos como los controles se obtienen de los registros de mortalidad poblacionales. *Rothman* dice que este tipo de controles son aceptables, sólo si la distribución de la exposición entre los grupos es similar a la que presenta la base poblacional.
+
+-   **Estudios de caso-caso**. En esta estrategia se compara la historia de exposición en subgrupos de casos. En el caso de enfermedades infecciosas, es posible conformar diversos subgrupos de enfermedad, partiendo de datos de vigilancia epidemiológica.
+
+Quienes desean profundizar estos tópicos sobre el diseño de los CyC, pueden leer el capítulo correspondiente de *“Epidemiología. Diseño y análisis de estudios”* de Hernández-Ávila (2011) . Comenzaremos ahora con la parte de análisis de estos diseños.
+
+## Análisis de estudios de casos y controles
+
+En estudios de CC, la medida de asociación principal es el **odds ratio (OR)** de la exposición. Este se calcula comparando la frecuencia de exposición entre casos y controles:
+
+$$
+OR = \frac{Odds~exposición~casos}{Odds~exposición~controles}
+$$
+
+El modelo multivariado a utilizar para estudios de casos y controles no apareados es la [**regresión logística**](reg_logistica.qmd), que desarrollaremos a continuación. Por otro lado, los estudios de CC apareados se analizan mediante modelos de [**regresión logística condicional**](reg_logistica_cond.qmd), los cuales abordaremos brevemente al final de la unidad.
+
+::: hidden
+@escuelasanidad
+
+@field2014
+
+@ortegacalvo2002
+
+@rothman2012
+
+@silvaayçaguer1995
+
+@thompson1994
+:::

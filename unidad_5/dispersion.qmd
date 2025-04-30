@@ -1,0 +1,266 @@
+---
+title: "Dispersión de datos"
+author:
+  - name: Tamara Ricardo
+    orcid: 0000-0002-0921-2611
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+En modelos de regresión Poisson se asume **equidispersión**, es decir que la varianza de la variable dependiente es igual a su media: $$
+var(Y) =  \mu
+$$
+
+Sin embargo, en la práctica, esta suposición frecuentemente no se cumple y la varianza puede ser mayor que la media (**sobredispersión**) o menor que la media (**subdispersión**). Además, en algunos casos, los datos pueden contener un **exceso de ceros** que el modelo Poisson no ajusta adecuadamente. Estos fenómenos pueden llevar a que las inferencias que hagamos sean incorrectas, por lo que deben controlarse al ajustar los modelos.
+
+## Sobredispersión
+
+La sobredispersión es común en datos de conteo y puede ser causada por varios factores, como la heterogeneidad no observada, correlación entre observaciones o una alta incidencia de valores extremos. La sobredispersión puede inflar los errores estándar, lo que lleva a una subestimación de la significancia estadística. Matemáticamente, se expresa como:
+
+$$
+Var(Y) > \mu
+$$
+
+Para detectar si un modelo tiene sobredispersión, se puede calcular el **ratio de dispersión**, que es el cociente entre la devianza del modelo y los grados de libertad. Un ratio significativamente mayor que 1 indica sobredispersión.
+
+En R, la función `check_overdispersion()` del paquete `performance` evalúa el ratio de dispersión en un modelo. En el [ejemplo de regresión Poisson](reg_poisson.qmd) el cociente del modelo final era cercano a 1, lo cual indicaba que no existía evidencia de sobredispersión y la distribución seleccionada ajustaba bien los datos.
+
+Veamos ahora un ejemplo de datos con sobredispersión a partir de los casos de dengue reportados en los departamentos de la Costa Atlántica de la provincia de Buenos Aires (PBA)[^1] entre las semanas epidemiológicas 1 y 20 de 2024[^2]. Los mismos se encuentran en el archivo "`dengue_costa.txt`".
+
+[^1]: Fuente: <https://es.wikipedia.org/wiki/Localidades_balnearias_del_mar_Argentino>
+
+[^2]: Fuente: Vigilancia de las enfermedades por virus del Dengue y Zika. Datos Abiertos del Ministerio de Salud. Disponible en: <http://datos.salud.gob.ar/dataset/vigilancia-de-dengue-y-zika>
+
+Comenzaremos por cargar los paquetes necesarios para el análisis:
+
+```{r}
+# Ajuste de modelos
+library(glmmTMB)
+
+# Chequeo de supuestos
+library(easystats)
+
+# Coeficientes
+library(gtsummary)
+
+# Manejo de datos
+library(janitor)
+library(tidyverse)
+```
+
+Ahora cargamos los datos y exploramos su estructura:
+
+```{r}
+#| message: false
+# Carga datos
+datos <- read_delim("datos/dengue_costa.txt")
+
+# Explora datos
+glimpse(datos)
+```
+
+Las variables de interés para el modelo son:
+
+-   `semana_epi`: semana epidemiológica de reporte de los casos.
+
+-   `grupo_edad_cat`: grupo etario.
+
+-   `casos`: número de casos reportados por departamento, semana epidemiológica y grupo etario. Es la variable dependiente.
+
+Ajustamos un modelo Poisson con todas las variables de interés:
+
+```{r}
+fit_pois <- glm(casos ~ semana_epi + grupo_edad_cat,
+                data = datos,
+                family = poisson)
+
+# Salida del modelo
+summary(fit_pois)
+```
+
+El modelo ajustado no incluye un término *offset*, ya que este se utiliza cuando es necesario ajustar la tasa de eventos por una variable de tiempo o tamaño poblacional. En este ejemplo, podemos asumir que la población de cada departamento se mantiene constante en el periodo estudiado. Además, dado que una misma persona puede infectarse más de una vez con el virus del dengue, no es necesario incorporar un término de ajuste adicional.
+
+Chequeamos si existe sobredispersión:
+
+```{r}
+check_overdispersion(fit_pois)
+```
+
+El cociente de dispersión es de `r round(check_overdispersion(fit_pois)$dispersion_ratio,2)`, por lo que el modelo Poisson no es el más adecuado para representar los datos.
+
+## Subdispersión
+
+La subdispersión, aunque menos común, puede ocurrir en situaciones donde los conteos están más controlados o restringidos. Este fenómeno puede hacer que los errores estándar se subestimen, resultando en una sobreestimación de la significancia estadística. Matemáticamente se expresa como:
+
+$$
+Var(Y) < \mu
+$$
+
+Para detectar si un modelo tiene subdispersión también se usa el **ratio de dispersión**. Donde un ratio significativamente menor que 1 indica subdispersión.
+
+## Control de la sobredispersión y subdispersión
+
+### Modelos *quasi*-Poisson
+
+Una forma común de manejar la sobredispersión en los datos es mediante el uso de modelos *quasi*-Poisson. Estos modelos ajustan los errores estándar sin modificar la media predicha, incorporando un parámetro adicional que permite que la varianza sea distinta a la media. Aunque los modelos quasi-Poisson son útiles para corregir la sobredispersión, no abordan las causas subyacentes de esta ni son adecuados para datos con subdispersión o un exceso de ceros. Además, la estimación de parámetros en estos modelos tiende a ser menos eficiente, ya que asumen que la sobredispersión es constante en todas las observaciones, lo que puede llevar a inferencias menos robustas. Debido a estas limitaciones, no profundizaremos en el uso de los modelos *quasi*-Poisson.
+
+### Distribución binomial negativa
+
+Dentro de los modelos lineales generalizados (GLM), la distribución binomial negativa es especialmente útil para manejar la sobredispersión en datos discretos. Esta distribución aporta flexibilidad, mejora las inferencias estadísticas con estimaciones más precisas, permite procesar grandes volúmenes de datos y se puede combinar con componentes de inflación de ceros.
+
+La familia binomial negativa no está integrada en la función `glm()` del paquete `stats`. No obstante, existen varios paquetes que permiten su implementación. En el contexto del curso, usaremos el paquete `glmmTMB` [@glmmTMB] para explorar alternativas a los modelos Poisson, dado su alto grado de versatilidad. La función base `glmmTMB()` permite ajustar desde regresiones lineales y modelos lineales generalizados (GLMs) hasta modelos mucho más complejos, lo que lo convierte en una herramienta poderosa para manejar una amplia variedad de estructuras de datos.
+
+A modo de ejemplo, ajustaremos el modelo Poisson anterior con `glmmTMB()`:
+
+```{r}
+fit_pois_tmb <- glmmTMB(casos ~ semana_epi + grupo_edad_cat,
+                data = datos,
+                family = poisson)
+
+# Salida modelo
+summary(fit_pois_tmb)
+```
+
+Al comparar los resultados del modelo ajustado con `glmmTMB` y el modelo ajustado con el paquete `stats`, podemos observar que, aunque no presentan exactamente la misma información, los coeficientes y el AIC son prácticamente idénticos.
+
+Ahora, ajustaremos el modelo de regresión binomial negativa utilizando el argumento `family = nbinom2`, que tiene como función de enlace por defecto el logaritmo `(link = "log")`:
+
+```{r}
+# Modelo binomial negativo 
+fit_nb <- glmmTMB(casos ~ semana_epi + grupo_edad_cat,  
+                  data = datos,                 
+                  family = nbinom2)  
+
+# Salida del modelo
+summary(fit_nb)
+```
+
+Si comparamos los coeficientes de este modelo con el de Poisson, observamos que son similares, pero los intervalos de confianza varían ligeramente debido al ajuste binomial negativo:
+
+```{r}
+#| echo: false 
+# Tablas coeficientes 
+tbl_merge(tbls = list(tbl_regression(fit_pois_tmb, exponentiate = T),
+                      tbl_regression(fit_nb, exponentiate = T)),
+          tab_spanner = c("Poisson", "Binomial negativa"))
+```
+
+La regresión binomial negativa tiene como limitación no ser adecuada para datos con subdispersión. Además, son modelos computacionalmente complejos y su ajuste depende de la estructura específica de los datos, lo que puede afectar la estabilidad de las estimaciones.
+
+### Distribución Conway-Maxwell Poisson
+
+Otra alternativa a la regresión de Poisson, que permite controlar tanto sobredispersión como subdispersión y exceso de ceros es el modelo Conway-Maxwell Poisson (COM-Poisson). El mismo ofrece una generalización del modelo Poisson estándar, introduciendo un parámetro adicional que permite ajustar de forma independiente la media y la varianza.
+
+Podemos ajustar estos modelos con la función `glmmTMB()` especificando el argumento `family = compois()`, que tiene como función de enlace por defecto el logaritmo `(link = "log")`:
+
+```{r}
+#| eval: false
+# Modelo COMPOIS
+fit_compois <- glmmTMB(casos ~ semana_epi + grupo_edad_cat,  
+                  data = datos,                 
+                  family = compois)  
+
+# Salida del modelo
+summary(fit_compois)
+```
+
+Una desventaja de estos modelos es que son computacionalmente complejos y están implementados en pocos *software* estadísticos y paquetes de R. Por otro lado, los parámetros son menos intuitivos de interpretar, y puede presentar dificultades en la estimación de parámetros, especialmente en casos de datos limitados o de mala calidad.
+
+## Exceso de ceros (*zero-inflation)*
+
+El exceso de ceros ocurre cuando se observan más ceros en los datos de lo que el modelo Poisson predice. Este fenómeno puede ser un indicativo de que el modelo Poisson no es adecuado para los datos.
+
+Para identificar un exceso de ceros, se puede utilizar la función `check_zeroinflation()` del paquete `performance`:
+
+```{r}
+check_zeroinflation(fit_pois_tmb)
+```
+
+Los resultados del test indican que los datos presentan un exceso de ceros. Para explorar el origen de este fenómeno, comenzamos tabulando los datos por semana epidemiológica:
+
+```{r}
+datos |> 
+  group_by(semana_epi) |> 
+  summarise(casos = sum(casos))
+```
+
+Observamos que se reportaron casos de dengue en todas las semanas epidemiológicas. Ahora, veamos la distribución de los casos por departamento:
+
+```{r}
+datos |> 
+  group_by(departamento) |> 
+  summarise(casos = sum(casos))
+```
+
+En este caso, todos los departamentos reportaron casos de dengue durante el período de estudio. Procedamos a cruzar los datos por semana epidemiológica y departamento:
+
+```{r}
+datos |> 
+  group_by(semana_epi, departamento) |> 
+  summarise(casos = sum(casos)) |> 
+  print(n = 20) # Muestra las primeras 20 observaciones
+```
+
+En esta tabla, se observa que no todos los departamentos en La Costa reportaron casos de dengue cada semana epidemiológica. Además, dado que los datos están separados por grupo etario, es razonable suponer que tampoco se reportaron casos para cada grupo en cada departamento y semana epidemiológica.
+
+Para obtener una visión más detallada, generamos una tabla de frecuencia para los reportes de cero casos:
+
+```{r}
+tabyl(datos$casos) |> 
+  adorn_pct_formatting()
+```
+
+La tabla muestra que el 78.4% de los datos corresponden a observaciones con cero reportes de casos de dengue. Esto es esperado en el contexto de datos de vigilancia epidemiológica, donde es común encontrar muchas observaciones sin eventos.
+
+Este exceso de ceros se puede controlar usando modelos *zero-inflated*, que tendrán distribución Poisson o binomial negativa según exista o no sobredispersión de los datos.
+
+Añadiendo el argumento `zi = ~ 1`, podemos controlar el exceso de ceros en el modelo de regresión binomial negativa ajustada anteriormente. Indicando que la inflación en ceros sigue un modelo de intercepto único (sin predictores adicionales):
+
+```{r}
+# Modelo zero-inflated
+fit_zi_nb <- glmmTMB(casos ~ semana_epi + grupo_edad_cat,  
+                  zi = ~ 1,
+                  data = datos,                 
+                  family = nbinom2)  
+
+# Salida del modelo
+summary(fit_zi_nb)
+```
+
+La salida de estos modelos se divide en tres partes que incluyen:
+
+-   `Conditional model`: coeficientes, error estándar, valor z y significancia para el modelo de conteo binomial negativo.
+
+-   `Zero-inflation model`: coeficiente para la probabilidad de observar un cero adicional, con su respectivo error estándar, valor z y significancia. El coeficiente del intercepto no es significativo, lo que indica que la probabilidad de observar un cero adicional no está significativamente influenciada por las variables en el modelo y podría ser necesario incluir un predictor en `zi` para mejorar el ajuste del modelo.
+
+-   Estadísticas del modelo: AIC, BIC, logLik, devianza y grados de libertad residuales.
+
+::: {.callout-caution appearance="simple"}
+Existen diversas soluciones para tratar la sobredispersión, subdispersión y exceso de ceros en modelos de conteo. En este documento, nos enfocamos en las estrategias más comunes que pueden ser abordadas mediante modelos lineales generalizados utilizando el paquete `glmmTMB`.
+
+| Problema | Modelo |
+|------------------------------------|------------------------------------|
+| Sobredispersión | `glmmTMB(formula, family = nbinom2)` |
+| Subdispersión | `glmmTMB(formula, family = compois)` |
+| Sobredispersión + Exceso de Ceros | `glmmTMB(formula, family = nbinom2, zi = ~1)` |
+:::
+
+::: hidden
+@tidyverse
+
+@easystats
+
+@janitor
+
+@gtsummary
+
+@agresti2015
+
+@salinas-rodríguez2009
+:::

@@ -1,0 +1,124 @@
+---
+title: "Estudios de cohortes"
+author: 
+  - name: Christian Ballejo
+    orcid: 0000-0002-7346-5701
+  - name: Andrea Silva
+    orcid: 0000-0002-4791-9706
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+En su forma más básica, un diseño de cohorte implica la selección de un grupo de personas expuestas al factor de estudio y un grupo similar pero no expuesto, considerado como el grupo de referencia. Ambos grupos serán seguidos durante un período determinado y se evaluará si durante el mismo se produjo o no el evento de interés. Al final del seguimiento, se realiza la comparación de ambos grupos para analizar los resultados.
+
+La esencia de los estudios de cohortes radica en el seguimiento de los participantes a lo largo del tiempo. Por tratarse de estudios longitudinales, los mismos podrán ser prospectivos, retrospectivos o mixtos. Además, las cohortes podrán ser fijas o dinámicas. En una cohorte fija, se establece un período de reclutamiento y, una vez finalizado, no se admiten más participantes. En una cohorte dinámica (también llamada cohorte abierta), se permite la entrada y salida de sujetos a lo largo de todo el estudio.
+
+Como recordarán, la selección de los participantes se basa en la exposición, por lo cual la misma debe estar claramente definida. Como dijimos anteriormente, la idea clásica de un estudio de cohorte es comparar dos grupos, expuestos y no expuestos. Sin embargo, existen otras comparaciones posibles:
+
+-   **Estudios de comparación con la población general:** El estudio identifica y sigue a una cohorte expuesta, comparando la frecuencia del evento de salud en esta cohorte con la observada en la población general. Para ello, es esencial disponer de registros poblacionales que proporcionen esta información.
+
+-   **Comparaciones internas:** La cohorte estudiada incluye tanto personas expuestas como no expuestas, y las comparaciones se realizan dentro de la propia cohorte.
+
+Por otra parte, el evento a observar puede tomar distintas formas: puede tratarse de un evento fijo, eventos múltiples, cambio en una medida de función (la cual se evalúa mediante tasa de cambio) o marcadores intermedios del evento. Estas variaciones también influyen en el abordaje analítico.
+
+Al diseñar un estudio de cohortes, es fundamental definir claramente los siguientes aspectos:
+
+-   Criterios de inclusión
+-   Fechas de entrada y de salida de los participantes
+-   Estrategia de seguimiento
+-   Eventos finales de interés
+-   Definición de la exposición
+-   Identificación de factores de confusión
+-   Consideraciones éticas
+-   Estrategias de análisis
+-   Potencia estadística
+
+En la siguiente tabla se remarcan ventajas y desventajas de estos estudios:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  Ventajas = c("Más cercanos a un experimento",
+               "Claridad temporal entre exposición y evento",
+               "Permiten estudiar varios eventos asociados a la exposición",
+               "Estimación directa de la incidencia",
+               "Reducción de sesgos de selección y de memoria",
+               "Eficientes para evaluar exposiciones poco frecuentes",
+               "Permiten fijar criterios de calidad en la medición del evento"),
+ 
+  Desventajas = c("Alto costo y duración del estudio",
+                  "Riesgo de pérdida de participantes",
+                  "Necesidad de cohortes grandes",
+                  "Dificultad para controlar confusores",
+                  "Cambios en la exposición durante el estudio",
+                  "No adecuados para enfermedades raras",
+                  "")
+) |> 
+  
+  # Tabla
+  kbl() |> 
+  kable_paper(html_font = "Calibri") |>
+  row_spec(0, background = "#2f2e4e", color = "white")
+```
+
+### ¿Cómo analizar un estudio de cohortes?
+
+Como recordarán de los cursos de epidemiología previos, una de las formas más simples de análisis en un estudio de cohortes es el cálculo del Riesgo Relativo (RR). Sin embargo, hay aspectos adicionales de este diseño que son importantes de considerar.
+
+El análisis de los estudios de cohortes debe tener en cuenta la variable tiempo. La pérdida de participantes por diversas razones y la diferente duración del seguimiento entre los miembros de la cohorte requieren el uso de técnicas analíticas especiales que permitan aprovechar toda la información disponible. Existen dos estrategias de análisis principales para el estudio de cohortes: el análisis **persona-tiempo**, que desarrollaremos en esta unidad y el **análisis de supervivencia**, que retomaremos en la Unidad 6 cuando veamos estudios experimentales. Ambos métodos requieren información precisa sobre el inicio y final del seguimiento de cada participante, así como su estado al momento de finalizar o salir del estudio (desarrollo o no el evento de interés). Además, es necesario definir una escala temporal adecuada para el análisis.
+
+Las técnicas de análisis **persona-tiempo** utilizan como unidad de análisis estratos o grupos homogéneos en los que se asume una tasa de incidencia uniforme. Las técnicas clásicas de análisis incluyen la comparación de tasas, la estandarización directa y las razones estandarizadas de incidencia o mortalidad (denominadas RIE o SIR, para la incidencia y RME o SMR para la mortalidad). El RIE y RME comparan el número de casos observados con el número esperado, teniendo en cuenta la frecuencia del evento en la población de referencia. La técnica multivariada por excelencia para la modelización de las tasas es la [**regresión de Poisson**](reg_poisson.qmd), que utiliza la distribución de Poisson para modelizar la variabilidad aleatoria del numerador de las tasas.
+
+A modo de resumen, compartimos esta tabla, extraída del libro de @hernández-ávila2011:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  Aspecto = c("Tamaño de la muestra",
+              "Tipo de eventos",
+              "Escala temporal",
+              "Tipos de medida",
+              "Análisis bivariado",
+              rep("", 2),
+              "Análisis multivariado"),
+ 
+  "Análisis de supervivencia" = c("Relativamente pequeño",
+                                  "Frecuentes",
+                                  "Única",
+                                  "Probabilidad (condicional y acumulada)",
+                                  "Comparación de curvas de supervivencia",
+                                  "Log-rank test",
+                                  "Razón de riesgos",
+                                  "Regresión de Cox"),
+  
+  "Análisis tiempo-persona" = c("Relativamente grande",
+                                "Raros",
+                                "Única o múltiple",
+                                "Tasa (densidad)",
+                                "Comparación de tasas",
+                                "Razón de tasas",
+                                "REM",
+                                "Regresión de Poisson")
+) |> 
+  
+  # Tabla
+  kbl() |> 
+  kable_paper(html_font = "Calibri") |>
+  row_spec(0, background = "#2f2e4e", color = "white")
+```
+
+::: hidden
+@nolasco2016
+
+@pérezhoyos2001
+
+@salinas-rodríguez2009
+:::

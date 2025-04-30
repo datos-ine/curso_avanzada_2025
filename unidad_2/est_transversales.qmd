@@ -1,0 +1,111 @@
+---
+title: "Estudios de corte transversal"
+author: 
+  - name: Andrea Silva
+    orcid: 0000-0002-4791-9706
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+Los estudios transversales se caracterizan por realizar mediciones en un **único momento** en el tiempo, sin llevar a cabo un seguimiento de los participantes. En este diseño, el investigador mide de forma simultánea la **exposición** y el **evento** en los sujetos seleccionados mediante criterios de inclusión y exclusión predefinidos.
+
+Se trata de un diseño **observacional de base individual**, que puede tener un propósito **descriptivo**, **analítico**, o ambos. También se los conoce como estudios de prevalencia o encuestas transversales. Los estudios transversales entonces pueden dividirse en:
+
+-   **Descriptivos:** se enfocan en determinar la **frecuencia** y **distribución** de eventos de salud y enfermedad en un momento determinado, midiendo una o más variables o condiciones.
+
+-   **Analíticos:** se orientan a explorar **asociaciones** y generar hipótesis de investigación. Algunos autores ubican este diseño en el límite entre los estudios descriptivos y los analíticos.
+
+En los estudios transversales, la medida de frecuencia más utilizada es la **prevalencia**. Para evaluar asociaciones se pueden calcular dos medidas principales:
+
+-   **Razón de prevalencia** (*prevalence ratio*)**:** que aproxima el riesgo relativo observado en estudios de cohortes.
+
+-   **Odds ratio de prevalencia** (*prevalence odds ratio*): que se utiliza como aproximación al *odds ratio* calculado en estudios de casos y controles.
+
+A continuación se resumen las ventajas y desventajas de este diseño:
+
+```{r}
+#| echo: false 
+# Datos 
+tibble(   
+  Ventajas = c("Eficientes para estudiar la prevalencia de enfermedades en la población",  
+               "Se pueden estudiar varias exposiciones",  
+               "Son poco costosos y se pueden realizar en poco tiempo",   
+               "Se puede estimar la prevalencia del evento",              
+               rep("", 2)),      
+  
+  Desventajas = c("Problemas para definir y medir exposición",  
+                  "Sesgos de selección",                  
+                  "Sesgos por casos prevalentes",                   
+                  "La relación causa efecto no siempre es verificable",   
+                  "Sobrerrepresentación de enfermos con tiempos prolongados de sobrevida o con manifestaciones con mejor curso clínico",     
+                  "Se puede presentar causalidad débil") ) |>      
+  
+  # Tabla   
+  kbl() |>    
+  kable_paper(html_font = "Calibri") |>   
+  row_spec(0, background = "#2f2e4e", color = "white")
+```
+
+> **Nota**: Los aspectos metodológicos esenciales para el reporte de estudios transversales pueden consultarse en la [**Declaración STROBE**](est_epidemio.qmd#declaracion_strobe), sección *Métodos*.
+
+## Análisis de estudios transversales
+
+Al planificar un estudio transversal, es fundamental definir con precisión la **población de estudio**. La selección de los sujetos depende directamente de la pregunta de investigación y los objetivos planteados. Una identificación adecuada de la población garantiza la validez externa de los resultados y su potencial generalización.
+
+En la práctica, estos estudios rara vez incluyen a todos los miembros de la población objetivo, sino que se trabaja con una **muestra**. Solo una muestra representativa, que refleje las características de la población base, permite desarrollar el componente analítico y exploratorio del diseño transversal, de modo que las conclusiones sean relevantes y aplicables.
+
+Una vez obtenidos los datos, éstos pueden representarse gráficamente, resumirse mediante estadísticas descriptivas (como medidas de tendencia central y dispersión) e incluso utilizarse para modelar relaciones entre variables.
+
+-   Si el objetivo es **describir los resultados** en la muestra, las herramientas descriptivas pueden ser suficientes.
+
+-   Si se busca **extrapolar a la población general,** es necesario aplicar métodos de inferencia estadística, fundamentados en la teoría de la probabilidad.
+
+### Inferencia estadística
+
+La estadística inferencial se basa en el cálculo de probabilidades, que proporciona el marco teórico para analizar fenómenos aleatorios y extrapolar los resultados de una muestra a la población. Como las conclusiones inferidas a partir de una muestra pueden no ser ciertas, es fundamental utilizar siempre un lenguaje **probabilístico** al comunicarlas.
+
+Las dos actividades principales en este proceso son:
+
+-   Estimación de **parámetros** poblacionales. Por ejemplo:
+
+    -   *Calcular la prevalencia de una enfermedad X en la población.*
+
+-   **Pruebas de hipótesis** sobre parámetros poblacionales. Por ejemplo:*:*
+
+    -   *¿La prevalencia de la enfermedad X en Argentina es menor que en Uruguay?*
+
+    -   *¿La prevalencia de la enfermedad X en Argentina en 2010 fue menor que en el año 2000?*
+
+Al trabajar con muestras, subyace el concepto de **teoría del muestreo**, que no abordaremos aquí en profundidad, pero que es clave para comprender cómo se relacionan los valores observados en la muestra con aquellos de la población.
+
+Esta teoría estudia las relaciones entre la distribución de una variable en la población y su comportamiento en las muestras extraídas aleatoriamente de ella. Los matemáticos llaman a las medidas de descripción o asociación que hayamos obtenido a partir de nuestra muestra como **estimadores,** “estadísticos muestrales”, o simplemente “estadísticos”. Por otra parte, se denomina **parámetros** a los correlatos de esos estimadores en la población de la que hemos obtenido esa muestra.
+
+Por ejemplo, supongamos que queremos conocer el valor medio de colesterol total de la población de Mar del Plata y tomamos una muestra de tamaño $n$.
+
+-   La media de colesterol total de toda la población es el parámetro y se representa con la letra griega $\mu$.
+
+-   La media de colesterol total en la muestra es lo que se denomina estadístico muestral o **estimador** y se lo representa como $\bar{x}$.
+
+::: hidden
+@rodríguez2018
+
+@hernández-ávila2011
+
+@ríusdíaz2012
+
+@daniel2002
+
+@alvarez2007
+
+@triola2018
+
+@normangr1996
+
+@glantzs2006
+:::

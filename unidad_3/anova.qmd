@@ -1,0 +1,401 @@
+---
+title: "Análisis de la varianza (ANOVA)"
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+showtext::showtext_opts(dpi = 500)
+```
+
+## Introducción
+
+El análisis de varianza (ANOVA) es una extensión del modelo lineal general que se utiliza para comparar las medias de una variable dependiente continua ($Y$) entre diferentes niveles de una variable explicativa categórica ($X$), que debe tener al menos tres niveles.
+
+La hipótesis nula ($H_0$) del test estadístico establece que las medias de la variable dependiente son iguales en todos los grupos, mientras que la hipótesis alternativa ($H_1$) plantea que al menos dos medias difieren significativamente:
+
+-   $H_0: \mu_1 = \mu_2 = ... = \mu_i$
+
+-   $H_1$: al menos una $\mu_i \not= \mu_j$
+
+Por lo tanto, el ANOVA permite comparar múltiples medias, pero lo hace analizando la variabilidad entre y dentro de los grupos.
+
+La variabilidad total se descompone en dos componentes:
+
+-   **Intervarianza (SSB):** Variabilidad entre los grupos.
+
+-   **Intravarianza (SSE):** Variabilidad dentro de los grupos.
+
+El estadístico $F$ del ANOVA, que sigue una distribución F de Fisher-Snedecor, compara estas dos fuentes de variabilidad:
+
+$$
+F = \frac{SSB/(k-1)}{SSE/(n-k)}
+$$
+
+donde:
+
+-   $k$: el número de grupos.
+
+-   $n$: número total de observaciones.
+
+Si se cumple $H_0$, el estadístico $F$ tiende a 1, ya que las varianzas entre y dentro de los grupos son similares. Si las medias difieren significativamente, la intervarianza será mayor que la intravarianza, resultando en valores de $F$ superiores a 1.
+
+## ANOVA de un factor o de una vía
+
+El ANOVA de una vía puede considerare como una extensión de los *t-test* independientes para comparar más de dos grupos de un factor. En este contexto, factor se refiere a la variable categórica que define los grupos.
+
+Para que los resultados del ANOVA sean válidos, deben cumplirse los siguientes supuestos:
+
+-   **Aleatoriedad:** Las observaciones deben ser aleatorias.
+
+-   **Independencia:** Las observaciones entre grupos deben ser independientes.
+
+-   **Variable dependiente:** Cuantitativa continua.
+
+-   **Variable explicativa:** Categórica con más de dos niveles.
+
+-   **Normalidad:** La distribución de la variable dependiente dentro de cada grupo debe ser normal.
+
+-   **Homocedasticidad:** Las varianzas de los grupos deben ser homogéneas.
+
+## Ejemplo práctico en R
+
+Nuevamente vamos a trabajar con el conjunto de datos "`cancer_USA.txt`", que contiene información sobre la tasa de mortalidad por cáncer (por 100.000 habitantes) en distintos condados de la Costa Este de Estados Unidos. Nuestro objetivo será analizar la relación entre la tasa de mortalidad (`tasa_mortalidad`) y el estado de residencia (`estado`).
+
+Comenzaremos por cargar los paquetes necesarios:
+
+```{r}
+# tablas salida del modelo
+library(gtsummary)
+
+# chequeo de supuestos
+library(easystats)
+library(nortest)
+library(pwr)
+
+# comparación de medias
+library(emmeans)
+
+# análisis exploratorio
+library(skimr)
+library(dlookr)
+
+# paletas de colores aptas daltonismo
+library(scico)
+
+# manejo de datos
+library(janitor)
+library(tidyverse) 
+```
+
+Cargamos y exploramos los datos:
+
+```{r}
+# Carga datos
+datos <- read_csv2("datos/cancer_USA.txt")
+
+# Explora datos
+glimpse(datos)
+```
+
+La base de datos tiene `r nrow(data)` observaciones y `r ncol(data)` variables. La variable dependiente es `tasa_mortalidad`, mientras que `estado` es nuestra variable explicativa, categórica con 9 niveles.
+
+Exploremos más en profundidad la estructura de los datos usando la función `skim()` del paquete `skimr`:
+
+```{r}
+# Resumen de los datos
+skim(datos)
+
+# Frecuencia por estado
+tabyl(datos$estado)
+```
+
+Observamos que la variable `estado` tiene 9 niveles y ningún valor ausente (`n_missing = 0`). La variable dependiente tiene valores entre 139 y 217 (casos/100 000 habitantes) y tampoco presenta valores `NA`.
+
+Los estados con menos observaciones (Connecticut, New Hampshire y Rhode Island) serán excluidos para evitar sesgos en el análisis. También convertiremos la variable estado a un factor ordenado con el comando `fct_relevel()` del paquete `tidyverse`:
+
+```{r}
+# Filtramos estados con pocas observaciones y convertimos a factor
+datos <- datos |> 
+  filter(!estado %in% c("New Hampshire", "Rhode Island", 
+                        "Connecticut")) |> 
+  
+  mutate(estado = fct_relevel(estado, "New York", after = 0))
+
+# Verificamos con class() y levels()
+class(datos$estado)
+
+levels(datos$estado)
+```
+
+Graficamos la distribución de la variable dependiente mediante un histograma y un boxplot:
+
+```{r}
+# histograma
+datos |> 
+  ggplot(mapping = aes(x = tasa_mortalidad)) +
+  geom_histogram(binwidth = 10, 
+                 color = "white", 
+                 fill = "#1E6590") +
+  theme_minimal() # tema claro
+
+# boxplot 
+datos |> 
+  ggplot(mapping = aes(y = tasa_mortalidad)) +
+  geom_boxplot(fill = "#B2D680") +
+  theme_minimal() # tema claro
+```
+
+La distribución global es simétrica pareciera existir un valor atípico.
+
+Ahora veamos como es la distribución de la tasa de mortalidad por estado.
+
+```{r}
+# Histograma por grupos
+datos |> 
+  ggplot(mapping = aes(x = tasa_mortalidad, fill = estado)) +
+  geom_histogram(binwidth = 10, color = "white") +
+  scale_fill_scico_d() + # paleta colorblind-friendly
+  facet_grid(estado ~ .) + # variable estado en filas
+  theme_minimal() # tema claro
+
+# Boxplot por grupos
+datos |> 
+  ggplot(mapping = aes(x = estado, y = tasa_mortalidad, 
+                       fill = estado)) +
+  geom_boxplot() +
+  scale_fill_scico_d() + # paleta colorblind-friendly
+  theme_minimal() + # tema claro
+  theme(axis.text.x = element_text(angle = 90)) # gira etiquetas eje x
+```
+
+Observamos que las distribuciones en algunos grupos parecen simétricas y hay diferencias visuales entre las medianas. Esto plantea la pregunta de si dichas diferencias son estadísticamente significativas.
+
+### Análisis de supuestos
+
+Si bien es más recomendable y habitual realizar el análisis de supuestos a partir de los residuales del modelo, podemos chequear que la variable dependiente cumpla con los supuestos de normalidad y homocedasticidad previo a realizar el análisis.
+
+#### Normalidad
+
+Usamos el test de Kolmogorov-Smirnov con corrección de Lilliefors para grupos con más de 50 observaciones con la función `lillie.test()` del paquete `nortest`. Como algunos grupos tienen menos de 50 observaciones, también podríamos utilizar el test de Shapiro-Wilk mediante la función `shapiro.test()` de R `base`:
+
+```{r}
+datos |> 
+  filter(estado == "New York") |> 
+  pull(tasa_mortalidad) |>  # con pull() extraemos datos de tasa_mortalidad como vector
+  lillie.test()  # aplicamos test de bondad de ajuste
+
+datos |> 
+  filter(estado == "Maine") |> 
+  pull(tasa_mortalidad) |>  # con pull() extraemos datos de tasa_mortalidad como vector
+  lillie.test()  # aplicamos test de bondad de ajuste
+
+datos |> 
+  filter(estado == "Massachusetts") |> 
+  pull(tasa_mortalidad) |>  # con pull() extraemos datos de tasa_mortalidad como vector
+  lillie.test()  # aplicamos test de bondad de ajuste
+
+datos |> 
+  filter(estado == "New Jersey") |> 
+  pull(tasa_mortalidad) |>  # con pull() extraemos datos de tasa_mortalidad como vector
+  lillie.test()  # aplicamos test de bondad de ajuste
+
+datos |> 
+  filter(estado == "Pennsylvania") |> 
+  pull(tasa_mortalidad) |>  # con pull() extraemos datos de tasa_mortalidad como vector
+  lillie.test()  # aplicamos test de bondad de ajuste
+
+datos |> 
+  filter(estado == "Vermont") |> 
+  pull(tasa_mortalidad) |>  # con pull() extraemos datos de tasa_mortalidad como vector
+  lillie.test()  # aplicamos test de bondad de ajuste
+```
+
+Podemos graficar el comportamiento de la variable dependiente en cada grupo mediante Q-Q plots usando el paquete `ggplot2`:
+
+```{r}
+datos |> 
+  ggplot() +
+  geom_qq(mapping = aes(sample = tasa_mortalidad)) + 
+  geom_qq_line(mapping = aes(sample = tasa_mortalidad)) +
+  facet_wrap(~ estado) +
+  theme_minimal()
+```
+
+#### Homocedasticidad
+
+Verificamos la homogeneidad de varianzas por grupo con el test de Bartlett:
+
+```{r}
+bartlett.test(tasa_mortalidad ~ estado, # utiliza sintaxis fórmula
+              data = datos) 
+```
+
+La variable respuesta cumple con el supuesto de homocedasticidad (*p* = 0.438).
+
+### Análisis de varianza
+
+Si bien podemos realizar un test ANOVA mediante la función `aov()` de R `base`, en el contexto de este curso utilizaremos la función `lm()` del paquete `stats` que usamos anteriormente para ajustar el modelo de [regresión lineal simple](reg_lineal.qmd):
+
+```{r}
+lm(tasa_mortalidad ~ estado, data = datos)
+```
+
+Siempre que trabajemos con modelos, conviene que asignemos los resultados a objetos que luego nos servirán para aplicar otras funciones. Como nuestra variable explicativa es categórica y nuestro principal interés es conocer si existen diferencias significativas entre grupos, no analizaremos los coeficientes del modelo con `summary()`, sino la significancia del test F mediante la función `anova()`.
+
+```{r}
+# ANOVA
+modelo <- lm(tasa_mortalidad ~ estado, data = datos)
+
+# Salida del modelo
+anova(modelo)
+```
+
+Los resultados del test F nos muestran un *p* valor de 0,003, sugiriendo que al menos dos grupos son diferentes entre sí.
+
+### Comparaciones múltiples
+
+Una vez que comprobamos que existen diferencias significativas entre grupos, nos interesa saber cuáles grupos son diferentes entre sí. Para ello, existen distintos algoritmos de comparaciones múltiples con sus respectivas correcciones, como el test de *Diferencia Honestamente Significativa de Tukey,* también llamado Tukey HSD o **test de Tukey**. Esta prueba se aplica para grupos equilibrados (mismo tamaño) y varianzas similares (homocedásticas). Es una prueba conservadora, dado que mantiene bajo el error de tipo I, sacrificando la capacidad de detectar diferencias existentes.
+
+Si las varianzas son homocedásticas pero los grupos difieren en tamaño, podemos usar el test de Tukey si tenemos que comparar entre varios grupos, o la **corrección de Bonferroni** para grupos más reducidos.
+
+```{=html}
+<table style="border-collapse:collapse;border-color:#aaa;border-spacing:0;border:none" class="tg"><thead><tr><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Código</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Rango</th></tr></thead>
+<tbody><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">***</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0 a 0,001</td></tr><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">**</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0,001 a 0,01</td></tr>
+<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">*</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0,01 a 0,05</td></tr><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">.</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0,05 a 0,1</td></tr>
+<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal"></td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0,1 a 1</td></tr></tbody></table>
+```
+
+El paquete `emmeans` [@emmeans] es una herramienta muy versátil y poderosa para realizar comparaciones múltiples. Comenzaremos utilizando la función `emmeans()` con el argumento `specs = "estado"` para crear un objeto que contenga las medias marginales por grupo:
+
+```{r}
+comp <- emmeans(modelo, specs = "estado")
+```
+
+Para realizar las comparaciones múltiples mediante test de Tukey usamos el comando `contrast()` con el argumento `method = "pairwise"`:
+
+```{r}
+contrast(comp, method = "pairwise")
+```
+
+Los resultados del test de Tukey nos muestran diferencias significativas en la tasa de mortalidad por cáncer en el estado de Maine respecto de New York, Massachusetts y New Jersey.
+
+Para mayor claridad, podemos mostrar las comparaciones múltiples mediante un gráfico:
+
+```{r}
+plot(comp) +
+  theme_minimal() # tema claro
+```
+
+El rombo del medio representa la media marginal para cada grupo y el rectángulo azul, su intervalo de confianza, aquellos grupos en los que no se superponen los intervalos de confianza son estadísticamente diferentes entre sí.
+
+### Bondad de ajuste
+
+El tamaño de efecto comúnmente utilizado para el caso de ANOVA es *eta cuadrado*, que se calcula haciendo el cociente de la suma de cuadrados del efecto sobre la suma de cuadrados total.
+
+```{r}
+anova(modelo)
+
+# calculo eta-cuadrado
+eta2 <- 3513/(3513 + 35036)
+
+eta2
+```
+
+Podemos llegar al mismo valor usando la función `r2()` del paquete `performance`:
+
+```{r}
+r2(modelo)
+```
+
+### Potencia
+
+Los test de potencia permiten determinar la probabilidad de encontrar diferencias significativas entre las medias para un determinado nivel de significancia indicando el tamaño de los grupos.
+
+En base al eta-cuadrado obtenido anteriormente, calculamos el tamaño de efecto convencional mediante la función `cohen.ES()` del paquete `pwr` [@pwr]:
+
+```{r}
+cohen.ES(test = "anov", size = "small")
+```
+
+La función `pwr.anova.test()` del paquete `pwr` nos permite calcular la potencia en base al número de grupos, número de observaciones por grupo, tamaño de efecto y nivel de significancia (habitualmente 0,05).
+
+Para grupos de igual tamaño usamos el siguiente código:
+
+```{r}
+#| eval: false
+
+pwr.anova.test(k = k, n = n, f = eta_cuadrado, sig.level = 0.05)
+```
+
+En nuestro ejemplo, donde los tamaños de grupo son diferentes, primero debemos calcular el tamaño de grupo efectivo:
+
+```{r}
+# Número de grupos
+k <- nlevels(datos$estado)
+  
+# Número de observaciones por grupo
+n <- tabyl(datos$estado)$n
+
+# Tamaño de grupo efectivo
+neff <- sum(n)^2 / sum(n^2)
+```
+
+Calculamos la potencia:
+
+```{r}
+pwr.anova.test(k = k, n = neff, f = eta2, sig.level = 0.05)
+```
+
+### Análisis de residuales
+
+Para poder dar por válidos los resultados del ANOVA es necesario verificar que se satisfacen las condiciones analizando los residuos del modelo. Para ello, usaremos el mismo procedimiento que vimos para la [regresión lineal simple](reg_lineal.qmd).
+
+Método gráfico con paquete `performance`:
+
+```{r}
+check_model(modelo)
+```
+
+Chequeo normalidad de residuales mediante test de Lilliefors:
+
+```{r}
+lillie.test(modelo$residuals)
+```
+
+Chequeo homocedasticidad (test de Breusch-Pagan):
+
+```{r}
+check_heteroscedasticity(modelo)
+```
+
+Chequeo presencia de outliers (distancia de Cook):
+
+```{r}
+check_outliers(modelo)
+```
+
+## Conclusión
+
+Se ha realizado un ANOVA de una vía para comparar la tasa de mortalidad por cáncer en seis estados de Estados Unidos. Se encontraron diferencias estadísticamente significativas entre las medias de los grupos (F = 3,71, *p* = 0.003). El eta-cuadrado fue de 0.091, lo que indica que el estado de residencia explica un 9.1% de la varianza total en los valores de la tasa de mortalidad por cáncer. La potencia de la prueba estadística para un nivel de significancia de 0,05 % fue del 5.7%.
+
+Se realizó la prueba post hoc de Tukey HSD y se encontró que media de mortalidad para el estado de Maine fue estadísticamente superiror respecto de los estados de Massachusetts, New York y New Jersey (*p* \< 0.05).
+
+::: {.hidden .only-html}
+@agresti2015
+
+@triola2018
+
+@tidyverse
+
+@gtsummary
+
+@easystats
+
+@nortest
+
+@janitor
+
+[@dlookr; @emmeans; @janitor; @skimr]
+:::

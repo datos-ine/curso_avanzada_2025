@@ -1,0 +1,358 @@
+---
+title: "Selección de la muestra"
+author: 
+  - name: Andrea Silva
+    orcid: 0000-0002-4791-9706
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+Toda investigación epidemiológica requiere, en principio, la selección de una muestra representativa de la población objeto de estudio. Esto implica:
+
+-   Determinar el tamaño de la muestra.
+
+-   Definir cómo se seleccionarán los sujetos (es decir, las unidades de análisis).
+
+-   Calcular la incertidumbre que introduce este proceso de muestreo en nuestras estimaciones.
+
+El tamaño de la muestra se establece en la fase de diseño del estudio, habitualmente cuando se redacta el protocolo de investigación. Es importante considerar que este tamaño es, en cierto sentido, orientador, ya que su cálculo depende de factores que en ocasiones pueden ser subjetivos o estar limitados por la información previa disponible. Además, las exigencias varían según el objetivo del estudio. Por ejemplo:
+
+-   En un estudio transversal, donde se estima una prevalencia, se puede aceptar una precisión menor.
+
+-   En un estudio experimental, donde se compara la eficacia de un fármaco frente a un placebo, el tamaño de la muestra debe ser suficiente para detectar una “diferencia significativa” entre los grupos.
+
+Cuando el objetivo de la investigación incluye la estimación de un intervalo de confianza (IC) para alguna variable, se busca que dicho IC tenga alta confiabilidad y sea lo más estrecho posible.
+
+En el caso de los estudios de corte transversal, que se orientan a estimar una proporción, se formulan preguntas como:\
+— ¿Cuál es la prevalencia, proporción o porcentaje del fenómeno en estudio?
+
+Al tomar una muestra para estimar lo que sucede en la realidad, debemos aceptar que la medición obtenida reflejará la situación poblacional, pero siempre con cierto grado de variabilidad (o error). La **precisión** es ese grado de variabilidad aceptable y se expresa a través de los intervalos de confianza, que definen los límites inferior y superior dentro de los cuales se espera encontrar el verdadero valor del parámetro.
+
+## Cálculo del tamaño muestral
+
+Como se mencionó en la [**sección anterior**](est_transversales.qmd), se requiere conocer algunos datos para el cálculo del tamaño de muestra requerido, entre los que destacan:
+
+-   **La proporción esperada del evento:** Aunque resulte paradójico, ya que es el parámetro que se desea estimar, el investigador suele contar con información previa que permite delimitar sus posibles valores. Si no fuera el caso, se utiliza el peor escenario, es decir, una proporción del 50%, ya que este valor maximiza el producto $p(1-p)$ y, por ende, exige el mayor tamaño muestral. De esta forma, muchas veces se recurre a esto para tener al menos una idea del “límite superior” que estaríamos manejando.
+
+-   **El nivel de confianza deseado:** Habitualmente se emplea un 95% (lo que equivale a un $\alpha$ de 0.05). Este valor indica la probabilidad de que el intervalo calculado contenga el parámetro poblacional verdadero. A mayor nivel de confianza (es decir, menor $\alpha$), mayor es el coeficiente de confiabilidad y, por ende, mayor el tamaño muestral requerido.
+
+-   **La precisión (**$\delta$**) deseada:** Se refiere a la amplitud aceptable del intervalo de confianza. Cuanta más precisión se exija (es decir, un intervalo más estrecho), mayor será el tamaño de la muestra necesario.
+
+La fórmula para el cálculo es la siguiente:
+
+$$
+N = \frac{p.q.(Z\alpha)^2}{\delta^2}
+$$ Donde:
+
+-   $N$ es el tamaño muestra requerido.
+-   $p$ es la proporción esperada de sujetos portadores del evento.
+-   $q = 1 – p$ es la proporción complementaria (sujetos que no tienen la variable en estudio).
+-   $\delta$ es la precisión o magnitud de error aceptable.
+-   $Z\alpha$ es el valor crítico de la distribución normal asociado al nivel de significancia. Se obtiene de tablas de distribución normal de probabilidades y habitualmente se utiliza un valor $\alpha$ de 0.05, al que le corresponde un valor $Z$ de 1.96
+
+Cuando se conoce el tamaño de la población, es necesario aplicar una corrección por población finita:
+
+$$
+N =\frac{n^1}{1+\frac{n^1}{Población}}
+$$ donde $n^1$ es el $N$ calculado con la ecuación anterior.
+
+Es fundamental entender que el tamaño de la muestra dependerá de $p$ de $\alpha$ y de la precisión deseada, más que de la complejidad de la fórmula en sí. Existen numerosos softwares que calculan tamaños de muestra. Algunos están especializados en esta tarea (por ejemplo, **EpiDat**, **EpiInfo**, **OpenEp**i), mientras que otros lo incluyen como una opción dentro de un paquete más amplio de análisis. En el lenguaje R, funciones como `power.prop.test()` (para comparación de proporciones) y `power.t.test()` (para pruebas de medias basadas en la distribución $t$ de Student) están incluidas en el paquete `stats`. Otros paquetes útiles incluyen `samplingbook` [@samplingbook], `samplesize` , `pwr` [@pwr] y `epiR` [@epiR].
+
+A continuación, se presenta un ejemplo práctico utilizando la función `sample.size.prop()` del paquete `samplingbook`. Supongamos que queremos estimar la prevalencia de diabetes en una ciudad de 600,000 habitantes, donde estudios previos sugieren una prevalencia cercana al 10.2%. El objetivo es determinar el tamaño de la muestra en un muestreo aleatorio simple.
+
+Comenzamos cargando el paquete requerido:
+
+```{r}
+library(samplingbook)
+```
+
+Calculamos el tamaño muestral en base a los siguientes argumentos:
+
+-   **e**: número positivo que especifica la precisión que es la mitad del ancho del intervalo de confianza
+-   **p**: proporción esperada de eventos con dominio entre los valores 0 y 1.
+-   **N**: número entero positivo para el tamaño de la población. El valor predeterminado es `Inf`, lo que significa que los cálculos se realizan sin *corrección de población finita*.
+-   **level**: nivel de confianza para los intervalos de confianza. El valor predeterminado es 95%.
+
+```{r}
+sample.size.prop(e = 0.02, P = 0.102, N = 600000, level = 0.95)
+```
+
+El resultado, tras aplicar la corrección por población finita, indica que se requieren 879 sujetos en la muestra. Por simplicidad, es habitual considerar infinita a la población objetivo, ya que hacerlo así minimiza los riesgos estadísticos:
+
+```{r}
+sample.size.prop(e = 0.02, P = 0.102, N = Inf, level = 0.95)
+```
+
+Si se considera una población infinita, el tamaño muestral calculado es de 880 personas, apenas una unidad más, lo que demuestra que el ajuste por población finita en este caso es mínimo. En cambio, si no se conoce o no se confía en el valor de prevalencia y se opta por el peor escenario ($p = 0.5$):
+
+```{r}
+sample.size.prop(e = 0.02, P = 0.5, N = 600000, level = 0.95)
+```
+
+En este caso, el tamaño muestral aumenta considerablemente hasta 2392 unidades, lo que refleja un enfoque más conservador.
+
+Además del cálculo del tamaño muestral, es esencial planificar la forma en que se seleccionarán los individuos. En estudios de corte transversal se debe realizar un muestreo probabilístico, ya que la técnica de muestreo influirá en los factores de expansión necesarios para generalizar los resultados a la población. Aunque el proceso de muestreo no se detalla en este curso, es vital considerarlo para garantizar la validez externa de la investigación.
+
+## Conceptos generales sobre muestreo
+
+Un muestreo se considera **probabilístico** cuando se cumplen dos condiciones fundamentales:
+
+-   Es posible conocer de antemano la probabilidad de selección que tiene cada elemento de la población.
+
+-   Esta probabilidad es mayor que cero para todos los elementos.
+
+Solo con un muestreo probabilístico se puede medir el grado de precisión de las estimaciones realizadas, ya que se conocen las probabilidades de inclusión. Algunos de los métodos más usados son: Muestreo aleatorio simple, muestreo sistemático en fases, Muestreo aleatorio estratificado, muestreo por conglomerados, etc.
+
+### Muestreo aleatorio simple (MAS)
+
+En el MAS, cada elemento de la población tiene la misma probabilidad de ser seleccionado (es decir, es un método **equiprobabilístico**). La probabilidad de inclusión se expresa como:
+
+$$
+P = \frac{n}{N} 
+$$
+
+donde:
+
+-   $n$ es el tamaño de la muestra,
+
+-   $N$ es el tamaño de la población.
+
+Este método requiere contar con un listado completo de la población y se utiliza principalmente en poblaciones cerradas (por ejemplo, escuelas, cárceles, hospitales o muestras de laboratorio), donde los elementos pueden identificarse y numerarse fácilmente.
+
+### Muestreo sistemático (MS)
+
+El muestreo sistemático es un procedimiento alternativo al MAS, adecuado para la selección de muestras equiprobabilísticas de poblaciones organizadas según algún orden conocido. Sus ventajas incluyen no requerir necesariamente un listado completo de todas las unidades, lo que resulta útil, por ejemplo, para seleccionar a los usuarios que llegan a un servicio hospitalario durante un período determinado.
+
+El procedimiento consiste en:
+
+1.  Asignar a cada elemento de la población un número del 1 a $N$.
+
+2.  Calcular el intervalo de selección:
+
+    $$
+    k = \frac{N}{n}
+    $$
+
+3.  Seleccionar aleatoriamente un número $r$ entre 1 y $k$.
+
+4.  Elegir los elementos que ocupan las posiciones: $r, r+k, r + 2k,...$, es decir, la secuencia $r, r+jk$ con $j = 0, 1, 2, \dots$.
+
+La probabilidad de ser seleccionado es igual que en el MAS
+
+$$
+P = \frac{n}{N} 
+$$
+
+### Muestreo aleatorio estratificado (MAE)
+
+Este método se emplea cuando la población puede dividirse en subgrupos o **estratos** que difieren en las características de interés (por ejemplo, edad, sexo o nivel socioeconómico). La idea es asegurar que cada estrato esté representado en la muestra. El proceso habitual consiste en:
+
+-   Elaborar listas separadas para cada estrato.
+
+-   Seleccionar una submuestra de cada uno de ellos.
+
+La probabilidad de selección en cada estrato es:
+
+$$
+P \ estrato = \frac{n \ estrato}{N \ estrato} 
+$$
+
+Si se aplica un muestreo proporcional, el tamaño de la muestra en cada estrato se calcula como:
+
+$$
+n \ estrato = n\frac{N \ estrato}{N} 
+$$
+
+El objetivo es obtener una muestra cuya variabilidad interna se asemeje a la de la población, logrando que los estratos sean internamente homogéneos y heterogéneos entre sí.
+
+### Muestreo por conglomerados monoetápico
+
+El muestreo por conglomerados es ideal cuando la población es difícil de delimitar o está muy dispersa. Se divide la población en **conglomerados** (o grupos) que actúan como unidades de primera etapa (UPE) y no deben solaparse.
+
+La población se divide en grupos (por ejemplo, áreas geográficas, instituciones o servicios). Se selecciona una muestra de $n$ conglomerados y se incluyen **todos** las unidades de análisis de los conglomerados seleccionados. El tamaño del conglomerado se refiere al número de unidades elementales que contiene, pudiendo ser de igual o distinto tamaño. Los conglomerados deberían ser lo más heterogéneos dentro de ellos y lo más homogéneos entre ellos.
+
+### Muestreo por conglomerados bietápico
+
+Se utiliza cuando existe gran variabilidad en el tamaño de los conglomerados o la población es muy grande. En este caso, después de dividir la población en conglomerados y seleccionar algunos de ellos como UPE, se realiza una subselección (muestreo secundario) de los elementos dentro de los conglomerados elegidos.
+
+Existen más posibilidades, que no abordaremos aquí, pero sí nos detendremos en discutir qué implicaciones tiene el muestreo en el proceso de estimación.
+
+### Implicaciones en la Estimación y Ponderación
+
+En métodos equiprobabilísticos (como el MAS o el MS), cada elemento tiene la misma probabilidad de selección. Sin embargo, en diseños muestrales más complejos (como el muestreo estratificado o por conglomerados), las probabilidades de selección pueden variar entre individuos.
+
+En estos casos, la probabilidad total de selección de un individuo es el producto de las probabilidades de selección en cada etapa del muestreo. Una vez conocida esta probabilidad, se calcula el peso (o **factor de expansión**) como su inverso. Este peso se interpreta como el número de individuos en la población que representa cada individuo de la muestra.
+
+> El factor de expansión se interpreta como *la cantidad de personas en la población, que representa una persona en la muestra*.
+
+El factor de expansión se utiliza para extrapolar los resultados obtenidos en la muestra a la población total. Por ejemplo, para estimar un total poblacional para una variable, se pondera el valor medido en cada individuo por su factor de expansión y se suman dichos valores.
+
+## Ejemplo práctico
+
+Supongamos que queremos estimar la prevalencia de sobrepeso/obesidad en estudiantes de enseñanza media de una localidad. Se tiene la siguiente información:
+
+-   **Población total de alumnos:** 966
+
+-   **Número de escuelas (conglomerados):** 21
+
+-   **Tamaño de la muestra global (ya calculado):** 120 alumnos
+
+Si se realizara un **muestreo aleatorio simple (MAS)**, se necesitaría disponer del listado completo de los 966 alumnos y, mediante un sorteo, seleccionar 120 individuos. En ese caso, la probabilidad de selección para cada alumno sería:
+
+$$
+P = \frac{n}{N} = \frac{120}{966}=0,124
+$$
+
+Supongamos ahora que decide realizar un muestreo por conglomerados biétapico. Cada escuela se considera un conglomerado; se seleccionan 10 de las 21 escuelas por MAS y, dentro de cada escuela seleccionada, se elige una submuestra de estudiantes también mediante MAS. Se decide que el número de estudiantes elegidos en cada conglomerado sea igual para todos.
+
+Los datos globales quedan de la siguiente forma:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  " " = c("Tamaño total",
+         "Número de conglomerados"),
+  "Población" = c(966, 21),
+  "Muestra" = c(120, 10)
+) |> 
+  # Tabla
+  kbl() |> 
+  kable_paper(html_font = "Calibri")
+```
+
+La decisión de cuántos conglomerados forman parte de la muestra, es una decisión del investigador: a veces puede ser necesario fijar un número, a veces puede ser más conveniente fijar el tamaño de la muestra en cada conglomerado. Por otra parte, puede que decidamos que el número de sujetos seleccionados en cada conglomerado sea igual para todos; que sea una fracción fija o algo a definir.
+
+Dentro de los conglomerados seleccionados, se obtiene la siguiente distribución (en este ejemplo, la suma de los tamaños de los conglomerados seleccionados es 480 y en cada uno se eligen 12 alumnos):
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  Conglomerado = c("5.1",
+                   "1.3",
+                   "2.3",
+                   "2.2",
+                   "3.1",
+                   "5.3",
+                   "1.4",
+                   "3.3",
+                   "2.4",
+                   "1.5",
+                   "Total"),
+  "Tamaño" = c(48, 28, 64, 43, 37, 86, 37, 56, 48, 33, 480),
+  "Muestra" = c(rep(12, 10), 120)
+) |> 
+  
+  # Tabla
+  kbl(align = "l") |> 
+  kable_paper(html_font = "Calibri") |> 
+  row_spec(11, bold = TRUE)
+```
+
+### Cálculo de las Probabilidades de Selección y Ponderaciones
+
+Para que un individuo sea seleccionado en este diseño, debe ocurrir primero que su conglomerado sea escogido y, posteriormente, que él sea seleccionado dentro de ese conglomerado. Si asumimos que:
+
+> *“Dos sucesos son independientes si la probabilidad de que ocurran ambos simultáneamente es igual al producto de las probabilidades de que ocurra cada uno de ellos”*.
+
+La probabilidad total de selección es el producto de:
+
+1.  La probabilidad de que el conglomerado sea seleccionado:
+
+    $$
+    P_{conglomerado} = \frac{10}{21}
+    $$
+
+2.  La probabilidad de que un individuo sea seleccionado dentro de su conglomerado:
+
+    $$
+    P_{dentro} = \frac{N°~alumnos~en~la~muestra~del~conglomerado}{Tamaño~del~conglomerado}
+    $$
+
+Para los individuos del conglomerado 5.1; la probabilidad de selección será:
+
+$$
+P_{5.1} = \frac{10}{21}*\frac{12}{48} \approx 0,1190 \quad (11.9\%)
+$$
+
+La ponderación o **factor de expansión** se obtiene como el inverso de la probabilidad de selección:
+
+$$
+w = \frac{1}{P}
+$$
+
+Es decir:
+
+$$
+w_{5.1} = \frac{1}{1.190} \approx 8.4
+$$
+
+Esto significa que cada alumno seleccionado del conglomerado 5.1 representa aproximadamente a 8 alumnos de la población.
+
+Si se realizan los cálculos para cada uno de los conglomerados, se obtiene la siguiente tabla:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  Conglomerado = c("5.1",
+                   "1.3",
+                   "2.3",
+                   "2.2",
+                   "3.1",
+                   "5.3",
+                   "1.4",
+                   "3.3",
+                   "2.4",
+                   "1.5"),
+  "Probabilidad" = c(11.9, 20.41, 8.93, 13.29, 15.44, 
+                     6.65, 15.44, 10.20, 11.9, 17.32),
+  "Ponderación" = c(8.4, 4.9, 11.2, 7.53, 6.48, 
+                    15.05, 6.48, 9.8, 8.4, 5.78)
+) |> 
+  
+  # Tabla
+  kbl(align = "l") |> 
+  kable_paper(html_font = "Calibri")
+```
+
+Cada individuo seleccionado en el estudio tiene una probabilidad de inclusión que depende tanto de la probabilidad de que su escuela (conglomerado) sea seleccionada como de la probabilidad de que él sea elegido dentro de su escuela. La ponderación resultante (el inverso de esta probabilidad) se utiliza para "expandir" el resultado del estudio, de manera que cada alumno en la muestra represente a un número determinado de alumnos en la población total.
+
+Por ejemplo, en el conglomerado 5.1, cada alumno seleccionado representa aproximadamente a 8 alumnos de la población. De este modo, al calcular la prevalencia de sobrepeso/obesidad en la muestra, se aplican estos factores de expansión para obtener estimaciones que sean representativas de los 966 alumnos de la localidad.
+
+Este proceso es fundamental en estudios basados en muestreos complejos, ya que permite corregir posibles diferencias en las probabilidades de selección y garantizar que las estimaciones sean válidas y precisas para toda la población.
+
+::: hidden
+@hernández-ávila2011
+
+@daniel2002
+
+@rodríguez2018
+
+@ríusdíaz2012
+
+@triola2018
+
+@caceres2007
+
+@normangr1996
+
+@glantzs2006
+
+@vonelm2008
+
+@schulz2010
+
+@field2014
+
+@rodríguez2003
+
+@epidat4
+:::

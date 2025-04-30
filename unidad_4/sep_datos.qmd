@@ -1,0 +1,231 @@
+---
+title: "Separación de datos binomiales"
+author: "Tamara Ricardo"
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+En los modelos de regresión logística, se analizan las relaciones entre una variable dependiente de tipo binaria y una o más variables independientes que pueden ser de distintos tipos (numéricas continuas, numéricas discretas, categóricas, binarias, etc.). Sin embargo, en algunas situaciones, la relación entre las variables independientes y la variable respuesta puede derivar en problemas de separación de datos, afectando las estimaciones del modelo.
+
+## Tipos de separación de datos
+
+### Separación total
+
+También conocida como separación perfecta o completa, ocurre cuando un predictor o combinación lineal de predictores clasifica perfectamente las observaciones en una de las dos categorías de la variable respuesta. En estos casos, las probabilidades predichas para una de las categorías son 0 o 1, y los coeficientes de regresión para las variables involucradas se vuelven indefinidos. Esto provoca un fallo en la convergencia del modelo, ya que no se pueden calcular los logaritmos para odds ratios (OR) iguales a 0 o a infinito ($\infty$), generando un mensaje de error.
+
+### Separación parcial
+
+La separación parcial se presenta cuando un predictor o combinación lineal de predictores predice perfectamente la variable respuesta solo en algunos niveles de las variables independientes. Es decir, separa en gran medida las categorías de la variable respuesta. Esto puede llevar a la estimación de coeficientes y errores estándar extremadamente grandes, con intervalos de confianza muy amplios, lo que hace que las inferencias realizadas sean poco fiables.
+
+Tomemos como ejemplo la base `covid_cancer.txt`, que contiene datos de un estudio de casos y controles realizado en la ciudad de Santa Fe, Argentina en pacientes con cáncer hospitalizados por formas severas de COVID-19[^1].
+
+[^1]: Gastiazoro MP, Cardozo MA, Ricardo T, Ramos JG, Ballina A, Maillo M, et al. Clinical features in cancer patients with COVID-19 in Santa Fe and Buenos Aires, Argentina. J Clin Images Med Case Rep \[Internet\]. el 14 de febrero de 2023 \[citado el 9 de agosto de 2024\];4(2). Disponible en: <https://jcimcr.org/articles/JCIMCR-v4-2285.html>
+
+Cargamos paquetes necesarios:
+
+```{r}
+library(gtsummary)
+library(janitor)
+library(tidyverse)
+```
+
+Cargamos datos:
+
+```{r}
+# Carga datos
+datos <- read_delim("datos/covid_cancer.txt")
+
+# Explora datos
+glimpse(datos)
+```
+
+Las variables de interés incluyen:
+
+-   `fallecido`: fallecimiento por COVID-19 (No: 0, Sí: 1)
+
+-   `sexo`: sexo biológico del/a paciente (M: masculino, F: femenino)
+
+-   `edad`: edad en años al momento de la hospitalización
+
+-   `comorbilidades`: presencia de comorbilidades (Sí, No)
+
+-   `disnea`: dificultad para respirar (Sí, No)
+
+-   `neumonia_severa`: paciente con neumonía severa (Sí, No)
+
+-   `inf_secundaria`: presencia de infección secundaria (Sí, No)
+
+-   `complicaciones`: complicaciones del COVID-19 (Sí, No)
+
+-   `infil_bilateral`: infiltración bilateral en radiografía (Sí, No)
+
+-   `asist_resp`: paciente que recibió asistencia respiratoria (Sí, No)
+
+-   `cancer_tipo`: tipo de cáncer (Sólido, Hematológico)
+
+-   `tr_quimioterapia`: paciente que recibió quimioterapia (Sí, No)
+
+-   `tr4_quimioterapia`: paciente que recibió quimioterapia en el último mes (Sí, No)
+
+Nuestra variable dependiente es si el/la paciente falleció a causa del COVID-19. Comenzaremos por ajustar modelos de regresión logística univariados para evaluar qué variables explicativas están asociadas significativamente a la variable dependiente:
+
+```{r}
+#| warning: false
+
+# Regresiones logísticas simples
+datos |> 
+  tbl_uvregression(y = fallecido,
+                   method = glm,
+                   method.args = list(family = binomial),
+                   exponentiate = T) |> 
+  bold_p()
+```
+
+Al ejecutar este código aparecerá el siguiente mensaje de advertencia: `Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred`. Esto indica que todas o alguna de las variables explicativas provoca separación parcial de los datos.
+
+Al observar la tabla generada, notamos que las variables `disnea`, `neumonia_severa`, `inf_secundaria`, `asist_resp` y `tr_quimioterapia` presentan intervalos de confianza excesivamente amplios, lo que sugiere la presencia de separación parcial. Si generamos tablas de 2x2 de cada variable explicativa en función de la variable `fallecido`, podemos visualizar este fenómeno:
+
+```{r}
+# disnea
+datos |> 
+  tabyl(disnea, fallecido, 
+        show_na = F) |> 
+  adorn_percentages() |> 
+  adorn_pct_formatting()
+
+# neumonía severa
+datos |> 
+  tabyl(neumonia_severa, fallecido, 
+        show_na = F) |> 
+  adorn_percentages() |> 
+  adorn_pct_formatting()
+
+# infección secundaria
+datos |> 
+  tabyl(inf_secundaria, fallecido, 
+        show_na = F) |> 
+  adorn_percentages() |> 
+  adorn_pct_formatting()
+
+# asistencia respiratoria
+datos |> 
+  tabyl(asist_resp, fallecido, 
+        show_na = F) |> 
+  adorn_percentages() |> 
+  adorn_pct_formatting()
+
+# quimioterapia
+datos |> 
+  tabyl(tr_quimioterapia, fallecido, 
+        show_na = F) |> 
+  adorn_percentages() |> 
+  adorn_pct_formatting()
+
+```
+
+Estos análisis muestran que variables como `disnea`, `neumonia_severa`, `inf_secundaria`, `asist_resp` y `tr_quimioterapia` explican casi completamente la mortalidad por COVID-19 severo.
+
+Si evaluamos las variables `complicaciones` y `cancer_tipo`:
+
+```{r}
+# complicaciones
+datos |> 
+  tabyl(complicaciones, fallecido, 
+        show_na = F) |> 
+  adorn_percentages() |> 
+  adorn_pct_formatting()
+
+# tipo de cáncer
+datos |> 
+  tabyl(cancer_tipo, fallecido, 
+        show_na = F) |> 
+  adorn_percentages() |> 
+  adorn_pct_formatting()
+```
+
+Observamos que todos los pacientes sin complicaciones o con cáncer hematológico sobrevivieron, lo cual también indica separación parcial de los datos.
+
+Ahora, ajustemos un modelo para evaluar el efecto de la interacción entre el tipo de cáncer y haber recibido quimioterapia en los 30 días previos, controlando por la presencia de neumonía severa y asistencia respiratoria:
+
+```{r}
+fit1 <- glm(fallecido ~ cancer_tipo * tr4_quimioterapia + 
+              neumonia_severa + asist_resp, 
+            data = datos, family = binomial)
+
+
+summary(fit1)
+```
+
+El resumen del modelo muestra el mensaje: `Coefficients: (1 not defined because of singularities)`, indicando que los errores estándar para el intercepto y `cancer_tipo` son muy grandes. Además, no se muestran los coeficientes ni el *p*-valor para la interacción. Esto se puede visualizar tabulando los coeficientes:
+
+```{r}
+#| warning: false
+tbl_regression(fit1, exponentiate = T)
+```
+
+Recibirás advertencias como: `Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred` y `Warning in regularize.values(x, y, ties, missing(ties), na.rm = na.rm) : collapsing to unique 'x' values`, lo que sugiere separación parcial de los datos.
+
+Para evaluar separación de estos datos, podemos crear una nueva variable que represente el cruce entre tipo de cáncer y quimioterapia usando la función `fct_cross()` de `tidyverse`:
+
+```{r}
+datos |> 
+  mutate(tipo_ca_quim = fct_cross(cancer_tipo, tr4_quimioterapia)) |> 
+  tabyl(tipo_ca_quim, fallecido, show_na = F) |> 
+  adorn_percentages() |> 
+  adorn_pct_formatting()
+```
+
+Este análisis muestra que ninguno de los pacientes con cáncer hematológico recibió quimioterapia en los últimos 30 días, lo que también contribuye a la separación parcial.
+
+Finalmente, para evaluar la separación de datos de manera más formal, utilizamos el paquete `detectseparation` [@detectseparation]. Ajustamos nuevamente el modelo con el argumento `method = "detect_separation"`:
+
+```{r}
+library(detectseparation)
+
+# Tipo de cáncer
+glm(fallecido ~ cancer_tipo, data = datos, family = binomial,
+    method = "detect_separation")
+
+# Neumonía severa
+glm(fallecido ~ neumonia_severa, data = datos, family = binomial,
+    method = "detect_separation")
+
+# Modelo con interacción
+glm(fallecido ~ cancer_tipo * tr4_quimioterapia + 
+              neumonia_severa + asist_resp, 
+            data = datos, 
+            family = binomial,
+            method = "detect_separation")
+```
+
+En el caso de separación completa, un nivel de la variable explicativa debería modelar perfectamente los "Sí" y el otro los "No", y al intentar correr el modelo nos encontraríamos con un error de convergencia que impediría continuar con el análisis.
+
+## Soluciones a la separación de datos
+
+### Remuestreo, recolección o submuestreo
+
+Siempre que fuera posible, recolectar más datos puede mitigar la separación total al introducir más variabilidad en los datos. En su defecto, se puede considerar el submuestreo o el sobremuestreo para balancear las clases. Sin embargo, estas técnicas deben aplicarse con cuidado para evitar sesgos.
+
+### Eliminación o recategorización de variables
+
+En casos de separación parcial, una opción es simplificar el modelo eliminando las variables causantes de la separación. Si esas variables son esenciales, otra alternativa es agrupar niveles de las variables categóricas para reducir la separación. Esto puede hacer que el modelo sea más robusto al reducir la complejidad y mejorar la estabilidad de las estimaciones.
+
+### Uso de modelos alternativos a la regresión logística
+
+Los **modelos de** ***pseudo-likelihood***, como la regresión logística condicional y la máxima verosimilitud penalizada, permiten ajustar el modelo incluso cuando la separación de datos impide la convergencia con métodos tradicionales. Los **modelos penalizados**, que incluyen las regresiones Ridge, Lasso y Elastic Net, añaden un término de penalización que controla el crecimiento excesivo de los coeficientes en casos de separación parcial, facilitando la convergencia y mejorando la estabilidad del modelo. Por otro lado, los **modelos bayesianos** introducen distribuciones previas sobre los coeficientes, permitiendo una mayor flexibilidad para manejar la separación de datos y ofreciendo estimaciones más estables y confiables. Sin embargo, el ajuste e interpretación de estos modelos es complejo y escapa al alcance de este curso, por lo que no serán abordados en detalle.
+
+::: hidden
+@agresti2015
+
+@base
+
+@tidyverse
+
+@janitor
+:::

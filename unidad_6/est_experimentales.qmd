@@ -1,0 +1,138 @@
+---
+title: "Estudios Experimentales"
+author:
+  - name: Andrea Silva
+    orcid: 0000-0002-4791-9706
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+En esta última unidad abordaremos los diseños experimentales. En epidemiología, un estudio experimental implica que el investigador manipula activamente las condiciones del estudio con el objetivo de evaluar el efecto de una intervención sobre las observaciones realizadas. La aleatorización constituye una etapa clave, ya que permite asignar la exposición de manera intencional y al azar. En cuanto a su temporalidad, estos estudios son de carácter longitudinal y prospectivo.
+
+Los estudios experimentales presentan una alta capacidad para establecer relaciones causales. De hecho, los meta-análisis de ensayos clínicos aleatorizados constituyen el nivel más alto de evidencia científica. Sin embargo, su implementación suele estar limitada por consideraciones éticas, legales y operativas. Por eso, su aplicación más frecuente se da en la evaluación de fármacos y otras intervenciones sanitarias, especialmente en el contexto de ensayos clínicos. También se utilizan en investigaciones comunitarias orientadas a evaluar la efectividad de programas de salud pública.
+
+Aunque el rasgo distintivo de un estudio experimental es la introducción de una intervención asignada por el investigador, para que se lo considere científicamente válido deben cumplirse las siguientes condiciones:
+
+-   La única razón por la que los sujetos reciben la intervención es el cumplimiento del protocolo del estudio.
+
+-   El estudio incluye un grupo control que no recibe la intervención bajo análisis.
+
+-   La asignación de los sujetos al grupo de intervención se realiza mediante un mecanismo aleatorio.
+
+## Tipos de estudios clínicos experimentales (ECE)
+
+Existen distintas clasificaciones de estudios experimentales según diversos autores, aunque en esencia apuntan a lo mismo. Por ejemplo, @hernández-ávila2011 propone la siguiente clasificación:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  "Tipo de estudio" = c("Laboratorio", 
+                        "Ensayo clínico",
+                        "Intervención comunitaria"),
+  
+  "Objetivos" = c("Prueba hipótesis etiológicas y estima respuestas biológicas y/o de comportamiento agudas. Sugiere eficacia de una intervención para modificar factores de riesgo en una población",
+                  "Prueba hipótesis etiológicas y estima efectos de salud a largo plazo.
+Prueba eficacia de intervenciones que modifican el estado de salud Sugiere factibilidad de intervenciones",
+                  "Identifica personas de alto riesgo.
+Prueba eficacia y efectividad de intervenciones clínicas/sociales que modifican el estado de salud dentro de poblaciones particulares
+Sugiere políticas y programas de salud pública"),
+  
+  "Duración" = c("Horas o días",
+                          "Días hasta años",
+                          "No menos de 6 meses")
+) |> 
+  
+  # Tabla
+  kbl() |> 
+  kable_paper(html_font = "Calibri") |>
+  row_spec(0, background = "#2f2e4e", color = "white")
+```
+
+Otras clasificaciones más amplias incluyen estudios donde no se cumplen estrictamente las tres condiciones mencionadas anteriormente, que apuntan a descartar que los efectos observados puedan deberse a factores desconocidos o no controlados. Estos estudios, denominados **cuasi-experimentales**, también implican una intervención, pero carecen del rigor metodológico necesario para asegurar la validez interna. Por lo tanto, presentan limitaciones para atribuir el efecto observado exclusivamente a la intervención. Esta clasificación puede resumirse de la siguiente forma:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  "Tipo de estudio" = c("Estudios cuasi-experimentales",
+                        rep("", 2),
+                        "Estudios controlados y aleatorizados",
+                        rep("", 4)),
+  "Subtipo" = c("No controlados",
+                "Con controles históricos",
+                "Controlados no aleatorizados",
+                "Ensayo de prevención primaria (ensayo de campo)",
+                "Ensayo de intervención comunitaria",
+                "Ensayo clínico de grupos paralelos",
+                "Ensayo clínico cruzado",
+                "Ensayo clínico factorial"),
+  "Descripción general" = c("No se incluye grupo de comparación",
+                            "Comparación con datos del pasado",
+                            "Comparación con grupo contemporáneo, pero sin asignación aleatoria",
+                            "Evalúan intervenciones preventivas en poblaciones sanas",
+                            "Evalúan programas a nivel grupal o comunitario",
+                            "Cada grupo recibe una intervención distinta de forma simultánea",
+                            "Cada sujeto recibe más de una intervención en distintos períodos",
+                            "Evalúa dos o más intervenciones simultáneamente en distintas combinaciones")
+) |> 
+  
+  # Tabla
+  kbl() |> 
+  kable_paper(html_font = "Calibri") |>
+  row_spec(0, background = "#2f2e4e", color = "white")
+```
+
+En esta unidad nos enfocaremos principalmente en los **ensayos clínicos controlados**, pero pueden consultar la bibliografía para explorar los otros diseños. Como en todo estudio epidemiológico, es fundamental adoptar medidas que minimicen el riesgo de sesgos. Habitualmente se consideran 5 principios para evitar sesgos:
+
+-   Uso de grupo control
+-   Aleatorización
+-   Cegamiento
+-   Consentimiento antes de aleatorizar
+-   Análisis por intención de tratar
+
+### Uso de grupo control
+
+Al igual que en los estudios de cohortes, los estudios de intervención deben incluir un grupo control con el cual comparar el grupo tratado. Habitualmente se utilizan dos grupos, aunque puede haber más. El grupo control puede recibir un placebo o un tratamiento activo alternativo, como la terapia existente.
+
+### Aleatorización
+
+Su objetivo principal es garantizar que las diferencias observadas entre grupos al final del estudio no se deban a factores distintos a la intervención. La aleatorización se refiere a la asignación mediante el azar de las unidades de investigación (individuos) a los distintos tratamientos a evaluar, con la finalidad de compararlos según las variables resultado definidas.
+
+### Cegamiento
+
+Es la política de mantener a alguien sin saber qué tratamiento se ha administrado. Existen distintas categorías de cegamiento:
+
+-   En estudios **simple ciego**, el sujeto ignora el tratamiento recibido.
+
+-   En estudios **doble ciego**, tanto el sujeto como quien evalúa los resultados desconocen la asignación.
+
+-   En estudios **triple ciego**, incluso quien analiza los datos (por ejemplo, un/a estadístico/a) también lo desconoce.
+
+El cegamiento reduce el sesgo del observador, aunque no siempre es posible. Un ejemplo claro es cuando se compara un tratamiento con radiación con un tratamiento quirúrgico para el cáncer de mama. Por otro lado, es fundamental que la asignación del tratamiento esté codificada y que alguien pueda descifrar el código en momentos de problemas médicos durante el estudio y cuando se requieran resultados finales.
+
+### Consentimiento antes de la aleatorización
+
+Para evitar sesgos en la composición de los grupos, el consentimiento informado y la elegibilidad de los sujetos para cada tratamiento deben verificarse antes de asignar aleatoriamente a los participantes.
+
+### Análisis por intención de tratar
+
+Durante el estudio de intervención, los sujetos pueden suspender o modificar su tratamiento asignado por muchas razones, que incluyen enfermedad, toxicidad, migración o simplemente por error. Este enfoque analiza a los sujetos según el tratamiento asignado, independientemente de su adherencia. Esto evita sesgos debidos a interrupciones o cambios de tratamiento, y refleja mejor lo que ocurre en la práctica clínica. No obstante, puede subestimar la diferencia real entre tratamientos. En algunos casos, un análisis ITT completo no es factible.
+
+## Análisis de los estudios experimentales
+
+En un estudio experimental, se realiza un seguimiento de una cohorte. Lo más habitual en ensayos clínicos controlados es medir la incidencia de un evento en ambos grupos durante un período definido. Los eventos se categorizan de manera dicotómica (presencia/ausencia) y se presentan como la proporción de sujetos que presentan el desenlace (por ejemplo, infarto, recurrencia, muerte). Al tratarse de una cohorte, es posible calcular el riesgo relativo (RR), la diferencia de riesgos o la reducción relativa del riesgo. También se utiliza el **número necesario a tratar (NNT)**, que indica cuántos pacientes deben recibir la intervención para evitar un caso adicional.
+
+Una metodología frecuentemente utilizada es el [**análisis de supervivencia**](analisis_superv.qmd), donde el tiempo hasta la ocurrencia del evento cobra un rol central. Como ya se vio en la [unidad anterior](unidad_5/est_cohortes), esta técnica también puede aplicarse a estudios de cohortes. A continuación avanzaremos en su comprensión.
+
+::: hidden
+@escuelasanidad2009
+
+@woodward2005
+:::

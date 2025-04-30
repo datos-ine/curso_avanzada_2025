@@ -1,0 +1,603 @@
+---
+title: "Análisis exploratorio de datos"
+author: 
+  - name: Christian Ballejo
+    orcid: 0000-0002-7346-5701
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+showtext::showtext_opts(dpi = 500)
+```
+
+![](images/EDA_packages.png){fig-align="center" width="44%"}
+
+## Introducción
+
+El análisis exploratorio de datos (conocido como **EDA**, su sigla en inglés) es un enfoque de análisis fundamental para resumir y visualizar las características importantes de un conjunto de datos.
+
+[John Tukey](https://es.wikipedia.org/wiki/John_W._Tukey), estadístico estadounidense, fue uno de los principales impulsores de este enfoque. En 1977 publicó el libro *Exploratory Data Analysis*, donde, entre otras contribuciones, introdujo el gráfico *boxplot* (diagrama de caja y bigotes).
+
+En términos sencillos, antes de avanzar hacia el análisis formal o la construcción de modelos estadísticos, resulta esencial explorar, conocer y describir las variables presentes en nuestra tabla de datos.
+
+Entre los principales objetivos perseguidos por EDA se encuentran:
+
+-   Conocer la estructura de la tabla de datos y sus tipos de variable.
+-   Detectar observaciones incompletas (valores *missing* o `NA`).
+-   Explorar la distribución de las variables de interés a partir de:
+    -   Estadísticos descriptivos
+    -   Representaciones gráficas
+-   Detectar valores atípicos (*outliers*).
+
+#### Aclaración
+
+En este documento utilizaremos funciones del lenguaje R basadas en la filosofía *tidyverse*, junto con otros paquetes diseñados para tareas específicas. Esto no implica que no se puedan emplear funciones del R base; sin embargo, el ecosistema `tidyverse` facilita la comprensión y legibilidad del código.
+
+Presentaremos estas diferentes funciones de distintos paquetes que pueden servir en cada etapa de un EDA. Los paquetes con los que trabajaremos son:
+
+-   `tidyverse`
+-   `skimr`
+-   `dlookr`
+-   `janitor`
+
+::: {.callout-warning appearance="simple"}
+**Nota:** Algunos paquetes, como `dlookr`, pueden generar falsos positivos en la detección del antivirus durante el proceso de instalación. Sugerimos desactivar momentáneamente el antivirus para evitar inconvenientes.
+:::
+
+Una vez [instalados](files/paquetes_curso.zip), podemos activar los paquetes con el siguiente código:
+
+```{r}
+# Carga de paquetes
+library(skimr)
+library(janitor)
+library(dlookr)
+library(tidyverse)
+```
+
+Se recomienda cargar `tidyverse` al final de la lista para evitar conflictos con funciones que puedan solaparse entre paquetes.
+
+> Es importante destacar que no existe un único camino y/o función para realizar un análisis exploratorio. Esta selección de herramientas puede adaptarse según las preferencias y necesidades de cada usuario. Por lo tanto, quienes ya tengan familiaridad con otras funciones o paquetes pueden continuar utilizándolos sin inconvenientes.
+
+Para ilustrar los pasos del análisis exploratorio, utilizaremos un archivo con datos ficticios llamado "`datos2.txt`", que contiene variables de distintos tipos.
+
+## Conocer la estructura de la tabla de datos y sus tipos de variable
+
+El primer paso en la exploración de un conjunto de datos es conocer su estructura y tamaño:
+
+-   El **tamaño** se refiere a la cantidad de observaciones (filas) y de variables (columnas).
+
+-   La **estructura** incluye cómo están organizadas las variables, qué tipo de datos contiene cada una y qué categorías o valores pueden tomar.
+
+Comenzaremos por cargar los datos de ejemplo con la función `read_csv2()` de `tidyverse`:
+
+```{r}
+datos <- read_csv2("datos/datos2.txt")
+```
+
+Una vez cargados los datos, la función `glimpse()` permite obtener una visión general de la tabla:
+
+```{r}
+glimpse(datos)
+```
+
+Esta función nos informa que la tabla contiene, por ejemplo, 74 observaciones y 7 variables, mostrando el tipo de dato de cada una y los primeros valores que aparecen.
+
+Entre los tipos de datos más comunes que podemos encontrar se incluyen:
+
+-   `int` (*integer*): números enteros.
+
+-   `dbl` (*double*): números reales.
+
+-   `lgl` (*logical*): valores lógicos (`TRUE`, `FALSE`).
+
+-   `chr` (*character*): texto o cadenas de caracteres.
+
+-   `Date`: fechas.
+
+-   `fct` (*factor*): variables categóricas con niveles.
+
+-   `dttm` (*date-time*): fechas y horas.
+
+Esta primera revisión de la estructura suele complementarse con el **diccionario de datos**, un recurso fundamental que describe el significado, tipo, unidad y codificación de cada variable. Este diccionario puede acompañar tanto a bases de datos generadas en investigaciones propias (fuentes primarias) como a datos provenientes de fuentes secundarias.
+
+Es importante tener en cuenta que el tipo de dato en R no siempre coincide con la naturaleza estadística de la variable. Por ejemplo:
+
+-   Una variable codificada como `dbl` puede representar una medida cuantitativa continua, como la edad o el peso.
+
+-   Pero también puede representar una variable cualitativa codificada con números. Por ejemplo, si una variable que registra respuestas "Sí" y "No" fue codificada como `1` y `0`, su tipo de dato será numérico (`dbl` o `int`), aunque conceptualmente sea una variable categórica.
+
+Por esta razón, además de inspeccionar el tipo de datos en R, es importante revisar el significado y el uso previsto de cada variable dentro del contexto del análisis.
+
+## Detectar observaciones incompletas
+
+Los valores perdidos o faltantes (conocidos como *missing* en inglés), representados en R por el valor especial `NA`, constituyen un desafío importante en el análisis de datos. Su presencia puede afectar la calidad del análisis y condicionar las decisiones estadísticas posteriores.
+
+Existen numerosos enfoques para el tratamiento de valores faltantes, incluyendo técnicas de imputación y modelado específico. Sin embargo, en este curso nos enfocaremos exclusivamente en cómo **detectar**, **contabilizar** y, en algunos casos, **excluir** valores faltantes utilizando funciones del lenguaje R.
+
+Una forma sencilla de detectar valores faltantes es mediante la función `count()` del paquete `dplyr`. Al aplicarla a una variable, la salida incluye una fila adicional que informa cuántos valores `NA` hay:
+
+```{r}
+datos |> 
+  count(trabaja)
+```
+
+Una alternativa más completa es la función `find_na()` del paquete `dlookr` [@dlookr]:
+
+```{r}
+find_na(datos, rate = T)
+```
+
+Esta función se puede aplicar al conjunto de datos completo y devuelve, para cada variable, la cantidad y el porcentaje de valores `NA`. Por ejemplo, podríamos observar que la variable `sexo` tiene alrededor de un 4 % de valores faltantes, y la variable `trabaja`, algo más del 12 %.
+
+Estos porcentajes pueden ayudarnos a decidir si una variable debe incluirse en un análisis o si es conveniente excluir ciertas observaciones con datos incompletos, siempre que los `NA` sean el resultado de una ausencia real de información.
+
+El mismo paquete trae una función gráfica llamada `plot_na_pareto()`, que genera un gráfico de barras ordenados por frecuencia de valores faltantes:
+
+```{r}
+plot_na_pareto(datos, only_na = T)
+```
+
+Finalmente, para un diagnóstico más integral de la calidad de las variables, puede utilizarse la función `diagnose()`:
+
+```{r}
+diagnose(datos)
+```
+
+Esta función ofrece un resumen detallado que incluye el tipo de variable, la cantidad de valores faltantes, la proporción de valores únicos, entre otros indicadores de utilidad para la exploración inicial.
+
+## Conocer la distribución de las variables de interés
+
+### Resumir variables cuantitativas
+
+La instalación básica de R tiene incorporadas múltiples funciones estadísticas que permiten calcular medidas resumen para variables cuantitativas. Estas funciones pueden integrarse a la función `summarise()` de `tidyverse`.
+
+#### Medidas de tendencia central
+
+Las medidas de tendencia central forman parte del grupo de medidas de posición o localización, pero su objetivo principal es resumir la información en torno a un valor que representa el "centro" de la distribución. Es decir, un valor respecto al cual tienden a agruparse los demás valores.
+
+Podemos obtener la media y la mediana de nuestros datos con el siguiente código:
+
+```{r}
+datos |>
+  summarise(
+    # Media
+    media = mean(edad),
+    # Mediana
+    mediana = median(edad)
+  )
+```
+
+En cambio, R base no incluye una función específica para calcular la **moda**. Para obtenerla, debemos escribir una función propia o utilizar algún paquete adicional que la implemente (por ejemplo, `modeest::mlv()`).
+
+#### Medidas de posición
+
+Las medidas de posición dividen los datos en grupos con igual número de observaciones. Entre las más utilizadas se encuentran los **cuartiles** y **percentiles**.
+
+La función `quantile()` del paquete base `stats` permite calcular cuartiles u otros percentiles. Por ejemplo, para calcular los cuartiles Q1 y Q3, indicamos en el argumento `probs` los valores 0.25 y 0.75:
+
+```{r}
+datos |>
+  summarise(
+    # Primer cuartil
+    cuartil1 = quantile(edad, probs = 0.25),
+    # Tercer cuartil
+    cuartil3 = quantile(edad, probs = 0.75)
+  )
+```
+
+Para obtener el mínimo y máximo de estos valores numéricos usamos el siguiente código:
+
+```{r}
+datos |>
+  summarise(
+    # Mínimo
+    minimo = min(edad),
+    # Máximo
+    maximo = max(edad)
+  )
+```
+
+#### Medidas de dispersión
+
+Las medidas de dispersión nos permiten conocer cuán dispersos o variables son los valores dentro del conjunto de datos.
+
+Entre las más clásicas se encuentran la **varianza** y el **desvío estándar**, que se calculan fácilmente con las funciones `var()` y `sd()`:
+
+```{r}
+datos |>
+  summarise(
+    # Varianza
+    varianza = var(edad),
+    # Desvío estándar
+    desvio = sd(edad)
+  )
+```
+
+También puede ser útil calcular el **rango**, que se obtiene como la diferencia entre el valor máximo y el mínimo, y el **rango intercuartílico (RIC)**, mediante `IQR()`:
+
+```{r}
+datos |>
+  summarise(
+    # Rango
+    rango = max(edad) - min(edad),
+    # Rango intercuartílico
+    ric = IQR(edad)
+  )
+```
+
+El paquete `dlookr` ofrece la función `describe()` para generar un resumen completo de las variables numéricas:
+
+```{r}
+describe(datos, -id)
+```
+
+Esta función puede aplicarse directamente sobre todo el conjunto de datos. Si bien selecciona automáticamente las variables numéricas, en este caso estamos excluyendo explícitamente la variable `id`, ya que un identificador no tiene interés estadístico.
+
+El resumen que devuelve incluye:
+
+-   `na`: cantidad de observaciones con datos y con `NA.`
+
+-   `mean`: media aritmética.
+
+-   `sd`: desvío estándar de la media.
+
+-   `se_mean`: error estándar de la media.
+
+-   `IQR`: rango intercuartílico.
+
+-   Medidas de forma como la simetría (`skewness`) y la curtosis (`kurtosis`).
+
+-   Percentiles, incluyendo la mediana (`P50`) y los cuartiles (`P25` y `P75`).
+
+### Resumir variables cualitativas
+
+Las variables cualitativas o categóricas pueden encontrarse en R bajo los tipos de dato `character` o `factor`. En ocasiones será necesario convertirlas a `factor`, ya que este tipo permite aplicar ciertos procedimientos específicos para variables categóricas.
+
+#### Frecuencias
+
+Podemos resumir individualmente variables cualitativas mediante las frecuencias absolutas y relativas de sus categorías. La función `count()` de `dplyr` nos muestra el conteo absoluto:
+
+```{r}
+datos |> 
+  count(sexo)
+```
+
+En la salida se incluirán, además de las categorías presentes, las observaciones con valores faltantes (`NA`).
+
+La inclusión o no de los valores faltantes dependerá del propósito del análisis. Para excluirlos, podemos utilizar `drop_na()`:
+
+```{r}
+datos |> 
+  count(sexo) |> 
+  # Saltea los valores NA
+  drop_na()  
+```
+
+Para obtener frecuencias relativas en porcentaje:
+
+```{r}
+datos |>  
+  count(sexo) |>  
+  # Saltea los valores NA
+  drop_na() |> 
+  # Transforma a porcentajes
+  mutate(porc = 100 * n / sum(n))
+```
+
+Redondeamos el valor del porcentaje con `round()`:
+
+```{r}
+datos |>  
+  count(sexo) |>  
+  # Saltea los valores NA
+  drop_na() |> 
+  # Transforma a porcentajes y redondea decimales
+  mutate(
+    porc = 100 * n / sum(n),
+    porc = round(porc, digits = 2)
+  )
+```
+
+El paquete `janitor` [@janitor] ofrece una alternativa más completa mediante la función `tabyl()`:
+
+```{r}
+datos |>
+  tabyl(sexo)
+```
+
+Esta función muestra tanto frecuencias absolutas como relativas, incluyendo y excluyendo los valores `NA` (porcentaje sobre el total de valores válidos).
+
+Podemos mejorar la presentación combinando otras funciones del paquete:
+
+```{r}
+datos |>  
+  # Excluímos valores NA
+  tabyl(sexo, show_na = F) |> 
+  # Añadimos totales por fila
+  adorn_totals(where = "row") |>  
+  # Redondea porcentajes a 2 decimales
+  adorn_pct_formatting(digits = 2) 
+```
+
+#### Tablas de contingencia
+
+La forma más adecuada de describir la relación entre dos variables cualitativas es a través de una **tabla de contingencia**, en la cual:
+
+-   Las filas representan las categorías de una variable.
+
+-   Las columnas representan las categorías de otra variable.
+
+-   Las celdas muestran el número de observaciones correspondientes a cada combinación de categorías.
+
+La función `tabyl()` también permite crear este tipo de tablas. A continuación, un ejemplo entre `sexo` y `trabaja` (aunque `trabaja` sea lógica, puede tratarse como categórica):
+
+```{r}
+datos |>  
+  tabyl(sexo, trabaja) 
+```
+
+Recordemos que el orden dentro de los paréntesis de la función es igual al de los índices, el primer argumento es la variable que aparecerá en las filas y el segundo la variable de las columnas. Por ese motivo, en la tabla de contingencia absoluta tenemos `sexo` en las filas y `trabaja` en las columnas.
+
+Se puede mejorar la tabla excluyendo los valores `NA` y agregando totales por fila:
+
+```{r}
+datos |>  
+  # Excluímos valores NA
+  tabyl(sexo, trabaja, show_na = F) |> 
+  # Añadimos totales por fila
+  adorn_totals(where = "row")
+```
+
+Para calcular frecuencias relativas porcentuales por columna usamos el siguiente código:
+
+```{r}
+datos |>  
+  # Excluímos valores NA
+  tabyl(sexo, trabaja, show_na = F) |> 
+  # Añadimos totales
+  adorn_totals(where = "row") |> 
+  # Añadimos porcentajes por columna
+  adorn_percentages(denominator = "col") |> 
+  # Redondea porcentajes a 2 decimales
+  adorn_pct_formatting(digits = 2) 
+```
+
+Calculamos frecuencias relativas porcentuales por fila:
+
+```{r}
+datos |>  
+  # Excluímos valores NA
+  tabyl(sexo, trabaja, show_na = F) |> 
+  # Añadimos totales por columna
+  adorn_totals(where = "col") |> 
+  # Añadimos porcentajes por fila
+  adorn_percentages(denominator = "row") |> 
+  # Redondea porcentajes a 2 decimales
+  adorn_pct_formatting(digits = 2)
+```
+
+Cambiando el argumento `denominator` por `"all"` se calculan frecuencias relativas al total:
+
+```{r}
+datos |>  
+  # Excluímos valores NA
+  tabyl(sexo, trabaja, show_na = F) |> 
+  # Añadimos totales por columna
+  adorn_totals(where = "col") |> 
+  # Añadimos porcentajes al total
+  adorn_percentages(denominator = "all") |> 
+  # Redondea porcentajes a 2 decimales
+  adorn_pct_formatting(digits = 2)
+```
+
+### Explorar variables mediante gráficos
+
+Uno de los aportes más importantes de John Tukey al análisis de datos es la incorporación de los gráficos como herramienta exploratoria. A través de representaciones visuales podemos detectar rápidamente patrones, anomalías, valores extremos, asimetrías o relaciones entre variables.
+
+En R, los gráficos más útiles para explorar la distribución **univariada** de las variables son:
+
+-   Para variables **cualitativas**: gráficos de barras
+
+-   Para variables **cuantitativas**: histogramas, gráficos de densidad, boxplots y violin plots
+
+-   Cuando queremos explorar la relación entre **dos o más variables**, los tipos de gráficos más comunes incluyen:
+
+    -   Diagramas de dispersión (puntos)
+
+    -   Gráficos de líneas
+
+    -   Gráficos de mosaico para variables categóricas cruzadas
+
+El lenguaje R soporta una serie de sistemas gráficos asociados a paquetes como `graphics`, `lattice`, `ggplot2`, etc. que sirven de base incluso para otros paquetes con funciones más específicas. Actualmente el estándar gráfico en R es `ggplot2`.
+
+En el documento dedicado a [**tidyverse**](intro_tidyverse.qmd) ya explicamos cómo funciona `ggplot2`. Aquí nos concentraremos únicamente en aplicar distintos elementos geométricos (`geoms`) para representar las variables según su tipo.
+
+#### Barras (univariado)
+
+El gráfico de barras permite visualizar la frecuencia de las categorías de una variable cualitativa:
+
+```{r}
+datos |> 
+  # Omitimos los NA de sexo
+  drop_na(sexo) |> 
+  # Generamos histograma
+  ggplot(aes(x = sexo, fill = sexo)) + 
+  geom_bar() + 
+  scale_fill_manual(values = c("palevioletred4", "orange")) +
+  theme_minimal()
+```
+
+#### Barras (bivariado)
+
+Cuando cruzamos dos variables categóricas, podemos representar la relación entre ambas modificando el argumento `position` de `geom_bar()`.
+
+El argumento `position = "stack"` nos muestra los valores absolutos acumulados:
+
+```{r}
+datos |> 
+  # Omitimos los NA de sexo y trabaja
+  drop_na(sexo, trabaja) |> 
+  # Generamos gráfico de barras
+  ggplot(aes(x = sexo, fill = trabaja)) + 
+  geom_bar(position = "stack") + 
+  scale_fill_brewer(palette = "Set1") +
+  theme_minimal()
+```
+
+Por otro lado, el argumento position = "dodge" muestra las barras lado a lado, permitiendo comparar proporciones entre grupos:
+
+```{r}
+datos |> 
+  # Omitimos los NA de sexo y trabaja
+  drop_na(sexo, trabaja) |> 
+  # Generamos gráfico de barras
+  ggplot(aes(x = sexo, fill = trabaja)) + 
+  geom_bar(position = "dodge") + 
+  scale_fill_brewer(palette = "Set1") +
+  theme_minimal()
+```
+
+Finalmente, `position = "fill"` convierte las alturas en proporciones sobre el total por grupo:
+
+```{r}
+datos |> 
+  # Omitimos los NA de sexo y trabaja
+  drop_na(sexo, trabaja) |> 
+  # Generamos gráfico de barras
+  ggplot(aes(x = sexo, fill = trabaja)) + 
+  geom_bar(position = "fill") + 
+  scale_fill_brewer(palette = "Set1") +
+  theme_minimal()
+```
+
+#### Histograma
+
+Representa la frecuencia de valores en intervalos definidos. Útil para observar la forma general de la distribución:
+
+```{r}
+datos |> 
+  # Genera histograma
+  ggplot(aes(x = edad)) +
+  geom_histogram(binwidth = 10,
+                 fill = "royalblue1",
+                 color = "white"
+                )
+```
+
+#### Densidad
+
+Es una estimación suave de la distribución de frecuencias:
+
+```{r}
+datos |> 
+  ggplot(aes(x = edad)) + 
+  geom_density(fill = "thistle1")  
+```
+
+#### *Boxplot*
+
+Muestra el rango intercuartílico, la mediana y los valores atípicos. Ideal para detectar asimetrías y *outliers*:
+
+```{r}
+datos |> 
+  # Genera boxplot
+  ggplot(aes(x = edad)) + 
+  geom_boxplot(fill = "seagreen4")  
+```
+
+#### *Violinplot*
+
+Combina el *boxplot* con una curva de densidad reflejada. Permite visualizar tanto la forma de la distribución como los cuantiles:
+
+```{r}
+datos |> 
+  # Omitimos los NA de sexo
+  drop_na(sexo) |> 
+  # Genera violinplot
+  ggplot(aes(x = edad, y = sexo, fill = sexo)) + 
+  geom_violin() +
+  scale_fill_brewer(palette = "Set2") +
+  theme_light()
+```
+
+***Q-Q Plot***
+
+Los gráficos Q-Q (cuantil-cuantil) permiten evaluar visualmente si una variable sigue una distribución teórica, como la normal. Suelen usarse como método gráfico para analizar "normalidad", es decir cuanto se asemeja la distribución de la variable a la distribución normal o gaussiana.
+
+La función `plot_normality()` de `dlookr` muestra un diagnóstico gráfico de normalidad de una variable usando histogramas y Q-Q plot. Además muestra otros histogramas con conversiones de datos (logarítmico y raíz cuadrada por defecto, pero también "Box-Cox" y otras):
+
+```{r}
+# Sobre la variable edad
+datos |> 
+  plot_normality(edad)
+
+# Sobre la variable peso
+datos |> 
+  plot_normality(peso)
+```
+
+Podemos decir que la variable `peso` se ajusta mejor a una distribución normal, ya que los puntos del Q-Q plot se alinean más cercanamente a la diagonal teórica.
+
+> **Nota**: Este análisis gráfico de normalidad suele complementarse con pruebas estadísticas específicas, que abordaremos en la Unidad 2.
+
+## Detección de valores atípicos
+
+Un valor atípico (*outlier*) es una observación que se encuentra numéricamente alejada del resto de los datos. Su presencia puede tener diferentes causas, y su tratamiento dependerá del contexto:
+
+-   **Errores de carga o procedimiento**: deben corregirse si se detectan.
+
+-   **Valores extremos plausibles**: pueden ser válidos, pero conviene evaluarlos en detalle.
+
+-   **Eventos extraordinarios o causas desconocidas**: si no se pueden justificar, suelen excluirse del análisis.
+
+Estos valores pueden afectar sensiblemente ciertos estadísticos como la media, distorsionando su interpretación.
+
+Una forma gráfica común de detectar valores atípicos es mediante los *boxplots*. Los puntos situados fuera de los "bigotes" representan posibles *outliers*.
+
+A continuación, se presenta un ejemplo con la variable `peso`, donde se observa un valor extremo en el límite superior de la distribución (punto rojo):
+
+```{r}
+datos |> 
+  ggplot(aes(x = peso)) + 
+  geom_boxplot(fill = "darkkhaki", 
+               outlier.color = "red"
+              )  
+```
+
+Este valor coincide con el máximo observado:
+
+```{r}
+max(datos$peso)
+```
+
+El paquete `dlookr` incluye la función `diagnose_outlier()` para la detección automatizada de valores atípicos en todas las variables numéricas de un conjunto de datos:
+
+```{r}
+diagnose_outlier(datos)
+```
+
+Esta función devuelve una tabla que incluye, para cada variable: cantidad y proporción de outliers detectados, media de la variable incluyendo los outliers, media de la variable excluyendo los outliers. En función de estos dos estadísticos se puede comparar el efecto de los valores atípicos en la media.
+
+El paquete `skimr` [@skimr] permite obtener un resumen estadístico compacto y amigable de un conjunto de datos mediante la función `skim()`:
+
+```{r}
+skim(datos)
+```
+
+Además, puede integrarse fácilmente con la gramática `tidyverse`. Por ejemplo, podemos explorar estadísticas descriptivas de variables numéricas agrupadas por sexo:
+
+```{r}
+datos |> 
+  # Excluye NAs de sexo
+  drop_na(sexo) |>
+  # Agrupa por sexo
+  group_by(sexo) |>
+  # Solo variables numéricas - id
+  select(where(is.numeric), -id) |> 
+  # Explora outliers
+  skim()
+```
+
+En este ejemplo, mostramos resultados de variables numéricas menos de id agrupados por sexo (sin considerar valores `NA` en las categorías de sexo).

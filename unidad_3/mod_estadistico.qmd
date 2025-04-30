@@ -1,0 +1,229 @@
+---
+title: "Introducción al modelado estadístico"
+author: 
+  - name: Tamara Ricardo
+    orcid: 0000-0002-0921-2611
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+Uno de los propósitos fundamentales del modelado estadístico es explicar la realidad de la manera más "simple" posible, centrándose en su esencia y omitiendo elementos cuya variabilidad podría introducir ruido en la interpretación de los fenómenos. Existen eventos en la naturaleza que pueden ser explicados con exactitud si se cuenta con los datos adecuados. Por ejemplo, el cálculo del volumen de un cubo o la predicción de la trayectoria de un objeto en caída libre bajo condiciones ideales. Los modelos que explican estos fenómenos se denominan **modelos determinísticos**.
+
+Sin embargo, cuando se estudian fenómenos en sistemas complejos, la situación se vuelve más desafiante debido a la influencia de factores externos que impiden explicar completamente la variable dependiente a partir de otras variables. Para abordar esta incertidumbre, se emplean modelos que incorporan un componente de error, conocidos como **modelos probabilísticos**. Estos modelos constituyen la base de la estadística inferencial y se utilizan en el análisis de regresión para describir y predecir relaciones entre variables.
+
+### Modelos determinísticos
+
+En los modelos determinísticos, se asume una relación exacta entre las variables. Esto significa que tanto los parámetros como las variables son conocidos sin error, y el modelo genera siempre el mismo resultado para un conjunto de datos dado. Sin embargo, estos modelos no consideran la variabilidad causada por el azar o la incertidumbre.
+
+Un ejemplo clásico de modelos determinísticos son los **modelos SIR** (Susceptibles, Infectados, Recuperados), empleados para estudiar la propagación de enfermedades en poblaciones cerradas. Estos modelos asumen tasas de transmisión y recuperación constantes, ignorando la variabilidad individual y otros factores externos.
+
+### Modelos probabilísticos o de regresión
+
+Los modelos probabilísticos asumen que los fenómenos observados no son completamente predecibles, ya que ciertas variables están sujetas al azar. Estos modelos no generan un único resultado, sino una **distribución de resultados** expresada en términos de probabilidades.
+
+Un modelo de regresión describe la relación entre la variable dependiente ($Y$) y una o más variables independientes ($X$), incorporando un **componente sistemático** (función del modelo) y un **componente aleatorio** (residuo o error residual).
+
+Matemáticamente, esto se representa como:
+
+$$
+Y = \underbrace{\beta_0 + \beta_1 X_1}_{Componente \: sistemático} + \underbrace{\epsilon}_{Componente \: aleatorio}
+$$
+
+La función puede ser lineal o no lineal según la naturaleza y distribución de la variable dependiente. El componente aleatorio es esa parte de la variación de $Y$ que no puede ser totalmente explicada por la variación de la/s variable/s independiente/s. En algunos casos el error tendrá valor positivo y en otros tendrá valor negativo. El promedio del error es igual a 0.
+
+Una vez establecida esta función estaremos en condiciones de:
+
+-   Comprender cómo se comporta la variable respuesta $Y$ en función de la/s variable/s independientes ($X$).
+
+-   Estimar o predecir el valor de $Y$ para determinados valores de $X$.
+
+-   Calcular intervalos de confianza para estas estimaciones o predicciones.
+
+Los modelos probabilísticos pueden clasificarse en:
+
+-   **Paramétricos**: Asumen que los datos provienen de una distribución específica con un conjunto fijo de parámetros (por ejemplo, media, varianza).
+
+-   **No paramétricos**: Se utilizan cuando la distribución subyacente de los datos es desconocida o no sigue un patrón estándar.
+
+## Modelo lineal general
+
+El modelo lineal general (MLG) describe la relación lineal entre una variable respuesta numérica con distribución normal ($Y$) y una o más variables independientes. Se expresa matemáticamente como:
+
+$$
+Y_i = X_i\beta + \epsilon_i
+$$
+
+Donde:
+
+-   $Y_i$: Vector de valores de la variable dependiente (también llamada variable respuesta o resultado), que representa el efecto observado de un proceso o interacción causal.
+
+-   $X_i$: Matriz de diseño que contiene las variables independientes (variables explicativas o predictores), las cuales representan la influencia medida sobre la variable dependiente.
+
+-   $\beta$: Vector de coeficientes (parámetros), que cuantifican la magnitud y dirección de la influencia de cada predictor.
+
+-   $\epsilon_i$: Error aleatorio, que refleja la variabilidad no explicada por las variables independientes. Este componente puede deberse a diferencias individuales, errores de medición o calibración, y puede controlarse aumentando el tamaño muestral.
+
+#### Casos específicos del MLG
+
+-   [**Regresión lineal simple**](reg_lineal.qmd): Examina la relación entre $Y$ y una variable independiente numérica.
+
+-   [**Análisis de la varianza (ANOVA)**](anova.qmd): Evalúa las diferencias en la media de $Y$ respecto a los niveles de una variable categórica.
+
+-   [**Regresión lineal múltiple**](reg_lineal_multiple.qmd): Explora la relación entre $Y$ y dos o más variables independientes, que pueden ser numéricas y/o categóricas.
+
+::: {.callout-caution appearance="simple"}
+La principal fuente del "error" se debe a la variabilidad entre individuos propia de la naturaleza (error aleatorio). Puede haber otras fuentes de error, incluso no detectadas y que deben ser tenidas en cuenta, como pueden ser errores en la medición, calibración o incluso por una mala elección del método.
+:::
+
+### Supuestos del MLG:
+
+Para garantizar la validez del modelo, deben cumplirse los siguientes supuestos:
+
+1.  **Linealidad:** Relación lineal entre la variable dependiente e independientes.
+
+2.  **Independencia:** Las observaciones deben ser independientes.
+
+3.  **Homoscedasticidad:** La varianza de los errores debe ser constante.
+
+4.  **Normalidad de los errores:** Los errores deben seguir una distribución normal.
+
+Si alguno de estos supuestos se viola, podría ser necesario aplicar transformaciones a los datos, emplear técnicas alternativas o ajustar el modelo según corresponda.
+
+## Construcción del MLG en R
+
+Para ajustar un MLG en R, se utiliza la función `lm()` cuyas letras vienen de *linear models* (modelos lineales), ingresando los argumentos el formato fórmula. Esto significa especificar primero el nombre de la variable dependiente y luego la variable independiente.
+
+La estructura sintáctica es:
+
+```{r}
+#| eval: false
+lm(variable_dependiente ~ variable_independiente)
+```
+
+La función muestra resultados básicos, tales como la relación entre las variables que son parte del modelo y los coeficientes. Habitualmente `lm()` suele asignarse a un objeto de regresión para que contenga todos los resultados producto del ajuste:
+
+```{r}
+#| eval: false
+modelo <- lm(variable_dependiente ~ variable_independiente, data = datos)
+```
+
+Todos los ajustes de modelos lineales que produce la función `lm()` tienen la forma de una lista de 12 componentes. Sus componentes pueden ser llamados en resúmenes más completos, usando la función:
+
+```{r}
+#| eval: false
+summary(modelo)
+```
+
+La salida de esta función incluye:
+
+-   **Call:** Fórmula del modelo.
+
+-   **Residuals:** Distribución de los residuos (mínimo, máximo, mediana y percentiles 25-75).
+
+-   **Coefficients:** Incluye el intercepto y la pendiente, junto con errores estándar, valores *t* y *p*-valores asociados.
+
+-   **Residual standard error:** Error estándar de los residuos con sus grados de libertad.
+
+-   **Multiple R-squared:** Coeficiente de determinación $R^2$.
+
+-   **Adjusted R-squared:** Coeficiente $R^2$ ajustado.
+
+-   **F-statistic:** Estadístico $F$ y su *p*-valor asociado.
+
+Además, la salida de `summary(modelo)` utiliza asteriscos (\*) para indicar la significación de los coeficientes. Debajo de la tabla de coeficientes se encuentra la referencia del significado de los códigos, que van desde el 0 hasta el 1 como posible resultado del valor de probabilidad, y donde:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  "Código" = c("***", 
+               "**", 
+               "*", 
+               ".", 
+               ""),
+  
+  Rango = c("0 a 0,001",
+            "0,001 a 0,01",
+            "0,01 a 0,05",
+            "0,05 a 0,1",
+            "0,1 a 1")
+) |> 
+  
+  # Tabla
+  kbl() |> 
+  kable_paper(html_font = "Calibri") |>
+  row_spec(0, background = "#2f2e4e", color = "white")
+```
+
+Los elementos de la lista también pueden llamarse de forma independiente, siendo los más importantes:
+
+-   `coefficients`**:** Vector con los coeficientes del modelo, pueden visualizarse usando alguno de los siguientes comandos:
+
+    ```{r}
+    #| eval: false
+    modelo$coefficients
+
+    coef(modelo)
+    ```
+
+-   `residuals`**:** Los residuos o residuales para cada valor que surgen de la diferencia entre los valores predictivos calculados por el modelo y los valores reales. Se visualizan desde el objeto resultado de la regresión:
+
+    ```{r}
+    #| eval: false
+    modelo$residuals
+    ```
+
+    O bien usando el comando:
+
+    ```{r}
+    #| eval: false
+    resid(modelo)
+    ```
+
+-   `fitted.values`**:** Los valores calculados por el modelo en base a los datos existentes en la variable independiente. Los encontramos en:
+
+    ```{r}
+    #| eval: false
+    modelo$fitted.values
+    ```
+
+    O usando la función:
+
+    ```{r}
+    #| eval: false
+
+    fitted(modelo)
+    ```
+
+-   Otra función interesante para el análisis del objeto de regresión es `confint()` que calcula los intervalos de confianza de los coeficientes o parámetros del modelo de regresión. Para este modelo la línea de ejecución de la función es:
+
+    ```{r}
+    #| eval: false
+    confint(modelo)
+    ```
+
+    Si agregamos la función `round()` podemos redondear los valores con la cantidad de decimales que necesitemos.
+
+    ```{r}
+    #| eval: false
+    round(confint(modelo),2)  
+    ```
+
+    En forma predeterminada los IC se calculan al 95%, pero mediante el argumento `level` podemos modificarlo, por ejemplo al 99%:
+
+    ```{r}
+    #| eval: false
+    confint(modelo, level = 0.99)
+    ```
+
+::: hidden
+@agresti2015
+
+@triola2018
+:::

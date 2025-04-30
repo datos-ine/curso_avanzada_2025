@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="178.43036mm"
+   height="244.23395mm"
+   viewBox="0 0 178.43036 244.23395"
+   version="1.1"
+   id="svg1"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm" />
+  <defs
+     id="defs1">
+    <rect
+       x="443.63052"
+       y="116.50903"
+       width="60.495071"
+       height="51.532841"
+       id="rect27" />
+    <rect
+       x="443.63052"
+       y="116.50903"
+       width="60.495071"
+       height="51.532841"
+       id="rect49" />
+    <rect
+       x="443.63052"
+       y="116.50903"
+       width="60.495071"
+       height="51.532841"
+       id="rect54" />
+    <rect
+       x="443.63052"
+       y="116.50903"
+       width="60.495071"
+       height="51.532841"
+       id="rect58" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-7.6384475,-8.870561)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.3472px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0.264583px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"
+       x="7.475667"
+       y="19.562872"
+       id="text1"
+       inkscape:label="text1"><tspan
+         sodipodi:role="line"
+         id="tspan26"
+         x="7.475667"
+         y="19.562872">ggplot(data =                        ) +</tspan><tspan
+         sodipodi:role="line"
+         id="tspan27"
+         x="7.475667"
+         y="31.910072"></tspan></text>
+    <g
+       id="g35"
+       inkscape:label="datos"
+       style="display:inline"
+       transform="translate(-109.87228,-174.1407)">
+      <rect
+         style="fill:#562948;fill-opacity:1;fill-rule:evenodd;stroke-width:0.522886"
+         id="rect20"
+         width="70"
+         height="15"
+         x="191.71063"
+         y="183.01126"
+         ry="7.5" />
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;fill-opacity:1;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+         x="206.0887"
+         y="193.85472"
+         id="text35"><tspan
+           sodipodi:role="line"
+           id="tspan35"
+           style="fill:#ffffff;stroke-width:0.529167"
+           x="206.0887"
+           y="193.85472">&lt;DATOS&gt;</tspan></text>
+    </g>
+    <g
+       id="g33"
+       inkscape:label="geom"
+       style="display:inline"
+       transform="translate(-184.7645,-189.10361)">
+      <g
+         id="g42">
+        <rect
+           style="fill:#562948;fill-opacity:1;fill-rule:evenodd;stroke-width:0.649486"
+           id="rect28"
+           width="108"
+           height="15"
+           x="193.58858"
+           y="218.02463"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="203.72885"
+           y="228.9456"
+           id="text33"><tspan
+             sodipodi:role="line"
+             id="tspan33"
+             style="stroke-width:0.529167"
+             x="203.72885"
+             y="228.9456">&lt;FUNCIÓN geom_&gt;</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         transform="matrix(0.26458333,0,0,0.26458333,185.95013,188.66616)"
+         id="text27"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6666px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:1px;white-space:pre;shape-inside:url(#rect27);fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.99937;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"><tspan
+           x="443.63086"
+           y="151.50972"
+           id="tspan1">(</tspan></text>
+    </g>
+    <g
+       id="g31"
+       inkscape:label="aes"
+       style="display:inline"
+       transform="translate(-82.48697,-131.93266)">
+      <g
+         id="g41">
+        <rect
+           style="fill:#562948;fill-opacity:1;fill-rule:evenodd;stroke-width:0.522886"
+           id="rect30"
+           width="70"
+           height="15"
+           x="191.71063"
+           y="183.01126"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;fill-opacity:1;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="197.40244"
+           y="194.81589"
+           id="text31"><tspan
+             sodipodi:role="line"
+             id="tspan31"
+             style="fill:#ffffff;stroke-width:0.529167"
+             x="197.40244"
+             y="194.81589">&lt;ESTÉTICAS&gt;</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:12.3472px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0.264583px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"
+         x="27.862274"
+         y="56.910183"
+         id="text30"
+         transform="translate(82.328242,136.79338)"><tspan
+           sodipodi:role="line"
+           id="tspan32"
+           x="27.862274"
+           y="56.910183">mapping = aes(                       ),</tspan></text>
+    </g>
+    <g
+       id="g37"
+       inkscape:label="stat"
+       style="display:inline"
+       transform="translate(-125.74567,-109.77506)">
+      <g
+         id="g43">
+        <rect
+           style="fill:#81a95e;fill-opacity:1;fill-rule:evenodd;stroke-width:0.522886"
+           id="rect37"
+           width="70"
+           height="15"
+           x="187.0825"
+           y="183.01126"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;fill-opacity:1;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="206.0887"
+           y="193.85472"
+           id="text37"><tspan
+             sodipodi:role="line"
+             id="tspan37"
+             style="fill:#ffffff;stroke-width:0.529167"
+             x="206.0887"
+             y="193.85472">&lt;STAT&gt;</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.3472px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0.264583px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"
+         x="29.047895"
+         y="77.022202"
+         id="text34"
+         transform="translate(125.85825,116.22314)"><tspan
+           sodipodi:role="line"
+           id="tspan38"
+           x="29.047895"
+           y="77.022202">stat =                        , </tspan></text>
+    </g>
+    <g
+       id="g45"
+       inkscape:label="position"
+       style="display:inline"
+       transform="translate(-127.36538,-87.617473)">
+      <g
+         id="g44"
+         transform="translate(22.225008)">
+        <rect
+           style="fill:#81a95e;fill-opacity:1;fill-rule:evenodd;stroke-width:0.522886"
+           id="rect43"
+           width="70"
+           height="15"
+           x="187.0825"
+           y="183.01126"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0.264583px;fill:#ffffff;fill-opacity:1;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="194.04347"
+           y="194.81589"
+           id="text43"><tspan
+             sodipodi:role="line"
+             id="tspan45"
+             x="194.04347"
+             y="194.81589">&lt;POSICIÓN&gt;</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:12.3472px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0.264583px;display:inline;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"
+         x="29.047895"
+         y="77.022202"
+         id="text44"
+         transform="translate(125.85825,116.22314)"><tspan
+           sodipodi:role="line"
+           id="tspan46"
+           x="29.047895"
+           y="77.022202">position =                        , </tspan><tspan
+           sodipodi:role="line"
+           id="tspan47"
+           x="29.047895"
+           y="89.3694"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Calibri;-inkscape-font-specification:'Calibri Bold'">) +</tspan></text>
+    </g>
+    <g
+       id="g49"
+       inkscape:label="coord"
+       style="display:inline"
+       transform="translate(-183.57887,-90.811995)">
+      <g
+         id="g48">
+        <rect
+           style="fill:#562948;fill-opacity:1;fill-rule:evenodd;stroke-width:0.649486"
+           id="rect47"
+           width="108"
+           height="15"
+           x="193.58858"
+           y="218.02463"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="203.72885"
+           y="228.9456"
+           id="text48"><tspan
+             sodipodi:role="line"
+             id="tspan48"
+             style="stroke-width:0.529167"
+             x="203.72885"
+             y="228.9456">&lt;FUNCIÓN coord_&gt;</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         transform="matrix(0.26458333,0,0,0.26458333,185.95013,188.66616)"
+         id="text49"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6666px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:1px;white-space:pre;shape-inside:url(#rect49);fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.99937;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"><tspan
+           x="443.63086"
+           y="151.50972"
+           id="tspan2">+</tspan></text>
+      <g
+         id="g50">
+        <rect
+           style="fill:#81a95e;fill-opacity:1;fill-rule:evenodd;stroke-width:0.649486"
+           id="rect50"
+           width="108"
+           height="15"
+           x="193.58858"
+           y="218.02463"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="203.32785"
+           y="228.9456"
+           id="text50"><tspan
+             sodipodi:role="line"
+             id="tspan50"
+             style="stroke-width:0.529167"
+             x="203.32785"
+             y="228.9456">&lt;FUNCIÓN coord_&gt;</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g54"
+       inkscape:label="facet"
+       style="display:inline"
+       transform="translate(-183.57887,-68.654403)">
+      <g
+         id="g51">
+        <rect
+           style="fill:#562948;fill-opacity:1;fill-rule:evenodd;stroke-width:0.649486"
+           id="rect51"
+           width="108"
+           height="15"
+           x="193.58858"
+           y="218.02463"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="203.72885"
+           y="228.9456"
+           id="text51"><tspan
+             sodipodi:role="line"
+             id="tspan51"
+             style="stroke-width:0.529167"
+             x="203.72885"
+             y="228.9456">&lt;FUNCIÓN coord_&gt;</tspan></text>
+      </g>
+      <text
+         xml:space="preserve"
+         transform="matrix(0.26458333,0,0,0.26458333,185.95013,188.66616)"
+         id="text52"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6666px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:1px;white-space:pre;shape-inside:url(#rect54);fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.99937;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"><tspan
+           x="443.63086"
+           y="151.50972"
+           id="tspan3">+</tspan></text>
+      <g
+         id="g53">
+        <rect
+           style="fill:#81a95e;fill-opacity:1;fill-rule:evenodd;stroke-width:0.649486"
+           id="rect52"
+           width="108"
+           height="15"
+           x="193.58858"
+           y="218.02463"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="204.98407"
+           y="228.9456"
+           id="text53"><tspan
+             sodipodi:role="line"
+             id="tspan52"
+             style="stroke-width:0.529167"
+             x="204.98407"
+             y="228.9456">&lt;FUNCIÓN facet_&gt;</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g58"
+       inkscape:label="scale"
+       style="display:inline"
+       transform="translate(-184.7645,-46.496812)">
+      <text
+         xml:space="preserve"
+         transform="matrix(0.26458333,0,0,0.26458333,185.95013,188.66616)"
+         id="text56"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:46.6666px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:1px;white-space:pre;shape-inside:url(#rect58);fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.99937;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"><tspan
+           x="443.63086"
+           y="151.50972"
+           id="tspan4">+</tspan></text>
+      <g
+         id="g57"
+         style="display:inline">
+        <rect
+           style="fill:#81a95e;fill-opacity:1;fill-rule:evenodd;stroke-width:0.649486"
+           id="rect56"
+           width="108"
+           height="15"
+           x="193.58858"
+           y="218.02463"
+           ry="7.5" />
+        <text
+           xml:space="preserve"
+           style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+           x="204.99182"
+           y="228.9456"
+           id="text57"><tspan
+             sodipodi:role="line"
+             id="tspan56"
+             style="stroke-width:0.529167"
+             x="204.99182"
+             y="228.9456">&lt;FUNCIÓN scale_&gt;</tspan></text>
+      </g>
+    </g>
+    <g
+       id="g59"
+       transform="translate(-184.7645,-22.684303)"
+       style="display:inline"
+       inkscape:label="theme">
+      <rect
+         style="fill:#81a95e;fill-opacity:1;fill-rule:evenodd;stroke-width:0.649486"
+         id="rect59"
+         width="108"
+         height="15"
+         x="193.58858"
+         y="218.02463"
+         ry="7.5" />
+      <text
+         xml:space="preserve"
+         style="font-weight:bold;font-size:10.5833px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri Bold';letter-spacing:0.264583px;fill:#ffffff;stroke-width:0.529167;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9"
+         x="201.55536"
+         y="228.9456"
+         id="text59"><tspan
+           sodipodi:role="line"
+           id="tspan59"
+           style="stroke-width:0.529167"
+           x="201.55536"
+           y="228.9456">&lt;FUNCIÓN theme_&gt;</tspan></text>
+    </g>
+    <g
+       id="g65"
+       transform="translate(0,6.3500003)"
+       inkscape:label="valores">
+      <rect
+         style="fill:#562948;fill-opacity:1;fill-rule:evenodd;stroke-width:0.198437"
+         id="rect61"
+         width="12"
+         height="12"
+         x="7.7065868"
+         y="221.11977" />
+      <rect
+         style="fill:#81a95e;fill-opacity:1;fill-rule:evenodd;stroke-width:0.198437"
+         id="rect62"
+         width="12"
+         height="12"
+         x="7.7065868"
+         y="234.7545" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0.264583px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"
+         x="23.481653"
+         y="229.32893"
+         id="text64"
+         inkscape:label="text1"><tspan
+           sodipodi:role="line"
+           id="tspan64"
+           x="23.481653"
+           y="229.32893">Requerido</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8.81944px;line-height:1;font-family:Calibri;-inkscape-font-specification:'Calibri, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0.264583px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.529;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:3.9;stroke-dasharray:none;stroke-opacity:1"
+         x="22.88884"
+         y="243.03903"
+         id="text65"
+         inkscape:label="text1"><tspan
+           sodipodi:role="line"
+           id="tspan65"
+           x="22.88884"
+           y="243.03903">No requerido (se proveen valores iniciales)</tspan></text>
+    </g>
+  </g>
+</svg>

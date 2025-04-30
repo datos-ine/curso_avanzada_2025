@@ -1,0 +1,20 @@
+---
+title: ""
+author: ""
+---
+
+![](logos/logos_ine.svg){fig-align="center" width="50%"}
+
+::: {style="font-size:2em"}
+**¡Les damos la bienvenida al curso de Epidemiología Nivel Avanzado!**
+:::
+
+Es un gusto recibirles en esta nueva edición del curso, diseñado para profundizar en el análisis de datos provenientes de distintos diseños de estudio mediante el uso de modelos estadísticos.
+
+A lo largo del curso, abordaremos herramientas analíticas avanzadas que nos permitirán modelar adecuadamente la relación entre exposiciones y desenlaces en estudios transversales, de casos y controles, de cohortes y experimentales. Nos enfocaremos en la aplicación práctica de estos modelos, en la interpretación de resultados y en los supuestos que los sustentan, promoviendo una mirada crítica sobre su uso en la investigación epidemiológica.
+
+Esperamos que este espacio sea una experiencia formativa enriquecedora y un nuevo impulso en su desarrollo como investigadoras e investigadores en salud.
+
+::: {style="text-align: right; font-size: 1.25em;"}
+**El equipo docente**
+:::

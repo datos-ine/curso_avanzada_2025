@@ -1,0 +1,1116 @@
+---
+title: "Métodos para el análisis de supervivencia"
+author:
+  - name: Andrea Silva
+    orcid: 0000-0002-4791-9706
+  - name: Tamara Ricardo
+    orcid: 0000-0002-0921-2611
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+
+### Carga paquetes
+pacman::p_load(
+  survival,
+  survminer
+)
+```
+
+## Funciones básicas
+
+En el análisis de supervivencia, se busca modelar una variable aleatoria continua y no negativa, denotada por $T$, que representa el “*tiempo hasta un evento determinado*” para cada individuo del estudio. A continuación, se describen sus cuatro funciones fundamentales.
+
+### Función densidad de probabilidad
+
+Como toda variable aleatoria continua, $T$ posee una función de densidad de probabilidad, $f(t)$, que ya presentamos en la primera parte. Esta función puede interpretarse como la probabilidad de que un individuo experimente el evento en un intervalo instantáneo de tiempo. Asociada a ella, también se encuentra la función de distribución acumulada $F(t)$, que representa la probabilidad de que el evento ocurra en un intervalo determinado: \[$t_1$, $t_2$\].
+
+### Función de supervivencia
+
+La función de supervivencia, $S(t)$, indica la probabilidad de que un individuo no experimente el evento hasta al menos el tiempo $t$, es decir, que “sobreviva” hasta ese momento.
+
+### Función de riesgo (*hazard*)
+
+En el contexto del análisis de supervivencia, suele mantenerse el término en inglés *hazard*, aunque su traducción aproximada es “riesgo”, ya que asume ciertas particularidades. Esta función permite analizar el riesgo instantáneo de que un individuo experimente el evento entre el tiempo $t$ y $t+\varepsilon$, dado que sobrevivió hasta el tiempo $t$. Por ejemplo, para responder a preguntas como: ¿cuál es el riesgo de un paciente de fallecer después de una cirugía a corazón abierto?, deberemos conocer esta función de riesgo.
+
+Se simboliza como $h(t)$ o $\lambda(t)$ y la expresión es:
+
+$$
+h(t) = \lim_{n\rightarrow \infty}((t<T<t+\varepsilon)|T>t)/\varepsilon
+$$
+
+Esta expresión puede interpretarse, aproximadamente, como la probabilidad de morir en el intervalo ($t$, $t + \Delta t$\], dado que se está vivo al tiempo $t$, o bien de forma general como la probabilidad de presentar el evento en dicho intervalo. Podemos interpretarla como una medida de intensidad de muerte al tiempo $t$, o una medida de muerte potencial al tiempo $t$, o en forma general, como una medida de intensidad de eventos a dicho tiempo.
+
+La función de riesgo recibe otros nombres como: tasa de fallo, función o tasa de incidencia, fuerza de mortalidad condicional o simplemente fuerza de mortalidad. Es importante resaltar que a pesar de llevar el nombre de riesgo; $h(t)$ es una tasa y no una probabilidad, es por eso que a veces se prefiere usar el término *hazard*. Su unidad es $tiempo^{-1}$ y puede asumir cualquier valor real mayor que cero.
+
+Una de sus principales utilidades es guiar la elección de un modelo paramétrico adecuado para los datos de supervivencia. En muchos contextos, el investigador tiene una noción previa sobre cómo varía el riesgo a lo largo del tiempo, lo que puede facilitar la elección de una función específica para $h(t)$. Para entender un poco mejor esto último observemos detenidamente la siguiente figura:
+
+```{r}
+#| echo: false
+#| label: fig-fig1
+#| fig-cap: Funciones de riesgo
+# Generar datos
+datos <- tibble(
+  # Tiempo
+  Tiempo = seq(0, 50, length.out = 501),
+  # Constante
+  riesgo_a = rep(0.1, length(Tiempo)),
+  # Decreciente
+  riesgo_b = 1 / (1 + Tiempo),   
+  # Creciente
+  riesgo_c = 0.1 * sqrt(Tiempo), 
+  # Logístico
+  riesgo_d = 0.1 / (1 + exp(-0.2 * (Tiempo - 20))),
+  # Densidad gamma
+  riesgo_e = dgamma(Tiempo, shape = 2, scale = 10),
+  # Weibull hazard
+  riesgo_f = (0.8 / 10) * (Tiempo / 10)^(0.8 - 1)    
+)
+
+# Generar gráficos
+g1 <- datos |> 
+  ggplot(aes(x = Tiempo, y = riesgo_a))
+
+g2 <- datos |> 
+  ggplot(aes(x = Tiempo, y = riesgo_b))
+
+g3 <- datos |> 
+  ggplot(aes(x = Tiempo, y = riesgo_c))
+
+g4 <- datos |> 
+  ggplot(aes(x = Tiempo, y = riesgo_d)) 
+
+g5 <- datos |> 
+  ggplot(aes(x = Tiempo, y = riesgo_e))
+
+g6 <- datos |> 
+  ggplot(aes(x = Tiempo, y = riesgo_f))
+
+# Unir gráficos
+g1 + g2 + g3 + g4 + g5 + g6 +
+  plot_layout(ncol = 3,
+              guides = "collect",
+              axis_titles = "collect") +
+  plot_annotation(tag_levels = "A") &
+  geom_line(color = scico(n = 1, palette = "tokyo")) &
+  labs(y = "Riesgo") &
+  theme_minimal()
+
+# Limpiar environment
+rm(list = ls())
+```
+
+-   El gráfico **A** muestra una función de riesgo constante en el tiempo. Por ejemplo: riesgo de fracturas de escolares de 5to grado durante un año.
+
+-   El gráfico **B** muestra una función de riesgo que decrece en el tiempo. Por ejemplo: el riesgo post-quirúrgico, que es mayor en los primeros días post cirugía y luego cae con el tiempo.
+
+-   El gráfico **C** muestra una función de riesgo que se incrementa con el tiempo. Por ejemplo: si estudiamos el "tiempo hasta la solidificación de una fractura ósea", en un primer momento el "riesgo de solidificación" de la fractura es nulo, y a medida que transcurre el tiempo se incrementa.
+
+-   Los gráficos **D-F** presentan patrones más complejos de riesgo que pueden representar situaciones específicas.
+
+Para cerrar diremos que la función de riesgo marca la dinámica del proceso estudiado, al dar sus valores una adecuada aproximación a la tasa de incidencia del evento de interés.
+
+### Función de riesgo acumulado
+
+A partir de la función de riesgo ($h(t)$) es posible calcular la función de riesgo acumulado, que se simboliza como $\Lambda(t)$ o $H(t)$. Esta función mide el riesgo de ocurrencia de un evento hasta un determinado tiempo $t$. Matemáticamente implica la suma de todos los riesgos en todos los tiempos hasta el tiempo $t$.
+
+La expresión matemática es:
+
+$$
+H(t)=\int_0^t h(u)du
+$$
+
+Por ejemplo, permite responder preguntas como: ¿Cuál es el riesgo acumulado de morir en el primer año luego del diagnóstico de SIDA? ¿Y en los primeros dos años?
+
+Las funciones fundamentales del análisis de supervivencia están estrechamente relacionadas entre sí y son matemáticamente equivalentes. A continuación se resumen sus principales relaciones, omitiremos aquí dichas deducciones, pero hagan un acto de fe y crean en las siguientes equivalencias:
+
+$S(t)=1-F(t)$
+
+$h(t)=-\frac{dln(S(t))}{dt}$
+
+$h(t)=\frac{f(t)}{S(t)}$
+
+$h(t)=\frac{f(t)}{1-F(t)}$
+
+$H(t)=-ln(S(t))$
+
+$S(t)=exp(-H(t))$
+
+Una vez que estimamos una de ellas, será posible obtener cualquiera de las demás.
+
+## Modelos paramétricos
+
+En esencia, cualquier distribución definida sobre los números reales no negativos puede utilizarse para modelar el tiempo hasta la ocurrencia de un evento. Sin embargo, en la práctica, solo un pequeño conjunto de distribuciones es ampliamente utilizado en análisis de supervivencia. Las más frecuentes son la **exponencial**, la **Weibull** y la **lognormal**.
+
+### Distribución exponencial
+
+Al asumir que la variable aleatoria T posee una distribución exponencial, su $f(t)$ será:
+
+$$
+f(t) = \alpha e^{-\alpha t} \quad (\alpha>0)
+$$
+
+Utilizando las relaciones entre las funciones básicas de supervivencia se deducen:
+
+$S(t)=e^{-\alpha t}$
+
+$h(t)=\frac{f(t)}{S(t)}=\frac{\alpha e^{-\alpha t}}{e^{-\alpha t}}$
+
+$H(t) = -lnS(t)=\alpha t$
+
+Como podemos ver, al asumir una distribución exponencial para la variable "tiempo hasta que el evento se produzca", el riesgo es constante en el tiempo y el riesgo acumulado es una función lineal del tiempo:
+
+```{r}
+#| echo: false
+#| label: fig-fig2
+#| fig-cap: Funciones de supervivencia, riesgo y riesgo acumulado para la distribución exponencial.
+# Generar datos
+datos <- expand_grid(
+  Tiempo = seq(0, 5, length.out = 200),
+  alpha = c(0.5, 1, 1.5)
+) |> 
+  
+  mutate(
+    # Supervivencia
+    S = exp(-alpha * Tiempo),
+    # Riesgo instantáneo
+    h = alpha,
+    # Riesgo acumulado
+    H = alpha * Tiempo,
+    # Categorías alpha
+    alpha_lab = factor(paste("α =", alpha))
+  )
+
+# Generar gráficos
+g1 <- datos |> 
+  ggplot(aes(x = Tiempo, y = S)) +
+  labs(y = expression(S(t)))
+
+g2 <- datos |> 
+  ggplot(aes(x = Tiempo, y = h)) +
+  labs(y = expression(h(t)))
+
+
+g3 <- datos |> 
+  ggplot(aes(x = Tiempo, y = H)) +
+  labs(y = expression(H(t)))
+
+
+# Juntar gráficos
+g1 + g2 + g3 +
+  plot_layout(ncol = 3,
+              guides = "collect",
+              axis_titles = "collect") &
+  geom_line(aes(linetype = alpha_lab, color = alpha_lab)) &
+  scale_color_scico_d(palette = "tokyo", end = .75) &
+  theme_minimal() &
+  theme(legend.title = element_blank())
+  
+# Limpiar environment
+rm(list = ls())
+```
+
+Asumir una distribución exponencial para los tiempos de sobrevida es similar a suponer una distribución normal para otras variables: se trata de una elección que facilita el modelado. Sin embargo, en la práctica es una situación muy rara. Como mencionamos anteriormente, una posible excepción sería el riesgo de fractura en escolares de 5º grado a lo largo de un año escolar. Pero no existen demasiadas situaciones en salud donde el riesgo sea constante, en la mayoría de las situaciones el riesgo varía en el tiempo, usualmente incrementándose con la edad del individuo.
+
+Uno de los parámetros clave en el análisis de supervivencia es la **mediana de los tiempos de supervivencia**, es decir, el tiempo en el cual el 50% de los individuos ha experimentado el evento. Para el caso exponencial:
+
+$S(t)=e^{-\alpha t}=0,5$
+
+$-\alpha t=ln(0,5)$
+
+$\alpha t=ln(2)$
+
+$T_{mediano}=\frac{ln(2)}{\alpha}$
+
+A pesar de su simplicidad, la suposición de un riesgo constante limita seriamente la aplicabilidad del modelo exponencial en contextos de salud.
+
+### Distribución Weibull
+
+La distribución Weibull es una generalización de la exponencial, ampliamente utilizada en contextos biomédicos. Su función de densidad es:
+
+$$
+f(t)=\gamma\alpha^\gamma t^{\gamma-1}exp(-(\alpha t)^\gamma) \qquad (\alpha>0, \gamma>0)
+$$
+
+A partir de esta expresión, se deducen:
+
+$S(t)=exp(-(\alpha t)^\gamma)$
+
+$h(t) = \gamma\alpha^\gamma t^{\gamma-1}$
+
+$H(t)=-lnS(t)=(\alpha t)^{\gamma-1}$
+
+La distribución Weibull tiene **dos parámetros**:
+
+-   $\alpha$, que regula la escala del modelo
+
+-   $\gamma$, que controla la forma de la función de riesgo:
+
+    -   Si $\gamma < 1$, la función de riesgo es decreciente
+
+    -   Si $\gamma>1$, la función de riesgo es creciente
+
+    -   Si $\gamma = 1$, la función de riesgo es constante y equivale a una distribución exponencial
+
+```{r}
+#| echo: false
+#| label: fig-fig3
+#| fig-cap: Funciones de supervivencia, riesgo y riesgo acumulado para la distribución Weibull.
+# Crear datos
+datos <- expand_grid(
+  Tiempo = seq(0.01, 5, length.out = 200),
+  gamma = c(0.5, 1, 1.5)
+) |> 
+  
+  mutate(
+    # Supervivencia
+    S = exp(-(1 * Tiempo) ^ gamma), 
+    # Riesgo instantáneo
+    h = gamma * (1 ^ gamma) * Tiempo ^ (gamma - 1),  
+    # Riesgo acumulado
+    H = (1 * Tiempo) ^ gamma,  
+    # Etiqueta gamma
+    gamma_lab = factor(paste("γ =", gamma, ", α = 1"))
+  )
+
+# Generar gráficos
+# Generar gráficos
+g1 <- datos |> 
+  ggplot(aes(x = Tiempo, y = S)) +
+  labs(y = expression(S(t)))
+
+g2 <- datos |> 
+  ggplot(aes(x = Tiempo, y = h)) +
+  labs(y = expression(h(t)))
+
+
+g3 <- datos |> 
+  ggplot(aes(x = Tiempo, y = H)) +
+  labs(y = expression(H(t)))
+
+
+# Juntar gráficos
+g1 + g2 + g3 +
+  plot_layout(ncol = 3,
+              guides = "collect",
+              axis_titles = "collect") &
+  geom_line(aes(linetype = gamma_lab, color = gamma_lab)) &
+  scale_color_scico_d(palette = "tokyo", end = .75) &
+  theme_minimal() &
+  theme(legend.title = element_blank())
+  
+# Limpiar environment
+rm(list = setdiff(ls(), "pal"))
+```
+
+Para encontrar el tiempo mediano de supervivencia, procedemos en forma análoga que en la distribución exponencial:
+
+$S(t)=exp(-(\alpha t)^\gamma)=0,5$
+
+$-(\alpha t)^\gamma=ln(0,5)$
+
+$T_{mediano}=\frac{ln(2)^{1/\gamma}}{\alpha}$
+
+Dejaremos de lado la distribución lognormal, para pasar ahora a los métodos no paramétricos de estimación.
+
+## Métodos no paramétricos
+
+A continuación, abordaremos dos métodos no paramétricos para estimar las funciones básicas de supervivencia. Ambos se basan en las denominadas *tablas de vida*, que describen el proceso de mortalidad de una cohorte hasta la desaparición del último de sus integrantes bajo la experiencia de mortalidad observada en un período determinado. Estas tablas finalizan con la muerte de todos los sujetos, y su principal diferencia radica en la velocidad con que se alcanza dicho final.
+
+Las tablas de vida se utilizan principalmente en salud pública para medir mortalidad y supervivencia, aunque también son aplicadas en estudios demográficos y actuariales, para analizar longevidad, fertilidad, migraciones, crecimiento poblacional, proyecciones y años de vida sin discapacidad. En resumen, es una presentación tabular del progreso de una cohorte a través del tiempo que transcurre.
+
+Las curvas de supervivencia pueden construirse mediante dos métodos: el método de Kaplan-Meier o el análisis actuarial de Cutler-Ederer. Ambos permiten estimar la supervivencia en presencia de censura. Además, existe un estimador no paramétrico de la función de riesgo acumulado, conocido como *estimador de Nelson-Aalen*, que no será abordado en este curso.
+
+### Método actuarial
+
+En este método, los tiempos de supervivencia se agrupan en intervalos, cuya duración puede variar según la frecuencia del evento de interés y puede no ser de la misma longitud. Una limitación de este enfoque es la menor precisión en muestras pequeñas. Sin embargo, en muestras grandes, su influencia sobre las estimaciones es reducida y permite estimar también la función de riesgo. Se asume que las observaciones censuradas se distribuyen homogéneamente dentro de cada intervalo.
+
+Antes de continuar con el ejemplo se sugiere ver la siguiente videoclase:
+
+➡️ [Método Actuarial](https://www.youtube.com/watch?v=PZaWezVTgO4)
+
+Consideremos el ejemplo de un estudio de supervivencia pos trasplante hepático en una cohorte de 300 pacientes, seguidos durante cinco años (2009-2014). La siguiente tabla (@tbl-tab1) presenta los datos iniciales:
+
+```{r}
+#| echo: false
+#| label: tbl-tab1
+#| tbl-cap: Información inicial para construir la tabla de supervivencia.
+# Cargar datos
+datos <- read_csv("datos/tab1.csv")
+
+# Modificar datos
+datos |> 
+  mutate(vivos_final = as.character(vivos_final) |>  replace_na("")) |> 
+  rename("Muertes por otras causas" = muertos_otro,
+         "Vivos al final del estudio" = vivos_final) |> 
+  
+  # Generar tabla
+  kbl(align = "l") |> 
+  kable_paper(html_font = "Calibri") 
+```
+
+Para interpretar la información de la tabla, es necesario considerar que la misma presenta la evolución anual de los pacientes que fueron admitidos en el estudio año a año. En 2009 se incorporaron 60 pacientes, de los cuales 21 fallecieron, cuatro se perdieron en el seguimiento (se ignora si sobrevivieron o fallecieron) y uno murió por causas ajenas al trasplante. Estos últimos cinco pacientes corresponden a observaciones *censuradas*. Para el año 2010, 34 pacientes del grupo original y se sumaron 67 nuevos participantes al estudio.
+
+Cada paciente que ingresa durante cada uno de los años del estudio contribuye con información a lo que ocurre durante el primer año de supervivencia:
+
+-   Un total de 300 pacientes ingresaron vivos al estudio: $60 + 67 + 53 + 64 + 56 = 300$
+
+-   Durante el primer año de seguimiento murieron 103 pacientes: $21 + 23 + 18 + 22 + 19 = 103$
+
+Para estimar la probabilidad de morir en un período, se divide el número de muertes en cada período por el número de individuos en riesgo al comienzo del periodo de observación.
+
+Pero; ¿qué hacemos con los sujetos que se perdieron, es decir los individuos censurados? Al clasificar los datos en intervalos de tiempo discretos (como hemos hecho en nuestra tabla), no podremos decir en qué momento se han perdido exactamente: ¿diremos que han sido individuos en riesgo durante todo el año (o período? Lo que el método actuarial asume es una solución "salomónica": las observaciones censuradas, que se contabilizan como media persona-año:
+
+$$
+P(morir)=\frac{muertes\; en \; el \; período}{indiv.en\;riesgo\;al\;comienzo\;del\;período-\frac{indiv.censurados}{2}}
+$$
+
+Recordemos que los individuos censurados serán quienes están vivos al final del periodo, los que se han perdido y quienes han muerto por causas ajenas al estudio. En nuestra nueva tabla (Tabla 2), esta probabilidad se notará como $q_i$
+
+Por lo tanto, para el primer periodo:
+
+$$
+q_i = \frac{103}{300-\frac{23+34}{2}}=0,379
+$$
+
+La probabilidad de supervivencia condicional, $p_i$, que denota la probabilidad de sobrevivir a un determinado periodo, se calcula como:
+
+$$
+p_i = 1 - q_i 
+$$
+
+La probabilidad acumulada de supervivencia $S(t)$, que muestra la probabilidad de sobrevivir hasta un tiempo determinado, considerando que se ha sobrevidido a los tiempos anteriores se obtiene multiplicando las probabilidades de supervivencia en los períodos anteriores. Es decir que la probabilidad de sobrevivir al tercer año a partir del trasplante será:
+
+$$
+S(3) = 0,621 * 0,789 * 0,868 = 0,425~(42,5\%)
+$$
+
+Esto indica que el 42,5% de los pacientes sobreviven al menos tres años luego del trasplante:
+
+```{r}
+#| echo: false
+#| label: tbl-tab2
+#| tbl-cap: Tabla de supervivencia construida por el método actuarial.
+# Generar datos
+datos <- tibble(
+  Periodo = c(1:5),
+  Vivos = c(300, 140, 81, 46, 19),
+  Muertes = c(103, 26, 9, 5, 1),
+  "Pérdidas/muertes otras causas" = c(23, 8, 3, 2, 0),
+  "Vivos al final del estudio" = c(34, 25, 23, 20, 18),
+  q = c(0.379, 0.211, 0.132, 0.143, 0.100),
+  p = c(0.621, 0.789, 0.868, 0.857, 0.900),
+  "S(t)" = c(0.621, 0.490, 0.425, 0.364, 0.368)
+) 
+
+# Generar tabla
+datos |> 
+  kbl(align = "l") |> 
+  kable_paper(html_font = "Calibri")
+
+```
+
+Puede luego graficarse $S(t)$ vs periodo (@fig-fig4). Sobre el gráfico se pueden ubicar los cuartiles y en particular, la mediana de los tiempos de supervivencia, que indica el momento donde la supervivencia es del 50%.
+
+```{r}
+#| echo: false
+#| label: fig-fig4
+#| fig-cap: Función de supervivencia estimada a partir de la observación de 300 personas post transplante hepático.
+# Generar gráfico
+datos |> 
+  ggplot(aes(x = Periodo, y = `S(t)`)) + 
+  geom_point(color = scico(n = 1, palette = "tokyo")) +
+  geom_line(color = scico(n = 1, palette = "tokyo")) +
+  scale_y_continuous(limits = c(0,1),
+                     breaks = seq(0, 1, .2)) +
+  # Anotación de la mediana
+  annotate(geom = "segment", 
+           x = 1, 
+           y = 0.5, 
+           xend = 1.9, 
+           linetype = "dashed",
+           color = scico(n = 1, palette = "tokyo", begin = 0.7)) +
+  annotate(geom = "segment", 
+           x = 1.9, 
+           y = 0, 
+           yend = 0.5, 
+           linetype = "dashed",
+           color = scico(n = 1, palette = "tokyo", begin = 0.7)) +
+  annotate(geom = "text", 
+           label = "Mediana", 
+           x = 2.2, 
+           y = 0.3) +
+  # Tema claro
+  theme_minimal()
+
+# Limpiar environment
+rm(list = ls())
+```
+
+### Método de Kaplan-Meier
+
+El método de Kaplan-Meier (KM) utiliza una lógica similar al actuarial, pero permite trabajar con datos individuales y periodos más cortos, siendo particularmente útil cuando el tamaño muestral es reducido. La probabilidad de supervivencia al tiempo $t$ se estima considerando que es independiente de la supervivencia a otros tiempos, entonces la probabilidad de alcanzar el tiempo $t$ es el producto de alcanzar los tiempos anteriores:
+
+$$S_{KM}(t)=\prod_{i:ti<t}(1-d_i/n_1) $$
+
+donde $d_i$ es el número de eventos y $n_i$ el número de personas expuestas en el tiempo $t_i$.
+
+La característica distintiva es que la proporción acumulada que sobrevive se calcula para el tiempo de supervivencia individual de cada paciente y no se agrupan los tiempos de supervivencia en intervalos.
+
+Antes de continuar con el ejemplo se sugiere ver la siguiente videoclase:
+
+➡️ [Método de Kaplan-Meier](https://www.youtube.com/watch?v=kb5q1OC0OgI)
+
+Para nuestro ejemplo consideraremos una cohorte cerrada de 10 pacientes con dos años de seguimiento. El evento es muerte por enfermedad cardiovascular (ECV). En la siguiente figura se muestra el esquema del seguimiento, donde “C” indica censura y “M” el evento:
+
+```{r}
+#| echo: false
+#| label: fig-fig5
+#| fig-cap: Cohorte cerrada de 10 pacientes en seguimiento.
+# Generar datos
+datos <- tibble(
+  participante = c(1:10) |>  as.factor(),
+  inicio = rep(0, 10),
+  fin = c(1, 17, 20, 9, 24, 16, 2, 13, 10, 3),
+  tiempo = fin,
+  cat = c(rep("M", 4), "", rep("C", 2),"M", "C", "M") |>  as.factor(),
+  status = c(rep(1, 4), rep(0, 3), 1, 0, 1)
+  )
+
+# Generar gráfico
+datos |> 
+  ggplot(aes(y = fct_rev(participante))) + 
+  # Tiempo hasta el evento
+  geom_segment(aes(x = inicio, xend = fin, color = cat),
+               linewidth = 1) +
+  
+  geom_segment(aes(x = inicio, xend = fin, color = cat),
+               arrow = arrow(type = "closed", length = unit(0.3, "cm")),
+               linewidth = 1,
+               data = datos |> filter(cat == "C")) +
+  
+  geom_text(aes(x = fin + 1.25, color = cat,
+                label = paste0(cat, " (", fin, ")"))) +
+  # Colores
+  scale_color_scico_d(palette = "tokyo", end = 0.7) +
+  # Nombres ejes
+  labs(x = "Tiempo de seguimiento", y = "Participante") +
+  # Tema claro
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+La información de esta figura se resume en la @tbl-tab3. Es importante señalar que la base de datos para análisis de supervivencia debe tener la siguiente estructura: cada fila es un individuo en seguimiento, debe consignarse el tiempo inicial y el tiempo final del seguimiento (en este caso, el tiempo inicial es el mismo para todos porque se trata de una cohorte cerrada, pero esto no es lo más frecuente), el tiempo de seguimiento $t$ (se obtiene de la diferencia tiempo final y tiempo inicial) y la variable `status`, que indica si el paciente sufrió el evento (`status:1`) o es un paciente censurado (`status:0`).
+
+```{r}
+#| echo: false
+#| label: tbl-tab3
+#| tbl-cap: Datos de 10 pacientes en seguimiento para ECV.
+# Datos
+datos |> 
+  select(Paciente = participante,
+         "Tiempo inicial" = inicio,
+         "Tiempo final" = fin,
+         "t (meses)"= tiempo,
+         status) |> 
+  
+  # Generar tabla
+  kbl(align = "l") |> 
+  kable_paper(html_font = "Calibri")
+```
+
+Para la construcción de la tabla de supervivencia, lo primero que debemos hacer es ordenar los pacientes de acuerdo a su tiempo.
+
+Entonces, la @tbl-tab3, se transforma en la @tbl-tab4:
+
+```{r}
+#| echo: false
+#| label: tbl-tab4
+#| tbl-cap: Pacientes en seguimientos por ECV, ordenados según tiempo de seguimiento.
+# Ordenar datos
+datos <- datos |> 
+  arrange(tiempo)
+
+# Datos
+datos |> 
+  select(Paciente = participante,
+         tiempo = fin,
+         status) |> 
+  
+  # Generar tabla
+  kbl(align = "l") |> 
+  kable_paper(html_font = "Calibri")
+```
+
+Comencemos con la construcción de la tabla de supervivencia (@tbl-tab5), teniendo en cuenta que aquí conocemos exactamente el tiempo en el que un individuo estuvo en riesgo de morir por ECV. Esta tabla se construye a partir de los individuos que tuvieron el evento.
+
+```{r}
+#| echo: false
+#| label: tbl-tab5
+#| tbl-cap: Tabla de supervivencia según KM para pacientes con ECV.
+# Objeto supervivencia
+surv <- survfit(Surv(time = tiempo, event = status) ~ 1, 
+                data = datos, time0 = TRUE)
+
+# Datos para tabla de supervivencia
+tab <- broom::tidy(surv) |> 
+  mutate(p_event = n.event/n.risk,
+         p_surv = 1 - p_event) |> 
+  select(time, n.risk, n.event, p_event, p_surv, estimate) |> 
+  filter(n.event == 1) |>
+  add_row(time = 0, n.risk = 10, n.event = 0,
+          p_event = 0, p_surv = 1, estimate = 1, .before = 1)
+
+# Generar tabla
+tab |> 
+  kbl(col.names = c("Tiempo", "Individuos en riesgo", "Eventos",
+                    "Prob. evento", "Prob. supervivencia", "S(t)"),
+      digits = 3,
+      align = "l") |> 
+  kable_paper(html_font = "Calibri")
+```
+
+Una vez obtenida la $S(t)$, se grafica:
+
+```{r}
+#| echo: false
+#| label: fig-fig6
+#| fig-cap: Curva de supervivencia estimada por Kaplan-Meier.
+# Generar curva de Kaplan-Meier
+g1 <- ggsurvplot(surv, 
+                 data = datos,
+                 palette = "#1B0D33",
+                 conf.int = FALSE,
+                 surv.median.line = "hv"
+) +
+  labs(x = "Tiempo de seguimiento (meses)",
+       y = expression(S(t))) 
+
+# Graficar
+g1$plot +
+  geom_text(aes(x = time, y = estimate, 
+                label = paste0(round(estimate * 100, 1), "%")),
+            data = tab,
+            vjust = -.5, hjust = -1) +
+  
+  scale_x_continuous(breaks = seq(0, 24, 2)) +
+  
+  theme(legend.position = "none")
+```
+
+Las curvas de supervivencia de Kaplan-Meier son representaciones escalonadas que describen cómo evoluciona la supervivencia acumulada a lo largo del tiempo. Cada descenso en la curva —es decir, cada “escalón”— se produce cuando ocurre un evento (por ejemplo, una muerte), lo que refleja una disminución en la probabilidad de supervivencia acumulada hasta ese instante.
+
+Resumiendo, para construir una curva de supervivencia se deben dar los siguientes pasos:
+
+a.  Ordenar los tiempos de supervivencia (o tiempos de observación) en forma ascendente.
+
+b.  Construir una tabla que contenga: una columna con los tiempos observados para cada participante ($t_i$) y una columna con el estado del individuo al final del seguimiento (status).
+
+c.  Calcular la probabilidad de supervivencia en cada tiempo ($s_i / n_i$), es decir, el cociente entre el número de individuos que sobreviven ($s_i$) y el número de individuos en riesgo de sufrir el evento en ese instante ($n_i$). Esta columna sólo tendrá valores en los momentos en que ocurre un evento. Es importante señalar que, en el denominador ($n_i$), se incluyen también los individuos que van a experimentar el evento en ese período, ya que entran al periodo vivos.
+
+d.  Obtener la supervivencia acumulada, multiplicando en cada periodo de tiempo los cocientes de supervivencia ($s_i$/$n_i$) por los productos acumulados de los tiempos anteriores.
+
+e.  Representar gráficamente la curva. La línea comienza en 1 (100% de supervivencia) y se mantiene constante hasta que ocurre el primer evento, momento en el que desciende un escalón. Este patrón se repite a medida que ocurren nuevos eventos. Por ejemplo, si la supervivencia cae a 0,90 tras el primer evento, ese valor se mantendrá hasta el siguiente.
+
+Algunos investigadores optan por representar también **curvas de incidencia acumulada**, que refleja la probabilidad de experimentar el evento a lo largo del tiempo. Esta también puede calcularse a partir de la tabla de vida generada mediante el método de Kaplan-Meier. Por ejemplo, en la @tbl-tab5, bastaría con usar la columna "Probabilidad del evento" y obtener la probabilidad acumulada multiplicando las probabilidades de distintos tiempos.
+
+Hasta aquí aprendimos a calcular la $S(t)$ a partir de nuestros datos, ya sea por el método actuarial o por el de KM. Todo esto que hicimos "a mano" aquí, las funciones del lenguaje R lo hacen y nos facilitan el trabajo.
+
+Ahora podríamos plantearnos distintos interrogantes, según el estudio, como por ejemplo:
+
+-   ¿La curva será una buena estimación tanto para hombres como para mujeres? Es decir: ¿la variable sexo afecta al tiempo de supervivencia?
+
+-   O también: ¿el tratamiento afecta el tiempo de supervivencia? Para ello será necesario comparar curvas de supervivencia.
+
+Responder estas preguntas requiere comparar curvas de supervivencia entre grupos, lo cual veremos a continuación.
+
+## Comparación de curvas de supervivencia
+
+Para responder a las preguntas anteriores, la estrategia de KM es estratificar según la variable de interés (sexo en el primer ejemplo, tratamiento en el segundo) y estimar la $S(t)$ para cada estrato. De esta forma podemos comparar las curvas gráficamente.
+
+Por ejemplo, la siguiente figura, nos muestra las curvas de supervivencia para dos grupos de pacientes que recibieron distintos tratamientos (A y B). Si observamos las medianas de los tiempos de supervivencia (líneas punteadas), podemos ver que los pacientes que siguieron el tratamiento $B$ tienen mayores tiempos de supervivencia que los que recibieron el tratamiento $A$ (Mediana tiempos de supervivencia $A \approx 7 \;meses$; Mediana tiempos de supervivencia $B \approx 20 \;meses$)
+
+```{r}
+#| echo: false
+#| label: fig-fig7
+#| fig-cap: Curvas de KM estratificadas por tipo de tratamiento.
+
+# Datos simulados
+set.seed(123)
+datos <- tibble(
+  tiempo = c(5, 8, rep(17, 3), 13, 19, 20, rep(35, 2)),
+  status = c(rep(1, 8), 0, 0),
+  tratamiento = c(rep("A", 5), rep("B", 5)) |> factor()
+)
+
+# Ajustar modelo de supervivencia
+surv <- survfit(Surv(tiempo, status) ~ tratamiento, data = datos)
+
+# Generar gráfico
+ggsurvplot(surv,
+           data = datos,
+           conf.int = FALSE,
+           surv.median.line = "hv",
+           palette = scico(n = 2, palette = "tokyo", begin = 0.25, end = 0.75),
+           xlab = "Tiempo",
+           ylab = "Probabilidad de supervivencia",
+           legend.title = "",
+           legend.labs = c("Tratamiento A", "Tratamiento B"),
+           ggtheme = theme_minimal())
+```
+
+Si bien gráficamente podemos tener una idea, lo correcto es hacer una comparación en términos estadísticos. Por lo tanto, existen varios test que nos permiten comparar curvas de supervivencia. Uno de los más usados por los paquetes estadísticos es el log-rank test.
+
+### Log-rank test
+
+-   La hipótesis nula ($H_0$) plantea que las supervivencias de los grupos que se comparan (2 o más) son iguales.
+
+-   La hipótesis alternativa ($H_1$) sostiene que al menos uno de los grupos tiene una supervivencia diferente.
+
+El estadístico de contraste utilizado es la **chi-cuadrado** ($\chi^2$) con $k-1$ grados de libertad, donde $k$ representa la cantidad de grupos (es decir, el número de curvas que se comparan). Esta prueba evalúa si la incidencia de eventos es similar en los distintos estratos.
+
+La interpretación del valor $p$ es similar a la de otros tests de hipótesis: típicamente, un valor $p < 0,05$ se considera evidencia suficiente para rechazar la hipótesis nula, indicando diferencias estadísticamente significativas entre los grupos.
+
+En la práctica médica, es frecuente comparar tratamientos o cohortes utilizando como criterio la supervivencia a cinco años. Sin embargo, esta estrategia puede ser engañosa. Es posible que dos curvas muy diferentes reflejen la misma supervivencia en ese único punto temporal. La @fig-fig8 ilustra claramente este problema.
+
+```{r}
+#| echo: false
+#| label: fig-fig8
+#| fig-cap: Curvas de supervivencia que exhiben la misma supervivencia a cinco años para diferentes estudios.
+
+# Datos simulados
+set.seed(123)
+datos <- tibble(
+  tiempo = c(4.25, 4.5, 4.75, rep(5, 3), 0.75, 1, 1.5, rep(5, 3)),
+  status = c(rep(1, 3), rep(0, 3), rep(1, 3), rep(0, 3)),
+  tratamiento = c(rep("A", 6), rep("B", 6)) |> factor()
+)
+
+# Ajustar modelo de supervivencia
+surv <- survfit(Surv(tiempo, status) ~ tratamiento, data = datos)
+
+# Generar gráfico
+ggsurvplot(surv,
+           data = datos,
+           conf.int = FALSE,
+           palette = scico(n = 2, palette = "tokyo", begin = 0.25, end = 0.75),
+           xlab = "Tiempo",
+           ylab = "Probabilidad de supervivencia",
+           legend.title = "",
+           legend.labs = c("Tratamiento A", "Tratamiento B"),
+           ggtheme = theme_minimal())
+```
+
+En la @fig-fig8, ambos grupos presentan una supervivencia del 50% a los 5 años. No obstante, se advierte que el grupo B experimenta una caída más temprana en la probabilidad de supervivencia, lo que indica un peor pronóstico desde los primeros momentos del seguimiento.
+
+Los tests diseñados específicamente para comparar curvas de supervivencia, como el log-rank, consideran todo el trayecto temporal de las curvas, y no únicamente un punto aislado. Esto permite detectar diferencias persistentes en el tiempo.
+
+El test de log-rank (también conocido como test de **Mantel-Haenszel**) es el más adecuado cuando el evento es poco frecuente o cuando las curvas son aproximadamente paralelas.
+
+Si las curvas se cruzan en el tiempo —por ejemplo, si un grupo presenta mejor supervivencia inicialmente, pero luego el otro lo supera— conviene emplear el **test de Wilcoxon (o de Breslow)**, que otorga mayor peso a las diferencias tempranas. Un tercer método menos utilizado es el **test de Tarone-Ware**, que aplica una ponderación intermedia donde se le da distinto peso a las diferencias según ocurran más precoz o más tardíamente a lo largo del seguimiento.
+
+## Hazard y Riesgo acumulado
+
+Ya hemos estimado $S(t)$, ahora nos falta abordar las otras funciones básicas de supervivencia
+
+La expresión compleja de $h(t)$, a los efectos de las Tablas de Supervivencia, puede reemplazarse por:
+
+$$\lambda(t)=\frac{Número \; de \; \;eventos\;observados\;en\;cada\;intervalo}{personas\;en\;riesgo\;al\;inicio*amplitud\;intervalo}$$
+
+De la misma forma que construimos $S(t)$, podemos estimar $h(t)$ (o un software puede hacerlo por nosotros). La @tbl-tab6, nos muestra las estimaciones para el ejemplo utilizado para KM.
+
+```{r}
+#| echo: false
+#| label: tbl-tab6
+#| tbl-cap: Estimaciones de h(t).
+# Generar datos
+datos <- tibble(
+  Tiempo = c(0, 1, 2, 6),
+  "Individuos en riesgo" = c(10, 10, 8, 7),
+  Eventos = c(0, 1, 1, 1),
+  "Prob. evento" = c(0, 0.1, 0.125, 0.143),
+  "Prob. supervivencia" = c(1, 0.9, 0.875, 0.857),
+  "lambda(t)" = c(0, 0.10, 0.625, 0.238)
+) 
+
+# Generar tabla
+datos |> 
+  kbl(digits = 3, 
+      align = "l") |> 
+  kable_paper(html_font = "Calibri")
+```
+
+¿Qué expresa $h(t)$ o $\lambda(t)$?
+
+Observemos que la función de riesgo $h(t)$ o $\lambda(t)$ es una medida de la probabilidad de que se produzca el suceso estudiado entre los que quedan sin haber sufrido todavía tal suceso.
+
+Es realmente una función que evalúa, puntualmente, en un período de tiempo determinado, la probabilidad de que un individuo de los que todavía no han sufrido tal suceso lo sufra precisamente en ese período de tiempo. Es, por lo tanto, realmente, una función que mide el riesgo en un período de tiempo concreto.
+
+De forma similar, la expresión para el riesgo acumulado:
+
+$$
+H(t)=\int_0^t h(u)du 
+$$
+
+puede aproximarse como:
+
+$$
+\Lambda(t)=\sum\lambda(t)*intervalo
+$$ No mostramos aquí los cálculos correspondientes para no agobiarlos más, pero pueden intentarlo si están motivados.
+
+## Intervalos de confianza y error estándar para la supervivencia
+
+Si se desea calcular un intervalo de confianza (IC) para la probabilidad de supervivencia estimada en un tiempo determinado, es necesario considerar su **error estándar (SE)**. El mismo se calcula en función de la supervivencia acumulada hasta ese momento, y representa la incertidumbre asociada a la estimación.
+
+Una fórmula común para el error estándar de la estimación de supervivencia acumulada ($S_t$) en un tiempo dado es el producto de la supervivencia estimada para ese tiempo por la raíz de la suma de los cocientes entre el número de fallecidos en cada momento y el producto de supervivientes y pacientes en riesgo en ese tiempo:
+
+$$
+SE_{S_t}=S_t\sqrt{\sum\frac{n_i-s_i}{n_is_i}}
+$$
+
+Para calcular el 95% IC, podríamos pensar en usar la fórmula que vimos inicialmente:
+
+$$
+95\%~IC_{S_t} =  S_t \pm 1,96 SE \qquad donde~1,96~es~el~valor~Z~para~un~alfa~bilateral~del~5\% 
+$$
+
+Con esta fórmula, en algunos casos se podría obtener, un límite inferior negativo o un límite superior mayor que 1. Ambos resultados carecen de sentido en un contexto de probabilidades.
+
+Para evitar estos problemas, se utiliza una **transformación logarítmica** que estabiliza la varianza. La fórmula ajustada para el error estándar transformado es:
+
+$$
+SE_t=\sqrt{\frac{1}{(ln[S])^2}\times\sum\frac{n_i-s_i}{n_is_i}} 
+$$
+
+Y a partir de este $SE_t$, calcular el intervalo de confianza al 95%, según la expresión:
+
+$$
+95\%~IC = SE_t * exp(\pm1,96 SE_t)
+$$
+
+Aunque todos estos cálculos pueden realizarse manualmente, **las funciones del lenguaje R ya los incluyen** al utilizar modelos de supervivencia. El propósito aquí es mostrar la lógica matemática detrás de dichas funciones.
+
+## Algunas otras medidas de supervivencia
+
+En la literatura científica, muchas veces nos encontramos con otras medidas de supervivencia, que puntualizaremos a continuación:
+
+-   **Supervivencia a 5 años**: es el número de personas aún vivas después de 5 años del diagnóstico.
+
+-   **Supervivencia media**: tener en cuenta sólo aquellos individuos de los que se tienen datos completos y se conoce con exactitud su situación clínica. Esta se calcula por:
+
+$$
+S \;media=\frac{\sum tiempo\;hasta\;alcanzar\;el\;evento}{numero\;total\;de\;individuos\;que\;tuvieron\;el\;evento} 
+$$
+
+-   **Tasa de supervivencia**: Se obtiene según la fórmula
+
+$$
+Tasa\;de\;supervivencia= \frac{nro.\;de\;individuos\;que\;sobreviven\;hasta\;un\;tiempo\;t}{nro.\;total\;de\;individuos}  
+$$
+
+-   **Tasa de Incidencia**: Puede calcularse también una tasa de incidencia del evento de interés
+
+$$
+Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seguimiento}  
+$$
+
+## Ejemplo práctico en R
+
+A continuación, veremos un ejemplo para aprender a realizar un análisis de supervivencia en R, utilizando datos de pacientes con **leucemia mieloide crónica (LMC)** almacenados en el archivo "`tmo.txt`".
+
+Hasta hace pocos años, el **trasplante de médula ósea (TMO)** a partir de un donante compatible era el único tratamiento disponible para la LMC. Sin embargo, este procedimiento presenta diversos desafíos: una de las complicaciones más frecuentes es la enfermedad injerto contra huésped, que afecta entre el 25 y el 30 % de los pacientes trasplantados. También pueden presentarse efectos adversos vinculados a tratamientos previos como la quimioterapia o la radioterapia. El pronóstico de los pacientes sometidos a TMO se asocia además, con la fase de la enfermedad en el momento del trasplante: aquellos trasplantados durante la fase crónica inicial suelen presentar una mayor probabilidad de supervivencia.
+
+El Centro de Trasplante de Médula Ósea del Instituto Nacional del Cáncer de Brasil, entre 1986 y 1998 realizó 96 trasplantes de médula ósea para tratamiento de LMC. El análisis de los datos de esta cohorte tuvo como objetivo identificar factores que pudieran estar relacionados con el pronóstico, ya sea para orientar intervenciones profilácticas o terapéuticas que mejoren los resultados, o para evaluar la conveniencia de alternativas terapéuticas en subgrupos de alto riesgo.
+
+Existen numerosas librerías para el análisis de supervivencia, nosotros aquí usaremos los paquetes `survival` [@survival] y `survminer`[@survminer], este último provee funciones que facilitan el análisis y la visualización de datos de supervivencia. Comenzamos cargando los paquetes:
+
+```{r}
+library(survival)
+library(survminer)
+library(tidyverse)
+```
+
+A continuación cargamos los datos y exploramos su estructura:
+
+```{r}
+datos <- read_csv2("datos/tmo.txt")
+```
+
+Las variables presentes en el conjunto de datos son las siguientes:
+
+-   `id`: identificador único del paciente
+
+-   `sexo`: sexo biológico (M = masculino, F = femenino)
+
+-   `edad`: edad en años al momento del trasplante
+
+-   `status`: estado al final del seguimiento (1 = fallecido, 0 = censurado)
+
+-   `tiempo`: tiempo hasta la fecha de óbito o censura
+
+-   `deag`: presencia de enfermedad injerto-huesped aguda
+
+-   `decr`: presencia de enfermedad injerto-huesped crónica
+
+-   `fase`: fase de la LMC (aguda, crónica, crisis blástica)
+
+El evento de interés es "*muerte pos-trasplante*". Comenzaremos por utilizar la función `Surv()`, que toma como argumentos `time` y `event` y devuelve un objeto de supervivencia que se utiliza como insumo para los análisis posteriores. La función `survfit()` toma ese objeto y construye las curvas de supervivencia correspondientes.
+
+Nos centraremos en la construcción de objetos de supervivencia a partir de **datos con censura a la derecha**, ya que es el tipo más común en estudios longitudinales. En este tipo de censura, solo necesitamos dos argumentos para `Surv()`. Para explorar otras formas de censura (por ejemplo, censura por intervalo o truncamiento), se recomienda consultar la documentación del paquete `survival`.
+
+Generamos el objeto de supervivencia usando las variables `tiempo` y `status`:
+
+```{r}
+global <- Surv(time = datos$tiempo, event = datos$status)
+
+# Explorar el objeto de supervivencia
+global
+```
+
+Al llamar el objeto, veremos que algunas observaciones aparecen con el símbolo `+`, indicando que han sido **censuradas** a la derecha.
+
+La función `survfit()` crea curvas de supervivencia a partir de una fórmula. A continuación, ajustaremos un modelo Kaplan-Meier para estimar la curva de supervivencia global:
+
+```{r}
+KM <- survfit(global ~ 1)
+
+# Explorar el modelo de supervivencia
+KM
+```
+
+Algunos de los argumentos opcionales de la función son los siguientes:
+
+-   `conf.int`: permite modificar el nivel de confianza (por ejemplo, `conf.int = 0.90`)
+
+-   `conf.type`: define el método de construcción del intervalo:
+
+    -   `"log"` (por defecto): usa transformación logarítmica: $g(t) = log(t)$
+
+    -   `"log-log"`: usa $g(t) = log(-log(t))$
+
+    -   `"plain"`: intervalo lineal sin transformación.
+
+El objeto `KM` contiene información detallada: número de observaciones, cantidad de eventos observados, mediana del tiempo de supervivencia y su intervalo de confianza. Además, al tratarse de un objeto de tipo lista, podemos acceder a información adicional con los siguiente comandos:
+
+```{r}
+# devuelve las estimaciones de Kaplan-Meier a cada t_i
+KM$surv
+
+# {t_i}
+KM$time 
+
+# {Y_i}
+KM$n.risk 
+
+# {d_i}
+KM$n.event 
+
+# error estándar de las estimaciones de  K-M a {t_i}
+KM$std.err 
+
+# estimaciones puntuales inferiores (alternativamente, $upper)
+KM$lower
+```
+
+También puede obtenerse un resumen completo mediante:
+
+```{r}
+#| echo: true  
+summary(KM)
+```
+
+Para graficar la función de supervivencia usaremos la función `ggsurvplot()` del paquete `survminer`:
+
+```{r}
+ggsurvplot(KM, data = datos)
+```
+
+Como se esperaba, la gráfica nos muestra las probabilidades decrecientes de supervivencia a medida que pasa el tiempo. El sombreado alrededor de la curva representa el intervalo de confianza para cada estimación puntual. Más adelante exploraremos cómo personalizar estos gráficos para mejorar su presentación e interpretación.
+
+### Comparación de curvas de supervivencia
+
+Intentaremos ahora verificar los factores pronósticos para el tiempo de supervivencia pos-trasplante. Recordemos que el evento a considerar es “*muerte pos-trasplante*”. Como herramienta exploratoria, utilizaremos las curvas de supervivencia estimadas por el método de Kaplan Meier según las covariables: `sexo`, Enfermedad injerto crónica (`decr`), Enfermedad injerto aguda (`deag`) y `fase`. Esta parte es equivalente al análisis bivariado que realizamos en regresión lineal y logística. Recordemos que la variable que representa los tiempos de supervivencia es `tiempo` y la que representa el evento o la censura es `status`.
+
+Comenzaremos evaluando las curvas de Kaplan Meier en forma visual, y las completaremos con la información del log-rank test, que nos permite comparar dos funciones de supervivencia.
+
+Definimos la función de supervivencia para `sexo`, usando el objeto de supervivencia creado anteriormente:
+
+```{r}
+kmsex <- survfit(global ~ sexo, data = datos)
+```
+
+Graficamos la curva de supervivencia:
+
+```{r}
+ggsurvplot(kmsex, data = datos)
+```
+
+Para comparar ambas funciones de supervivencia se debe ejecutar la función `survdiff()`:
+
+```{r}
+logrank <- survdiff(global ~ sexo, data = datos)
+
+logrank
+```
+
+Podemos resumir toda la información en un único gráfico, e incluso sumarle información adicional, de acuerdo a cómo personalicemos dicho gráfico:
+
+```{r}
+ggsurvplot(
+  kmsex, 
+  data = datos, 
+  size = 1,                       # <1>
+  palette = c("#A36267", "#515A79"), # <2> 
+  conf.int = TRUE,                # <3>
+  pval = TRUE,                    # <4>
+  risk.table = TRUE,              # <5>
+  risk.table.col = "strata",      # <6> 
+  legend.labs = c("Femenino", "Masculino"),   # <7>
+  risk.table.height = 0.25,       # <8>
+  ggtheme = theme_bw()            # <9>
+)
+```
+
+1.  Cambia el grosor de la línea
+2.  Personaliza las paletas de colores
+3.  Agrega intervalo de confianza
+4.  Agrega *p*-valor
+5.  Agrega tabla de riesgo
+6.  Tabla de riesgos con diferente color según grupo
+7.  Cambia etiqueta de la leyenda
+8.  Útil para cambiar cuando se tienen múltiples grupos
+9.  Cambia el tema de `ggplot2`
+
+Hagamos lo mismo para las restantes variables del ejemplo:
+
+Enfermedad injerto aguda:
+
+```{r}
+# Función de supervivencia
+kmdeag <- survfit(global ~ deag, data = datos)
+
+# Generar curvas de supervivencia
+ggsurvplot(
+  kmdeag, 
+  data = datos, 
+  size = 1,                  
+  palette = c("#A36267", "#515A79"),
+  conf.int = TRUE,          
+  pval = TRUE,              
+  risk.table = TRUE,        
+  risk.table.col = "strata",
+  legend.labs = c("NO", "SI"),    
+  risk.table.height = 0.25, 
+  ggtheme = theme_bw()      
+)
+
+# Test de log-rank
+logrank <- survdiff(global ~ deag, data = datos)
+
+logrank
+```
+
+Enfermedad injerto crónica:
+
+```{r}
+# Función de supervivencia
+kmdecr <- survfit(global ~ decr, data = datos)
+
+# Generar curvas de supervivencia
+ggsurvplot(
+  kmdecr, 
+  data = datos, 
+  size = 1,                  
+  palette = c("#A36267", "#515A79"),
+  conf.int = TRUE,          
+  pval = TRUE,              
+  risk.table = TRUE,        
+  risk.table.col = "strata",
+  legend.labs = c("NO", "SI"),    
+  risk.table.height = 0.25, 
+  ggtheme = theme_bw()      
+)
+
+# Test de log-rank
+logrank <- survdiff(global ~ decr, data = datos)
+
+logrank
+```
+
+Fase de la leucemia:
+
+```{r}
+# Función de supervivencia
+kmfase <- survfit(global ~ fase, data = datos)
+
+# Generar curvas de supervivencia
+ggsurvplot(
+  kmfase, 
+  data = datos, 
+  size = 1,                  
+  palette = c("#A36267", "#515A79", "#E99973"),
+  conf.int = TRUE,          
+  pval = TRUE,              
+  risk.table = TRUE,        
+  risk.table.col = "strata",
+  legend.labs = c("aguda", "cb", "crónica"),    
+  risk.table.height = 0.25, 
+  ggtheme = theme_bw()      
+)
+
+# Test de log-rank
+logrank <- survdiff(global ~ fase, data = datos)
+
+logrank
+```
+
+¿Qué podemos concluir a partir de las curvas de KM? Observando cada gráfico detenidamente, vemos que:
+
+-   Para la variable `sexo`, las curvas se superponen bastante. Es decir que parece razonable suponer que no existe diferencia en la supervivencia pos-trasplante de hombres y mujeres. Dado la forma de las curvas, parecería más correcto emplear el test de Wilcoxon. De todas formas, el valor de ambos test indica lo que ya habíamos predicho observando el gráfico: que no hay diferencia en las curvas de supervivencia entre hombres y mujeres.
+
+-   Se observa diferencia en las curvas de supervivencia de los pacientes según hayan padecido o no enfermedad injerto contra huésped aguda (`deag`), con menor supervivencia para quienes la padecieron.
+
+-   Se observa diferencia en las curvas de supervivencia de los pacientes según hayan padecido o no enfermedad injerto contra huésped crónica (`decr`), con menor supervivencia para quienes no la padecieron.
+
+-   Se observa diferencia en las curvas de supervivencia de los pacientes según la fase de la enfermedad en la que se encontraban al momento del trasplante. Observen que la variable `fase` tiene 3 categorías. El valor del log Rank test nos indica que hay diferencia en la supervivencia de las categorías, pero no nos dice si las 3 son distintas o si sólo una difiere de las otras dos. De la observación del gráfico podemos concluir que los pacientes que sufren crisis blástica (`cb`) tienen una supervivencia menor, de hecho aproximadamente a los 200 días fallecen todos.
+
+Recordamos que KM estratifica por variables cualitativas, por lo tanto `edad` no puede ser evaluada de esta forma. Podría recodificarse si, para el evento en cuestión, el marco teórico señalara alguna edad de corte. Volveremos sobre este ejemplo cuando abordemos el modelo de regresión de Cox.
+
+### Función de riesgo
+
+En algunas situaciones, dependiendo del evento que estemos considerando, puede resultar más fácil de interpretar la función de riesgo en lugar de la función de supervivencia. En nuestro ejemplo, el evento considerado es el "*tiempo hasta la muerte pos-trasplante*", y en este contexto la función de supervivencia se interpreta fácilmente.
+
+Sin embargo, en otros escenarios —por ejemplo, cuando el evento es la aparición de una infección, una recaída o una complicación— la interpretación de la función de supervivencia puede no ser tan directa. En esos casos, puede ser más útil representar la **función de riesgo acumulado**, que muestra la acumulación del riesgo del evento a lo largo del tiempo.
+
+Una vez definidos los objetos de supervivencia, podemos utilizar la opción `fun = "cumhaz"` dentro de la función `ggsurvplot()` para graficar la función de riesgo acumulado:
+
+```{r}
+ggsurvplot(
+  kmsex, 
+  data = datos, 
+  fun= "cumhaz",
+  size = 1,                  
+  palette = c("#A36267", "#515A79"),
+  conf.int = TRUE,          
+  pval = TRUE,              
+  risk.table = TRUE,        
+  risk.table.col = "strata",
+  legend.labs = c("Femenino", "Masculino"),    
+  risk.table.height = 0.25, 
+  ggtheme = theme_bw()      
+)
+```
+
+Con el argumento `fun="cumhaz"` le indicamos a `ggsurvplot()` que grafique la función de riesgo acumulado. Este mismo procedimiento puede aplicarse a todos los objetos de supervivencia creados previamente.
+
+::: hidden
+@hernández-ávila2011
+
+@woodward2005
+
+@royo-bordonada2009
+
+@escuelasanidad
+:::

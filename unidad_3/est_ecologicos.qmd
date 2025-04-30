@@ -1,0 +1,124 @@
+---
+title: "Estudios ecológicos"
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+Por definición, un **estudio ecológico** es aquel en el cual las unidades de análisis son poblaciones o agrupamientos de individuos, no los individuos propiamente dichos. Estos conglomerados pueden estar definidos en un contexto espacial (ciudad, provincia, país, región, etc), institucional (hospitales, escuelas, etc), social, temporal, etc. La característica principal de este tipo de diseños es que se cuenta con información sobre la exposición y el evento para el conglomerado en su totalidad, pero se desconoce la información a escala individual.
+
+En este tipo de estudios se asigna la misma exposición (generalmente una exposición promedio) a todo el conglomerado. Algo similar ocurre con el evento considerado, tenemos un número de eventos correspondiente al conglomerado, pero no se sabe si los individuos expuestos son los que tienen el evento.
+
+Repasemos las principales ventajas y desventajas de este diseño:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  Ventajas = c("Se pueden estudiar grandes grupos poblacionales",
+               "Relativamente fáciles de realizar",
+               "Aumenta el poder estadístico",
+               "Aumenta la variabilidad en exposición",
+               "Se puede utilizar información de estadísticas vitales"),
+  Desventajas = c("No se tiene información del individuo,por lo que no se puede ajustar por diferencias a nivel individual",
+                  "No se puede saber quién sí está expuesto o quién sí desarrolló el evento de interés",
+                  "No se tiene información sobre factores de confusión y no se puede corregir por esto",
+                  rep("",2))) |> 
+  
+  # Tabla
+  kbl() |> 
+  kable_paper(html_font = "Calibri") |>
+  row_spec(0, background = "#2f2e4e", color = "white")
+```
+
+Recordemos también que puede incurrirse en la llamada *falacia ecológica*:
+
+::: {.callout-warning appearance="simple"}
+## Falacia ecológica (*ecological fallacy*)
+
+Sesgo que puede aparecer al observar una asociación a partir de un estudio ecológico pero que no representa una asociación causal a nivel individual.
+:::
+
+En un estudio ecológico, existen distintos niveles de medición de las variables de grupo:
+
+-   **Medidas agregadas**: Se trata de resumir las observaciones sobre individuos en cada grupo, expresándolas como medias o proporciones (ejemplo la proporción de usuarios de cinturón de seguridad).
+
+-   **Mediciones ambientales**: Son características generalmente del lugar en el que los miembros del grupo viven o trabajan (ejemplo: niveles de contaminación ambiental). Cada medición ambiental tiene su análogo a nivel individual y la exposición individual puede variar dentro del grupo.
+
+-   **Mediciones globales**: Son características de grupos, organizaciones o áreas para las que no existe una analogía con el nivel individual (ejemplo: densidad de población).
+
+Esta distinción es importante, porque para las dos primeras siempre existe el recurso de la medición individual, en tanto que en las mediciones globales, el diseño ecológico es la única alternativa viable.
+
+## Clasificación de estudios ecológicos
+
+-   **Exploratorios**: En los estudios exploratorios se comparan las tasas de enfermedad entre muchas regiones durante un mismo periodo, o se compara la frecuencia de la enfermedad a través del tiempo en una misma región. Se podría decir que se buscan patrones regionales o temporales, que pudieran dar origen a alguna hipótesis.
+
+    ➡️ [Ocaña-Riola, R., et al. (2016). Geographical and Temporal Variations in Female Breast Cancer Mortality in the Municipalities of Andalusia (Southern Spain). International journal of environmental research and public health, 13(11), 1162.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5129372/)
+
+-   **Estudios de grupos múltiples**: Este es el tipo de estudio ecológico más común. Se evalúa la asociación entre los niveles de exposición promedio y la frecuencia de la enfermedad entre varios grupos. La fuente de datos suele ser las estadísticas de morbilidad y mortalidad rutinarias.
+
+    ➡️ [Vinikoor-Imler, L. C., et al. (2011). An ecologic analysis of county-level PM2.5 concentrations and lung cancer incidence and mortality. International journal of environmental research and public health, 8(6), 1865–1871.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3138001/)
+
+-   **Estudios de series temporales**: Se comparan las variaciones temporales de los niveles de exposición con otra serie de tiempo que refleja los cambios en la frecuencia de la enfermedad en la población de un área geográfica determinada.
+
+    ➡️ [Ballester, F., et al. (2001). Air pollution and emergency hospital admissions for cardiovascular diseases in Valencia, Spain.Journal of Epidemiology & Community Health, 55, 57-65.](https://jech.bmj.com/content/55/1/57.long)
+
+-   **Estudios mixtos**: En esta categoría se incluyen los estudios de series de tiempo combinadas con la evaluación de grupos múltiples.
+
+    ➡️ [Schneider, M. C., et al. (2017). Leptospirosis in Latin America: Exploring the first set of regional data. Revista Panamericana de Salud Pública, 41, 1.](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6645204/)
+
+Algunos autores presentan la perspectiva que mostramos en la siguiente tabla, para una comprensión más rápida de las distintas posibilidades de los diseños ecológicos:
+
+```{r}
+#| echo: false
+# Datos
+tibble(
+  Tipo = c("Transversal",
+           "Series temporales",
+           "Descriptivo"),
+  "Diseño" = c("A lo largo de diferentes comunidades",
+               "Dentro de la misma comunidad",
+               "A lo largo de diferentes comunidades o dentro de la misma comunidad"),
+  "Marco temporal" = c("Mismo período",
+                       "A lo largo del tiempo",
+                       "Un punto en el tiempo o a lo largo del tiempo")
+) |> 
+  
+  # Tabla
+  kbl() |> 
+  kable_paper(html_font = "Calibri") |>
+  row_spec(0, background = "#2f2e4e", color = "white")
+```
+
+## Análisis de estudios ecológicos
+
+En un **análisis ecológico completo**, todas las variables son medidas ecológicas (exposición o exposiciones, enfermedad u otras variables incluidas), ya que la unidad de análisis es el grupo. Ello implica que desconocemos la distribución conjunta de cualquier combinación de variables a nivel individual.
+
+En un **análisis ecológico parcial** de tres o más variables puede tenerse información de la distribución conjunta de alguna de las variables en cada grupo. Por ejemplo, en el estudio de incidencia de cáncer se conocen la edad y el sexo de los casos (información individual) pero la exposición derivada de la residencia en un área concreta (municipio) es información ecológica.
+
+El **análisis multinivel** es un tipo especial de modelización que combina el análisis efectuado a dos o más niveles. Ejemplo: la modelización de la incidencia de cáncer incluyendo el sexo y la edad como variables explicativas, además de variables socio-demográficas.
+
+Como podemos apreciar, tenemos muchas posibilidades para contemplar. En este capítulo, nos centraremos en aquellos estudios ecológicos completos donde el objetivo principal sea encontrar una relación entre la exposición y la enfermedad, es decir un ***estudio de grupos múltiples***.
+
+La manera usual de evaluación de la asociación en estudios de grupos múltiples es mediante modelos lineales de regresión, de hecho algunos autores se refieren a estos estudios como "Estudios de correlación". Dependiendo del diseño y la distribución de los datos se pueden emplear otros modelos no lineales o no aditivos. Como las tasas de morbilidad y mortalidad en las regiones geográficas que se comparan comúnmente son eventos raros o que ocurren a bajas frecuencias, éstos semejan una distribución Poisson; así que la regresión de Poisson también puede ser usada.
+
+En este capítulo abordaremos a modo de introducción el [**modelo lineal general**](mod_estadistico.qmd), la [**covarianza y correlación,**](covarianza_correlacion.qmd) para luego entender los modelos de [**regresión lineal simple**](reg_lineal.qmd)**, [análisis de la varianza](anova.qmd)** y [**regresión lineal múltiple**](reg_lineal_multiple.qmd), ampliamente usados en el análisis de los estudios ecológicos, aunque no exclusivos de ellos.
+
+::: hidden
+@ballesterdíez2003
+
+@escuelasanidad
+
+@daniel2002
+
+@hernández-ávila2011
+
+@triola2018
+
+@weisberg2005
+:::

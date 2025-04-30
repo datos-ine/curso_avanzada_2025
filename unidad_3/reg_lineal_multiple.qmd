@@ -1,0 +1,773 @@
+---
+title: "Regresión lineal múltiple"
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+Los modelos de Regresión Lineal Múltiple (RLM) son herramientas estadísticas ampliamente utilizadas cuando la variable dependiente es continua y existen dos o más variables independientes, que pueden ser tanto continuas como categóricas. En el caso de las covariables categóricas, estas pueden ser dicotómicas, ordinales o tener múltiples niveles.
+
+Al igual que la Regresión Lineal Simple (RLS), que permite estimar el efecto bruto de una variable independiente sobre la variable dependiente, la RLM nos permite conocer el efecto conjunto de dos o más variables independientes ($X_1$, $X_2$,...$X_k$) sobre la variable dependientea ($Y$). De esta manera, la RLM nos permite:
+
+-   **Analizar la dirección y fuerza de la asociación** entre la variable dependiente y las variables independientes.
+
+-   **Identificar las variables independientes importantes** en la predicción o explicación de la variable dependiente.
+
+-   **Describir la relación entre una o más variables independientes**, controlando la confusión.
+
+-   **Detectar interacciones**, es decir, cómo cambia la relación entre la variable dependiente y una variable independiente según el nivel de otra variable independiente.
+
+El modelo estadístico de la RLS que expresa la relación entre $X$ e $Y$ es:
+
+$$
+Y = \beta_0 + \beta_1X_1
+$$
+
+Este modelo se representa gráficamente como una recta de ajuste en un plano bidimensional (dos dimensiones).
+
+Por otro lado, el modelo estadístico de la RLM es:
+
+$$
+Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ...+\beta_kX_k  
+$$
+
+Donde $\beta_0$, $\beta_1$, $\beta_2$,...,$\beta_k$ son los parámetros de la regresión. Para cada combinación de valores de $X_1$, $X_2$,...$X_k$ existe una distribución $Y$ cuya **media** es una función lineal de $X_1$, $X_2$,..., $X_k$.
+
+```{r}
+#| echo: false
+
+## Sample data
+set.seed(1234)
+
+dat <- tibble(
+  x = runif(100, 0, 50),
+  y = rnorm(100, 10*x, 100)) |> 
+  # breaks
+  mutate(section =  cut(x, breaks = seq(min(x), max(x), len = 5),
+                       labels = c("X1", "X2", "X3", "X4"))
+  ) |> 
+  
+  # residuals
+  mutate(res = residuals(lm(y ~ x)))
+
+
+## Compute normal densities for each section
+normal_dens <- do.call(rbind, lapply(split(dat, dat$section), function(x) {
+  xs <- seq(min(x$res), max(x$res), len = 50)
+  res <- data.frame(y = xs + mean(x$y),
+                    x = max(x$x) - 2000*dnorm(xs, 0, sd(x$res)))
+  res$type <- "normal"
+  res
+}))
+normal_dens$section <- rep(levels(dat$section), each = 50)
+
+## Plot
+ggplot() +
+  
+  geom_smooth(data = dat, mapping = aes(x = x, y = y),
+              method = "lm", se = F, color = "grey5") +
+  
+  geom_line(data = normal_dens,
+            aes(x = x, y = y, color = section),
+            linewidth = 1, alpha = .7) +
+  
+  scale_color_manual(values = pal) +
+ 
+  scale_x_continuous(breaks = c(11, 24, 36, 46),
+                     labels = c("X1", "X2", "X3", "X4")) +
+  
+  annotate(geom = "text", x = 40, y = 100, 
+           label = expression(y  == alpha + beta*x)) +
+  
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+La representación gráfica de la recta de ajuste en la regresión lineal múltiple se realiza en un espacio de dimensión $K + 1$, donde $K$ es el número de variables independientes. En el caso de la regresión lineal simple (RLS), la relación se puede representar fácilmente en un plano bidimensional (2D). Sin embargo, a medida que aumentamos el número de variables independientes, la representación gráfica se vuelve más compleja, ya que requerimos más dimensiones, lo que dificulta visualizar el modelo en el espacio.
+
+En el caso puntual que el modelo tuviera 2 variables independientes, la ecuación sería:
+
+$$
+Y = \beta_0 + \beta_1 X_1 + \beta_2X_2
+$$
+
+En este caso, la relación podría representarse en un plano tridimensional (3D), donde los ejes corresponden a $X_1$, $X_2$ y la variable dependiente $Y$. En este plano, la superficie de ajuste es un plano que describe la relación entre las tres variables, y la orientación de dicho plano estará determinada por los coeficientes $\beta_1$ y $\beta_2$.
+
+![](images/rlm.png){fig-align="center"}
+
+En forma similar a la RLS, la interpretación de cada parámetro $\beta$ de la regresión es:
+
+-   $\beta_0$: es el valor esperado de $Y$ cuando todas las otras variables son iguales a cero.
+
+-   $\beta_1$ es la pendiente a lo largo del eje $X_1$ y representa el cambio esperado en la respuesta por unidad de cambio en $X_1$ a valores constantes de $X_2$.
+
+-   $\beta_2$ es la pendiente a lo largo del eje $X_2$ y representa el cambio esperado en la respuesta por unidad de cambio en $X_2$ a valores constantes de $X_1$.
+
+## Presupuestos del modelo de RLM
+
+### Independencia
+
+Las observaciones $Y_i$ son independientes unas de otras: el efecto de $X_1$ sobre la respuesta media no depende de $X_2$ y viceversa, siempre y cuando no exista interacción. Cuando existe interacción entre $X_1$ e $X_2$ , el efecto de $X_1$ sobre la respuesta media de $Y$ depende $X_2$ y viceversa ($X_1$ e $X_2$ no son independientes cuando existe interacción).
+
+### Linealidad
+
+Para cada combinación de valores de las variables independientes ($X_1$, $X_2$,..., $X_k$) el valor medio de $Y$ es función lineal de $X_1$, $X_2$,...,$X_k$.. La linealidad se define en relación a los coeficientes de la regresión, por lo tanto el modelo puede incluir términos cuadráticos e interacciones
+
+-   Modelo con interacción
+
+$$
+Y = \beta_0X_1 + \beta_2X_2 + \beta_3X_1X_2 
+$$
+
+-   Modelo con términos cuadráticos
+
+    $$
+    Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \beta_3X_1^2 + \beta_4X_2^2 
+    $$
+
+### Homocedasticidad
+
+la varianza de $Y$ para los distintos valores de $X_1$, $X_2$,...,$X_k$ se mantiene constante.
+
+### Normalidad
+
+Los valores de $Y$ tienen una distribución normal según los valores de $X_1$, $X_2$, $X_k$ , ésto nos permite realizar inferencias en relación a los parámetros del modelo.
+
+Al igual que en la RLS la estimación de los parámetros de la regresión (coeficientes) se realiza mediante el **Método de los Mínimos Cuadrados** **(MMC)**. El mismo consiste en adoptar como estimativas de los parámetros de la regresión los valores que minimicen la suma de los cuadrados de los residuos.
+
+$$
+ \sum_{i=1}^{i=n}e_1^2=\sum_{i=1}^{i=n}(Y_i-\hat{Y_i})^2=\sum_{i=n}^{i=n}(Y_i-(\hat{\beta}_0+\hat{\beta}_1X_1+\dots+\hat{\beta}_kX_k))^2
+$$
+
+## Interpretación del modelo
+
+Comenzaremos aprendiendo cómo interpretar un modelo de regresión lineal múltiple (RLM) antes de abordar su construcción. Para ilustrarlo, observemos en detalle la salida de R para un modelo de RLM en el que modelamos la variable `V23`, en función de las variables `V10`, `V11`, `V12`, `V14`, `V15`, `V17`, `V18` y `V24`.
+
+```{r}
+#| echo: false
+
+# Genera datos
+set.seed(123)
+n <- 100  # número de observaciones
+
+data <- tibble(
+  V23 = rnorm(n),
+  V10 = rnorm(n),
+  V11 = rnorm(n),
+  V12 = rnorm(n),
+  V14 = rnorm(n),
+  V15 = rnorm(n),
+  V17 = rnorm(n),
+  V18 = rnorm(n),
+  V24 = rnorm(n)
+)
+
+## RLM
+lm(V23 ~ ., data = data) |> 
+  summary()
+```
+
+En la salida obtenida, encontramos varios términos clave para interpretar:
+
+-   **Estimate**: muestra los coeficientes estimados ($\beta$) para el intercepto ($\beta_0$) y para cada una de las variables explicativas ($\beta_i$).
+
+-   **Std. Error**: el error estándar de cada coeficiente estimado $\beta$.
+
+-   **t-value**: los valores del test t para cada coeficiente, que evalúan si los coeficientes son significativamente diferentes de cero.
+
+-   **Pr(\>\|t\|)**: los valores p asociados a los test t para cada coeficiente.
+
+-   **Residual standard error**: el error estándar de los residuales.
+
+-   **Multiple R-squared**: el coeficiente de determinación $R^2$ múltiple, que indica qué proporción de la variabilidad de la variable dependiente es explicada por el modelo.
+
+-   **Adjusted R-squared**: el coeficiente de determinación ajustado, que penaliza por la inclusión de variables que no mejoran el modelo.
+
+-   **F-statistic**: el resultado del test F global, que evalúa la significancia del modelo en su conjunto, junto con su valor *p*.
+
+### Test F parcial
+
+En un modelo de regresión, la estimación de los coeficientes se realiza partiendo de una muestra, lo que implica que diferentes muestras pueden generar distintos valores de los parámetros. El test F parcial evalúa la siguiente hipótesis:
+
+$$
+H_0 = \beta_1 = \beta_2 = ... \beta_n = 0  \\H_1 = \exists\beta_i \neq 0
+$$
+
+Donde $H_0$ indica que todos los coeficientes de las variables independientes son cero, y $H_1$ implica que al menos uno de los coeficientes es diferente de cero. Este test evalúa la contribución de cada variable al modelo, es decir, si la inclusión de esa variable mejora significativamente la explicación de la variabilidad de $Y$. En modelos de regresión lineales generalizados (GLM), el test de Wald cumple esta misma función, mientras que en los modelos de regresión lineales múltiplos, el test F parcial cumple el mismo rol.
+
+### Varianza residual
+
+Al igual que en el [análisis de la varianza (ANOVA)](anova.qmd) y en la [regresión lineal simple](reg_lineal.qmd), podemos descomponer la variabilidad de la variable dependiente $Y$ en dos componentes:
+
+1.  Variabilidad explicada por el modelo.
+
+2.  Variabilidad **no explicada** por el modelo, atribuida a factores aleatorios.
+
+Matemáticamente, esto se expresa como:
+
+$$
+Variabilidad \ total = Variabilidad \ regresión \ + \ Variabilidad \ residual
+$$
+
+De manera equivalente, la suma de cuadrados totales (SCT) se descompone en la suma de cuadrados de la regresión (SCR) y la suma de cuadrados residuales (SCE):
+
+$$
+\sum (y_i-\bar{y})^2 = \sum (\hat{y}-\bar{y})^2 + \sum (y_i -\hat{y}_i)^2
+\\
+SCT = SCR + SCE
+$$
+
+A continuación, mostramos cómo estos términos se distribuyen entre los grados de libertad y se obtienen los cuadrados medios correspondientes:
+
+```{=html}
+<table style="border-collapse:collapse;border-color:#aaa;border-spacing:0;border:none" class="tg"><thead><tr><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal"></th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Grados de libertad</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CM</th></tr></thead>
+<tbody><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">SCT</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">n-1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CMT = SCT/n-1</td></tr>
+<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">SCT</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">k-1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CMR = SCR/k-1</td></tr>
+<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">SCE</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">n-k-1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CME = SCE/n-k-1</td></tr></tbody></table>
+```
+
+### Test F global
+
+El test F global compara el modelo de regresión ajustado con el modelo nulo (sin variables independientes) y evalúa el efecto conjunto de todas las variables independientes. Su fórmula es:
+
+$$ 
+F = CMR/CME 
+\\ 
+gl = (k -1, n - k - 1) 
+$$
+
+### Coeficiente de determinación
+
+Al igual de lo que aprendimos en la RLS la bondad de ajuste del modelo de RLM se valora con el coeficiente de determinación ($R^2$), que nos dice qué proporción de la variabilidad de $Y$ es explicada por los coeficientes de la regresión del modelo en estudio. Su valor se calcula como:
+
+$$ R^2 = \frac{SCT-SCE}{SCT}=\frac{SCR}{SCT} $$
+
+Sin embargo, al agregar más variables al modelo, $R^2$ siempre mejora, incluso si la nueva variable no mejora sustancialmente el modelo. Este fenómeno se debe a que $R^2$ solo refleja la proporción de variabilidad explicada, pero no penaliza la inclusión de variables que no aportan al modelo.
+
+Por esta razón, se utiliza el $R^2$ ajustado, que corrige el $R^2$ penalizando la inclusión de variables que no aportan significativamente:
+
+$$ R^2_a = 1 - \bigg [ \frac{n-1}{n-(k+1)}\bigg]\frac{SCE}{SCT}=1-\bigg[\frac{n-1}{n-(k+1)}\bigg](1-R^2)  $$
+
+Como el término $1 - R^2$ es constante y $n$ es mayor que $k$, a medida que agregamos variables, el cociente entre paréntesis crece, lo que hace que la penalización por agregar variables no significativas también aumente. Esto hace que el $R^2$ ajustado sea una medida más fiable de la calidad del modelo.
+
+::: {.callout-caution appearance="simple"}
+Cuando tenemos que elegir el mejor modelo será necesario utilizar distintos criterios para compararlos y basar nuestra decisión en elegir el modelo que mejor explique la variación de $Y$ con el menor número de variables independientes, el modelo más simple y efectivo, también llamado el modelo más **parsimonioso**.
+:::
+
+## Variables *dummy*
+
+En los modelos de regresión, podemos incluir tanto variables cuantitativas como variables categóricas. Las variables categóricas pueden ser dicotómicas (por ejemplo, sexo: femenino/masculino; hábito de fumar: sí/no) o tener más de dos categorías (por ejemplo, grupo sanguíneo, religión, color de ojos).
+
+Para modelar las variables categóricas, cada categoría se transforma en una variable dicotómica (binaria), con un número de categorías menos uno. Es decir, para una variable con $n$ categorías, se crearán $n-1$ variables *dummy*, donde $1$ indica la presencia de esa categoría y $0$ indica su ausencia. En estos casos, se selecciona como grupo basal (o grupo de referencia) la categoría con el valor más bajo.
+
+#### Ejemplo para variable independiente dicotómica
+
+Supongamos que tenemos una variable cualitativa dicotómica, como "Hábito de Fumar", que toma los valores 1 (si fuma) y 0 (si no fuma). Si ajustamos un modelo con esta variable, la ecuación sería:
+
+$$ 
+Y = \beta_0+\beta_1F_1  
+$$
+
+Donde:
+
+-   $Y$ es la variable dependiente.
+
+-   $\beta_0$ es el intercepto (valor basal de $Y$ cuando el individuo no fuma).
+
+-   $\beta_1$ es el coeficiente asociado al hábito de fumar, que indica el cambio en $Y$ cuando el individuo fuma (es decir, la diferencia entre el grupo de fumadores y no fumadores).
+
+#### Ejemplo para variable independiente con múltiples categorías
+
+Ahora, consideremos una variable "Región", que tiene tres categorías: Noreste (NE), Norte (N) y Centro Oeste (CO). Para modelarla como variables *dummy*, la transformamos en dos variables: $Re_1$ y $Re_2$, ya que hay $n-1 = 3-1 = 2$ categorías *dummy*.
+
+La transformación de las categorías sería:
+
+```{=html}
+<table style="border-collapse:collapse;border-color:#aaa;border-spacing:0;border:none" class="tg"><thead><tr><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Región</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">RE1</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">RE2</th></tr></thead>
+<tbody><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">NE (basal)</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0</td></tr>
+<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">N</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0</td></tr>
+<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CO</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">1</td></tr></tbody></table>
+```
+
+En este caso:
+
+-   $Re_1 = 1$ si vive en el Norte, $Re_1 = 0$ si vive en otra región.
+
+-   $Re_2 = 1$ si vive en el Centro Oeste, $Re_2 = 0$ si vive en otra región.
+
+Ahora imaginemos el modelo de regresión entre $Y$ y la variable *“región”* (supongamos que $Y$ es la Tasa de Mortalidad Infantil):
+
+$$ 
+Y = \beta_0+\beta_1Re_1 + \beta_2Re_2 
+$$
+
+Para interpretar el modelo:
+
+-   Si el individuo vive en la región Norte ($Re_1 = 1$ y $Re_2 = 0$), la ecuación se reduce a:
+
+$$ 
+Y=\beta_0+\beta_1Re_1  
+$$
+
+-   Si el individuo vive en la región Centro Oeste ($Re_1 = 0$ y $Re_2 = 1$), la ecuación sería:
+
+$$ Y=\beta_0+\beta_2Re_2  $$
+
+-   Si el individuo vive en la región Noreste (grupo basal, $Re_1 = 0$ y $Re_2 = 0$), la ecuación se reduce a:
+
+$$ Y=\beta_0 $$
+
+En este contexto, $\beta_1$ y $\beta_2$ nos estarán indicando cuánto se modifica la TMI según consideremos la región Norte o Centro Oeste. El coeficiente $\beta_0$ es el valor basal medio de la TMI considerada en la región Noreste
+
+Las variables *dummy* o indicadoras no tienen un significado por sí solas, ya que su interpretación depende de cómo se comparan con el grupo basal. Es importante que todas las categorías de la variable cualitativa estén representadas en el modelo, y la inclusión de estas variables debe ser contrastada en bloque, incluso si algunos de los tests $F$ parciales para una categoría no son significativos.
+
+Además, al agregar una variable *dummy* al modelo, esta incrementa los grados de libertad de la regresión en función de la cantidad de categorías de la variable. Por ejemplo, si una variable tiene $n$ categorías, se agregarán $n-1$ variables *dummy*, cada una con su respectivo grado de libertad.
+
+Cuando trabajamos en R, el lenguaje se encarga de construir las variables *dummy* automáticamente siempre que su estructura sea **factor**. Los tipos de datos **factor** tienen una estructura de niveles donde el primero de ellos es el de referencia. Para modificar el nivel de referencia podemos utilizar las funciones `relevel()` de R `base` o `fct_relevel()` de `tidyverse`.
+
+## Estimación y predicción en modelos de regresión
+
+La regresión es una herramienta clave en los análisis tanto explicativos como predictivos, y se utiliza de las siguientes maneras:
+
+1.  **Con fines explicativos**: Este uso tiene como objetivo obtener estimaciones precisas sobre variables de interés para realizar inferencias o cuantificar relaciones entre variables, controlando por otras. Aquí se busca entender cómo los cambios en las variables independientes afectan a la variable dependiente.
+
+2.  **Con fines predictivos**: La regresión también se utiliza para predecir el comportamiento de la variable dependiente ($Y$) basándose en los valores de las variables independientes ($X_k$) observados en la muestra. Sin embargo, la predicción solo debe hacerse si existe una correlación lineal adecuada y si el modelo ajustado es adecuado para los datos.
+
+#### Consideraciones para la predicción:
+
+-   **No utilizar el modelo si no hay correlación lineal**: Si no existe una correlación lineal significativa entre $Y$ y las $X_k$, la predicción no será válida. En estos casos, la mejor predicción es la media muestral de $Y$.
+
+-   **No extrapolar más allá de los valores muestrales conocidos**: Las predicciones fuera del rango de los datos observados pueden ser inexactas.
+
+-   **Datos actualizados**: La predicción debe basarse en datos recientes y relevantes.
+
+-   **No predecir para poblaciones distintas**: El modelo debe ser usado solo para hacer predicciones dentro de la población de la cual se obtuvieron los datos muestrales.
+
+-   **Relación no necesariamente causal para modelos predictivos**: Mientras que para modelos explicativos la relación entre $X$ y $Y$ debe ser causal (en términos temporales y lógicos), para la predicción basta con que exista una correlación.
+
+## Lineamientos la selección del modelo de regresión
+
+Dada una variable dependiente $Y$ y un conjunto de $k$ variables independientes $X_1$, $X_2$, $X_3$....,$X_k$ , nuestro interés es definir el mejor conjunto de $p$ predictores ($p \leq k$) y el correspondiente modelo de regresión para describir la relación entre $Y$ y las variables $X$.
+
+Para ello, debemos seguir los siguientes pasos:
+
+1.  Especificar el conjunto de variables potencialmente predictivas/explicativas
+2.  Evaluar colinealidad
+3.  Especificar un criterio estadístico para la elección de las variables
+4.  Especificar una estrategia para seleccionar modelos
+5.  Conducir el análisis específico
+6.  Evaluar los presupuestos del modelo
+7.  Evaluar la confiabilidad del modelo escogido
+
+### Identificación de variables potencialmente predictivas/explicativas
+
+El primer paso para construir un modelo de regresión es seleccionar un conjunto adecuado de variables predictivas. Esto implica identificar aquellas variables que mejor expliquen la variable dependiente sin que ninguna de ellas sea combinación lineal de las restantes.
+
+El primer paso a seguir es identificar las relaciones entre la variable dependiente y las variables independientes de forma bivariada utilizando tests de correlación y gráficos de dispersión para las variables explicativas continuas y tests de asociación para las variables explicativas categóricas.
+
+### Colinealidad
+
+Un problema frecuente en los modelos de RLM es el de la **multicolinealidad**, que ocurre cuando las variables independientes están relacionadas entre sí en forma lineal. Si bien no implica una violación de las hipótesis o presupuestos del modelo, puede ocasionar problemas en la inferencia, ya que:
+
+-   Aumenta las varianzas y covarianzas de los estimadores.
+
+-   Los errores de las estimaciones serán grandes.
+
+-   Tiende a producir estimadores con valores absolutos grandes.
+
+-   Los coeficientes de cada variable independiente difieren notablemente de los que se obtendrían por RLS.
+
+-   No se puede identificar de forma precisa el efecto individual de cada variable colineal sobre la variable respuesta.
+
+A la hora de plantear modelos de RLM conviene estudiar previamente la existencia de casi-colinealidad (la colinealidad exacta no es necesario estudiarla previamente, ya que todos los algoritmos la detectan, de hecho no pueden acabar la estimación). Como medida de la misma hay varios estadísticos propuestos:
+
+-   Podemos examinar la matriz de correlación
+
+-   Realizar gráficos de dispersión entre las variables explicativas/predictivas
+
+-   Cálculo del factor de inflación de la varianza (VIF por sus siglas en inglés):
+
+$$
+VIF = \frac{1}{1-R^2_i}
+$$
+
+Una regla empírica, citada por @kleinbaum1988, consiste en considerar que existen problemas de colinealidad si algún VIF es superior a 10. Por otro lado @kim2019 considera que un VIF entre 5 y 10 indican la presencia de colinealidad. En caso de detectar colinealidad entre dos predictores, existen dos posibles soluciones:
+
+-   Excluir uno de los predictores problemáticos intentando conservar el que, a juicio del investigador, está influyendo realmente en la variable respuesta
+
+-   Combinar las variables colineales en un único predictor, aunque con el riesgo de perder su interpretación
+
+### Selección de variables
+
+Generalmente incluiremos en el modelo aquellas variables que resultaron significativas en el análisis bivariado y otras que, aun cuando no resultaran significativas, decidamos mantener por cuestiones teóricas, porque se necesitan establecer predicciones para distintas categorías de dicha variable, etc.
+
+El proceso de selección de variables puede realizarse en forma manual o automática, siendo este último desaconsejado por la mayoría de los autores, ya que en el proceso de ajuste de un modelo no sólo se involucran criterios estadísticos sino también conceptuales. Existen tres estrategias para realizar el proceso , basadas en el valor del test $F$ parcial:
+
+-   **Método jerárquico o *forward:*** se basa en el criterio del investigador que introduce predictores determinados en un orden específico en relación al marco teórico. Comienza con un modelo nulo que solo contiene el intercepto ($\beta_0$) y agrega secuencialmente una variable a la vez, eligiendo la que proporciona el mayor beneficio en términos de ajuste del modelo. Este proceso continúa hasta que agregar más variables no mejore significativamente el ajuste del modelo.
+
+-   **Método de entrada forzada o *backward***: es el método inverso al anterior. Se introducen todos los predictores simultáneamente y, en cada paso, elimina la variable que tenga el menor impacto en el ajuste del modelo. Este proceso continúa hasta que eliminar más variables no mejore significativamente el ajuste del modelo. Permite evaluar cada variable en presencia de las otras.
+
+-   **Método paso a paso o *stepwise***: emplea criterios matemáticos para decidir qué predictores contribuyen significativamente al modelo y en qué orden se introducen. Se trata de una combinación de la selección *forward* y *backward.* Comienza con un modelo nulo, pero tras cada nueva incorporación se realiza un test de extracción de predictores no útiles como en el *backward.* Presenta la ventaja de que si a medida que se añaden predictores, alguno de los ya presentes deja de contribuir al modelo, se elimina.
+
+### Selección de modelos
+
+Hasta ahora hemos desarrollado algunos criterios que se pueden utilizar para comparar modelos como $R^2$, $R^2$ ajustado y $F$ global. Como hemos mencionado anteriormente el uso de $R^2$ como único criterio de selección tiene varias desventajas: tiende a sobreestimar, al adicionar variables siempre aumenta, por lo que si fuera el único criterio elegiría modelos con el mayor número de variables, no tiene en consideración la relación entre parámetros y tamaño muestral.
+
+Para modelos anidados, podemos realizar una comparación entre ambos modelos mediante un ANOVA. Existen otros criterios como el Criterio de Información de Akaike (**AIC**), el Criterio de Información Bayesiano (**BIC**), etc. Tanto el BIC como el AIC, son funciones del logaritmo de la verosimilitud y un término de penalidad basado en el número de parámetros del modelo.
+
+Recuerden que frente a $p$ variables independientes existen $2^p$ posibles modelos. No necesariamente el modelo con mayor número de variables es el mejor. Debemos priorizar siempre el principio de parsimonia (el modelo más simple que mejor explique). El tamaño de la muestra también es importante, algunos autores recomiendan que el número de observaciones sea como mínimo entre 10 y 20 veces el número de predictores del modelo.
+
+## Validación y diagnóstico del modelo
+
+Utilizaremos el análisis de los residuales para realizar los contrastes *a posteriori* de las hipótesis del modelo. Recordemos que los residuos o residuales se definen como la diferencia entre el valor observado y el valor predicho por el modelo.
+
+$$
+y-\hat{y}=e~(residuo~ o ~error~ residual)
+$$
+
+El planteamiento habitual es considerar que, como dijimos inicialmente, los valores de $Y$ tienen una distribución normal según los valores de $X_1$, $X_2$,... $X_k$., entonces, los residuos también tendrán una distribución normal. Los residuos tienen unidades de medida y, por tanto no se puede determinar si es grande o pequeño a simple vista. Para solucionar este problema se define el residuo estandarizado como el cociente entre el residuo y su desvío standard. Se considera que un residuo tiene un valor alto, y por lo tanto puede influir negativamente en el análisis, si su residuo estandarizado es mayor a 3 en valor absoluto. También se trabaja con los residuos tipificados o con los residuos estudentizados.
+
+### Normalidad
+
+El análisis de normalidad de los residuos lo realizaremos gráficamente (Histograma y gráfico de probabilidad normal) y analíticamente (Contraste de Kolmogorov-Smirnov) o similar.
+
+### Homocedasticidad y linealidad
+
+La hipótesis de homocedasticidad establece que la variabilidad de los residuos es independiente de las variables explicativas. En general, la variabilidad de los residuos estará en función de las variables explicativas, pero como las variables explicativas están fuertemente correlacionadas con la variable dependiente, bastara con examinar el gráfico de valores pronosticados versus residuos (a veces residuos al cuadrado).
+
+Comprobamos la hipótesis de homogeneidad de las varianzas gráficamente representando los residuos tipificados frente a los valores predichos por el modelo. El análisis de este gráfico puede revelar una posible violación de la hipótesis de homocedasticidad, por ejemplo si detectamos que el tamaño de los residuos aumenta o disminuye de forma sistemática para algunos valores ajustados de la variable $Y$, si observamos que el gráfico muestra forma de embudo. Si por el contrario dicho gráfico no muestra patrón alguno, entonces no podemos rechazar la hipótesis de igualdad de varianzas.
+
+### Valores de influencia (*leverage*)
+
+Se considera que una observación es influyente *a priori* si su inclusión en el análisis modifica sustancialmente el sentido del mismo. Una observación puede ser influyente si es un *outlier* respecto a alguna de las variables explicativas. Para detectar estos problemas se utiliza la medida de **Leverage**:
+
+$$ 
+l(i)=\frac{1}{n}\bigg(1+\frac{(x_i-\bar{x})^2}{S^2_x}\bigg)  
+$$
+
+Este estadístico mide la distancia de un punto a la media de la distribución. Valores cercanos a 2/$n$ indican casos que pueden influir negativamente en la estimación del modelo introduciendo un fuerte sesgo en el valor de los estimadores.
+
+### Distancia de Cook
+
+Es una medida de cómo influye la observación *i*-ésima sobre la estimación de $\beta$ al ser retirada del conjunto de datos. Una distancia de Cook grande significa que una observación tiene un peso grande en la estimación de $\beta$. Son puntos influyentes las observaciones que presenten
+
+$$ D_i=\frac{4}{n-p-2}  $$
+
+### Independencia de residuos
+
+La hipótesis de independencia de los residuos la realizaremos mediante el contraste de *Durbin-Watson*.
+
+## Ejemplo práctico en R
+
+En el documento [Introducción al modelado estadístico](mod_estadistico.qmd) vimos como generar en R una fórmula para una regresión lineal simple:
+
+$$ variable \ dependiente \; \sim variable  \ independiente $$
+
+Para generar fórmulas que contengan más de una variable independiente o predictora (necesario para que sea una regresión lineal múltiple) debemos agregarlas mediante el símbolo $+$
+
+$$ variable \ dependiente \ \sim var\_indepen\_1 \ + \ var\_indepen\_2 \ + \; \dots \ + \ var\_indepen\_n $$
+
+Si luego de la `~` incluímos **un punto** como notación de "todas", estamos creando un *modelo saturado* con todas las variables incluidas dentro del dataframe:
+
+```{r}
+#| eval: false
+lm(y ~., data = datos)
+```
+
+Esto es útil cuando tenemos muchas posibles variables explicativas y queremos conocer cuáles tienen una correlación significativa.
+
+También se puede descartar alguna o algunas variables explicativas en particular basado en la misma estructura, mediante el símbolo $-$
+
+```{r}
+#| eval: false
+lm(y ~ .-x2, data = datos)
+```
+
+En la línea anterior, incluimos dentro del modelo a todas las variables de `data` menos `x2`.
+
+Usaremos para el ejemplo el dataset "`cancer_USA.txt`", que contiene información sobre la tasa de mortalidad por cáncer cada 100.000 habitantes de distintos condados de Estados Unidos.
+
+### Lectura de datos y visualización de estructura
+
+Para comenzar, cargamos los paquetes de R necesarios para el análisis:
+
+```{r}
+# correlogramaas 
+library(GGally) 
+
+# chequeo de supuestos y análisis de residuales  
+library(easystats) 
+library(gvlma)  
+library(lmtest)   
+library(nortest)
+
+# manejo de datos  
+library(tidyverse)      
+```
+
+A continuación leemos los datos y realizamos una exploración rápida
+
+```{r}
+# Carga datos
+datos <- read_csv2("datos/cancer_USA.txt")
+
+# Explora datos
+glimpse(datos)
+```
+
+La base de datos tiene `r nrow(data)` observaciones y `r ncol(data)` variables. La variable dependiente es `tasa_mortalidad` y hay 3 variables independientes categóricas y 6 variables independientes numéricas o continuas.
+
+### Análisis de variables potencialmente explicativas
+
+Analizaremos la relación entre las variables explicativas numéricas y la variable dependiente mediante un correlograma con el paquete `GGally`:
+
+```{r}
+datos |> 
+  # selecciono variables numéricas
+  select(where(is.numeric)) |> 
+  
+  # correlograma
+  ggcorr(label = T)
+```
+
+Como habíamos observado en el capítulo sobre [covarianza y correlación](covarianza_correlacion.qmd), la `tasa_mortalidad` tiene correlación negativa moderada con `mediana_ingresos`, también que existe una correlación negativa fuerte entre `pct_pobreza` y `mediana_ingresos` y moderada con `pct_salud_publica`.
+
+### Estrategia de construcción del modelo
+
+Al momento de seleccionar las variables independientes que formarán parte del modelo, una de las herramientas más utilizadas es el Criterio de Información de Akaike (AIC) que ajusta mediante *máxima verosimilitud*. Al penalizar la complejidad excesiva, el AIC ayuda a prevenir el sobreajuste y favorece la inclusión de variables relevantes buscando el modelo equilibrado que describa adecuadamente la relación y tenga el mínimo AIC. Podemos consultar el AIC de un modelo en R mediante la función `AIC()`.
+
+Como vimos anteriormente, la selección de variables se puede hacer mediante métodos *forward*, *backward* o *stepwise*. La función `step()` de R `base` permite encontrar de forma automática el mejor modelo basado en AIC utilizando cualquiera de las 3 variantes del método paso a paso. Por otro lado, la función `drop1()` de `R base` nos permite realizar un proceso *backward* manual, eligiendo que variable quitar del modelo en cada caso según su contribución al AIC. Siempre es oportuno aclarar que estos últimos métodos se basan en cálculos matemático/estadísticos que no tienen en cuenta criterios conceptuales epidemiológicos que surjan del marco teórico, por lo que exigen un control especial del analista.
+
+el lenguaje R ofrece una variedad de funciones para abordar y facilitar la tarea de seleccionar el mejor modelo de regresión (más parsimonioso). Como existe correlación fuerte entre `mediana_ingresos`, `pct_pobreza` y `pct_salud_publica` sólo usaremos la que presente mayor correlación con `tasa_mortalidad`.
+
+```{r}
+# Modelo saturado
+mod_full <- lm(tasa_mortalidad ~ mediana_ingresos + mediana_edad +
+             pct_sec_incompleta + pct_desempleo + estado,
+           data = datos)
+
+# Mediana ingresos
+mod1 <- lm(tasa_mortalidad ~ mediana_ingresos, data = datos)
+
+# Mediana edad
+mod2 <- lm(tasa_mortalidad ~ mediana_edad, data = datos)
+
+# Secundaria incompleta
+mod3 <- lm(tasa_mortalidad ~ pct_sec_incompleta, data = datos)
+
+# Desempleo
+mod4 <- lm(tasa_mortalidad ~ pct_desempleo, data = datos)
+
+# Estado
+mod5 <- lm(tasa_mortalidad ~ estado, data = datos)
+```
+
+Mediante `summary()` observamos sus resultados:
+
+```{r}
+# Modelo saturado
+summary(mod_full)
+
+# Modelos simples
+summary(mod1)
+
+summary(mod2)
+
+summary(mod3)
+
+summary(mod4)
+
+summary(mod5)
+```
+
+En los resúmenes observamos que todos los coeficientes de las variables involucradas son significativas y que los valores mostrados tienen forma de lista, es decir no son tablas "ordenadas", por lo que muchas veces cuando trabajamos con numerosas variables, se hace difícil la comparación de resultados.
+
+### Comparación de modelos
+
+El comando `compare_performance()` del paquete `performance` permite comparar de manera sencilla entre modelos anidados:
+
+```{r}
+compare_performance(mod_full,
+                    mod1, mod2, mod3, mod4, mod5,
+                    metrics = "common")
+```
+
+Las métricas comunes extraídas de los objetos de regresión, presentadas en una tabla, son:
+
+-   **AIC**: Criterio de información de Akaike
+
+-   **BIC**: Criterio de información bayesiano
+
+-   **R2**: Coeficiente de determinación $R^2$
+
+-   **R2 (adj.)**: Coeficiente de determinación ajustado
+
+-   **RMSE**: Error cuadrático medio
+
+También podemos ordenar los modelos de mejor a peor con el argumento `rank = TRUE`:
+
+```{r}
+compare_performance(mod_full,
+                    mod1, mod2, mod3, mod4, mod5,
+                    metrics = "common",
+                    rank = TRUE)
+```
+
+Podemos ver que el modelo saturado tiene un menor AIC y performance global que los modelos univariados.
+
+### Colinealidad
+
+Hay varias maneras de detectar la presencia de colinealidad entre variables independientes:
+
+-   Antes de ajustar el modelo, al comparar los coeficientes de correlación.
+
+-   Una vez ajustado el modelo, si tenemos un $R^2$ alto y muchas variables independientes que no son estadísticamente significativas.
+
+Cuando hemos intuido que tenemos multicolinealidad y queremos comprobar, el paquete `performance` nos ofrece la función `check_collinearity()` que implementa el método de factor de inflación de la varianza (VIF):
+
+```{r}
+check_collinearity(mod_full)
+```
+
+Los resultados del ejemplo muestra VIF de entre 1.28 y 2.52 (no hay colinealidad). Recordemos que el umbral de detección parte de valores cercanos a 5 y un VIF $\geq$ 10 indicaría que el modelo de regresión lineal presenta un grado de multicolinealidad preocupante.
+
+### Análisis de residuales
+
+Como vimos para la regresión lineal simple, podemos analizar gráficamente los residuales con la función `check_model()` del paquete `performance`:
+
+```{r}
+check_model(mod_full)
+```
+
+Por otra parte, también tenemos las funciones de análisis para los supuestos (independencia, linealidad, normalidad, homocedasticidad).
+
+-   **Independencia:** El paquete `lmtest` permite evaluar independencia según estadístico de Durbin-Watson.
+
+```{r}
+dwtest(mod_full)
+```
+
+-   **Linealidad:** El paquete `lmtest` implementa el *Ramsey's RESET* bajo la función `resettest()`
+
+```{r}
+resettest(mod_full)
+```
+
+-   **Normalidad:** El paquete `nortest` permite chequear normalidad mediante test de Lilliefors.
+
+```{r}
+lillie.test(mod_full$residuals)
+```
+
+-   **Homocedasticidad:** El paquete `performance` permite chequear homocedasticidad con el test de Breush-Pagan.
+
+```{r}
+check_heteroscedasticity(mod_full)
+```
+
+Finalmente presentamos un paquete interesante para validar supuestos de modelos lineales denominado `gvlma`[@gvlma]. Su función, de mismo nombre `gvlma()`, implementa un procedimiento global sobre vector residual estandarizado para probar los cuatro supuestos del modelo lineal.
+
+Si el procedimiento global indica una violación de al menos uno de los supuestos, los componentes se pueden utilizar para obtener información sobre qué supuestos se han violado.
+
+```{r}
+gvlma(mod_full)
+```
+
+### Resumen del mejor modelo elegido
+
+```{r}
+summary(mod_full)
+```
+
+El modelo `mod_full` es capaz de explicar el 29,8% de la variabilidad observada en la tasa de mortalidad por cáncer en estos condados ($R^2_{ajustado}$: 0,2975). El test F global muestra que es significativo (*p*-valor \< 0.001).
+
+Los coeficientes se pueden interpretar como:
+
+-   **Mediana de ingresos**: Cada aumento de una unidad en la mediana de ingresos reduce la tasa de mortalidad en 0,0004 unidades.
+
+-   **Mediana de edad**: Cuando aumento una unidad en la mediana de edad incrementa la tasa de mortalidad en 0,5 unidades.
+
+-   **Porcentaje de población con secundaria incompleta**: Cada aumento de una unidad en este porcentaje incrementa la tasa de mortalidad en 0,17 unidades, pero esta relación no es significativa.
+
+-   **Porcentaje de desempleo**: Cada aumento de una unidad en el desempleo incrementa la tasa de mortalidad en 1.64 unidades.
+
+-   **Estados**: Las tasas de mortalidad varían entre los estados, con algunos efectos significativos, como en Maine, New Jersey, Pennsylvania y Vermont, todos con tasas de mortalidad más altas que el estado de referencia. Es decir, la recta de regresión para cada estado tendrá un intercepto diferente.
+
+## Funciones para modelado automático
+
+El uso de la función `step()` se enmarca en los procedimientos automáticos y puede ser *forward*, *backward* o mixto. La sintaxis básica de la función es:
+
+```{r}
+#| eval: false
+step(object = modelo, direction = c("both", "backward", "forward"))
+```
+
+donde:
+
+-   **object**: es el modelo inicial de regresión lineal (nulo o saturado).
+-   **direction**: es la dirección que indicamos. Puede ser "*forward*", "*backward*" o "*both*" (predeterminado, si no se define).
+
+Generalmente conviene partir del modelo saturado y utilizar la dirección por defecto, donde se usan ambas direcciones.
+
+```{r}
+modelo_step <- step(mod_full, direction = "both")
+```
+
+Observamos que el proceso automático nos indica que debemos eliminar las variables explicativas `pct_sec_incompleta` y `estado`.
+
+```{r}
+summary(modelo_step)
+```
+
+Si bien en el ejemplo mostramos como usar el método *stepwise* automático para la selección de variables, no se recomienda su uso ya que está basado únicamente en criterios matemáticos y no en la relevancia en el mundo real.
+
+Además, cuenta con las siguientes limitaciones:
+
+-   Sensibilidad a la selección de variables
+
+-   Propensión al sobreajuste
+
+-   Violación de supuestos estadísticos
+
+-   Inclusión de variables irrelevantes
+
+Para evitar estos inconvenientes, es recomendable usar métodos alternativos de selección de variables tales como:
+
+-   **Selección manual de variables**, según su relevancia teórica y conocimiento experto del tema.
+
+-   **Selección de variables por AIC o BIC** (Criterio de Información Bayesiano).
+
+-   **Regularización** por regresión LASSO (*Least Absolute Shrinkage and Selection Operator*), que penaliza los coeficientes de las variables menos importantes, favoreciendo modelos más simples y generalizables. Para conocer más sobre este método pueden entrar [aquí](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df).
+
+-   **Árboles de decisión** (*random forest* y *gradient boosting),* herramientas de aprendizaje automático que permiten manejar automáticamente la selección de variables con menor probabilidad de sobreajuste. Para conocer más sobre este método pueden entrar [aquí](https://www.ibm.com/es-es/think/topics/decision-trees).
+
+Estos dos últimos métodos escapan al alcance del curso. Sin embargo, invitamos a quienes tengan interés a explorar las múltiples posibilidades que ofrecen, en particular al momento de analizar datasets grandes y con múltiples variables explicativas.
+
+::: hidden
+@deirala2001
+
+@deirala2001a
+
+@gordis2017
+
+@kim2019
+
+@kleinbaum1988
+
+@macmahon1972
+
+@base
+
+@tidyverse
+
+@GGally
+
+@easystats
+
+@lmtest
+:::

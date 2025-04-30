@@ -1,0 +1,539 @@
+---
+title: "Intervalos de confianza en muestras complejas"
+author: 
+  - name: Christian Ballejo
+    orcid: 0000-0002-7346-5701
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+## Introducción
+
+En los estudios epidemiológicos de corte transversal, es común el uso de encuestas poblacionales para estimar la frecuencia de determinadas condiciones de salud o la presencia de factores de riesgo en la población.
+
+Sin embargo, la implementación de estas encuestas enfrenta restricciones prácticas que hacen inviable o poco conveniente el muestreo aleatorio simple (MAS). En su lugar, se recurre a otras alternativas de muestreo, como la estratificación, la selección en etapas, la formación de conglomerados o el empleo de probabilidades de selección desiguales.
+
+Los diseños muestrales que incorporan combinaciones de estas estrategias se denominan **muestreos complejos**, por contraste con el MAS, en el que las unidades muestrales se seleccionan independientemente unas de otras y todas tienen igual probabilidad de selección y distribución.
+
+El análisis de los datos obtenidos mediante diseños muestrales complejos presenta desafíos adicionales debido a la posible correlación entre observaciones dentro de un mismo conglomerado. Esta correlación impide asumir independencia de las observaciones, condición necesaria para sostener el supuesto de normalidad. Si no se considera el efecto del diseño muestral al realizar estimaciones e intervalos de confianza (IC), los resultados pueden ser erróneos. Aspectos clave como el **efecto del diseño**, los **dominios de estimación** y los **factores de expansión** deben ser incorporados en el análisis para obtener inferencias válidas.
+
+### Algunas definiciones necesarias
+
+#### Estratos
+
+Subpoblaciones "naturales" que, *a priori*, son homogéneos en su interior pero heterogéneos entre sí. El diseño de la encuesta se hace de modo que se garantiza cubrir adecuadamente todos los estratos de interés. Algunas variables de estratos habituales son: sexo, edad (como grupo etario), nivel de educación, urbano/rural, etc.
+
+#### Conglomerados
+
+Unidades definidas dentro de cada estrato (si es muestreo polietápico), cuyo tamaño es conocido. Lo ideal es que la población dentro de un conglomerado sea lo más heterogénea posible, pero debe haber homogeneidad entre los conglomerados. Cada grupo debe ser una representación a pequeña escala de la población total. Los grupos deben ser mutuamente excluyentes y colectivamente exhaustivos.
+
+#### Probabilidad de inclusión
+
+Es la probabilidad que cada unidad tiene de estar incluida en la muestra. En los muestreos complejos polietápicos se obtiene, en general, multiplicando las probabilidades asociadas al estrato, a cada **Unidad Primaria de Muestreo** (UPM o PSU en inglés) dentro del estrato, y a la unidad de segunda etapa dentro cada UPM.
+
+#### Dominios de estimación
+
+Subconjuntos de la población objetivo cuyos elementos pueden ser identificados en el marco muestral sin ambigüedad, y en los que se permite desagregar los resultados de la encuesta. Es aconsejable respetar estos dominios de estimación y no realizar inferencia de parámetros de interés para otros dominios no previstos que conlleva estimaciones inválidas.
+
+#### Factor de expansión
+
+Es el valor asociado a cada unidad elegible y que responde a la muestra, que se construye a partir de la inversa de la probabilidad de inclusión de cada unidad o peso muestral inicial. Puede incluir distintos tipos de ajustes, para disminuir en lo posible los errores de cobertura y de no respuesta que afectan a la encuesta, y ser tratados por un proceso de calibración que lleva en general a ganar eficiencia y precisión en las estimaciones. Los factores de expansión finales son los que se emplean tanto para generar todas las estimaciones de una encuesta, como en los cálculos del error muestral al determinar la precisión alcanzada.
+
+#### Efecto de diseño (DEFF por sus siglas en inglés)
+
+Mide la pérdida en precisión al utilizar un diseño muestral complejo en lugar de un diseño aleatorio simple, por ejemplo, un efecto de diseño de 1,5 indica que la varianza del diseño complejo es 1,5 veces más grande que la varianza de un diseño aleatorio simple, en otras palabras se dio un aumento en la varianza de un 50%.
+
+## Paquetes survey y srvyr
+
+El paquete más conocido y utilizado del lenguaje R para trabajar con datos provenientes de muestreos complejos es `survey` [@survey]. Desarrollado por *Thomas Lumley* que a su vez es autor del libro *Complex Surveys - A Guide to Analysis Using R (2010)*.
+
+Las funciones que lo integran utilizan en sus argumentos la sintaxis fórmula preferentemente y no son compatibles con el universo "ordenado" de `tidyverse`. Con el objetivo de hacer compatible estas funciones crearon un paquete "wrapper" (envoltorio) llamado `srvyr` [@srvyr], que incorpora sintaxis *tidy*, haciendo uso de tuberías y funciones tales como `group_by()`, `summarise()`, entre otras.
+
+El primer paso para trabajar con las funciones de `srvyr` es crear un objeto con la información relacionada con el diseño muestral. Esta tarea se realiza con la función `as_survey_design()` que tiene estos argumentos principales:
+
+```{r}
+#| eval: false
+datos |>                      
+  as_survey_design(ids = ..., 
+                   strata = ..., 
+                   variables = ...,
+                   fpc = ...,
+                   nest = F,
+                   weights = ...)
+```
+
+donde:
+
+-   `ids`: Variables que especifican identificadores de conglomerados desde el nivel más grande hasta el nivel más pequeño (dejar el argumento vacío, `NULL`, 1 o 0 indica que no hay conglomerados).
+
+-   `strata`: Variables que identifican a los estratos. Si no hay estratos, se ignora esta especificación.
+
+Usualmente, se declara a partir de una variable. Por ejemplo, si la variable `estrato` define los estratos, sería,
+
+```{r}
+#| eval: false
+datos |> 
+  as_survey_design(..., 
+                   strata = estrato, 
+                   ...)
+```
+
+-   `variables`: Variables que se incluirán en el diseño. El valor predeterminado es todas las variables de datos.
+
+-   `fpc`: Variables con el factor de corrección por población finita.
+
+-   `nest:` Si es `TRUE`, re-etiqueta los conglomerados considerando anidamiento dentro de los estratos. Necesario activar cuando las etiquetas de las categorías de los conglomerados en los distintos estratos se llaman igual.
+
+-   **`weights`**: Variables de ponderación de cada observación (inverso a la probabilidad).
+
+Los argumentos mínimos que debemos definir dependerá de la estructura muestral de la base de datos que estemos analizando y de las variables que tengamos a disposición. Habitualmente se tiene referencia de estratos, conglomerados y ponderaciones. También podemos encontrarnos con situaciones donde están definidos los tamaños poblacionales (variable `fpc`).
+
+## Ejemplo práctico en R
+
+Para ejemplificar vamos a tomar a la **Encuesta Mundial de Salud Escolar** (EMSE) en su tercera edición que en la Argentina se realizó en 2018. Fue llevada a cabo por el Ministerio de Salud y Desarrollo Social de la Nación, contó con la colaboración de los Ministerios de Educación Nacional y Provinciales, la OPS/OMS Argentina, OPS/OMS Washington y el CDC.
+
+El diseño de muestreo tuvo dos etapas (selección de escuelas y luego de divisiones al azar) para producir una muestra representativa de alumnos de 1º a 5º año de educación media a nivel nacional (8º EGB a 3º polimodal en el caso de la provincia de Buenos Aires) y provincial. Se relevaron 523 escuelas en todo el país y se encuestaron 57.095 alumnos de los cuales se analizaron 56.981 cuestionarios correspondientes a las edades de 13 a 17 años, con una tasa de respuesta global de 63%. Se puede acceder a sus datos abiertos en [EMSE 2018](http://datos.salud.gob.ar/dataset/base-de-datos-de-la-3-encuesta-mundial-de-salud-escolar-emse-con-resultados-nacionales-argentina)
+
+Activamos los paquetes necesarios:
+
+```{r}
+library(srvyr)
+library(tidyverse)
+```
+
+Leemos el archivo de datos "`EMSE.txt`" con:
+
+```{r}
+datos <- read_csv2("datos/EMSE.txt")
+
+# dimensiones de la tabla de datos
+glimpse(datos) 
+```
+
+El dataframe importado consta de *14 variables y 56.981 observaciones*.
+
+Calculamos el total de la muestra expandida:
+
+```{r}
+datos |> 
+  summarise(total_expandido = sum(weight))
+```
+
+Las variables relevantes para el diseño muestral que el documento de usuario define son:
+
+-   `psu`: Unidades primarias de muestreo (conglomerados)
+
+-   `stratum`: Estratos del muestreo
+
+-   `weight`: Ponderación
+
+Además, nuestras variables de interés son:
+
+-   `record`: Nro. de registro
+
+-   `q2`**:** Sexo
+
+-   `texto_q2`: Sexo categorizado
+
+-   `q3`**:** Grado / año en el que se encuentra el estudiante
+
+-   `texto_q3`: Grado / año en el que se encuentra el estudiante categorizado
+
+-   `q4`: Estatura sin zapatos (medido en metros)
+
+-   `q5`: Peso sin zapatos (medido en kilogramos)
+
+-   **`q6`**: Pregunta sobre hambre
+
+-   `texto_q6`: Pregunta sobre hambre categorizada
+
+-   `qn24`: Pregunta sobre idea suicida
+
+-   `texto_qn24`: Pregunta sobre idea suicida categorizada
+
+Para facilitar el análisis, vamos a renombrar nuestras variables de interés usando la función `rename()` de `tidyverse`:
+
+```{r}
+datos <- datos |> 
+  rename(sexo = texto_q2,
+         grado = texto_q3,
+         estatura_m = q4,
+         peso_kg = q5,
+         hambre = texto_q6,
+         idea_suicida = texto_qn24)
+```
+
+A partir de las variables cuantitativas `estatura_m` y `peso_kg` vamos a construir una nueva variable llamada `imc` (Índice de Masa Corporal) :
+
+```{r}
+datos <- datos |> 
+  # IMC: peso sobre talla al cuadrado
+  mutate(imc = peso_kg/(estatura_m)^2)
+```
+
+Ahora podemos comenzar a definir el objeto de diseño muestral:
+
+```{r}
+d <- datos |> 
+  as_survey_design(ids = psu, # conglomerados
+                   variables = c(record, psu, stratum, weight,
+                                 q2, sexo, q3, grado, 
+                                 peso_kg, estatura_m, imc, q6, hambre,
+                                 qn24, idea_suicida), # variables
+                   strata = stratum, # estratos
+                   weights = weight, # ponderación
+                   nest = T) # anidación
+```
+
+Una vez que tenemos creado el objeto ***"survey.design"***, que en nuestro ejemplo se denomina `d`, podemos avanzar en el calculo de las estimaciones.
+
+Si bien podemos manipular datos dentro de este formato de diseño utilizando algunas de las funciones de `tidyverse` como `select()`, `mutate()`, `filter()` y `rename()`, lo conveniente es modificar previamente la estructura de la tabla de datos, ya sea para crear una nueva variable, como hicimos recién con IMC o cambiar una existente y luego generar el objeto con el diseño muestral para poder hacer uso de esos cambios en las estimaciones.
+
+### Estimaciones
+
+::: {.callout-warning appearance="minimal"}
+Todos los códigos para las estimaciones comenzaran a partir del objeto de diseño creado inicialmente (llamado `d` en nuestro ejemplo) y evitando utilizar el nombre de la tabla de datos leída que solo tiene los datos de la muestra sin especificar el diseño de muestreo.
+:::
+
+En primer lugar tomaremos la variable `imc`, variable cuantitativa continua que construimos.
+
+La función `survey_mean()` computa estimaciones de medias en diseños complejos usando la sintaxis de `tidyverse`.
+
+Los siguientes son los argumentos comunes de la función:
+
+-   `x`: Variable o expresión o vacía.
+
+-   `na.rm`: Si es `TRUE`, omite los valores `NA` de la variable
+
+-   `vartype`: Obtiene la variabilidad como uno o más estimadores: error estándar (`"se"`, predeterminado), intervalo de confianza (`"ci"`), varianza (`"var"`) o coeficiente de variación (`"cv"`).
+
+-   `level`: Nivel de confianza (solo se usa si el anterior es `"ci"`)
+
+-   `deff`: Si es `TRUE`, calcula el efecto de diseño para la estimación
+
+Aplicamos la función con todas las posibles salidas de varianza sobre la variable de `imc` dentro de `summarise()` de `tidyverse`:
+
+```{r}
+d |> 
+  summarise(imc = survey_mean(x = imc,
+              na.rm = T,
+              vartype = c("se", "ci", "var", "cv"),
+              level = 0.95))
+
+```
+
+El resultado muestra una media de IMC de 22,1, un error estándar de 0,09, un intervalo de confianza al 95% de (22,0-22,3), una varianza de 0,007 y un coeficiente de variación de 0,4 %.
+
+Como nos informan que hubo no respuesta en la encuesta y las faltantes de información en altura y/o peso provoca observaciones perdidas en la variable IMC, vamos a ver cuantos de estos valores perdidos tenemos en la variable.
+
+Si deseamos calcular totales, es decir a cuantos estudiantes representa estos valores perdidos podemos usar la función `survey_total()`:
+
+```{r}
+d |>  
+  filter(is.na(imc)) %>%  # filtramos los NA en IMC
+  
+  summarise(imc_na = survey_total(vartype = "ci"))
+```
+
+Hay aproximadamente 976.104 IC 95% (87.820-1.074.088) estudiantes sin valor en la variable `imc` del total de la población de 2.637.546 (un 37 %).
+
+Si en lugar de la media quisiéramos la mediana podemos cambiar la función y usar `survey_median()`:
+
+```{r}
+d |> 
+  summarise(imc = survey_median(x = imc,
+              na.rm = T,
+              vartype = c("se", "ci", "var", "cv"),
+              level = 0.95))
+
+```
+
+Podemos estratificar estas estimaciones haciendo uso del `group_by()`, por ejemplo con la variable `sexo` del estudiante:
+
+```{r}
+d |> 
+  group_by(sexo)  |> 
+  summarise(media_imc = survey_mean(imc, 
+                                    vartype = "ci", 
+                                    na.rm = T))
+```
+
+Como hay datos perdidos en la variable sexo nos aparece una categoría más en los grupos de los resultados. Al estar vacía en las estimaciones (evidentemente son "no respuestas" completas) podemos deshacernos de esa línea con un `filter()`:
+
+```{r}
+d |> 
+  filter(sexo != "Dato perdido") |> # o filter(!is.na(q2))
+  
+  group_by(sexo) |> 
+  summarise(media_imc = survey_mean(imc, 
+                                    vartype = "ci", 
+                                    na.rm = T))
+```
+
+Esta tabla muestra las estimaciones de `imc` según sexo con sus intervalos de confianza.
+
+Otra variable de la encuesta es la respuesta a la pregunta *"Durante los últimos 30 días ¿con qué frecuencia te quedaste con hambre porque no había suficiente comida en tu hogar?"*. Las categorías válidas fueron: Nunca, Rara vez, Algunas veces, Casi siempre, Siempre y Dato perdido si no hubo respuesta.
+
+Para abordar estas variables cualitativas donde queremos obtener proporciones el paquete tiene la función `survey_prop()` que se utiliza declarando la variable de interés en un `group_by()` previo:
+
+```{r}
+d |>  
+  group_by(hambre) %>% # variable para la estimación
+  summarise(prop_hambre = survey_prop(vartype = "ci")*100) # usamos 100 para %
+```
+
+El resultado muestra las categorías desordenadas en relación a lo que significa cada una respecto a la definición de la pregunta, es decir a la ordinalidad de la variable, aunque si está ordenada respecto a la forma en que lo hace el lenguaje R (alfabético).
+
+Para darle el orden adecuado, deberíamos convertir la variable `hambre` a *factor* y declarar correctamente sus niveles. Conviene hacer esto previo a la creación del objeto de diseño pero el paquete también lo permite una vez creado:
+
+```{r}
+d <- d |> 
+  mutate(hambre = factor(hambre,
+                         c("Nunca", "Rara vez", "Algunas veces",
+                           "Casi siempre", "Siempre", "Dato perdido")))
+```
+
+Repetimos el código anterior:
+
+```{r}
+d |> 
+  group_by(hambre) |> 
+  summarise(prop_hambre = survey_prop(vartype = "ci")*100)
+```
+
+El ordenamiento de las categorías ahora es el correcto producto de la transformación a factor.
+
+Para estratificar estas proporciones lo único que debemos hacer es incorporar la variable de agrupamiento dentro del `group_by()`:
+
+```{r}
+d |> 
+  group_by(sexo, hambre) |> 
+  summarise(prop_hambre = survey_prop(vartype = "ci")*100) 
+```
+
+Este esquema de agrupamientos o estratificaciones se anidan en el orden en que se declaran dentro del `group_by()` siendo la última variable la de estimación. Por ende, los porcentajes también salen anidados, tomando como denominador para el calculo del 100 % al total de cada categoría de `sexo` en el ejemplo anterior.
+
+También podemos hacer que para el calculo de los porcentajes se tome como denominador el total general de la siguiente forma:
+
+```{r}
+d |> 
+  group_by(interact(sexo, hambre)) |> 
+  summarise(prop_hambre = survey_prop(vartype = "ci")*100)
+```
+
+Un argumento incluido dentro de las posibilidades de `survey_prop()` es el método para su calculo (`prop_method`). En este documento no vamos a profundizar en los métodos que la función ofrece, solo mencionaremos las posibilidades permitidas según la ayuda del paquete:
+
+-   `"likelihood"`: utiliza la distribución de chi-cuadrado escalada (Rao-Scott) para la log-likelihood de una distribución binomial.
+
+-   `"asin"`: usa la transformación estabilizadora de la varianza para la distribución binomial, la raíz cuadrada del arcoseno, y luego transforma el intervalo a la escala de probabilidad.
+
+-   `"beta"`: usa la función beta incompleta como en `binom.test`, con una tamaño de muestra efectivo basado en la varianza estimada de la proporción. (Korn y Graubard, 1998).
+
+-   `"mean"`: utiliza un intervalo tipo Wald en la escala de probabilidad, igual que `confint()`.
+
+-   `"logit"`: ajusta un modelo de regresión logística y calcula un intervalo tipo Wald en la escala logarítmica de probabilidades, que luego se transforma a la escala de probabilidad. Es el método predeterminado de la función.
+
+Otra función útil es `survey_count()` que estima el conteo poblacional de las observaciones según categoría:
+
+```{r}
+d |>  
+  survey_count(hambre,
+               vartype = "ci") 
+```
+
+Aquí lo usamos acompañando con el intervalo de confianza del 95% (predeterminado).
+
+Ahora tomaremos otra variable de la EMSE2018 llamada `idea_suicida` que refiere a la pregunta: *"Durante los últimos 12 meses, ¿alguna vez consideraste seriamente la posibilidad de intentar suicidarte?"*. Sus posibles respuestas son `"Si"`, `"No"` y el habitual `"Dato perdido"`. Estimaremos su proporción para toda la población pero también para una subpoblación en particular, por ejemplo para *"3er año/12vo grado nivel Polimodal o 5to año nivel Secundario"*.
+
+Como es habitual que necesitemos obtener estimaciones en subgrupos o subpoblaciones determinados por categorías definidas de una variable, debemos tener cuidado al interpretar los elementos del muestro para que esas subpoblaciones hayan sido consideradas y por lo tanto estén incluídas como **dominio de estimación**.
+
+Estos subgrupos requeridos pueden no coincidir con los estratos de la muestra compleja generando un inconveniente para las estimaciones, dado que las ponderaciones muestrales serían correctas pero la probabilidad de muestreo seguramente no, lo que produce estimaciones puntuales correctas con errores estándar incorrectos.
+
+Las funciones del paquete `srvyr` maneja estos detalles sin ningún esfuerzo especial por parte del analista siempre y cuando utilice la muestra completa para definir el objeto de diseño de la encuesta pero no asegura que los resultados tengan la calidad necesaria.
+
+Mostremos el código entonces:
+
+```{r}
+d |>  
+  group_by(idea_suicida) |> 
+  
+  summarise(prop_suicidio = survey_prop(vartype = c("ci", "cv"))*100) 
+```
+
+Seleccionamos una subpoblación correspondiente a los estudiantes de "*3er año/12vo grado nivel Polimodal o 5to año nivel Secundario*" (código 5 de `q3`):
+
+```{r}
+d |> 
+  filter(q3 == 5) |> 
+  
+  group_by(idea_suicida) |> 
+  
+  summarise(prop_suicidio = survey_prop(vartype = c("ci", "cv"))*100)
+```
+
+Un 21,0% (95% IC: 20,3-21,7%) del total de estudiantes dicen haber considerado un intento de suicidio en el último año, mientras que un 18,9% (95% IC: 17,5-20,4%) dice lo mismo en el grupo de "*3er año/12vo grado nivel Polimodal o 5to año nivel Secundario*".
+
+Agregamos a los resultados algo importante, que va a garantizar la calidad de la estimaciones y evitar estar informando valores poco confiables para los cuales el muestreo quizás no esté preparado. Este es el **coeficiente de variación** (CV). Comparativamente vamos a encontrar valores más elevados de CV, en la medida que se agreguen filtros o agrupamientos anidados que reduzcan la muestra de la estimación.
+
+Que pasa si filtramos y nos quedamos además solo con las mujeres que respondieron que se quedaron con hambre "algunas veces" en los últimos 30 días:
+
+```{r}
+d |> 
+  filter(q3 == 5, sexo == "Femenino", hambre == "Algunas veces") |> 
+  
+  group_by(idea_suicida) |> 
+  summarise(prop_suicidio = survey_prop(vartype = c("ci", "cv"))*100)
+```
+
+Los CV de las estimaciones siguen creciendo, por ejemplo en el caso de la respuesta **Si** a un 12,6 % en comparación de la población completa que era de 1,6 %. Este aumento tiene que ver sobre todo con el tamaño muestral que nos queda luego de tantos filtros:
+
+```{r}
+# Total muestra
+d |>  
+  survey_count(idea_suicida)
+
+# Subgrupo seleccionado
+d |> 
+  filter(q3 == 5, sexo == "Femenino", hambre == "Algunas veces") |> 
+  survey_count(idea_suicida)
+```
+
+Solo 6.347 estudiantes expandidos que respondieron que **Si** sobre los 553.934 totales que lo hicieron. Y cuantos respecto a la muestra sin expandir?
+
+Podemos verlo así:
+
+```{r}
+# Total muestra
+d |>  
+  group_by(idea_suicida) |> 
+  
+  summarise(n = unweighted(n()))
+
+# Subgrupo seleccionado
+d |> 
+  filter(q3 == 5, sexo == "Femenino", hambre == "Algunas veces") |>
+  
+  group_by(idea_suicida) |> 
+  
+  summarise(n = unweighted(n()))
+```
+
+194 estudiantes de la muestra sin expandir respondieron que **Si** sobre 11.962 sin aplicar los filtros.
+
+## Errores estándar según efecto del diseño
+
+En este punto vamos a comparar estimaciones en función de construir objetos de diseños muestrales diferentes sobre la misma base de datos.
+
+Diseño complejo y pesos (igual al ejemplo anterior):
+
+```{r}
+d_complejo <- datos |> 
+  as_survey_design(ids = psu, # conglomerados
+                   variables = c(record, psu, stratum, weight,
+                                 q2, sexo, q3, grado, 
+                                 peso_kg, estatura_m, imc, q6, hambre,
+                                 qn24, idea_suicida), # variables
+                   strata = stratum, # estratos
+                   weights = weight, # ponderación
+                   nest = T) # anidación
+```
+
+Diseño sin pesos ni estratos:
+
+```{r}
+d_simple <- datos |> 
+  as_survey_design(ids = psu, # conglomerados
+                   variables = c(record, psu, stratum, weight,
+                                 q2, sexo, q3, grado, 
+                                 peso_kg, estatura_m, imc, q6, hambre,
+                                 qn24, idea_suicida), # variables
+                   strata = NULL, # estratos
+                   weights = NULL, # ponderación
+                   nest = T) # anidación
+```
+
+Diseño con pesos y sin estratos:
+
+```{r}
+d_ponde <- datos |> 
+  as_survey_design(ids = psu, # conglomerados
+                   variables = c(record, psu, stratum, weight,
+                                 q2, sexo, q3, grado, 
+                                 peso_kg, estatura_m, imc, q6, hambre,
+                                 qn24, idea_suicida), # variables
+                   strata = NULL, # estratos
+                   weights = weight, # ponderación
+                   nest = T) # anidación
+```
+
+Tenemos tres diseños distintos: un diseño complejo basado en conglomerados, estratos y pesos, un diseño sólo con pesos y un diseño simple sin estratos ni ponderación. Sabemos que el primero es el diseño "real" con el que se llevó a cabo la recolección de los datos.
+
+Ahora volvamos a la variable `imc` para estimar su media en cada diseño:
+
+```{r}
+#| echo: false
+options(pillar.sigfig = 7)
+```
+
+```{r}
+d_complejo |> 
+  summarise(media_IMC = survey_mean(x = imc,
+                                    na.rm = T,
+                                    vartype = c("ci", "cv")))
+
+d_simple  |>  
+  summarise(media_IMC = survey_mean(x = imc,
+                                    na.rm = T,
+                                    vartype = c("ci", "cv")))
+
+d_ponde  |>  
+  summarise(media_IMC = survey_mean(x = imc,
+                                    na.rm = T,
+                                    vartype = c("ci", "cv")))
+```
+
+La estimación puntual (`imc` = 22,14) es la misma para los análisis que usan el diseño complejo y los que usan sólo pesos. A su vez es diferente si las estimaciones se llevan a cabo sin considerar el factor de expansión (muestreo simple - `imc` = 22,23). Los intervalos de confianza estimados son diferentes para todos los casos porque la varianza se vincula con la estructura del muestreo (estratos y conglomerados). Si no se utilizan pesos en las estimaciones, los estimadores no serán representativos de la población muestreada.
+
+Si solo se utilizan pesos sin considerar el diseño complejo, en general, se infravalorará la dispersión de los estimadores, llevando a intervalos de confianza excesivamente estrechos y a niveles de significación reales mayores que los nominales (como si se tratase de un MAS). Basta comparar el resultado correcto IMC 22,14 (95% IC: 21,97-22,31) frente al producido con el diseño simple IMC 22,23 (95% IC: 22,16-22,30).
+
+Como vemos, el lenguaje R permite que construyamos el objeto de diseño de la muestra compleja con la forma que indiquemos pero esto no siempre es correcto. Debemos conocer previamente la forma en que se diseño el muestreo y como se expresa en las variables de la tabla de datos para hacerlo adecuadamente. **Es fundamental leer detenidamente los documentos de utilización de los datos de toda encuesta donde se hayan recolectado datos mediante muestreos complejos**.
+
+### Criterios de calidad en las estimaciones
+
+Todas las estimaciones elaboradas a partir de datos obtenidos por encuestas poblacionales con muestreos complejos están sujetas al error muestral, lo que hace necesario evaluar su validez estadística mediante diversos indicadores de precisión y confiabilidad.
+
+Veamos algunos de estos indicadores de calidad:
+
+#### Coeficiente de variación
+
+Es el principal indicador de calidad de una estimación. Esta medida configura un acercamiento al error de muestreo que permite verificar si la inferencia es válida. Se caracteriza por ser proporcional a la amplitud del intervalo de confianza, que provee una versión estandarizada y relativa de la precisión alrededor de la estimación puntual.
+
+Un umbral aproximado de CV mayor a 20%-30% puede asumirse como un valor de referencia útil a nivel regional para señalar una cifra de poco confiable, *Gutiérrez y otros (2020)*. Para calcular el coeficiente de variación de las estimaciones en estas estimaciones basta con incluirlo dentro del argumento `vartype`.
+
+#### Tamaño de muestra
+
+Este criterio se encuentra generalmente relacionado al anterior y es relevante a la hora de decidir la calidad de la estimación. La cobertura de los intervalos de confianza y la distribución de los estimadores dependen de que, tanto el tamaño de la subpoblación como su tamaño de muestra asociado, no sean pequeños. Con este espíritu, *Gutiérrez y otros (2020)* proponen que todas las estimaciones basadas en un tamaño de muestra expandida menor a 100 unidades deberían ser marcadas como no confiables.
+
+#### Conteo de casos no ponderado
+
+Cuando la incidencia de un fenómeno es muy baja y el diseño de la encuesta no lo tuvo en cuenta, entonces es posible que las estimaciones asociadas a tamaños, totales y proporciones sobre este fenómeno no sean confiables. Por ejemplo, *National Research Council (2015)* plantea que si el número de casos no ponderados es menor a 50 unidades entonces la estimación no sería publicable.
+
+::: hidden
+@epidat4
+
+@bell2012
+
+@sakshaug2014
+
+@nationalresearch
+
+@aycaguer2000
+
+@lumley2011
+
+@gutiérrez2020
+:::
