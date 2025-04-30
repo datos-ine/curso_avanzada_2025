@@ -1,9 +1,8 @@
-# opciones globales
-knitr::opts_chunk$set(
-  fig.align = "center",
-  out.width = "85%",
-  dpi = 300
-)
+# # opciones globales
+# knitr::opts_chunk$set(
+#   out.width = "85%",
+#   dpi = 300
+# )
 
 
 # paquetes
