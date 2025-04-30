@@ -1,3 +1,11 @@
+# opciones globales
+knitr::opts_chunk$set(
+  fig.align = "center",
+  out.width = "85%",
+  dpi = 300
+)
+
+
 # paquetes
 pacman::p_load(
   patchwork,

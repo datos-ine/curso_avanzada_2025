@@ -6,11 +6,16 @@ bibliography: references.bib
 ```{r}
 #| echo: false
 source("../setup.R")
+
+# Paquetes extra
+pacman::p_load(
+  MASS,
+  patchwork)
 ```
 
 ## Introducción
 
-Para entender el modelo de regresión lineal simple, volvamos al ejemplo del peso en niñas menores de 6 meses de la [**unidad anterior**](https://datos-ine.github.io/unidad_2/), donde habíamos trazado una recta que nos ilustraba la relación lineal del peso en función de la edad.
+Para entender el modelo de regresión lineal simple, volvamos al ejemplo del peso en niñas menores de 6 meses de la [**unidad anterior**](../unidad_2/dist_muestrales.qmd#ejemplo-práctico-en-r), donde habíamos trazado una recta que nos ilustraba la relación lineal del peso en función de la edad.
 
 Según el modelo estadístico para la función lineal de $Y$ según $X$:
 
@@ -36,11 +41,6 @@ Ahora vamos a concentrarnos en la relación entre la varianza de la muestra, a t
 
 ```{r}
 #| echo: false
-
-# Paquetes extra
-pacman::p_load(
-  MASS,
-  patchwork)
 
 # Semilla para reproducibilidad
 set.seed(123)
@@ -423,7 +423,7 @@ Tanto el test de hipótesis como los gráficos de cuantiles nos informan que las
 
 ### Ajuste del modelo
 
-Como vimos [anteriormente](mod_estadistico.qmd), la función `lm()` del paquete `stats` nos permite ajustar modelos de regresión lineal:
+Como vimos [**anteriormente**](mod_estadistico.qmd), la función `lm()` del paquete `stats` nos permite ajustar modelos de regresión lineal:
 
 ```{r}
 lm(tasa_mortalidad ~ mediana_ingresos, data = datos)
@@ -615,7 +615,7 @@ El $R^2$ oscila entre 0 y 1, de modo que valores cercanos a 1 indican un buen aj
 
 La salida de `summary()` también incluye un estadístico $F$ de Snedecor y su *p-*valor correspondiente, que se utilizan en el contraste ómnibus para evaluar, de forma global, la idoneidad del modelo. En nuestro ejemplo, el *p*-valor es inferior a 0.05, por lo que, al 95 % de confianza, se rechaza la hipótesis nula y se concluye que el modelo lineal es adecuado para el conjunto de datos. Cabe mencionar que, cuando el modelo de regresión tiene una única variable explicativa, este contraste es equivalente al contraste del parámetro $\beta_1​$.
 
-Otra forma de verificar de manera independiente la significación del modelo es mediante la función `anova()`, que plantea el contraste de la regresión mediante el [análisis de la varianza](anova.qmd):
+Otra forma de verificar de manera independiente la significación del modelo es mediante la función `anova()`, que plantea el contraste de la regresión mediante el [**análisis de la varianza**](anova.qmd):
 
 ```{r}
 anova(modelo)

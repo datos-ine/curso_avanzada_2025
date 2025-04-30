@@ -171,11 +171,6 @@ format:
 # Tipografía
 mainfont: "Calibri"
 
-# Configuración de figuras
-fig-align: center
-fig-width: 0.85
-fig-dpi: 300
-
 # Archivos para descargar
 resources: 
   - files/
