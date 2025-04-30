@@ -4,36 +4,41 @@ project:
 
 # Opciones del sitio web
 website:
+  # Título del sitio
+  title: "Curso Epidemiología - Nivel Avanzado"
+  
+  # Mensaje
+  announcement: 
+    content: "Guardar como PDF: presione **CTRL** + **P**"
+    icon: file-pdf-fill
+    type: dark
+  
+  # Botón de búsqueda
   search: 
     location: sidebar
-  # Título
-  title: "Curso Epidemiología - Nivel Avanzado"
-  announcement: "Guardar a PDF: presione **CTRL** + **P**"
-  # Botón de volver arriba
-  back-to-top-navigation: true
-  # Pié de página
-  page-footer: 
-    center: Este material es parte del curso de Epidemiología - Nivel Avanzado © 2025 Instituto Nacional de Epidemiología "Dr. Juan H. Jara" (ANLIS)
-  # Barra de navegación
+  
+ # Barra de navegación
   navbar:
+    title: false
     background: "#2F2E4E"
     pinned: true
-    source: sidebar
     left:
-      - text: "Unidad 1"
-        href: unidad_1/intro_R.qmd
-      - text: "Unidad 2"
-        href: unidad_2/est_epidemio.qmd
-      - text: "Unidad 3"
-        href: unidad_3/est_ecologicos.qmd
-      - text: "Unidad 4"
-        href: unidad_4/est_caso_control.qmd
-      - text: "Unidad 5"
-        href: unidad_5/est_cohortes.qmd
-      - text: "Unidad 6"
-        href: unidad_6/est_experimentales.qmd
-        
-    right: 
+      - text: "Curso de Epidemiología: Nivel Avanzado"
+        menu: 
+          - text: "Unidad 1: Introducción a R"
+            href: unidad_1/intro_R.qmd
+          - text: "Unidad 2: Estudios transversales"
+            href: unidad_2/est_epidemio.qmd
+          - text: "Unidad 3: Estudios ecológicos"
+            href: unidad_3/est_ecologicos.qmd
+          - text: "Unidad 4: Estudios de casos y controles"
+            href: unidad_4/est_caso_control.qmd
+          - text: "Unidad 5: Estudios de cohortes"
+            href: unidad_5/est_cohortes.qmd
+          - text: "Unidad 6: Estudios experimentales"
+            href: unidad_6/est_experimentales.qmd
+            
+    right:
       - icon: cloud-download
         text: "Descargas"
         menu: 
@@ -72,9 +77,9 @@ website:
           - unidad_1/intro_tidyverse.qmd
           - unidad_1/analisis_exploratorio.qmd
           - unidad_1/hoja_estilo.qmd
-
-      - section: "Unidad 2"
-        icon: file-earmark-bar-graph
+          
+      # - section: "Unidad 2"
+      #   icon: file-earmark-bar-graph
         # contents:
           # - unidad_2/est_epidemio.qmd
           # - unidad_2/est_transversales.qmd
@@ -83,9 +88,9 @@ website:
           # - unidad_2/muestreo.qmd
           # - unidad_2/fun_condicionales.qmd
           # - unidad_2/IC_complejos.qmd
-
-      - section: "Unidad 3"
-        icon: file-earmark-bar-graph
+          
+      # - section: "Unidad 3"
+      #   icon: file-earmark-bar-graph
         # contents:
           # - unidad_3/est_ecologicos.qmd
           # - unidad_3/mod_estadistico.qmd
@@ -94,37 +99,51 @@ website:
           # - unidad_3/anova.qmd
           # - unidad_3/confusion_interaccion.qmd
           # - unidad_3/reg_lineal_multiple.qmd
-
-      - section: "Unidad 4"
-        icon: file-earmark-bar-graph
+          
+      # - section: "Unidad 4"
+      #   icon: file-earmark-bar-graph
         # contents:
           # - unidad_4/est_caso_control.qmd
           # - unidad_4/reg_logistica.qmd
           # - unidad_4/sep_datos.qmd
           # - unidad_4/reg_logistica_cond.qmd
           # - unidad_4/mod_predict.qmd
-
-      - section: "Unidad 5"
-        icon: file-earmark-bar-graph
+          
+      # - section: "Unidad 5"
+      #   icon: file-earmark-bar-graph
         # contents:
           # - unidad_5/est_cohortes.qmd
           # - unidad_5/reg_poisson.qmd
           # - unidad_5/dispersion.qmd
-
-      - section: "Unidad 6"
-        icon: file-earmark-bar-graph
+          
+      # - section: "Unidad 6"
+      #   icon: file-earmark-bar-graph
         # contents:
           # - unidad_6/est_experimentales.qmd
           # - unidad_6/analisis_superv.qmd
           # - unidad_6/metodos_analisis.qmd
           # - unidad_6/reg_cox.qmd
+  
+  # Botón de anterior/siguiente
+  page-navigation: true
+  
+  # Botón de volver arriba
+  back-to-top-navigation: true
+  
+  # Pié de página
+  page-footer: 
+    center: Este material es parte del curso de Epidemiología - Nivel Avanzado © 2025 Instituto Nacional de Epidemiología "Dr. Juan H. Jara" (ANLIS)
+ 
+
 
 # Formato HTML
 format:
   html:
+    # Tema claro y oscuro
     theme: 
      light: cosmo
      dark: cyborg
+     
      # Botón para cambiar a modo oscuro
     include-in-header:
       text: |
@@ -138,9 +157,15 @@ format:
           background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgba(189, 195, 199, 1)" class="bi bi-moon-stars-fill" viewBox="0 0 16 16"> <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"/> <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"/> </svg>') !important;
         }
         </style>
+        
+    # CSS
     css: styles.css
+    
+    # Tabla de contenidos
     toc: true
     toc-title: "Contenidos"
+    
+    # Colocar enlaces a la ayuda de funciones
     code-link: true
 
 # Tipografía

@@ -100,7 +100,7 @@ El menú de proyectos del área superior derecha va guardando como elementos rec
 
 ## Scripts en RStudio
 
-Como vimos [anteriormente](intro_R.qmd#scripts-de-r), un script es un archivo de código que contiene una secuencia de instrucciones escritas en R. Estos scripts pueden ser reutilizados, modificados y compartidos, lo que los convierte en una herramienta fundamental para garantizar la reproducibilidad del trabajo.
+Como vimos [**anteriormente**](intro_R.qmd#scripts-de-r), un script es un archivo de código que contiene una secuencia de instrucciones escritas en R. Estos scripts pueden ser reutilizados, modificados y compartidos, lo que los convierte en una herramienta fundamental para garantizar la reproducibilidad del trabajo.
 
 ### Crear un nuevo script
 
@@ -283,7 +283,7 @@ install.packages("nombre_del_paquete",
 ```
 
 ::: {.callout-note appearance="minimal" icon="false"}
-Para facilitar la instalación de los paquetes requeridos durante el curso, recomendamos descargar el archivo **"Paquetes de R necesarios"**, descomprimirlo y ejecutar el script que se encuentra en su interior.
+Para facilitar la instalación de los paquetes requeridos durante el curso, recomendamos descargar el archivo **"[Paquetes y datos para el curso](../files/datos_y_paquetes.zip)"**, descomprimirlo y ejecutar el script que se encuentra en su interior.
 :::
 
 ## Lectura de archivos de datos

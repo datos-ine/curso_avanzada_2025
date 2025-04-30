@@ -452,11 +452,9 @@ library(dplyr)
 
 ### Conjunto de datos para ejemplo
 
-Para visualizar y comprender el funcionamiento de estos “verbos” de manipulación, resulta muy útil contar con ejemplos concretos. Por eso, en esta unidad trabajaremos con un conjunto de datos que nos permitirá practicar el uso de las funciones del paquete:
+Para visualizar y comprender el funcionamiento de estos “verbos” de manipulación, resulta muy útil contar con ejemplos concretos. Por eso, en esta unidad trabajaremos con un conjunto de datos que nos permitirá practicar el uso de las funciones del paquete.
 
-⬇️ [Descargar datos en formato ZIP](files/datos_ejemplo.zip)
-
-También podés acceder a este archivo desde el enlace disponible en la barra superior de esta página.
+> Recuerden que pueden [**descargar los datos**](../files/datos_y_paquetes.zip) utilizados en los ejemplos del curso y descomprimirlos en la carpeta donde tengan guardado su proyecto de RStudio.
 
 Uno de los archivos incluidos, "`noti-vih.csv`", contiene registros de notificaciones de VIH por jurisdicción en Argentina correspondientes a los años 2015 y 2016.
 
