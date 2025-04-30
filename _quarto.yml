@@ -68,7 +68,7 @@ website:
         icon: file-earmark-bar-graph
         contents:
           - unidad_1/intro_R.qmd
-          - unidad_1/primeros_pasos.qmd
+          - unidad_1/intro_RStudio.qmd
           - unidad_1/intro_tidyverse.qmd
           - unidad_1/analisis_exploratorio.qmd
           - unidad_1/hoja_estilo.qmd
