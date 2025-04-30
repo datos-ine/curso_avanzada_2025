@@ -23,9 +23,9 @@ website:
       - text: "Unidad 1"
         href: unidad_1/intro_R.qmd
       - text: "Unidad 2"
-        href: unidad_2/est_transversales.qmd
+        href: unidad_2/est_epidemio.qmd
       - text: "Unidad 3"
-        href: unidad_3/est_epidemio.qmd    # 
+        href: unidad_3/est_ecologicos.qmd
       - text: "Unidad 4"
         href: unidad_4/est_caso_control.qmd
       - text: "Unidad 5"
