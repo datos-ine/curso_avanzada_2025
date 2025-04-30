@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Andrea Silva">
+<meta name="author" content="Micaela Gauto">
+<title>Regresión de Cox – Curso Epidemiología - Nivel Avanzado</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script><script src="../site_libs/kePrint-0.0.1/kePrint.js"></script><link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<style type="text/css">
+.quarto-reader-toggle .bi::before, .quarto-color-scheme-toggle .bi::before {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-size: 20px 20px;
+  background-position: center;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgba(189, 195, 199, 1)" class="bi bi-moon-stars-fill" viewbox="0 0 16 16"> <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"></path> <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"></path> </svg>') !important;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../styles.css">
+</head>
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-announcement" data-announcement-id="becee250ce001fd824b63172db46fe39" class="alert alert-primary hidden">
+<div class="quarto-announcement-content">
+<p>Guardar a PDF: presione <strong>CTRL</strong> + <strong>P</strong></p>
+</div>
+<i class="bi bi-x-lg quarto-announcement-action"></i>
+</div>
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Curso Epidemiología - Nivel Avanzado</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item">
+    <a class="nav-link active" href="../unidad_1/intro_R.html" aria-current="page"> 
+<span class="menu-text">Unidad 1</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../unidad_2/est_transversales.html"> 
+<span class="menu-text">Unidad 2</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../unidad_3/est_epidemio.qmd"> 
+<span class="menu-text">Unidad 3</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../unidad_4/est_caso_control.html"> 
+<span class="menu-text">Unidad 4</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../unidad_5/est_cohortes.html"> 
+<span class="menu-text">Unidad 5</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../unidad_6/est_experimentales.html"> 
+<span class="menu-text">Unidad 6</span></a>
+  </li>  
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-descargas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-cloud-download" role="img">
+</i> 
+ <span class="menu-text">Descargas</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">
+<li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/windows/" target="_blank"><i class="bi bi-windows" role="img">
+</i> 
+ <span class="dropdown-text">R para Windows</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/macosx/" target="_blank"><i class="bi bi-apple" role="img">
+</i> 
+ <span class="dropdown-text">R para macOS</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/linux/" target="_blank"><i class="bi bi-ubuntu" role="img">
+</i> 
+ <span class="dropdown-text">R para Linux</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://posit.co/download/rstudio-desktop/" target="_blank"><i class="bi bi-terminal" role="img">
+</i> 
+ <span class="dropdown-text">RStudio Desktop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank"><i class="bi bi-terminal" role="img">
+</i> 
+ <span class="dropdown-text">RTools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../files/datos_y_paquetes.zip"><i class="bi bi-file-zip" role="img">
+</i> 
+ <span class="dropdown-text">Paquetes y datos para el curso</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_6/est_experimentales.html">Unidad 6</a></li><li class="breadcrumb-item"><a href="../unidad_6/reg_cox.html">Regresión de Cox</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
+</i> 
+ <span class="menu-text">Unidad 1</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/intro_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/primeros_pasos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Primeros pasos y generalidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/intro_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a tidyverse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/analisis_exploratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis exploratorio de datos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/hoja_estilo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja de Estilo del lenguaje R</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
+</i> 
+ <span class="menu-text">Unidad 2</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_2/est_epidemio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios epidemiológicos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_2/est_transversales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios de corte transversal</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_2/dist_muestrales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Distribuciones muestrales y estimación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_2/normalidad_heterocedasticidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de normalidad y homocedasticidad</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_2/muestreo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Selección de la muestra</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_2/fun_condicionales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Funciones condicionales en R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_2/IC_complejos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Intervalos de confianza en muestras complejas</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
+</i> 
+ <span class="menu-text">Unidad 3</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/est_ecologicos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios ecológicos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/mod_estadistico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción al modelado estadístico</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/covarianza_correlacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Covarianza y correlación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/reg_lineal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión lineal simple</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de la varianza (ANOVA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/confusion_interaccion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Confusión e interacción</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/reg_lineal_multiple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión lineal múltiple</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
+</i> 
+ <span class="menu-text">Unidad 4</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_4/est_caso_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios de casos y controles</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_4/reg_logistica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión logística</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_4/sep_datos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Separación de datos binomiales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_4/reg_logistica_cond.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión logística condicional</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_4/mod_predict.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Modelos predictivos</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
+</i> 
+ <span class="menu-text">Unidad 5</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/est_cohortes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios de cohortes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/reg_poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Poisson</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/dispersion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dispersión de datos</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
+</i> 
+ <span class="menu-text">Unidad 6</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/est_experimentales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios Experimentales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/analisis_superv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/metodos_analisis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Métodos para el análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/reg_cox.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Regresión de Cox</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contenidos</h2>
+   
+  <ul>
+<li><a href="#introducci%C3%B3n" id="toc-introducción" class="nav-link active" data-scroll-target="#introducci%C3%B3n">Introducción</a></li>
+  <li>
+<a href="#modelo-de-cox" id="toc-modelo-de-cox" class="nav-link" data-scroll-target="#modelo-de-cox">Modelo de Cox</a>
+  <ul class="collapse">
+<li><a href="#estimaci%C3%B3n-e-interpretaci%C3%B3n-de-los-coeficientes-del-modelo-de-cox" id="toc-estimación-e-interpretación-de-los-coeficientes-del-modelo-de-cox" class="nav-link" data-scroll-target="#estimaci%C3%B3n-e-interpretaci%C3%B3n-de-los-coeficientes-del-modelo-de-cox">Estimación e interpretación de los coeficientes del modelo de Cox</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#ejemplo-pr%C3%A1ctico-en-r" id="toc-ejemplo-práctico-en-r" class="nav-link" data-scroll-target="#ejemplo-pr%C3%A1ctico-en-r">Ejemplo práctico en R</a>
+  <ul class="collapse">
+<li><a href="#analicemos-nuestro-modelo" id="toc-analicemos-nuestro-modelo" class="nav-link" data-scroll-target="#analicemos-nuestro-modelo">Analicemos nuestro modelo</a></li>
+  <li><a href="#algunas-alternativas" id="toc-algunas-alternativas" class="nav-link" data-scroll-target="#algunas-alternativas">Algunas alternativas</a></li>
+  <li><a href="#predicci%C3%B3n-de-la-curva-de-supervivencia" id="toc-predicción-de-la-curva-de-supervivencia" class="nav-link" data-scroll-target="#predicci%C3%B3n-de-la-curva-de-supervivencia">Predicción de la curva de supervivencia</a></li>
+  <li><a href="#calidad-de-ajuste-de-un-modelo" id="toc-calidad-de-ajuste-de-un-modelo" class="nav-link" data-scroll-target="#calidad-de-ajuste-de-un-modelo">Calidad de ajuste de un modelo</a></li>
+  <li><a href="#an%C3%A1lisis-de-residuos" id="toc-análisis-de-residuos" class="nav-link" data-scroll-target="#an%C3%A1lisis-de-residuos">Análisis de residuos</a></li>
+  </ul>
+</li>
+  <li><a href="#modelo-de-cox-estratificado" id="toc-modelo-de-cox-estratificado" class="nav-link" data-scroll-target="#modelo-de-cox-estratificado">Modelo de Cox estratificado</a></li>
+  <li><a href="#modelo-de-cox-extendido" id="toc-modelo-de-cox-extendido" class="nav-link" data-scroll-target="#modelo-de-cox-extendido">Modelo de Cox extendido</a></li>
+  <li><a href="#an%C3%A1lisis-de-supervivencia-m%C3%A1s-complejos" id="toc-análisis-de-supervivencia-más-complejos" class="nav-link" data-scroll-target="#an%C3%A1lisis-de-supervivencia-m%C3%A1s-complejos">Análisis de supervivencia más complejos</a></li>
+  <li><a href="#consideraciones-sobre-el-tama%C3%B1o-de-la-muestra" id="toc-consideraciones-sobre-el-tamaño-de-la-muestra" class="nav-link" data-scroll-target="#consideraciones-sobre-el-tama%C3%B1o-de-la-muestra">Consideraciones sobre el tamaño de la muestra</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_6/est_experimentales.html">Unidad 6</a></li><li class="breadcrumb-item"><a href="../unidad_6/reg_cox.html">Regresión de Cox</a></li></ol></nav><div class="quarto-title">
+<h1 class="title">Regresión de Cox</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autores/as</div>
+    <div class="quarto-title-meta-contents">
+             <p>Andrea Silva <a href="https://orcid.org/0000-0002-4791-9706" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+             <p>Micaela Gauto <a href="https://orcid.org/0000-0003-3288-1108" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="introducción" class="level2"><h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>Hasta el momento hemos visto cómo efectuar estimaciones paramétricas y no paramétricas de la función de supervivencia y de la función de riesgo, que permiten describir la evolución de la “supervivencia” de una población. También hemos visto cómo comparar curvas de supervivencia, al estratificar por las distintas categorías de una variable categórica.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="reg_cox_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>El análisis de supervivencia dispone también de <strong>modelos de regresión</strong>, que permiten identificar y evaluar la relación entre un conjunto de variables explicativas y el tiempo de supervivencia (variable respuesta), por lo que se la considera parte de los modelos lineales generalizados. A continuación, presentaremos uno de los modelos más usados en salud: el modelo de <strong>regresión de Cox</strong>, llamado así en honor a su creador <span class="citation" data-cites="cox1972">(<a href="#ref-cox1972" role="doc-biblioref">Cox 1972</a>)</span>.</p>
+<p>La regresión de Cox, también llamada <em>modelo de riesgos proporcionales</em> (<em>proportional hazards model</em>) es una técnica muy difundida. Está indicado su uso cuando la variable dependiente esté relacionada con la <strong>supervivencia de un grupo de sujetos</strong> o, en general, con el <strong>tiempo que trascurre hasta que se produce en ellos un suceso o evento</strong>. Como ya dijimos, el evento de interés no tiene por qué ser la muerte, puede ser otro tipo de suceso, por ejemplo, el fallo de una prótesis, la incidencia de una enfermedad o la ocurrencia de una complicación en quien ya tiene una patología de base. Se usa para valorar simultáneamente el efecto independiente de una serie de variables explicativas o factores pronósticos sobre esta supervivencia (es decir, sobre la tasa de mortalidad) o sobre la tasa de ocurrencia de otro fenómeno que vaya ocurriendo tras un periodo de tiempo variable en cada sujeto. Como en cualquier modelo de regresión, las variables explicativas pueden ser tanto cuantitativas como categóricas.</p>
+<p>La <strong>regresión de Cox</strong> es la extensión multivariada del <a href="../unidad_6/analisis_superv.html"><strong>análisis de supervivencia</strong></a> para evaluar de manera general variables dependientes del tipo “tiempo hasta un suceso o evento” y usa modelos de regresión, próximos al modelo de <a href="unidad_4/reg_logistica"><strong>regresión logística</strong></a>. Es una técnica que permite identificar y evaluar la relación entre un conjunto de variables explicativas y la tasa de ocurrencia del suceso de interés.</p>
+<p>La mayor utilidad del modelo de regresión de Cox radica en que permite <em>predecir las probabilidades de supervivencia</em> (o, en general de permanencia libre del evento) para un determinado sujeto a partir del patrón de valores que presenten sus variables pronósticas.</p>
+<p>Al igual que en la regresión logística, en la regresión de Cox también es necesaria una función matemática que transforme el desenlace y permita entender la relación entre las variables por medio de un modelo similar al de la línea recta. Y en esto nos concentraremos a continuación.</p>
+</section><section id="modelo-de-cox" class="level2"><h2 class="anchored" data-anchor-id="modelo-de-cox">Modelo de Cox</h2>
+<p>El modelo de Cox es un modelo semi-paramétrico que postula que:</p>
+<p><span class="math display">\[
+h(t,x) = h_o(t) exp (x_1\beta_1+x_2\beta_2+\dots+x_n\beta_n)
+\]</span></p>
+<p>donde,</p>
+<p><span class="math inline">\(h (t,x)\)</span> : representa el riesgo de morir al tiempo <span class="math inline">\(t\)</span> de un sujeto que tiene un patrón determinado de las variables <span class="math inline">\(x\)</span>.</p>
+<p><span class="math inline">\(h_0(t)\)</span>: representa el riesgo basal dependiente del <span class="math inline">\(t\)</span>.</p>
+<p>En este caso, como podemos ver, la función que es “transformada” es la función denominada <strong>Hazard</strong>, que puede simplificarse en términos prácticos como una <strong>medida del riesgo instantáneo de ocurrencia de dicho evento</strong>.</p>
+<p>Como podemos ver, este modelo asume un presupuesto importante: las covariables tienen un efecto multiplicativo sobre la función de riesgo. ¿Qué significa esto? Esto significa que la razón entre el riesgo de ocurrencia del evento para dos individuos: individuo i e individuo j, por ejemplo, con covariables:</p>
+<p><span class="math inline">\(xi= (xi_1, xi_2, xi_3,\dots,xi_n)\)</span> (es el conjunto de covariables del individuo i) <span class="math inline">\(xj= (xj_1, xj_2, xj_3,\dots,xj_n)\)</span> (es el conjunto de covariables del individuo j) será: <span class="math display">\[
+\frac {hi(t/xi)} {hj(t/xj)}= \frac{ho(t)exp(xi_1\beta_1+xi_2\beta_2+\dots xi_n \beta_n)}{ho(t)exp(xj_1\beta_1+xj_2 \beta_2+\dots xj_n \beta_n)}
+\]</span> Entonces:</p>
+<p><span class="math display">\[
+\frac {hi(t/xi)} {hj(t/xj)}= \frac{\cancel{ho(t)} exp(xi_1\beta_1+xi_2\beta_2+\dots xi_n \beta_n)}{\cancel{ho(t)}exp(xj_1\beta_1+xj_2 \beta_2+\dots xj_n \beta_n)}
+\]</span></p>
+<p>O sea que este cociente de riesgos, como podemos ver, es independiente del tiempo. Por este motivo, el modelo de Cox se lo conoce también como <strong>Modelo de Riesgos Proporcionales</strong>. Es un modelo semi-paramétrico, pues no asume ninguna distribución para la función de riesgo basal <span class="math inline">\(ho(t)\)</span>, la única asunción es, como ya dijimos antes, que las covariables tienen un efecto multiplicativo sobre la función de riesgo, y esto constituye la parte paramétrica del modelo.</p>
+<p>En la regresión de Cox, por lo tanto, el efecto de las variables independientes se presenta como un <strong>Hazard Relativo (HR)</strong>, y expresa la magnitud en la que una variable aumenta o disminuye el riesgo de ocurrencia de un desenlace en el tiempo.</p>
+<p>Como en todo modelo, tendremos que estimar los coeficientes (<span class="math inline">\(\beta\)</span>) y aprender a interpretarlos. A continuación aprenderemos a construir un modelo de Cox, fijaremos criterios para seleccionar el mejor modelo, evaluaremos el ajuste de dicho modelo y veremos algo de análisis de residuos. Allá vamos!</p>
+<section id="estimación-e-interpretación-de-los-coeficientes-del-modelo-de-cox" class="level3"><h3 class="anchored" data-anchor-id="estimación-e-interpretación-de-los-coeficientes-del-modelo-de-cox">Estimación e interpretación de los coeficientes del modelo de Cox</h3>
+<p>Los coeficientes del modelo de Cox son estimados por el método de verosimilitud parcial, pero su desarrollo lo omitiremos, dado que los paquetes estadísticos, los calcularán por nosotros. Para comprender su interpretación, consideraremos el modelo más simple, con una única covariable:</p>
+<p><span class="math display">\[
+h(t,x)= ho(t) e^{\beta x}
+\]</span> Si se calcula el cociente entre la tasa de riesgo instantáneo para una variable que toma los valores <span class="math inline">\(x=0\)</span> y <span class="math inline">\(x=1\)</span>: <span class="math display">\[
+HR= \frac{e^{(\beta*1)}}{e^{(\beta*0)}}= e^\beta
+\]</span></p>
+<p>¿Cómo interpretamos esto? Sé que ya todos tienen mucha experiencia en interpretar correctamente expresiones de este tipo (notarán ciertas similitudes con la regresión logística), pero nunca está de más reforzar.</p>
+<ul>
+<li><p>Si la variable es <em>dicotómica</em>, por ejemplo consideremos <em>sexo</em>, donde <span class="math inline">\(x=1\)</span> corresponde a masculino y <span class="math inline">\(x= 0\)</span> a femenino, diremos que los varones ven incrementado su riesgo en <span class="math inline">\(e\beta\)</span> respecto de las mujeres.</p></li>
+<li><p>Si la variable fuera <em>continua</em>, como por ejemplo la <em>edad</em>, diremos que un incremento de un año en la edad, aumenta el riesgo en <span class="math inline">\(e\beta\)</span>. Si calculamos el cambio en <span class="math inline">\(h\)</span> para <span class="math inline">\(n\)</span> variables explicativas, y observamos el coeficiente para cuando cada <span class="math inline">\(xi\)</span> se incrementa en una unidad, manteniendo constante al resto, observaremos algo similar.</p></li>
+</ul>
+<p>Si aplicamos <strong>ln</strong> a la expresión del HR, tendremos que: <span class="math display">\[
+lnHR= \beta
+\]</span></p>
+<p>Como acabamos de ver, la interpretación del modelo de Cox no se hace directamente a través de su coeficiente estimado <span class="math inline">\((\beta)\)</span> sino del exponencial del coeficiente estimado, <span class="math inline">\(exp(\beta)\)</span>.</p>
+<p>Para variables dicotómicas <span class="math inline">\(exp(\beta)\)</span> es un estimador de la razón de riesgos (Hazard Ratio) y se interpretará en forma análoga al RR: valores mayores que 1 indican sobreriesgo para el grupo “expuesto”, valores menores a 1 indican factor de protección. Para variables continuas, su interpretación es más difícil ya que no es estrictamente un RR, pero lo podemos pensar como algo similar a un RR para un incremento de la variable continua. Para comprender mejor lo que hemos visto hasta aquí y lo que seguiremos viendo, vamos a recurrir a un ejemplo.</p>
+</section></section><section id="ejemplo-práctico-en-r" class="level2"><h2 class="anchored" data-anchor-id="ejemplo-práctico-en-r">Ejemplo práctico en R</h2>
+<p>Retomaremos el ejemplo sobre trasplante de médula ósea (TMO), que vimos cuando abordamos la estimación de Kaplan Meier. Recordemos que los datos del archivo “<code>tmo.txt</code><strong>“</strong> provienen de esa cohorte de 96 pacientes sometidos a trasplante de médula ósea. Las covariables registradas para cada paciente se describen en la siguiente tabla:</p>
+<p>Las variables presentes en el conjunto de datos son las siguientes:</p>
+<ul>
+<li><p><code>id</code>: identificador único del paciente</p></li>
+<li><p><code>sexo</code>: sexo biológico (M = masculino, F = femenino)</p></li>
+<li><p><code>edad</code>: edad en años al momento del trasplante</p></li>
+<li><p><code>status</code>: estado al final del seguimiento (1 = fallecido, 0 = censurado)</p></li>
+<li><p><code>tiempo</code>: tiempo hasta la fecha de óbito o censura</p></li>
+<li><p><code>deag</code>: presencia de enfermedad injerto-huesped aguda</p></li>
+<li><p><code>decr</code>: presencia de enfermedad injerto-huesped crónica</p></li>
+<li><p><code>fase</code>: fase de la LMC (aguda, crónica, crisis blástica)</p></li>
+</ul>
+<p>Comenzaremos por activar los paquetes necesarios:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival">survival</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rpkgs.datanovia.com/survminer/index.html">survminer</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/easystats/">easystats</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Leemos el archivo de datos</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Cargar datos</span></span>
+<span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/tmo.txt"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Modificar datos</span></span>
+<span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>.cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">deag</span>, <span class="va">decr</span>, <span class="va">fase</span><span class="op">)</span>,</span>
+<span>                .fns <span class="op">=</span> <span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>En general, no se realiza la regresión de Cox con cada una de las variables para decidir cuál incluir en el modelo (puede hacerse para ver el cambio de los coeficientes), sino que <em>esta decisión se toma en base a las curvas de KM</em>, considerando las variables en las que se observan diferencias. Como el modelo de Cox, en general se usa con fines predictivos, pueden ser incluidas otras variables que clínicamente se consideren relevantes.</p>
+<p>Vamos a considerar un modelo inicial que incluya todas las variables (<code>m1</code>) y luego usaremos un procedimiento “hacia atrás” manual. El modelo semiparamétrico de riesgo proporcionales de Cox es realizado con la función <code><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph()</a></code> del paquete <code>survival</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ajustar modelo</span></span>
+<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span>  <span class="va">fase</span> <span class="op">+</span> <span class="va">decr</span> <span class="op">+</span> <span class="va">deag</span> <span class="op">+</span> <span class="va">sexo</span> <span class="op">+</span> <span class="va">edad</span>, </span>
+<span>            data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida del modelo</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + decr + deag + sexo + 
+    edad, data = datos)
+
+  n= 96, number of events= 49 
+
+                 coef exp(coef)  se(coef)      z Pr(&gt;|z|)    
+fasecb       0.344438  1.411197  0.542408  0.635 0.525417    
+fasecrónica -0.593973  0.552129  0.371427 -1.599 0.109784    
+decrsi      -1.061750  0.345850  0.338452 -3.137 0.001706 ** 
+deagsi       1.190381  3.288332  0.327485  3.635 0.000278 ***
+sexoM        0.271984  1.312567  0.332115  0.819 0.412816    
+edad        -0.005019  0.994993  0.014912 -0.337 0.736415    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb         1.4112     0.7086    0.4874    4.0859
+fasecrónica    0.5521     1.8112    0.2666    1.1434
+decrsi         0.3459     2.8914    0.1782    0.6714
+deagsi         3.2883     0.3041    1.7307    6.2479
+sexoM          1.3126     0.7619    0.6846    2.5166
+edad           0.9950     1.0050    0.9663    1.0245
+
+Concordance= 0.768  (se = 0.03 )
+Likelihood ratio test= 40.67  on 6 df,   p=3e-07
+Wald test            = 38.46  on 6 df,   p=9e-07
+Score (logrank) test = 47.62  on 6 df,   p=1e-08</code></pre>
+</div>
+</div>
+<ul>
+<li><p>La columna “<code>coef</code>” indica los valores de <span class="math inline">\(\beta\)</span> .</p></li>
+<li><p>La columna “<code>exp (coef</code>)” indica los valores de <span class="math inline">\(HR\)</span>.</p></li>
+<li><p>La columna “<code>se (coef)</code>”: desvío estándar de los coeficientes</p></li>
+<li><p><code>Z</code> y <code>Pr (&lt;|Z|)</code>: estadístico del Test de Wald y su <em>p-</em>valor.</p></li>
+<li><p><code>lower.95</code> y <code>upper.95</code>: 95% IC para los <span class="math inline">\(HR\)</span>.</p></li>
+</ul>
+<p>En la parte inferior, destacamos el <em>LR test</em> del modelo.</p>
+<p>Además de lo señalado, se agregan el valor de <em>Concordancia</em> así como los <em>estadísticos de prueba</em>, <em>grados de libertad</em> y <em>p-valores</em> de las pruebas de hipótesis de Razón de Verosimilitud, Prueba de Wald y Prueba de Puntajes (<em>score test</em>).</p>
+<p>Repasemos:</p>
+<ul>
+<li><p>El <strong>test de Wald</strong> : Testea solo un parámetro, por ejemplo la <span class="math inline">\(Ho: \beta_3=0\)</span>. El test estadístico es <span class="math inline">\(Z=\frac{\beta}{EE\beta}\)</span> que sigue una distribución aproximadamente <span class="math inline">\(N(0,1)\)</span>. <span class="math inline">\(LR\)</span> y <span class="math inline">\(Z\)</span> son aproximadamente iguales en grandes muestras, pero pueden diferir en muestras pequeñas.</p></li>
+<li><p>La <strong>Deviance</strong> puede ser utilizada tanto para obtener una estadística global de ajuste del modelo, como para comparar modelos. Recordemos que: <span class="math inline">\(D= 2 (log\ Likelihood\ modelo- log\ Likelihood\ modelo\ nulo)\)</span>, donde el Modelo nulo es un modelo teórico sin covariables.</p></li>
+</ul>
+<p>Podemos calcular el <strong>Criterio de Información de Akaike (AIC)</strong> y también el <strong>Criterio de Información Bayesiano (BIC)</strong>. El AIC sirve para comparar la plausibilidad relativa de un conjunto de modelos. Es decir, dado un conjunto de modelos construidos con los mismos datos, el AIC los ordena según su verosimilitud dados los datos con que se construyen. Este criterio tiene en cuenta tanto el ajuste del modelo como su complejidad de acuerdo a la fórmula: <span class="math inline">\(-2*log(-Likelihood) + k*npar\)</span> donde el primer término mide el ajuste (es la deviance) y el segundo la complejidad (<span class="math inline">\(npar\)</span> es el número de parámetros y <span class="math inline">\(k = 2\)</span>).</p>
+<p>AIC mide lo lejos que está el modelo de la realidad (de un ‘modelo perfecto’), por lo que <strong>cuanto menor es el valor, más plausible es el modelo</strong>. Existen otros criterios parecidos como el BIC (en BIC <span class="math inline">\(k = log(n)\)</span>).</p>
+<p>AIC no equivale a significación; de hecho este criterio se plantea dentro de una concepción de la estadística distinta –y alternativa– a la fundamentada en testado de hipótesis. El comando es simplemente:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Criterio de información de Akaike</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 378.1393</code></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Criterio de información Bayesiano</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">BIC</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 389.4903</code></pre>
+</div>
+</div>
+<p>El <strong>Likelihood</strong> nos da una evaluación cuantitativa de la compatibilidad de los datos con determinado valor del parámetro. <span class="math display">\[
+Likelihood\ Ratio= \frac {Likelihood\ del\ modelo}{Máximo\ de\ Likelihood}
+\]</span></p>
+<ul>
+<li><p>El <em>Likelihood ratio</em> da una medida más conveniente del soporte de los datos para determinado valor de probabilidades que el likelihood, ya que relativiza los valores de los likelihood al valor del máximo likelihood.</p></li>
+<li><p>Cuanto más cerca de 1 está un <em>Likelihood ratio</em> significa que ese valor de p está más “sustentado” por los datos.</p></li>
+<li><p>El <strong>LR test compara dos modelos anidados</strong>: modelo mayor vs.&nbsp;modelo reducido. La <span class="math inline">\(H_0\)</span> plantea que algunos parámetros en el modelo completo son igual a 0. Este LR tiene aproximadamente una distribución chi-cuadrado bajo la hipótesis nula.</p></li>
+</ul>
+<section id="analicemos-nuestro-modelo" class="level3"><h3 class="anchored" data-anchor-id="analicemos-nuestro-modelo">Analicemos nuestro modelo</h3>
+<p>Solamente los coeficientes que acompañan a las variables <code>deag</code> y <code>decr</code> resultaron significativos según el test de Wald. Esto es lo mismo que observamos en las curvas de KM.</p>
+<p>Respecto de la variable fase, que tiene 3 categorías, observemos que fue transformada en una variable dummy: el modelo ha tomado como categoría de referencia “aguda” y los valores de HR son en referencia a esta categoría: “crisis blástica” respecto a “aguda” y “crónica” respecto a “aguda”.</p>
+<p>La columna <code>Coefficient</code> representa los valores de <span class="math inline">\(\beta\)</span> estimados por verosimilitud parcial. Valores positivos de <span class="math inline">\(\beta\)</span> indican variables que contribuyen a un incremento de riesgo, en tanto que valores negativos de <span class="math inline">\(\beta\)</span> indican variables que contribuyen a reducir el riesgo. Si miramos los HR, vemos que <code>decr</code> resultó un factor protector importante.</p>
+<p>Probaremos un modelo con cuatro variables ¿Cuál saco del modelo: <code>edad</code>, <code>sexo</code> o <code>fase</code>? Probemos distintos modelos:</p>
+<ul>
+<li>
+<strong>Modelo 2</strong>: <code>fase + decr + deag + edad</code> (sacando <code>sexo</code>)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ajustar modelo</span></span>
+<span><span class="va">m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">fase</span> <span class="op">+</span> <span class="va">decr</span> <span class="op">+</span> <span class="va">deag</span> <span class="op">+</span> <span class="va">edad</span>, </span>
+<span>            data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida modelo </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + decr + deag + edad, 
+    data = datos)
+
+  n= 96, number of events= 49 
+
+                coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+fasecb       0.34930   1.41808  0.54010  0.647 0.517801    
+fasecrónica -0.66770   0.51289  0.35813 -1.864 0.062262 .  
+decrsi      -1.04100   0.35310  0.33283 -3.128 0.001762 ** 
+deagsi       1.15232   3.16554  0.32110  3.589 0.000332 ***
+edad        -0.00272   0.99728  0.01452 -0.187 0.851418    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb         1.4181     0.7052    0.4920     4.087
+fasecrónica    0.5129     1.9498    0.2542     1.035
+decrsi         0.3531     2.8321    0.1839     0.678
+deagsi         3.1655     0.3159    1.6870     5.940
+edad           0.9973     1.0027    0.9693     1.026
+
+Concordance= 0.758  (se = 0.031 )
+Likelihood ratio test= 39.98  on 5 df,   p=2e-07
+Wald test            = 38.28  on 5 df,   p=3e-07
+Score (logrank) test = 47.16  on 5 df,   p=5e-09</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># AIC</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">m2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 376.825</code></pre>
+</div>
+</div>
+<ul>
+<li>
+<strong>Modelo 3</strong>: <code>fase + decr + deag + sexo</code> (sacando <code>edad</code>)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ajustar modelo</span></span>
+<span><span class="va">m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">fase</span> <span class="op">+</span> <span class="va">decr</span> <span class="op">+</span> <span class="va">deag</span> <span class="op">+</span> <span class="va">sexo</span>, </span>
+<span>            data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida modelo </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + decr + deag + sexo, 
+    data = datos)
+
+  n= 96, number of events= 49 
+
+               coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+fasecb       0.3378    1.4019   0.5429  0.622 0.533779    
+fasecrónica -0.5715    0.5647   0.3647 -1.567 0.117090    
+decrsi      -1.0940    0.3349   0.3246 -3.370 0.000750 ***
+deagsi       1.2075    3.3451   0.3240  3.726 0.000194 ***
+sexoM        0.2509    1.2852   0.3251  0.772 0.440233    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb         1.4019     0.7133    0.4837    4.0631
+fasecrónica    0.5647     1.7709    0.2763    1.1540
+decrsi         0.3349     2.9863    0.1772    0.6326
+deagsi         3.3451     0.2989    1.7725    6.3128
+sexoM          1.2852     0.7781    0.6796    2.4306
+
+Concordance= 0.762  (se = 0.03 )
+Likelihood ratio test= 40.56  on 5 df,   p=1e-07
+Wald test            = 38.19  on 5 df,   p=3e-07
+Score (logrank) test = 47.46  on 5 df,   p=5e-09</code></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># AIC</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">m3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 376.2529</code></pre>
+</div>
+</div>
+<ul>
+<li>
+<strong>Modelo 4</strong>: <code>sexo + decr + deag + edad</code> (sacando <code>fase</code>)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ajustar modelo</span></span>
+<span><span class="va">m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">decr</span> <span class="op">+</span> <span class="va">deag</span> <span class="op">+</span> <span class="va">sexo</span> <span class="op">+</span> <span class="va">edad</span>, </span>
+<span>            data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida modelo </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m4</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ decr + deag + sexo + edad, 
+    data = datos)
+
+  n= 96, number of events= 49 
+
+             coef  exp(coef)   se(coef)      z Pr(&gt;|z|)    
+decrsi -1.3160459  0.2681937  0.3150468 -4.177 2.95e-05 ***
+deagsi  1.1988240  3.3162147  0.3084393  3.887 0.000102 ***
+sexoM   0.4531812  1.5733092  0.3241990  1.398 0.162158    
+edad    0.0003653  1.0003654  0.0142724  0.026 0.979578    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+       exp(coef) exp(-coef) lower .95 upper .95
+decrsi    0.2682     3.7286    0.1446    0.4973
+deagsi    3.3162     0.3015    1.8118    6.0700
+sexoM     1.5733     0.6356    0.8334    2.9701
+edad      1.0004     0.9996    0.9728    1.0287
+
+Concordance= 0.732  (se = 0.032 )
+Likelihood ratio test= 36.35  on 4 df,   p=2e-07
+Wald test            = 32.6  on 4 df,   p=1e-06
+Score (logrank) test = 38.43  on 4 df,   p=9e-08</code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># AIC</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span> <span class="op">(</span><span class="va">m4</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 378.4578</code></pre>
+</div>
+</div>
+<p>De acuerdo al criterio AIC, considerando los modelos construidos, <code>m3</code> sería un mejor modelo, dado que tiene un menor AIC, pero se observa que existen términos sin significación en este modelo, según el test de Wald.</p>
+<p>Ajustemos ahora un modelo con tres variables, partiendo de <code>m3</code>, cuya fórmula era:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>Surv(tiempo, status) ~ fase + decr + deag + sexo
+&lt;environment: 0x000002801810d508&gt;</code></pre>
+</div>
+</div>
+<p>En general, el criterio que se utiliza para “sacar” variables del modelo, es sacar aquellas cuyo <span class="math inline">\(\beta\)</span> haya resultado no significativo. En el caso de <code>m3</code> serían los <span class="math inline">\(\beta\)</span> correspondientes a las variables <code>sexo</code> y <code>fase</code>.</p>
+<ul>
+<li>
+<strong>Modelo 5</strong>: <code>fase + decr + deag</code> (sacando <code>sexo</code>)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ajustar modelo</span></span>
+<span><span class="va">m5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">fase</span> <span class="op">+</span> <span class="va">decr</span> <span class="op">+</span> <span class="va">deag</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida modelo </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + decr + deag, data = datos)
+
+  n= 96, number of events= 49 
+
+               coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+fasecb       0.3449    1.4119   0.5402  0.639 0.523100    
+fasecrónica -0.6509    0.5216   0.3467 -1.878 0.060440 .  
+decrsi      -1.0597    0.3466   0.3176 -3.336 0.000849 ***
+deagsi       1.1633    3.2004   0.3160  3.681 0.000232 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb         1.4119     0.7083    0.4898    4.0698
+fasecrónica    0.5216     1.9173    0.2644    1.0290
+decrsi         0.3466     2.8856    0.1860    0.6458
+deagsi         3.2004     0.3125    1.7227    5.9456
+
+Concordance= 0.753  (se = 0.03 )
+Likelihood ratio test= 39.95  on 4 df,   p=4e-08
+Wald test            = 38.18  on 4 df,   p=1e-07
+Score (logrank) test = 47.11  on 4 df,   p=1e-09</code></pre>
+</div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># AIC</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 374.8601</code></pre>
+</div>
+</div>
+<ul>
+<li>
+<strong>Modelo 6</strong>: <code>decr + deag + sexo</code> (sacando <code>fase</code>)</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ajustar modelo</span></span>
+<span><span class="va">m6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">decr</span> <span class="op">+</span> <span class="va">deag</span> <span class="op">+</span> <span class="va">sexo</span>,  data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida modelo </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m6</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ decr + deag + sexo, data = datos)
+
+  n= 96, number of events= 49 
+
+          coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+decrsi -1.3143    0.2687   0.3072 -4.279 1.88e-05 ***
+deagsi  1.1977    3.3124   0.3051  3.925 8.66e-05 ***
+sexoM   0.4555    1.5769   0.3115  1.462    0.144    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+       exp(coef) exp(-coef) lower .95 upper .95
+decrsi    0.2687     3.7220    0.1472    0.4906
+deagsi    3.3124     0.3019    1.8215    6.0236
+sexoM     1.5769     0.6341    0.8564    2.9037
+
+Concordance= 0.74  (se = 0.031 )
+Likelihood ratio test= 36.35  on 3 df,   p=6e-08
+Wald test            = 32.6  on 3 df,   p=4e-07
+Score (logrank) test = 38.43  on 3 df,   p=2e-08</code></pre>
+</div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># AIC</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span><span class="op">(</span><span class="va">m6</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 376.4584</code></pre>
+</div>
+</div>
+<p>El <code>m5</code> parece ser un mejor modelo, con un AIC menor (374.8600995).</p>
+<p>Ensayemos ahora un modelo con 2 variables, a partir entonces de <code>m5</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>Surv(tiempo, status) ~ fase + decr + deag
+&lt;environment: 0x000002801507a540&gt;</code></pre>
+</div>
+</div>
+<p>Saco <code>fase</code>, dado que su coeficiente resultó no significativo.</p>
+<ul>
+<li>
+<strong>Modelo 7</strong>: <code>deag + decr</code>
+</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Ajustar modelo</span></span>
+<span><span class="va">m7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">decr</span> <span class="op">+</span> <span class="va">deag</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida modelo </span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m7</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ decr + deag, data = datos)
+
+  n= 96, number of events= 49 
+
+          coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+decrsi -1.2532    0.2856   0.3038 -4.125 3.71e-05 ***
+deagsi  1.1001    3.0045   0.2959  3.717 0.000201 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+       exp(coef) exp(-coef) lower .95 upper .95
+decrsi    0.2856     3.5015    0.1574     0.518
+deagsi    3.0045     0.3328    1.6822     5.366
+
+Concordance= 0.739  (se = 0.03 )
+Likelihood ratio test= 34.13  on 2 df,   p=4e-08
+Wald test            = 32.9  on 2 df,   p=7e-08
+Score (logrank) test = 37.62  on 2 df,   p=7e-09</code></pre>
+</div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># AIC</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/AIC.html">AIC</a></span> <span class="op">(</span><span class="va">m7</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 376.6813</code></pre>
+</div>
+</div>
+<p>Ahora todas las variables tienen significación y, si bien no ha habido mejora en el AIC, según los valores del test de Wald, parece un mejor modelo. No obstante, podemos comparar los modelos “candidatos”.</p>
+<p>La comparación entre los modelos se realiza con la función <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code>, que realiza la prueba de Razón de Verosimilitud entre dos modelos. Los argumentos de la función son los dos modelos ajustados a comparar. La salida de la función es una tabla en donde muestra para los dos modelos el log-verosimilitud, el estadístico <code>Chisq</code>, los grados de libertad <code>Df</code> y el p-valor <code>P(&gt;|Chi|)</code> de la prueba.</p>
+<p>Ahora, seleccionamos los dos modelos a comparar en nuestro caso: <code>m5</code> y <code>m7</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">m5</span>, <span class="va">m7</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Analysis of Deviance Table
+ Cox model: response is  Surv(tiempo, status)
+ Model 1: ~ fase + decr + deag
+ Model 2: ~ decr + deag
+   loglik  Chisq Df Pr(&gt;|Chi|)  
+1 -183.43                       
+2 -186.34 5.8212  2    0.05444 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Recordemos que los modelos deben ser anidados para poder hacer ANOVA. En este caso, lo que hace es comparar los log de Likelihood de ambos modelos. Esa diferencia se distribuye como un Chi cuadrado. El valor de <em>p</em> se encuentra en el límite de significación (considerando 0,05). Si somos estrictos, el valor de <em>p</em> indica que no hay diferencia entre ambos modelos, por lo tanto nos quedaríamos con el de menos variables, de acuerdo al principio de parsimonia.</p>
+<p>En nuestro caso, podemos decidir quedarnos con el <code>m5</code>, dado que la fase de la enfermedad puede resultar un elemento predictivo importante. Como se indicó anteriormente, la regresión de Cox generalmente tiene fines predictivos, así que podemos ver en la bibliografía, modelos que no siguen todas las “normas” del modelado, porque se hace importante mantener variables como edad o sexo, aún cuando no resulten significativas, a fin de contar con intervalos de predicción por sexo o grupo etario.</p>
+<p>Supongamos entonces que decidimos quedarnos con el <code>m5</code>, aunque rompamos algunas reglas. Interpretemos ahora los parámetros del modelo:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + decr + deag, data = datos)
+
+  n= 96, number of events= 49 
+
+               coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+fasecb       0.3449    1.4119   0.5402  0.639 0.523100    
+fasecrónica -0.6509    0.5216   0.3467 -1.878 0.060440 .  
+decrsi      -1.0597    0.3466   0.3176 -3.336 0.000849 ***
+deagsi       1.1633    3.2004   0.3160  3.681 0.000232 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb         1.4119     0.7083    0.4898    4.0698
+fasecrónica    0.5216     1.9173    0.2644    1.0290
+decrsi         0.3466     2.8856    0.1860    0.6458
+deagsi         3.2004     0.3125    1.7227    5.9456
+
+Concordance= 0.753  (se = 0.03 )
+Likelihood ratio test= 39.95  on 4 df,   p=4e-08
+Wald test            = 38.18  on 4 df,   p=1e-07
+Score (logrank) test = 47.11  on 4 df,   p=1e-09</code></pre>
+</div>
+</div>
+<p>Para la interpretación, nos centramos en la columna <code>exp(coef)</code>, que corresponde a los HR. Partiendo de dichos valores, podemos concluir:</p>
+<ul>
+<li><p>El riesgo de muerte de los pacientes que padecen enfermedad injerto contra huésped aguda es aproximadamente el triple de aquellos que no la han padecido (<span class="math inline">\(HR = 3,2\)</span>).</p></li>
+<li><p>Los pacientes que hayan padecido enfermedad injerto contra huésped crónica tienen 0,34 veces el riesgo de morir post datos de los que no la tuvieron. Puede decirse también (y quizás quedaría mejor expresado) que tienen un 66% menos riesgo que los que no tuvieron enfermedad injerto contra huésped crónica (<span class="math inline">\(HR = 0,34\)</span>).</p></li>
+<li><p>Los pacientes que reciben trasplante en la fase crónica de la enfermedad, tienen un riesgo 48% menor de morir post datos que aquellos que son trasplantados en la fase aguda (si consideramos un <span class="math inline">\(p&lt; 0,1\)</span>, este término tendría significación). Se observó un aumento de riesgo en los que reciben trasplante en la crisis blástica respecto de quienes lo reciben en la aguda, pero este término no resultó significativo.</p></li>
+</ul></section><section id="algunas-alternativas" class="level3"><h3 class="anchored" data-anchor-id="algunas-alternativas">Algunas alternativas</h3>
+<p>Como hemos visto para modelados anteriores, podemos construir el modelo de Cox con funciones del paquete <code>stats</code> y del paquete <code>performance</code> <span class="citation" data-cites="performance">(<a href="#ref-performance" role="doc-biblioref">Lüdecke et&nbsp;al. 2021</a>)</span>.</p>
+<p>Les recordamos que para la comparación de modelos con la función <code>compare_performance()</code> van a observar que se utiliza el indicador <strong>AIC <em>weights</em></strong> en lugar del AIC. El AIC <em>weights</em> es un parámetro que cuantifica de manera relativa la calidad de un modelo. Refleja la probabilidad relativa de que un modelo sea el mejor entre un conjunto de modelos candidatos. Su cálculo se basa en la comparación de los valores de AIC de cada modelo considerado.</p>
+<p>Por esto, <strong>se interpreta de manera inversa al AIC</strong>: a mayor valor de <em>AIC weights</em>, mayor probabilidad de que el modelo sea un mejor candidato en comparación al resto.</p>
+<p>Les dejamos a continuación el proceso <em>backwards</em> utilizando funciones de estos paquetes.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Selección backwards a partir del modelo saturado</span></span>
+<span><span class="va">m1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span>  <span class="va">fase</span> <span class="op">+</span> <span class="va">decr</span> <span class="op">+</span> <span class="va">deag</span> <span class="op">+</span> <span class="va">sexo</span> <span class="op">+</span> <span class="va">edad</span>, </span>
+<span>            data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/add1.html">drop1</a></span><span class="op">(</span><span class="va">m1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term deletions
+
+Model:
+Surv(tiempo, status) ~ fase + decr + deag + sexo + edad
+       Df    AIC
+&lt;none&gt;    378.14
+fase    2 378.46
+decr    1 386.29
+deag    1 389.22
+sexo    1 376.82
+edad    1 376.25</code></pre>
+</div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) sexo</span></span>
+<span><span class="va">fit_m2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">m1</span>, <span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">sexo</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># (-) edad</span></span>
+<span><span class="va">fit_m3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">m1</span>, <span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">edad</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># (-) fase</span></span>
+<span><span class="va">fit_m4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">m1</span>, <span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">fase</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida de los modelos</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_m2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + decr + deag + edad, 
+    data = datos)
+
+  n= 96, number of events= 49 
+
+                coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+fasecb       0.34930   1.41808  0.54010  0.647 0.517801    
+fasecrónica -0.66770   0.51289  0.35813 -1.864 0.062262 .  
+decrsi      -1.04100   0.35310  0.33283 -3.128 0.001762 ** 
+deagsi       1.15232   3.16554  0.32110  3.589 0.000332 ***
+edad        -0.00272   0.99728  0.01452 -0.187 0.851418    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb         1.4181     0.7052    0.4920     4.087
+fasecrónica    0.5129     1.9498    0.2542     1.035
+decrsi         0.3531     2.8321    0.1839     0.678
+deagsi         3.1655     0.3159    1.6870     5.940
+edad           0.9973     1.0027    0.9693     1.026
+
+Concordance= 0.758  (se = 0.031 )
+Likelihood ratio test= 39.98  on 5 df,   p=2e-07
+Wald test            = 38.28  on 5 df,   p=3e-07
+Score (logrank) test = 47.16  on 5 df,   p=5e-09</code></pre>
+</div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_m3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + decr + deag + sexo, 
+    data = datos)
+
+  n= 96, number of events= 49 
+
+               coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+fasecb       0.3378    1.4019   0.5429  0.622 0.533779    
+fasecrónica -0.5715    0.5647   0.3647 -1.567 0.117090    
+decrsi      -1.0940    0.3349   0.3246 -3.370 0.000750 ***
+deagsi       1.2075    3.3451   0.3240  3.726 0.000194 ***
+sexoM        0.2509    1.2852   0.3251  0.772 0.440233    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb         1.4019     0.7133    0.4837    4.0631
+fasecrónica    0.5647     1.7709    0.2763    1.1540
+decrsi         0.3349     2.9863    0.1772    0.6326
+deagsi         3.3451     0.2989    1.7725    6.3128
+sexoM          1.2852     0.7781    0.6796    2.4306
+
+Concordance= 0.762  (se = 0.03 )
+Likelihood ratio test= 40.56  on 5 df,   p=1e-07
+Wald test            = 38.19  on 5 df,   p=3e-07
+Score (logrank) test = 47.46  on 5 df,   p=5e-09</code></pre>
+</div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_m4</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ decr + deag + sexo + edad, 
+    data = datos)
+
+  n= 96, number of events= 49 
+
+             coef  exp(coef)   se(coef)      z Pr(&gt;|z|)    
+decrsi -1.3160459  0.2681937  0.3150468 -4.177 2.95e-05 ***
+deagsi  1.1988240  3.3162147  0.3084393  3.887 0.000102 ***
+sexoM   0.4531812  1.5733092  0.3241990  1.398 0.162158    
+edad    0.0003653  1.0003654  0.0142724  0.026 0.979578    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+       exp(coef) exp(-coef) lower .95 upper .95
+decrsi    0.2682     3.7286    0.1446    0.4973
+deagsi    3.3162     0.3015    1.8118    6.0700
+sexoM     1.5733     0.6356    0.8334    2.9701
+edad      1.0004     0.9996    0.9728    1.0287
+
+Concordance= 0.732  (se = 0.032 )
+Likelihood ratio test= 36.35  on 4 df,   p=2e-07
+Wald test            = 32.6  on 4 df,   p=1e-06
+Score (logrank) test = 38.43  on 4 df,   p=9e-08</code></pre>
+</div>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Comparación de modelos</span></span>
+<span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">m1</span>, <span class="va">fit_m2</span>, <span class="va">fit_m3</span>, <span class="va">fit_m4</span>, </span>
+<span>                    metrics <span class="op">=</span> <span class="st">"AIC"</span>, </span>
+<span>                    rank <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name   | Model | AIC weights | Performance-Score
+------------------------------------------------
+fit_m3 | coxph |       0.404 |           100.00%
+fit_m2 | coxph |       0.304 |            62.75%
+m1     | coxph |       0.157 |             8.58%
+fit_m4 | coxph |       0.134 |             0.00%</code></pre>
+</div>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Selección a partir de fit_m3</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/add1.html">drop1</a></span><span class="op">(</span><span class="va">fit_m3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term deletions
+
+Model:
+Surv(tiempo, status) ~ fase + decr + deag + sexo
+       Df    AIC
+&lt;none&gt;    376.25
+fase    2 376.46
+decr    1 386.02
+deag    1 387.91
+sexo    1 374.86</code></pre>
+</div>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) sexo</span></span>
+<span><span class="va">fit_m5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">fit_m3</span>, <span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">sexo</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># (-) fase</span></span>
+<span><span class="va">fit_m6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">fit_m3</span>, <span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">fase</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida de los modelos</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_m5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + decr + deag, data = datos)
+
+  n= 96, number of events= 49 
+
+               coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+fasecb       0.3449    1.4119   0.5402  0.639 0.523100    
+fasecrónica -0.6509    0.5216   0.3467 -1.878 0.060440 .  
+decrsi      -1.0597    0.3466   0.3176 -3.336 0.000849 ***
+deagsi       1.1633    3.2004   0.3160  3.681 0.000232 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb         1.4119     0.7083    0.4898    4.0698
+fasecrónica    0.5216     1.9173    0.2644    1.0290
+decrsi         0.3466     2.8856    0.1860    0.6458
+deagsi         3.2004     0.3125    1.7227    5.9456
+
+Concordance= 0.753  (se = 0.03 )
+Likelihood ratio test= 39.95  on 4 df,   p=4e-08
+Wald test            = 38.18  on 4 df,   p=1e-07
+Score (logrank) test = 47.11  on 4 df,   p=1e-09</code></pre>
+</div>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_m6</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ decr + deag + sexo, data = datos)
+
+  n= 96, number of events= 49 
+
+          coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+decrsi -1.3143    0.2687   0.3072 -4.279 1.88e-05 ***
+deagsi  1.1977    3.3124   0.3051  3.925 8.66e-05 ***
+sexoM   0.4555    1.5769   0.3115  1.462    0.144    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+       exp(coef) exp(-coef) lower .95 upper .95
+decrsi    0.2687     3.7220    0.1472    0.4906
+deagsi    3.3124     0.3019    1.8215    6.0236
+sexoM     1.5769     0.6341    0.8564    2.9037
+
+Concordance= 0.74  (se = 0.031 )
+Likelihood ratio test= 36.35  on 3 df,   p=6e-08
+Wald test            = 32.6  on 3 df,   p=4e-07
+Score (logrank) test = 38.43  on 3 df,   p=2e-08</code></pre>
+</div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Comparación de modelos</span></span>
+<span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">fit_m3</span>, <span class="va">fit_m5</span>, <span class="va">fit_m6</span>, </span>
+<span>                    metrics <span class="op">=</span> <span class="st">"AIC"</span>, </span>
+<span>                    rank <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name   | Model | AIC weights | Performance-Score
+------------------------------------------------
+fit_m5 | coxph |       0.513 |           100.00%
+fit_m3 | coxph |       0.256 |             8.85%
+fit_m6 | coxph |       0.231 |             0.00%</code></pre>
+</div>
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Selección a partir de fit_m5</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/add1.html">drop1</a></span><span class="op">(</span><span class="va">fit_m5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Single term deletions
+
+Model:
+Surv(tiempo, status) ~ fase + decr + deag
+       Df    AIC
+&lt;none&gt;    374.86
+fase    2 376.68
+decr    1 384.27
+deag    1 386.00</code></pre>
+</div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># fit_m5 (-) fase</span></span>
+<span><span class="va">fit_m7</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/update.html">update</a></span><span class="op">(</span><span class="va">fit_m5</span>, <span class="op">~</span><span class="va">.</span><span class="op">-</span><span class="va">fase</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit_m7</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ decr + deag, data = datos)
+
+  n= 96, number of events= 49 
+
+          coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+decrsi -1.2532    0.2856   0.3038 -4.125 3.71e-05 ***
+deagsi  1.1001    3.0045   0.2959  3.717 0.000201 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+       exp(coef) exp(-coef) lower .95 upper .95
+decrsi    0.2856     3.5015    0.1574     0.518
+deagsi    3.0045     0.3328    1.6822     5.366
+
+Concordance= 0.739  (se = 0.03 )
+Likelihood ratio test= 34.13  on 2 df,   p=4e-08
+Wald test            = 32.9  on 2 df,   p=7e-08
+Score (logrank) test = 37.62  on 2 df,   p=7e-09</code></pre>
+</div>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Comparación de modelos</span></span>
+<span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">fit_m5</span>, <span class="va">fit_m7</span>, </span>
+<span>                    metrics <span class="op">=</span> <span class="st">"AIC"</span>, </span>
+<span>                    rank <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name   | Model | AIC weights | Performance-Score
+------------------------------------------------
+fit_m5 | coxph |       0.713 |           100.00%
+fit_m7 | coxph |       0.287 |             0.00%</code></pre>
+</div>
+</div>
+<p>Por otro lado, recordemos que R permite también hacer una <strong>selección automática de los modelos</strong>, tanto para supervivencia como para cualquier tipo de modelado. Normalmente la bibliografía no recomienda los procedimientos automáticos, pero tengamos en claro lo que ocurre en cada caso:</p>
+<ul>
+<li><p>“hacia atrás / adelante” (el valor por defecto): la selección comienza con el modelo completo y elimina los predictores uno a la vez, en cada paso, considerando si el criterio será mejorado agregando de nuevo una variable eliminada en un paso anterior.</p></li>
+<li><p>“hacia adelante / hacia atrás”, la selección comienza con un modelo que incluye sólo una constante, y añade predictores uno a la vez, en cada paso considerando si el criterio se mejorará mediante la eliminación de una variable agregada anteriormente.</p></li>
+<li><p>“atrás” y “adelante” son similares sin la reconsideración en cada paso.</p></li>
+</ul></section><section id="predicción-de-la-curva-de-supervivencia" class="level3"><h3 class="anchored" data-anchor-id="predicción-de-la-curva-de-supervivencia">Predicción de la curva de supervivencia</h3>
+<p>Ahora, estaríamos en condiciones de obtener la función de supervivencia ajustada mediante el modelo de Cox seleccionado. La función <code><a href="https://rdrr.io/pkg/survival/man/survfit.html">survfit()</a></code> del paquete <code>survival</code> calcula la función de supervivencia pronosticada para un modelo de riesgos proporcionales de Cox.</p>
+<p>Para ello, la función de R es:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html">survfit</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Podríamos comparar esto con lo obtenido en la estimación de Kaplan-Meier (ver módulo de KM). Pero, siempre resulta más claro realizar la comparación en forma gráfica: graficaremos la función de supervivencia obtenida mediante el estimador de Kaplan-Meier y la obtenida mediante el modelo de Cox seleccionado. Para esto, primero tendremos que crear una lista con las funciones de supervivencia requeridas para luego graficarlas utilizando la función <code><a href="https://rdrr.io/pkg/survminer/man/ggsurvplot_combine.html">ggsurvplot_combine()</a></code> del paquete <code>survminer</code> <span class="citation" data-cites="survminer">(<a href="#ref-survminer" role="doc-biblioref">Kassambara, Kosinski, y Biecek 2024</a>)</span><strong>.</strong></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Creamos un objeto con la estimación de KM</span></span>
+<span><span class="va">global</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">tiempo</span>, <span class="va">datos</span><span class="op">$</span><span class="va">status</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Creamos una lista con la función de supervivencia del modelo final</span></span>
+<span><span class="co"># seleccionado y la función del estimador de KM</span></span>
+<span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>modelo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html">survfit</a></span><span class="op">(</span><span class="va">m5</span><span class="op">)</span>, </span>
+<span>            global <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/survfit.html">survfit</a></span><span class="op">(</span><span class="va">global</span> <span class="op">~</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># Generamos las curvas de supervivencia</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/survminer/man/ggsurvplot_combine.html">ggsurvplot_combine</a></span><span class="op">(</span><span class="va">fit</span>, </span>
+<span>                   data <span class="op">=</span> <span class="va">datos</span>,</span>
+<span>                   ggtheme <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>                   title <span class="op">=</span> <span class="st">"Comparación del ajuste del modelo de Cox y el estimador de KM"</span>,</span>
+<span>                   xlab <span class="op">=</span> <span class="st">"Días"</span>,</span>
+<span>                   ylab <span class="op">=</span> <span class="st">"Supervivencia"</span>,</span>
+<span>                   legend.title <span class="op">=</span> <span class="st">""</span>,</span>
+<span>                   legend.labs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ajuste por Cox"</span>, <span class="st">"Estimador de KM"</span><span class="op">)</span></span>
+<span>                   <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="reg_cox_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Podemos observar que el modelo seleccionado, ajusta bastante bien (sobreestima al principio, subestima al final). Sin embargo, en lo que a modelado respecta, para evaluar la calidad de ajuste contamos con parámetros adicionales.</p>
+</section><section id="calidad-de-ajuste-de-un-modelo" class="level3"><h3 class="anchored" data-anchor-id="calidad-de-ajuste-de-un-modelo">Calidad de ajuste de un modelo</h3>
+<p>Hay pocas medidas para evaluar el ajuste de un modelo de supervivencia. Una de las más simples es <span class="math inline">\(R^2\)</span>, cuya expresión es: <span class="math display">\[
+R^2_{LR}= 1- \bigg(\frac{Likelihood(modelo\ nulo)}{Likelihood(modelo\ ajustado)} \bigg )^ \frac{2}{n}
+\]</span></p>
+<p>Su interpretación es similar a la del <span class="math inline">\(R^2\)</span> de los otros modelos lineales:</p>
+<p><span class="math inline">\(R^2\)</span> puede ser interpretado como el poder explicativo de las covariables en el tiempo de ocurrencia del evento en estudio.</p>
+<p><span class="math inline">\(R^2\)</span> tiene valores bajos en los análisis de supervivencia (alrededor de 30% de poder explicativo), por lo que muchos autores no lo consideran apropiado. De hecho, en las salidas de R de los modelos, observamos que no lo muestra actualmente, siendo que antes sí lo ofrecía, atendiendo a estas y otras cuestiones teóricas. En su lugar, ofrece el valor de <strong>concordancia</strong>. Profundizaremos un poco sobre este concepto, ya que no lo hemos visto en otros modelos.</p>
+<p>El uso de la estadística de <strong>concordancia</strong> para los modelos de Cox fue popularizado por Harrel <span class="citation" data-cites="harrell1996">(<a href="#ref-harrell1996" role="doc-biblioref">Harrell, Lee, y Mark 1996</a>)</span>, y ahora es la medida más usada como bondad de ajuste en los modelos de supervivencia. Una ventaja de la estadística es que está bien definida, no solo para los modelos de supervivencia, sino también para la regresión lineal logística y ordinaria.</p>
+<p>En general, si <span class="math inline">\(yi\)</span> y <span class="math inline">\(xi\)</span> son los valores observados y predichos por el modelo, respectivamente, la concordancia se define como <span class="math inline">\(P(x_i &gt; x_j|y_i&gt; y_j)\)</span>, la probabilidad de que la predicción <span class="math inline">\(x\)</span> vaya en la misma dirección que los datos reales <span class="math inline">\(y\)</span>. Un par de las observaciones <span class="math inline">\(i, j\)</span> se consideran concordantes si la predicción y los datos van en la misma dirección. <strong>La concordancia es la fracción de pares concordantes</strong>.</p>
+<p>En general, se acepta la siguiente escala:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="lightable-paper caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Concordancia (c)</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Poder discriminatorio</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">0.3 &lt; c &lt; 0.4</td>
+<td style="text-align: left;">Bajo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">c = 0.5</td>
+<td style="text-align: left;">Por azar</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.6 &lt; c &lt; 0.7</td>
+<td style="text-align: left;">Común</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">0.7 &lt; c &lt; 0.8</td>
+<td style="text-align: left;">Muy bueno</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">0.8 &lt; c &lt; 0.9</td>
+<td style="text-align: left;">Excelente</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Si observamos, el valor de concordancia para el modelo <code>m5</code> (0.753), lo que indica muy buena concordancia entre lo observado y lo predicho por el modelo.</p>
+</section><section id="análisis-de-residuos" class="level3"><h3 class="anchored" data-anchor-id="análisis-de-residuos">Análisis de residuos</h3>
+<p>Como ustedes recordarán, se denomina residuo a la diferencia entre el valor observado y el valor estimado por la ecuación de regresión, es decir a lo que la ecuación de regresión deja sin explicar para cada observación.</p>
+<p>La definición de residuo en el análisis de supervivencia no es tan simple y directa como esta definición, dado, que, por ejemplo, un residuo obtenido como respuesta observada menos esperada, no tiene en consideración el tiempo observado de un individuo censurado.</p>
+<p>En el análisis de supervivencia, se describen distintos tipos de residuos que sirven para evaluar distintos aspectos del modelo:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="lightable-paper caption-top table table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Evaluación</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Tipo de residuo</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Verificar riesgos proporcionales</td>
+<td style="text-align: left;">Residuos de Schoenfeld</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Evaluar si es adecuado incluir las variables en forma lineal en el modelo</td>
+<td style="text-align: left;">Residuos Martingale</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Detectar residuos grandes (outliers)</td>
+<td style="text-align: left;">Residuos de Deviance</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Impacto que tiene cada observación en el modelo, tanto en forma global como por variable</td>
+<td style="text-align: left;">Residuos Score</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Y ahora algo más</strong>… para covariables con pocas categorías, las curvas de KM estratificadas dan una idea si se cumple el presupuesto de riesgos proporcionales de Cox. Curvas que son razonablemente paralelas a lo largo del tiempo indican proporcionalidad de riesgo entre las categorías y, por el contrario, el entrecruzamiento o una variación en las distancias entre las categorías, podría indicar falta de proporcionalidad.</p>
+<p>Si tienen presentes las curvas de KM que construimos para este ejemplo, en todas las curvas que se muestran, parece razonable suponer que se cumple el supuesto de proporcionalidad, aún en el caso de la variable <code>sexo</code>, dado que ambas categorías están prácticamente superpuestas, separándose recién al final, cuando quedan pocas observaciones.</p>
+<p>A continuación, abordaremos el análisis de residuos, al menos de algunos de ellos. Para el desarrollo de gráficos seguiremos explorando el paquete <code>survminer</code>. Les aclaramos, además, que no utilizaremos la función <code>check_model()</code> del paquete <code>performance</code> para esta ocasión dado que no permite aún el análisis de residuales para modelos de Cox.</p>
+<section id="residuos-de-schoenfeld" class="level4"><h4 class="anchored" data-anchor-id="residuos-de-schoenfeld">Residuos de Schoenfeld</h4>
+<p>Podríamos preguntarnos si el efecto de cada covariable será el mismo a medida que transcurra el tiempo, porque si no es así, se trataría de covariables tiempo dependientes. Para responder esta cuestión, se calculan los <strong>Residuos de Schoenfeld</strong>.</p>
+<p>Se genera un residuo para cada variable y para cada paciente, es decir que si tenemos un modelo de Cox con tres factores pronóstico se calcularán 3 residuos de Schoenfeld por paciente. Estos residuos valen cero para las observaciones incompletas. Es posible modificar estos residuos con el fin de que no valgan cero para las observaciones incompletas, obteniéndose entonces los denominados residuos Schoenfeld corregidos o escalados.</p>
+<p>En R, la función <code><a href="https://rdrr.io/pkg/survival/man/cox.zph.html">cox.zph()</a></code> realiza la prueba de hipótesis de correlación para los residuos de Schoenfeld de cada covariable con alguna transformación del tiempo, los argumentos de la función son:</p>
+<ul>
+<li><p><code>fit</code>: Un objeto coxph resultado de un ajuste del modelo de regresión de Cox.</p></li>
+<li><p><code>transform</code>: Tipo de transformación del tiempo, posibles valores son <code>"km"</code>, <code>"rank"</code>, <code>"identity"</code> o una función.</p></li>
+<li><p><code>global</code>: una prueba chi cuadrado global.</p></li>
+</ul>
+<p>La salida de la función es una tabla en donde para cada covariable calcula el coeficiente <span class="math inline">\(rho\)</span>, el estadístico de prueba chisq y su respectivo <em>p</em>-valor, además incluye una prueba global. Por ejemplo, para el <strong>m5</strong> o para <strong>m7</strong>, el supuesto de riesgos proporcionales puede ser verificado mediante el contraste de hipótesis generado mediante el comando:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/cox.zph.html">cox.zph</a></span><span class="op">(</span><span class="va">m5</span>, </span>
+<span>        transform <span class="op">=</span> <span class="st">"km"</span>, </span>
+<span>        global <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        chisq df       p
+fase    9.308  2 0.00952
+decr    7.834  1 0.00513
+deag    0.279  1 0.59742
+GLOBAL 18.546  4 0.00097</code></pre>
+</div>
+</div>
+<p><strong>¿Qué significa esta salida?</strong></p>
+<p>La <span class="math inline">\(H_0\)</span> que se testea es que la correlación lineal entre el residuo de Schoenfeld y el tiempo de supervivencia es cero.</p>
+<p>Esto es equivalente a probar <span class="math inline">\(H_0\)</span>: pendiente igual a cero o $H_0: logHR$ es constante en el tiempo.</p>
+<p>De lo expuesto se concluye que existe evidencia significativa al 5% de que se viole el supuesto de riesgos proporcionales, desde el punto de vista global, y para las covariables <code>decr</code> y <code>fase</code>.</p>
+<p>La validación del supuesto de riesgos proporcionales puede realizarse también en forma gráfica con la función <code><a href="https://rdrr.io/pkg/survminer/man/ggcoxdiagnostics.html">ggcoxdiagnostics()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/survminer/man/ggcoxdiagnostics.html">ggcoxdiagnostics</a></span><span class="op">(</span><span class="va">m5</span>, </span>
+<span>                 type <span class="op">=</span> <span class="st">"schoenfeld"</span>, </span>
+<span>                 title <span class="op">=</span> <span class="st">"Residuos de Schonfeld"</span>,</span>
+<span>                 ylab <span class="op">=</span> <span class="st">"Residuos"</span>,</span>
+<span>                 xlab <span class="op">=</span> <span class="st">"Tiempo"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="reg_cox_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La interpretación se facilita con el agregado de una línea de tendencia “<em>lowess</em>”, de esta forma, cuando esta línea se desvía de una línea constante, se sospecha una estructura tiempo dependiente en el efecto de la covariable.</p>
+<p>Los gráficos confirman lo que hallamos con el test: los residuos tienen un patrón o estructura con el tiempo. En el caso de la variable <code>decr</code>, parece visualizarse una relación lineal, lo mismo en <code>fase:cb</code>.</p>
+<p>Frente al problema de No proporcionalidad, se deberá evaluar:</p>
+<ul>
+<li><p>Magnitud</p></li>
+<li><p>Puntos influyentes</p></li>
+</ul>
+<p><em>¿Cuáles son las posibles soluciones?</em> Estratificar por covariable dependiente del tiempo, dividir el eje del tiempo o utilizar otro tipo de modelo.</p>
+<p>Continuaremos analizando los residuos de este modelo y retomaremos el tema cuando lleguemos a modelos estratificados.</p>
+</section><section id="residuos-martingale" class="level4"><h4 class="anchored" data-anchor-id="residuos-martingale">Residuos Martingale</h4>
+<p>El residuo Martingale de un sujeto es simplemente la diferencia entre el número de acontecimientos observados y el número de acontecimientos esperados según el modelo.</p>
+<p>Se grafica: <strong>Mi</strong> vs <strong>índice de individuo</strong>, permitiendo revelar sujetos mal ajustados por el modelo. Nuevamente nos será de utilidad la función <code><a href="https://rdrr.io/pkg/survminer/man/ggcoxdiagnostics.html">ggcoxdiagnostics()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/survminer/man/ggcoxdiagnostics.html">ggcoxdiagnostics</a></span><span class="op">(</span><span class="va">m5</span>, </span>
+<span>                 type <span class="op">=</span> <span class="st">"martingale"</span>, </span>
+<span>                 title <span class="op">=</span> <span class="st">"Residuos de Martingale"</span>,</span>
+<span>                 ylab <span class="op">=</span> <span class="st">"Residuos"</span>,</span>
+<span>                 xlab <span class="op">=</span> <span class="st">"Índice"</span></span>
+<span>                 <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="reg_cox_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Este gráfico sirve para evidenciar posibles valores aberrantes: individuos que demoraron mucho o demasiado poco en tener el evento (como los que señalan las flechas). Se espera que se distribuyan en torno a la línea punteada del 0, sin ningún patrón remanente. Valores de <strong>Mi</strong> mayores que 0, indica que el numero de eventos observados es menor que los estimados por el modelo y viceversa.</p>
+</section></section></section><section id="modelo-de-cox-estratificado" class="level2"><h2 class="anchored" data-anchor-id="modelo-de-cox-estratificado">Modelo de Cox estratificado</h2>
+<p>En algunas situaciones no podemos asumir que el riesgo basal <span class="math inline">\(h_o(t)\)</span> sea el mismo para todos los individuos del estudio. Esto podría ser por la característica propia de la variable (como la edad) o porque el diseño sea estratificado a priori (por ej. estadíos de una enfermedad). En estos casos, los distintos <span class="math inline">\(h_o(t)\)</span> definen los distintos estratos.</p>
+<p>Los coeficientes <span class="math inline">\(\beta\)</span> también se estiman por el método de verosimilitud parcial, pero los individuos en riesgo que participan de la estimación son sólo los del estrato.</p>
+<p>El modelo de Cox estratificado constituye una de las maneras de corregir el modelo de Cox cuando no se cumple el supuesto de riesgos proporcionales para alguna de las covariables. En este caso suele correrse el modelo estratificando por la covariable que no cumple con el supuesto de riesgo proporcional. Este procedimiento permite corregir el sesgo en la estimación del parámetro, que puede presentarse cuando se viola el supuesto de riesgo proporcional. Sin embargo, presenta una desventaja y es que no existe ningún <span class="math inline">\(\beta\)</span> que permita estimar el efecto de la covariable de estratificación.</p>
+<p>Continuando con nuestro ejemplo, vimos que la variable decr violaba el supuesto de proporcionalidad. Deberíamos entonces usar un modelo de Cox estratificado, donde decr sea la variable de estratificación.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">m5st</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/coxph.html">coxph</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/Surv.html">Surv</a></span><span class="op">(</span><span class="va">tiempo</span>, <span class="va">status</span><span class="op">)</span> <span class="op">~</span> <span class="va">fase</span> <span class="op">+</span> <span class="va">deag</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/strata.html">strata</a></span><span class="op">(</span><span class="va">decr</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Salida del modelo</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">m5st</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+coxph(formula = Surv(tiempo, status) ~ fase + deag + strata(decr), 
+    data = datos)
+
+  n= 96, number of events= 49 
+
+                coef exp(coef) se(coef)      z Pr(&gt;|z|)    
+fasecb       0.09209   1.09647  0.54271  0.170 0.865250    
+fasecrónica -0.72569   0.48399  0.35111 -2.067 0.038747 *  
+deagsi       1.12109   3.06819  0.32007  3.503 0.000461 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+            exp(coef) exp(-coef) lower .95 upper .95
+fasecb          1.096     0.9120    0.3785    3.1765
+fasecrónica     0.484     2.0662    0.2432    0.9632
+deagsi          3.068     0.3259    1.6385    5.7454
+
+Concordance= 0.646  (se = 0.041 )
+Likelihood ratio test= 17.02  on 3 df,   p=7e-04
+Wald test            = 17.36  on 3 df,   p=6e-04
+Score (logrank) test = 18.52  on 3 df,   p=3e-04</code></pre>
+</div>
+</div>
+<p>Podemos nuevamente chequear la proporcionalidad en este nuevo modelo:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/survival/man/cox.zph.html">cox.zph</a></span><span class="op">(</span><span class="va">m5st</span>, </span>
+<span>        transform<span class="op">=</span><span class="st">"km"</span>, </span>
+<span>        global<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        chisq df      p
+fase   10.848  2 0.0044
+deag    0.448  1 0.5031
+GLOBAL 11.084  3 0.0113</code></pre>
+</div>
+</div>
+<p>Vemos que el modelo de Cox estratificado tampoco resuelve el problema.</p>
+</section><section id="modelo-de-cox-extendido" class="level2"><h2 class="anchored" data-anchor-id="modelo-de-cox-extendido">Modelo de Cox extendido</h2>
+<p>El modelo de Cox que vimos inicialmente asume que las covariables no varían en el transcurso del tiempo. Pero sabemos que esto no siempre es así.</p>
+<p><em>¿Cómo analizar la supervivencia cuando las covariables cambian con el tiempo, como edad, tratamiento o hábitos alimentarios?</em></p>
+<p>El modelo de Cox extendido aborda esta situación mediante un proceso de conteo. Tiene las mismas premisas del modelo de Cox</p>
+<p><span class="math display">\[
+h(t|x(t))= h_0(t)exp(x(t)\beta)
+\]</span> ¿Cuál es la diferencia? La primer diferencia está ya en la base de datos: tendremos más de una fila por individuo, dado que los valores de una variable para el mismo individuo cambian con el correr del tiempo.</p>
+</section><section id="análisis-de-supervivencia-más-complejos" class="level2"><h2 class="anchored" data-anchor-id="análisis-de-supervivencia-más-complejos">Análisis de supervivencia más complejos</h2>
+<p>Hasta ahora, vimos modelos de supervivencia adecuados para tratar problemas en los cuales el evento ocurre una única vez. Pero existen situaciones en lo que esto no es así y podríamos estar interesados en eventos que pueden acontecer más de una vez para un mismo individuo, como: infartos, gestaciones, fracturas, internaciones, etc. Así también nos podrían interesar situaciones en las que existen diferentes tipos de eventos derivados de un mismo factor de riesgo en el estudio: efectos adversos por medicamentos, enfermedades oportunistas en SIDA, etc. Este análisis se conoce como <em>Supervivencia de eventos múltiples</em>.</p>
+<p>El análisis de eventos múltiples, pretende responder a dos preguntas básicas:</p>
+<ol type="1">
+<li><p>¿Cuáles son los factores de riesgo asociados a los tiempos de diferentes eventos en un mismo individuo?</p></li>
+<li><p>¿Cómo analizar diferentes eventos como desenlace de una misma situación de riesgo?</p></li>
+</ol>
+<p>Las principales características de este tipo de análisis son:</p>
+<ul>
+<li><p>Tener más de un tiempo de supervivencia por individuo.</p></li>
+<li><p>Los individuos pueden mantenerse en el grupo de riesgo aún después de la ocurrencia de algún evento.</p></li>
+</ul>
+<p>Dado que los intervalos de tiempo no son independientes entre sí, la utilización directa del modelo de Cox no sirve. A su vez, no tener independencia entre las observaciones puede generar error en las estimaciones.</p>
+<p>Las estrategias para resolver estas situaciones son varias:</p>
+<ul>
+<li><p>Ajustar un modelo de regresión en el que la variable respuesta es el número de eventos por paciente durante el período de estudio: Poisson</p></li>
+<li><p>Utilizar Cox considerando uno de los eventos: tiempo hasta el primer evento</p></li>
+<li><p>Utilizar Modelos multinivel</p></li>
+<li><p>Utilizar Modelos marginales</p></li>
+</ul>
+<p>A continuación presentaremos una clasificación de eventos múltiples, la cual no es rígida ni definitiva, dado que la evolución de métodos en esta área es grande y van surgiendo nuevos modelos, que se adecúan mejor a las situaciones analizadas.</p>
+<ul>
+<li><p><strong>Eventos Competitivos</strong>: sólo es posible observar tiempo hasta un evento primero que impide que otro tenga lugar. Ej; muerte x diferentes causas y un mismo factor de riesgo</p></li>
+<li><p><strong>Eventos Paralelos</strong>: la ocurrencia de un evento no excluye la aparición de otros eventos y no existe orden preferencial (Enfermedades oportunistas, los efectos secundarios, la pérdida de dientes)</p></li>
+<li><p><strong>Eventos Ordenados</strong>: la sucesión de tiempos sigue obligatoriamente un orden. Ej: IAM El riesgo subyacente cambia a medida que el individuo sufre nuevos eventos, es decir, los eventos, además de ordenarse en el tiempo, se ordenan según el riesgo basal.</p></li>
+</ul>
+<p>Como podrán intuir el análisis se complejiza aún más, por lo cual no los abordaremos en este curso. Solamente hemos presentado los lineamientos, para que ustedes sean capaces de reconocer situaciones donde se deben aplicar estas metodologías, con el fin de que no cometan errores metodológicos importantes en el futuro (al menos referidos a estos temas).</p>
+</section><section id="consideraciones-sobre-el-tamaño-de-la-muestra" class="level2"><h2 class="anchored" data-anchor-id="consideraciones-sobre-el-tamaño-de-la-muestra">Consideraciones sobre el tamaño de la muestra</h2>
+<p>Como ya hemos visto en la primera unidad, para determinar el tamaño de muestra necesario para un estudio, tendremos que tener una idea de la magnitud del efecto que deseamos detectar. En el análisis de supervivencia, el efecto es el HR, por ejemplo, a los 5 años, a los 10 años o al intervalo de tiempo que se desee.</p>
+<p>Supongamos que deseamos saber si existen diferencias entre dos terapias diferentes A y B utilizadas habitualmente para tratar un determinado tipo de cáncer. Para ello se planea realizar un estudio de supervivencia. <em>¿Cuántos pacientes deberán estudiarse con cada tratamiento si se desea calcular el riesgo relativo con una precisión del 50% de su valor real y una seguridad del 95%?</em> De experiencias previas, se estima que el valor real del riesgo relativo es aproximadamente igual a 3 y la probabilidad de fallecer entre los pacientes tratados con el tratamiento A de un 20%.</p>
+<p>En este caso, para conocer si el tratamiento A tiene un efecto beneficioso sobre la evolución de los enfermos, podremos utilizar un modelo de regresión de Cox en el que se ajuste por la variable tratamiento, y a partir de cuyos coeficientes podremos estimar el HR asociado a la terapia recibida. Si, con este procedimiento, deseamos calcular el tamaño muestral mínimo necesario para detectar un determinado HR, deberemos conocer:</p>
+<ul>
+<li><p>Una idea del valor aproximado del riesgo relativo que se desea detectar (HR).</p></li>
+<li><p>La proporción de expuestos al factor de estudio (p), es decir, en nuestro caso, la proporción de enfermos habitualmente tratados con la terapia A.</p></li>
+<li><p>El porcentaje de observaciones censuradas que se espera en el total de la muestra (%C)</p></li>
+<li><p>El nivel de confianza o seguridad con el que se desea trabajar <span class="math inline">\(\alpha\)</span></p></li>
+<li><p>El poder que se quiere para el estudio <span class="math inline">\(1-\beta\)</span></p></li>
+</ul>
+<p>Con estos datos, el cálculo del tamaño muestral puede abordarse mediante la fórmula:</p>
+<p><span class="math display">\[
+n= \frac{(z_{1-\alpha/2}+z_{1+\beta})^2}{(log(HR))^2*(1-\%C)*(1-p)*p}
+\]</span></p>
+<section id="ejemplo" class="level4"><h4 class="anchored" data-anchor-id="ejemplo">Ejemplo</h4>
+<p>Supongamos que el tratamiento (A) suele aplicarse a un 70% de los pacientes que padecen ese tipo de cáncer, mientras que la otra terapia (B) es recibida sólo por un 30% de los enfermos. Si el efecto pronóstico del tratamiento recibido va a analizarse de modo univariado, la ecuación puede aplicarse para calcular el número necesario de pacientes a estudiar. Así, para detectar un riesgo relativo de 3, suponiendo un 20% de censura y trabajando con un <span class="math inline">\(\alpha= 95\%\)</span> y un poder del 80% se tendría:</p>
+<p><span class="math display">\[
+n= \frac{(1.96+0.842)^2}{(log3)^2*(1-0.2)*(1-0.7)*0.7}= 47
+\]</span></p>
+<p>Necesitaríamos 47 pacientes para detectar un HR de 3. A menor HR, mayor tamaño de muestra.</p>
+<p>Si ahora deseamos usar un modelo de Cox con más variables, el tratar de ajustar un modelo más complejo con el mismo número de pacientes llevará consigo una pérdida de precisión en la estimación de los coeficientes y, con ello, del HR asociado a cada una de las variables incluidas en el modelo multivariante. En esta situación, es obvio, que se necesita realizar alguna corrección en la ecuación que permita adaptar el tamaño muestral calculado a las variables que se incluirán a posteriori en el modelo.</p>
+<p><span class="math display">\[
+n= \frac{(z_{1-\alpha/2}+z_{1+\beta})^2}{(logHR)^2*(1-\%C)*(1-p)*p}*\frac {1}{1-\rho^2}
+\]</span></p>
+<p>El término agregado se lo llama <strong>factor de inflación de la varianza</strong>, donde <span class="math inline">\(\rho\)</span> denota al coeficiente de correlación de Pearson entre el factor en estudio y aquella otra variable que incluiremos en el modelo. En el caso en el que se ajuste por más de otro factor en el modelo, lo más sencillo es considerar como el mayor coeficiente de correlación entre el factor de estudio y todas las variables incluidas. Este coeficiente de correlación, cuanto mayor sea, más incrementará el valor del factor de inflación de la varianza y, por tanto, se incrementará el tamaño de la muestra a estudiar.</p>
+<p>Siguiendo con el ejemplo, posiblemente el tratamiento aplicado a cada enfermo dependerá de las características clínicas particulares del mismo, y recibirá una u otra terapia en función, por ejemplo, del estadío del tumor. En términos estadísticos, podrá entonces decirse que el factor tratamiento se encuentra “<em>correlacionado</em>” con esta característica. Supongamos, por ejemplo, que la correlación existente entre el nuevo tratamiento y el estadío del tumor es de 0,25. Este dato lo podremos obtener a partir de un estudio piloto o de otros trabajos sobre el tema. En caso de desconocerse, deberemos asumir una correlación suficientemente alta para así asegurar un poder suficiente.</p>
+<p>El cálculo del tamaño muestral, por tanto, permite al investigador precisar el número de pacientes a estudiar para detectar como significativos efectos de una magnitud determinada. El no hacerlo, o el no conocer cuántos pacientes necesitamos para detectar un efecto como significativo podría llevarnos a cometer un error de tipo II, es decir, no encontrar diferencias cuando sí las hay.</p>
+<div class="hidden">
+<p><span class="citation" data-cites="harrell1996">Harrell, Lee, y Mark (<a href="#ref-harrell1996" role="doc-biblioref">1996</a>)</span></p>
+<p><span class="citation" data-cites="hernández-ávila2011">Hernández-Ávila (<a href="#ref-hern%C3%A1ndez-%C3%A1vila2011" role="doc-biblioref">2011</a>)</span></p>
+<p><span class="citation" data-cites="royo-bordonada2009">Royo-Bordonada et&nbsp;al. (<a href="#ref-royo-bordonada2009" role="doc-biblioref">2009</a>)</span></p>
+<p><span class="citation" data-cites="woodward2005">Woodward (<a href="#ref-woodward2005" role="doc-biblioref">2005</a>)</span></p>
+<p><span class="citation" data-cites="therneau2000">Therneau y Grambsch (<a href="#ref-therneau2000" role="doc-biblioref">2000</a>)</span></p>
+<p><span class="citation" data-cites="survminer">Kassambara, Kosinski, y Biecek (<a href="#ref-survminer" role="doc-biblioref">2024</a>)</span></p>
+</div>
+
+
+
+</section></section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-cox1972" class="csl-entry" role="listitem">
+Cox, D. R. 1972. <span>«Regression Models and Life-Tables»</span>. <em>Journal of the Royal Statistical Society Series B: Statistical Methodology</em> 34 (2): 187-202. <a href="https://doi.org/10.1111/j.2517-6161.1972.tb00899.x">https://doi.org/10.1111/j.2517-6161.1972.tb00899.x</a>.
+</div>
+<div id="ref-harrell1996" class="csl-entry" role="listitem">
+Harrell, Frank E., Kerry L. Lee, y Daniel B. Mark. 1996. <span>«MULTIVARIABLE PROGNOSTIC MODELS: ISSUES IN DEVELOPING MODELS, EVALUATING ASSUMPTIONS AND ADEQUACY, AND MEASURING AND REDUCING ERRORS»</span>. <em>Statistics in Medicine</em> 15 (4): 361-87. <a href="https://doi.org/10.1002/(SICI)1097-0258(19960229)15:4<361::AID-SIM168>3.0.CO;2-4">https://doi.org/10.1002/(SICI)1097-0258(19960229)15:4&lt;361::AID-SIM168&gt;3.0.CO;2-4</a>.
+</div>
+<div id="ref-hernández-ávila2011" class="csl-entry" role="listitem">
+Hernández-Ávila, Mauricio. 2011. <em>Epidemiología: diseño y análisis de estudios</em>. Buenos Aires: Editorial Médica Panamericana.
+</div>
+<div id="ref-survminer" class="csl-entry" role="listitem">
+Kassambara, Alboukadel, Marcin Kosinski, y Przemyslaw Biecek. 2024. <span>«survminer: Drawing Survival Curves using ’ggplot2’»</span>. <a href="https://CRAN.R-project.org/package=survminer">https://CRAN.R-project.org/package=survminer</a>.
+</div>
+<div id="ref-performance" class="csl-entry" role="listitem">
+Lüdecke, Daniel, Mattan S. Ben-Shachar, Indrajeet Patil, Philip Waggoner, y Dominique Makowski. 2021. <span>«<span></span>performance<span></span>: An <span></span>R<span></span> Package for Assessment, Comparison and Testing of Statistical Models»</span> 6: 3139. <a href="https://doi.org/10.21105/joss.03139">https://doi.org/10.21105/joss.03139</a>.
+</div>
+<div id="ref-royo-bordonada2009" class="csl-entry" role="listitem">
+Royo-Bordonada, Miguel Angel, Javier Damian, Beatriz Perez-Gomez, Fernando Rodríguez-Artalejo, Fernando Villar Alvarez, Gonzalo Lopez-Abente, Iñaki Imaz-Iglesia, et&nbsp;al. 2009. <em>Método epidemiológico</em>. Instituto de Salud Carlos III (ISCIII). Escuela Nacional de Sanidad (ENS). <a href="http://hdl.handle.net/20.500.12105/5271">http://hdl.handle.net/20.500.12105/5271</a>.
+</div>
+<div id="ref-therneau2000" class="csl-entry" role="listitem">
+Therneau, Terry M., y Patricia M. Grambsch. 2000. <em>Modeling Survival Data: Extending the Cox Model</em>. Statistics for Biology y Health. New York, NY: Springer New York. <a href="https://doi.org/10.1007/978-1-4757-3294-8">https://doi.org/10.1007/978-1-4757-3294-8</a>.
+</div>
+<div id="ref-woodward2005" class="csl-entry" role="listitem">
+Woodward, M. 2005. <em>Epidemiology: Study Design and Data Analysis</em>. Texts en statistical science. Chapman &amp; Hall/CRC. <a href="https://books.google.com.ar/books?id=kcDHxgEACAAJ">https://books.google.com.ar/books?id=kcDHxgEACAAJ</a>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reutilización</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.es">CC BY-NC 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Este material es parte del curso de Epidemiología - Nivel Avanzado © 2025 Instituto Nacional de Epidemiología “Dr.&nbsp;Juan H. Jara” (ANLIS)</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>
