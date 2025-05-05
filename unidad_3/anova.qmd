@@ -260,11 +260,24 @@ Una vez que comprobamos que existen diferencias significativas entre grupos, nos
 
 Si las varianzas son homocedásticas pero los grupos difieren en tamaño, podemos usar el test de Tukey si tenemos que comparar entre varios grupos, o la **corrección de Bonferroni** para grupos más reducidos.
 
-```{=html}
-<table style="border-collapse:collapse;border-color:#aaa;border-spacing:0;border:none" class="tg"><thead><tr><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Código</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Rango</th></tr></thead>
-<tbody><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">***</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0 a 0,001</td></tr><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">**</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0,001 a 0,01</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">*</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0,01 a 0,05</td></tr><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">.</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0,05 a 0,1</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal"></td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0,1 a 1</td></tr></tbody></table>
+```{r}
+#| echo: false
+# Datos
+tibble(
+  "Código" = c("***",
+               "**",
+               "*",
+               ".",
+               ""),
+  Rango = c("0 a 0,001",
+            "0,001 a 0,01",
+            "0,01 a 0,05",
+            "	0,05 a 0,1",
+            "0,1 a 1")
+) |> 
+  
+  # Tabla
+  kbl_format()
 ```
 
 El paquete `emmeans` [@emmeans] es una herramienta muy versátil y poderosa para realizar comparaciones múltiples. Comenzaremos utilizando la función `emmeans()` con el argumento `specs = "estado"` para crear un objeto que contenga las medias marginales por grupo:

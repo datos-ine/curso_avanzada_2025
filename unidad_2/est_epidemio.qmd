@@ -40,11 +40,9 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
+  kbl_format() |> 
   add_header_above(c("Estudios descriptivos" = 2, "Estudios analíticos" = 2),
-                   background = "#2f2e4e", color = "white") |> 
-  row_spec(0, background = "#2f2e4e", color = "white")
+                   background = "#2f2e4e", color = "white")
 ```
 
 Toda investigación debe partir de una revisión actualizada del conocimiento sobre el tema a abordar. Esto implica delimitar el problema de investigación de forma precisa, definiendo objetivos, propósito, justificación e hipótesis. Para ello, es fundamental conocer las características y ventajas de cada tipo de estudio epidemiológico, evaluar su adecuación a los objetivos planteados y considerar los recursos disponibles en términos de tiempo, personal y presupuesto.
@@ -109,10 +107,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white") |> 
-  column_spec(1, bold = TRUE)
+  kbl_format()
 ```
 
 ## Planificación y análisis de los estudios epidemiológicos

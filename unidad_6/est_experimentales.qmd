@@ -50,9 +50,7 @@ Sugiere políticas y programas de salud pública"),
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 Otras clasificaciones más amplias incluyen estudios donde no se cumplen estrictamente las tres condiciones mencionadas anteriormente, que apuntan a descartar que los efectos observados puedan deberse a factores desconocidos o no controlados. Estos estudios, denominados **cuasi-experimentales**, también implican una intervención, pero carecen del rigor metodológico necesario para asegurar la validez interna. Por lo tanto, presentan limitaciones para atribuir el efecto observado exclusivamente a la intervención. Esta clasificación puede resumirse de la siguiente forma:
@@ -84,9 +82,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 En esta unidad nos enfocaremos principalmente en los **ensayos clínicos controlados**, pero pueden consultar la bibliografía para explorar los otros diseños. Como en todo estudio epidemiológico, es fundamental adoptar medidas que minimicen el riesgo de sesgos. Habitualmente se consideran 5 principios para evitar sesgos:

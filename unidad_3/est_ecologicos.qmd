@@ -31,9 +31,7 @@ tibble(
                   rep("",2))) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 Recordemos también que puede incurrirse en la llamada *falacia ecológica*:
@@ -90,9 +88,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 ## Análisis de estudios ecológicos

@@ -245,7 +245,7 @@ La salida de estos modelos se divide en tres partes que incluyen:
 Existen diversas soluciones para tratar la sobredispersión, subdispersión y exceso de ceros en modelos de conteo. En este documento, nos enfocamos en las estrategias más comunes que pueden ser abordadas mediante modelos lineales generalizados utilizando el paquete `glmmTMB`.
 
 | Problema | Modelo |
-|------------------------------------|------------------------------------|
+|----|----|
 | Sobredispersión | `glmmTMB(formula, family = nbinom2)` |
 | Subdispersión | `glmmTMB(formula, family = compois)` |
 | Sobredispersión + Exceso de Ceros | `glmmTMB(formula, family = nbinom2, zi = ~1)` |

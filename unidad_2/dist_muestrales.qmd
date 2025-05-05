@@ -556,9 +556,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white") |> 
+  kbl_format() |> 
   column_spec(1, background = "#2f2e4e", color = "white", bold = TRUE)
 ```
 

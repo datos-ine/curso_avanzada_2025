@@ -408,7 +408,7 @@ datos <- tibble(
 # Generar tabla
 datos |> 
   kbl(align = "l") |> 
-  kable_paper(html_font = "Calibri")
+  kable_material(html_font = "Calibri")
 
 ```
 
@@ -518,7 +518,7 @@ datos |>
   
   # Generar tabla
   kbl(align = "l") |> 
-  kable_paper(html_font = "Calibri")
+  kable_material(html_font = "Calibri")
 ```
 
 Para la construcción de la tabla de supervivencia, lo primero que debemos hacer es ordenar los pacientes de acuerdo a su tiempo.
@@ -541,7 +541,7 @@ datos |>
   
   # Generar tabla
   kbl(align = "l") |> 
-  kable_paper(html_font = "Calibri")
+  kable_material(html_font = "Calibri")
 ```
 
 Comencemos con la construcción de la tabla de supervivencia (@tbl-tab5), teniendo en cuenta que aquí conocemos exactamente el tiempo en el que un individuo estuvo en riesgo de morir por ECV. Esta tabla se construye a partir de los individuos que tuvieron el evento.
@@ -569,7 +569,7 @@ tab |>
                     "Prob. evento", "Prob. supervivencia", "S(t)"),
       digits = 3,
       align = "l") |> 
-  kable_paper(html_font = "Calibri")
+  kable_material(html_font = "Calibri")
 ```
 
 Una vez obtenida la $S(t)$, se grafica:
@@ -739,7 +739,7 @@ datos <- tibble(
 datos |> 
   kbl(digits = 3, 
       align = "l") |> 
-  kable_paper(html_font = "Calibri")
+  kable_material(html_font = "Calibri")
 ```
 
 ¿Qué expresa $h(t)$ o $\lambda(t)$?

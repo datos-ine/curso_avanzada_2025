@@ -224,11 +224,22 @@ $$
 
 A continuación, mostramos cómo estos términos se distribuyen entre los grados de libertad y se obtienen los cuadrados medios correspondientes:
 
-```{=html}
-<table style="border-collapse:collapse;border-color:#aaa;border-spacing:0;border:none" class="tg"><thead><tr><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal"></th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Grados de libertad</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CM</th></tr></thead>
-<tbody><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">SCT</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">n-1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CMT = SCT/n-1</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">SCT</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">k-1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CMR = SCR/k-1</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">SCE</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">n-k-1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CME = SCE/n-k-1</td></tr></tbody></table>
+```{r}
+#| echo: false
+# Datos
+tibble(
+  " " = c("SCT",
+          "SCR",
+          "SCE"),
+  "Grados de libertad" = c("n-1",
+                            "k-1",
+                            "n-k-1"),
+  CM = c("CMT = SCT/n-1",
+         "CMR = SCR/k-1",
+         "CME = SCE/n-k-1")
+) |> 
+  # Tabla
+  kbl_format()
 ```
 
 ### Test F global
@@ -287,11 +298,18 @@ Ahora, consideremos una variable "Región", que tiene tres categorías: Noreste 
 
 La transformación de las categorías sería:
 
-```{=html}
-<table style="border-collapse:collapse;border-color:#aaa;border-spacing:0;border:none" class="tg"><thead><tr><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Región</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">RE1</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">RE2</th></tr></thead>
-<tbody><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">NE (basal)</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">N</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">CO</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">1</td></tr></tbody></table>
+```{r}
+#| echo: false
+# Datos
+tibble(
+  "Región" = c("NE (basal)",
+               "N",
+               "CO"),
+  RE1 = c(0, 1, 0),
+  RE2 = c(0, 0, 1)
+) |> 
+  # Tabla
+  kbl_format()
 ```
 
 En este caso:

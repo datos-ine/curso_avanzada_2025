@@ -493,9 +493,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 Si observamos, el valor de concordancia para el modelo `m5` (`r m5$concordance[6] |> round(3)`), lo que indica muy buena concordancia entre lo observado y lo predicho por el modelo.
@@ -522,9 +520,7 @@ tibble(
                         "Residuos Score")
 ) |> 
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 **Y ahora algo más**... para covariables con pocas categorías, las curvas de KM estratificadas dan una idea si se cumple el presupuesto de riesgos proporcionales de Cox. Curvas que son razonablemente paralelas a lo largo del tiempo indican proporcionalidad de riesgo entre las categorías y, por el contrario, el entrecruzamiento o una variación en las distancias entre las categorías, podría indicar falta de proporcionalidad.

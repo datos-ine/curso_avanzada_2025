@@ -519,15 +519,15 @@ glimpse(datos)
 
 Las variables a considerar son:
 
--   **camina**: si al momento de la entrevista caminaban (1, 0)
+-   `camina`: si al momento de la entrevista caminaban (1, 0)
 
--   **edad_meses**: a qué edad habían comenzado a caminar (medida en meses)
+-   `edad_meses`: a qué edad habían comenzado a caminar (medida en meses)
 
--   **edad_dias**: a qué edad habían comenzado a caminar (medida en días)
+-   `edad_dias`: a qué edad habían comenzado a caminar (medida en días)
 
--   **pareja_est**: si la madre tenía pareja estable (Si, No)
+-   `pareja_est`: si la madre tenía pareja estable (Si, No)
 
--   **lacto_180**: si había tomado pecho al menos 6 meses (Si, No)
+-   `lacto_180`: si había tomado pecho al menos 6 meses (Si, No)
 
 Coercionamos los tipos `character` a `factor`.
 
@@ -559,7 +559,7 @@ datos |>
 
 ### Selección de modelos
 
-A continuación iniciamos un proceso iterativo manual tipo *forward* basado en la selección de modelos propuesto en el capítulo 8 del libro de Silva Ayçaguer (1995).
+A continuación iniciamos un proceso iterativo manual tipo *forward* basado en la selección de modelos propuesto en el capítulo 8 del libro de @silvaayçaguer1995.
 
 **Paso 1**: Se ajustan tantos modelos de regresión logística simple como posibles variables explicativas tengamos. Dos de las variables (`edad_dias` y `edad_meses`) son la misma expresada en unidades diferentes, por lo que intentaremos quedarnos con la que explique más y a su vez sea estadísticamente significativa..
 
@@ -768,11 +768,24 @@ performance_accuracy(mod6)
 
 Los valores de AUC se pueden interpretar siguiendo el criterio:
 
-```{=html}
-<table style="border-collapse:collapse;border-color:#aaa;border-spacing:0;border:none" class="tg"><thead><tr><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Valor</th><th style="background-color:#2f2e4e;border-color:#aaa;border-style:solid;border-width:0px;color:#fff;font-family:Arial, sans-serif;font-size:14px;font-weight:bold;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Capacidad predictiva</th></tr></thead>
-<tbody><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0.5-0.6</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Mala</td></tr><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0.6-0.75</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Regular</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0.75-0.9</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Buena</td></tr><tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0.9-0.97</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Muy buena</td></tr>
-<tr><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">0.97-1</td><td style="background-color:#fff;border-color:#aaa;border-style:solid;border-width:0px;color:#333;font-family:Arial, sans-serif;font-size:14px;overflow:hidden;padding:10px 5px;text-align:left;vertical-align:top;word-break:normal">Excelente</td></tr></tbody></table>
+```{r}
+#| echo: false
+# Datos
+tibble(
+  Valor = c("0.5-0.6",
+            "0.6-0.75",
+            "0.75-0.9",
+            "0.9-0.97",
+            "0.97-1"),
+  "Capacidad predictiva" = c("Mala",
+                             "Regular",
+                             "Buena",
+                             "Muy buena",
+                             "Excelente")
+) |> 
+  
+  # Tabla
+  kbl_format()
 ```
 
 Nuestro modelo logra un AUC cercano a 0.94, que está dentro de la categoría muy buena.
@@ -884,7 +897,7 @@ Los resultados para cada una de las variables independientes es cercano a 1, por
 
 ### Interacción
 
-En este punto aplica el mismo concepto y explicación que la expresada en el material desarrollado en la [Unidad 3](https://datos-ine.github.io/unidad_3/conf_interac.html).
+En este punto aplica el mismo concepto y explicación que la expresada en el material desarrollado en la [**Unidad 3**](https://datos-ine.github.io/unidad_3/conf_interac.html).
 
 Ante la pregunta de la existencia de una variable modificadora de efecto dentro de la regresión múltiple, podemos realizar un análisis comparativo separando por estratos o subgrupos. El objetivo es identificar si la relación de la variable respuesta y una variable independiente cambia de acuerdo al nivel de otra variable independiente.
 

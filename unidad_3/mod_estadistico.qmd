@@ -156,9 +156,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 Los elementos de la lista también pueden llamarse de forma independiente, siendo los más importantes:

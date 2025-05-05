@@ -224,7 +224,7 @@ tibble(
 ) |> 
   # Tabla
   kbl() |> 
-  kable_paper(html_font = "Calibri")
+  kable_material(html_font = "Calibri")
 ```
 
 La decisión de cuántos conglomerados forman parte de la muestra, es una decisión del investigador: a veces puede ser necesario fijar un número, a veces puede ser más conveniente fijar el tamaño de la muestra en cada conglomerado. Por otra parte, puede que decidamos que el número de sujetos seleccionados en cada conglomerado sea igual para todos; que sea una fracción fija o algo a definir.
@@ -252,7 +252,7 @@ tibble(
   
   # Tabla
   kbl(align = "l") |> 
-  kable_paper(html_font = "Calibri") |> 
+  kable_material(html_font = "Calibri") |> 
   row_spec(11, bold = TRUE)
 ```
 
@@ -320,7 +320,7 @@ tibble(
   
   # Tabla
   kbl(align = "l") |> 
-  kable_paper(html_font = "Calibri")
+  kable_material(html_font = "Calibri")
 ```
 
 Cada individuo seleccionado en el estudio tiene una probabilidad de inclusión que depende tanto de la probabilidad de que su escuela (conglomerado) sea seleccionada como de la probabilidad de que él sea elegido dentro de su escuela. La ponderación resultante (el inverso de esta probabilidad) se utiliza para "expandir" el resultado del estudio, de manera que cada alumno en la muestra represente a un número determinado de alumnos en la población total.
