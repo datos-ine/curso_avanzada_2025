@@ -117,7 +117,8 @@ div.csl-indent {
     "search-submit-button-title": "Enviar",
     "search-label": "Buscar"
   }
-}</script><link href="../site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
+}</script><script src="../site_libs/kePrint-0.0.1/kePrint.js"></script><link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<link href="../site_libs/tabwid-1.1.3/tabwid.css" rel="stylesheet">
 <script src="../site_libs/tabwid-1.1.3/tabwid.js"></script><style type="text/css">
 .quarto-reader-toggle .bi::before, .quarto-color-scheme-toggle .bi::before {
   display: inline-block;
@@ -827,11 +828,11 @@ $ lacto_180  &lt;chr&gt; "Si", "Si", "No", "Si", "Si", "No", "Si", "Si", "Si", "
 </div>
 <p>Las variables a considerar son:</p>
 <ul>
-<li><p><strong>camina</strong>: si al momento de la entrevista caminaban (1, 0)</p></li>
-<li><p><strong>edad_meses</strong>: a qué edad habían comenzado a caminar (medida en meses)</p></li>
-<li><p><strong>edad_dias</strong>: a qué edad habían comenzado a caminar (medida en días)</p></li>
-<li><p><strong>pareja_est</strong>: si la madre tenía pareja estable (Si, No)</p></li>
-<li><p><strong>lacto_180</strong>: si había tomado pecho al menos 6 meses (Si, No)</p></li>
+<li><p><code>camina</code>: si al momento de la entrevista caminaban (1, 0)</p></li>
+<li><p><code>edad_meses</code>: a qué edad habían comenzado a caminar (medida en meses)</p></li>
+<li><p><code>edad_dias</code>: a qué edad habían comenzado a caminar (medida en días)</p></li>
+<li><p><code>pareja_est</code>: si la madre tenía pareja estable (Si, No)</p></li>
+<li><p><code>lacto_180</code>: si había tomado pecho al menos 6 meses (Si, No)</p></li>
 </ul>
 <p>Coercionamos los tipos <code>character</code> a <code>factor</code>.</p>
 <div class="cell" data-layout-align="center">
@@ -1008,7 +1009,7 @@ $ lacto_180  &lt;chr&gt; "Si", "Si", "No", "Si", "Si", "No", "Si", "Si", "Si", "
 </div>
 </div>
 <section id="selección-de-modelos" class="level3"><h3 class="anchored" data-anchor-id="selección-de-modelos">Selección de modelos</h3>
-<p>A continuación iniciamos un proceso iterativo manual tipo <em>forward</em> basado en la selección de modelos propuesto en el capítulo 8 del libro de Silva Ayçaguer (1995).</p>
+<p>A continuación iniciamos un proceso iterativo manual tipo <em>forward</em> basado en la selección de modelos propuesto en el capítulo 8 del libro de <span class="citation" data-cites="silvaayçaguer1995">Silva Ayçaguer (<a href="#ref-silvaay%C3%A7aguer1995" role="doc-biblioref">1995</a>)</span>.</p>
 <p><strong>Paso 1</strong>: Se ajustan tantos modelos de regresión logística simple como posibles variables explicativas tengamos. Dos de las variables (<code>edad_dias</code> y <code>edad_meses</code>) son la misma expresada en unidades diferentes, por lo que intentaremos quedarnos con la que explique más y a su vez sea estadísticamente significativa..</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># edad en días </span></span>
@@ -1337,34 +1338,38 @@ Method: Area under Curve</code></pre>
 </div>
 </div>
 <p>Los valores de AUC se pueden interpretar siguiendo el criterio:</p>
-<table class="tg caption-top table" data-quarto-postprocess="true">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead><tr class="header">
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Valor</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Capacidad predictiva</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Valor</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Capacidad predictiva</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0.5-0.6</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Mala</td>
+<td style="text-align: left;">0.5-0.6</td>
+<td style="text-align: left;">Mala</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0.6-0.75</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Regular</td>
+<td style="text-align: left;">0.6-0.75</td>
+<td style="text-align: left;">Regular</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0.75-0.9</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Buena</td>
+<td style="text-align: left;">0.75-0.9</td>
+<td style="text-align: left;">Buena</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0.9-0.97</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Muy buena</td>
+<td style="text-align: left;">0.9-0.97</td>
+<td style="text-align: left;">Muy buena</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0.97-1</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Excelente</td>
+<td style="text-align: left;">0.97-1</td>
+<td style="text-align: left;">Excelente</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <p>Nuestro modelo logra un AUC cercano a 0.94, que está dentro de la categoría muy buena.</p>
 </section><section id="cálculo-del-or" class="level3"><h3 class="anchored" data-anchor-id="cálculo-del-or">Cálculo del OR</h3>
 <p>Los valores de <em>odds-ratio</em> se obtienen como el resultado de calcular el valor del número <span class="math inline">\(e\)</span> elevado a los coeficientes estimados del modelo (exponencial o inversa del logaritmo natural).</p>
@@ -1921,7 +1926,7 @@ pareja_estSi  5.84  15.59</code></pre>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="reg_logistica_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+<figure class="figure"><p><img src="reg_logistica_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
@@ -1953,33 +1958,33 @@ pareja_estSi  5.84  15.59</code></pre>
 <span>  <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html">flextable</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="tabwid">
-<style>.cl-6a7998cc{}.cl-6a699080{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6a75fa1e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6a75fa28{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-6a761102{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6a761103{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6a76110c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6a76110d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6a76110e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6a76110f{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-6a7998cc">
+<style>.cl-df59d818{}.cl-df4afd20{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-df566912{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df566913{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-df5680dc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df5680dd{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df5680e6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df5680e7{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df5680f0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-df5680f1{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-df59d818">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-6a761102"><p class="cl-6a75fa1e"><span class="cl-6a699080">clasif</span></p></th>
-<th class="cl-6a761103"><p class="cl-6a75fa28"><span class="cl-6a699080">n</span></p></th>
-<th class="cl-6a761103"><p class="cl-6a75fa28"><span class="cl-6a699080">prop</span></p></th>
+<th class="cl-df5680dc"><p class="cl-df566912"><span class="cl-df4afd20">clasif</span></p></th>
+<th class="cl-df5680dd"><p class="cl-df566913"><span class="cl-df4afd20">n</span></p></th>
+<th class="cl-df5680dd"><p class="cl-df566913"><span class="cl-df4afd20">prop</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6a76110c"><p class="cl-6a75fa1e"><span class="cl-6a699080">&gt; 2</span></p></td>
-<td class="cl-6a76110d"><p class="cl-6a75fa28"><span class="cl-6a699080">16</span></p></td>
-<td class="cl-6a76110d"><p class="cl-6a75fa28"><span class="cl-6a699080">0.02000</span></p></td>
+<td class="cl-df5680e6"><p class="cl-df566912"><span class="cl-df4afd20">&gt; 2</span></p></td>
+<td class="cl-df5680e7"><p class="cl-df566913"><span class="cl-df4afd20">16</span></p></td>
+<td class="cl-df5680e7"><p class="cl-df566913"><span class="cl-df4afd20">0.02000</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6a76110c"><p class="cl-6a75fa1e"><span class="cl-6a699080">&gt; 2.5</span></p></td>
-<td class="cl-6a76110d"><p class="cl-6a75fa28"><span class="cl-6a699080">6</span></p></td>
-<td class="cl-6a76110d"><p class="cl-6a75fa28"><span class="cl-6a699080">0.00750</span></p></td>
+<td class="cl-df5680e6"><p class="cl-df566912"><span class="cl-df4afd20">&gt; 2.5</span></p></td>
+<td class="cl-df5680e7"><p class="cl-df566913"><span class="cl-df4afd20">6</span></p></td>
+<td class="cl-df5680e7"><p class="cl-df566913"><span class="cl-df4afd20">0.00750</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6a76110c"><p class="cl-6a75fa1e"><span class="cl-6a699080">&gt; 3</span></p></td>
-<td class="cl-6a76110d"><p class="cl-6a75fa28"><span class="cl-6a699080">1</span></p></td>
-<td class="cl-6a76110d"><p class="cl-6a75fa28"><span class="cl-6a699080">0.00125</span></p></td>
+<td class="cl-df5680e6"><p class="cl-df566912"><span class="cl-df4afd20">&gt; 3</span></p></td>
+<td class="cl-df5680e7"><p class="cl-df566913"><span class="cl-df4afd20">1</span></p></td>
+<td class="cl-df5680e7"><p class="cl-df566913"><span class="cl-df4afd20">0.00125</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6a76110e"><p class="cl-6a75fa1e"><span class="cl-6a699080"></span></p></td>
-<td class="cl-6a76110f"><p class="cl-6a75fa28"><span class="cl-6a699080">777</span></p></td>
-<td class="cl-6a76110f"><p class="cl-6a75fa28"><span class="cl-6a699080">0.97125</span></p></td>
+<td class="cl-df5680f0"><p class="cl-df566912"><span class="cl-df4afd20"></span></p></td>
+<td class="cl-df5680f1"><p class="cl-df566913"><span class="cl-df4afd20">777</span></p></td>
+<td class="cl-df5680f1"><p class="cl-df566913"><span class="cl-df4afd20">0.97125</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -1993,7 +1998,7 @@ pareja_estSi  5.84  15.59</code></pre>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="reg_logistica_files/figure-html/unnamed-chunk-47-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+<figure class="figure"><p><img src="reg_logistica_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
@@ -2021,14 +2026,14 @@ Low Correlation
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="reg_logistica_files/figure-html/unnamed-chunk-48-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+<figure class="figure"><p><img src="reg_logistica_files/figure-html/unnamed-chunk-49-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Los resultados para cada una de las variables independientes es cercano a 1, por lo que descartamos problemas de multicolinealidad.</p>
 </section><section id="interacción" class="level3"><h3 class="anchored" data-anchor-id="interacción">Interacción</h3>
-<p>En este punto aplica el mismo concepto y explicación que la expresada en el material desarrollado en la <a href="https://datos-ine.github.io/unidad_3/conf_interac.html">Unidad 3</a>.</p>
+<p>En este punto aplica el mismo concepto y explicación que la expresada en el material desarrollado en la <a href="https://datos-ine.github.io/unidad_3/conf_interac.html"><strong>Unidad 3</strong></a>.</p>
 <p>Ante la pregunta de la existencia de una variable modificadora de efecto dentro de la regresión múltiple, podemos realizar un análisis comparativo separando por estratos o subgrupos. El objetivo es identificar si la relación de la variable respuesta y una variable independiente cambia de acuerdo al nivel de otra variable independiente.</p>
 <p>Tomemos, por ejemplo, las variables <code>lacto_180</code> y <code>pareja_est</code>. Ambas son estadísticamente significativas dentro del modelo <code>mod6</code>. Construyamos dos modelos que contengan <code>lacto_180</code> y <code>edad_dias</code>, aplicados en dos subgrupos de la tabla <code>datos</code>: uno con niños de madres con pareja estable y otro con madres sin pareja estable.</p>
 <div class="cell" data-layout-align="center">
