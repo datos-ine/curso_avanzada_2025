@@ -178,26 +178,11 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_1/intro_R.html">
  <span class="dropdown-text">Unidad 1: Introducción a R</span></a>
   </li>  
-        <li>
-    <a class="dropdown-item" href="../unidad_2/est_epidemio.html">
- <span class="dropdown-text">Unidad 2: Estudios transversales</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../unidad_3/est_ecologicos.html">
- <span class="dropdown-text">Unidad 3: Estudios ecológicos</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../unidad_4/est_caso_control.html">
- <span class="dropdown-text">Unidad 4: Estudios de casos y controles</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../unidad_5/est_cohortes.html">
- <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="../unidad_6/est_experimentales.html">
- <span class="dropdown-text">Unidad 6: Estudios experimentales</span></a>
-  </li>  
+        <li class="dropdown-header">Unidad 2: Estudios transversales</li>
+        <li class="dropdown-header">Unidad 3: Estudios ecológicos</li>
+        <li class="dropdown-header">Unidad 4: Estudios de casos y controles</li>
+        <li class="dropdown-header">Unidad 5: Estudios de cohortes</li>
+        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
     </ul>
 </li>
 </ul>
@@ -664,7 +649,7 @@ Score (logrank) test = 38.43  on 4 df,   p=9e-08</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>Surv(tiempo, status) ~ fase + decr + deag + sexo
-&lt;environment: 0x00000202dc275200&gt;</code></pre>
+&lt;environment: 0x00000208c5237a48&gt;</code></pre>
 </div>
 </div>
 <p>En general, el criterio que se utiliza para “sacar” variables del modelo, es sacar aquellas cuyo <span class="math inline">\(\beta\)</span> haya resultado no significativo. En el caso de <code>m3</code> serían los <span class="math inline">\(\beta\)</span> correspondientes a las variables <code>sexo</code> y <code>fase</code>.</p>
@@ -753,7 +738,7 @@ Score (logrank) test = 38.43  on 3 df,   p=2e-08</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>Surv(tiempo, status) ~ fase + decr + deag
-&lt;environment: 0x00000202ddc50bd0&gt;</code></pre>
+&lt;environment: 0x00000208c78a24a0&gt;</code></pre>
 </div>
 </div>
 <p>Saco <code>fase</code>, dado que su coeficiente resultó no significativo.</p>
