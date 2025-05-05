@@ -28,15 +28,15 @@ website:
           - text: "Unidad 1: Introducción a R"
             href: unidad_1/intro_R.qmd
           - text: "Unidad 2: Estudios transversales"
-            href: unidad_2/est_epidemio.qmd
+            # href: unidad_2/est_epidemio.qmd
           - text: "Unidad 3: Estudios ecológicos"
-            href: unidad_3/est_ecologicos.qmd
+            # href: unidad_3/est_ecologicos.qmd
           - text: "Unidad 4: Estudios de casos y controles"
-            href: unidad_4/est_caso_control.qmd
+            # href: unidad_4/est_caso_control.qmd
           - text: "Unidad 5: Estudios de cohortes"
-            href: unidad_5/est_cohortes.qmd
+            # href: unidad_5/est_cohortes.qmd
           - text: "Unidad 6: Estudios experimentales"
-            href: unidad_6/est_experimentales.qmd
+            # href: unidad_6/est_experimentales.qmd
             
     right:
       - icon: cloud-download

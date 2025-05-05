@@ -489,7 +489,9 @@ tibble(
   
   # Tabla
   kbl() |> 
-  kable_paper(html_font = "Calibri") |>
+  kable_styling(bootstrap_options = c("stripped", "condensed"),
+                fixed_thead = TRUE,
+                html_font = "Calibri") |> 
   row_spec(0, background = "#2f2e4e", color = "white")
 ```
 
@@ -560,7 +562,9 @@ tibble(
   
   # Tabla
   kbl() |> 
-  kable_paper(html_font = "Calibri") |>
+  kable_styling(bootstrap_options = c("stripped", "condensed"),
+                fixed_thead = TRUE,
+                html_font = "Calibri") |> 
   row_spec(0, background = "#2f2e4e", color = "white")
 ```
 
@@ -608,7 +612,9 @@ tibble(
   
   # Tabla
   kbl() |> 
-  kable_paper(html_font = "Calibri") |>
+  kable_styling(bootstrap_options = c("stripped", "condensed"),
+                fixed_thead = TRUE,
+                html_font = "Calibri") |> 
   row_spec(0, background = "#2f2e4e", color = "white")
 ```
 
@@ -652,7 +658,9 @@ tibble(
   
   # Tabla
   kbl() |> 
-  kable_paper(html_font = "Calibri") |>
+  kable_styling(bootstrap_options = c("stripped", "condensed"),
+                fixed_thead = TRUE,
+                html_font = "Calibri") |> 
   row_spec(0, background = "#2f2e4e", color = "white")
 ```
 
