@@ -1,0 +1,253 @@
+---
+pagetitle: "Introducción al Lenguaje R"
+format: 
+  revealjs: 
+    width: 1600
+    height: 900
+    chalkboard: true
+    logo: logos_ine.png
+    incremental: false
+    slide-number: true
+    #footer: "Curso de Epidemiología - Nivel Avanzado"
+    theme: [simple, custom.scss]
+---
+
+```{r}
+#| echo: false
+# Configuración global
+knitr::opts_chunk$set(echo = FALSE,
+                      warning = FALSE,
+                      message = FALSE,
+                      fig.align = "center")
+
+# Paquetes necesarios
+pacman::p_load(
+  flextable,
+  patchwork,
+  rio,
+  janitor,
+  tidyverse
+)
+```
+
+## Curso de Epidemiología - Nivel Avanzado {style="text-align: center;"}
+
+[Unidad 1: Introducción a R]{.custom-title}
+
+[Encuentro 13/05/2025]{.custom-subtitle}
+
+![](img/R.png){.absolute bottom="40" left="850" width="800"}
+
+[artwork por allison horst]{.custom-artwork}
+
+## Objetivo de esta Unidad
+
+<br>
+
+> Introducir y nivelar al grupo de estudiantes del curso de **Epidemiología Nivel Avanzado** en el lenguaje R, con el fin de aplicarlo en el proceso de análisis de la siguientes unidades.
+
+<br> <br>
+
+. . .
+
+::: callout-warning
+## Aclaración
+
+> Este **NO es un curso de R**, solo lo usaremos como una herramienta para la cursada
+:::
+
+## Set mímino de herramientas
+
+![](img/Tools.PNG){.absolute bottom="0" left="600" width="1000"}
+
+<br>
+
+> Buscamos que todxs lxs estudiantes cuenten al menos con un set mínimo de herramientas para utilizarlas durante el año.
+
+. . .
+
+> Además de las bases que mostremos en esta dos semanas, iremos viendo nuevas herramientas durante las siguientes unidades.
+
+## Competencias a lograr
+
+<br>
+
+. . .
+
+-   Instalar R + RStudio + Rtools
+
+. . .
+
+-   Gestionar proyectos de RStudio
+
+. . .
+
+-   Entender los fundamentos del lenguaje R y tidyverse
+
+. . .
+
+-   Gestionar paquetes (instalación y activación)
+
+. . .
+
+-   Utilizar herramientas de RStudio
+
+. . .
+
+-   Leer tablas de datos
+
+. . .
+
+-   Realizar análisis exploratorios de datos (básico)
+
+## De donde partimos...
+
+![](img/Encuesta1.PNG)
+
+## De donde partimos...
+
+![](img/Encuesta2.PNG)
+
+## De donde partimos...
+
+![](img/Encuesta3.PNG)
+
+## Dificultades
+
+<br>
+
+Algunas de las dificultades que nos vamos a encontrar en el camino:
+
+<br>
+
+::: {.fragment .fade-in-then-semi-out}
+**R** es un lenguaje de *línea de comandos* por lo que su **curva de aprendizaje es lenta**
+:::
+
+<br>
+
+::: {.fragment .fade-in-then-semi-out}
+Hay muchas funciones y muchos paquetes. Es fácil **confundirse** y no recordar
+:::
+
+<br>
+
+::: {.fragment .fade-in-then-semi-out}
+Muchas veces la Ayuda no es clara
+:::
+
+<br>
+
+::: {.fragment .fade-in-then-semi-out}
+Hay que aprender a lidiar con los errores y no frustarse
+:::
+
+![](img/error2.PNG){.absolute bottom="15" left="995" width="650"}
+
+<br>
+
+::: {.fragment .fade-in-then-semi-out}
+Muchas veces los errores tampoco son claros
+:::
+
+## Consejos
+
+<br>
+
+> La practica vale más que la teoría. Cuanto mas horas de uso le dedique al lenguaje mejor.
+
+. . .
+
+<br>
+
+> Pida ayuda cuando se vea extraviado o confundido (el foro de ayuda está permanentemente abierto)
+
+. . .
+
+<br>
+
+> Aprenda a utilizar las herramientas de autocompletado de RStudio (va a minimizar la tasa de error de sintaxis)
+
+## Consejos
+
+<br>
+
+> Sea prolijo al escribir dentro de los scripts. Deje espacios donde corresponda y saltos de líneas para hacer el código más legible. Visite la hoja de estilo del lenguaje.
+
+. . .
+
+<br>
+
+> Documente los pasos que vaya desarrollando utilizando comentarios (#). Le servirá para entender que es lo que hizo cuando reutilice ese script.
+
+. . .
+
+<br>
+
+> Organice una estructura de carpetas con las unidades del curso donde descargue el material y los proyectos de R. Podrá buscar los recursos rápidamente cuando los necesite
+
+## Cómo vamos a trabajar en la práctica?
+
+<br>
+
+-   Cada unidad tiene actividades prácticas.
+
+-   En cada una de ellas el esquema de trabajo será similar:
+
+. . .
+
+1.  Descargar una carpeta comprimida (archivo **zip**)
+
+2.  Descomprimir el archivo (almacenar su contenido en la computadora)
+
+::: callout-warning
+## Cuidado
+
+No trabaje dentro del archivo comprimido porque perderá sus avances.
+:::
+
+3.  Abrir proyecto de R incluido en la carpeta
+
+4.  Abrir y ejecutar el script de R guiado o crear script (si la consigna lo pide)
+
+## Durante el curso
+
+<br>
+
+**No vamos a tener que hacer...**
+
+-   trabajos de limpieza y organización de tablas de datos.
+
+-   manipular datos y exploración exhaustiva
+
+**Habitualmente vamos a...**
+
+-   leer archivos de datos (texto plano -txt- o Excel)
+
+-   recategorizar variables, convertirlas a factor y configurar niveles.
+
+-   aplicar funciones comunes de tidyverse
+
+-   aplicar funciones estadísticas específicas
+
+-   utilizar sintaxis fórmula en los modelos de regresión
+
+## Temario del encuentro de hoy
+
+<br>
+
+-   Crear, abrir y cerrar proyectos de RStudio
+
+-   Crear, abrir y guardar scripts
+
+-   Usar autocompletado de RStudio, búsqueda y ayuda
+
+-   Instalar y gestionar paquetes
+
+-   Vectores y dataframes
+
+-   Operador de asignación
+
+-   Sintaxis diferenciada (R base y tidyverse)
+
+-   Responder preguntas, aclarar dudas, etc...

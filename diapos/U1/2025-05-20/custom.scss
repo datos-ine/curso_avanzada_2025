@@ -1,0 +1,66 @@
+/*-- scss:defaults --*/
+
+// fonts
+@import 'https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible&display=swap';
+@import url('https://fonts.googleapis.com/css2?family=Delius+Unicase&display=swap');
+
+$font-family-sans-serif: "Atkinson Hyperlegible", sans-serif;
+$code-block-font-size: 0.6em;
+
+$link-color: #066;
+
+
+/*-- scss:rules --*/
+
+/* Cambia color del texto */
+
+.reveal .custom-title {
+  color: #2F2E4E;
+  font-size: 2.2em;
+  position: absolute; 
+  left: 270px; 
+  top: 200px
+}
+
+.reveal .custom-subtitle {
+  font-family: 'Atkinson Hyperlegible';
+  color: #2F2E4E;
+  font-size: 1.5em;
+  position: absolute; 
+  left: 200px; 
+  bottom: 220px
+}
+
+.reveal .custom-artwork {
+  font-family: 'Atkinson Hyperlegible';
+  color: #2F2E4E;
+  font-size: 1em;
+  text-align: right;
+  position: absolute; 
+  left: 1100px; 
+  bottom: 15px;
+}
+
+.reveal {
+  color: #2F2E4E;
+}
+
+.reveal h2 {
+    background: #2F2E4E;
+    color: white; 
+    text-indent: 10px;         /* Ajusta la sangría en píxeles */
+    padding: 15px;             /* Espaciado interno para que el texto no esté pegado al borde */
+    border-radius: 20px;        /* Bordes redondeados opcionales */
+    
+}
+
+/* Cambiar el color de los títulos de nivel 3 (h3) */
+.reveal h3 {
+    color: #2F2E4E;
+}
+
+/* Cambiar el color de los elementos de lista */
+.reveal ul li, .reveal ol li {
+    color: #2F2E4E;
+}
+
