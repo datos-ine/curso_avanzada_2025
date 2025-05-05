@@ -20,9 +20,10 @@ pacman::p_load(
 pal <- scico::scico(n = 9, palette = "tokyo")
 
 # Formato tabla
-# # Tabla
-# kbl() |> 
-#   kable_styling(bootstrap_options = c("stripped", "condensed"),
-#                 fixed_thead = TRUE,
-#                 html_font = "Calibri") |> 
-#   row_spec(0, background = "#2f2e4e", color = "white")
+kbl_format <- function(x) {
+ kbl(x) |> 
+  kable_styling(bootstrap_options = c("stripped", "condensed", "hover"),
+                fixed_thead = TRUE,
+                html_font = "Calibri") |>
+  row_spec(0, background = "#2f2e4e", color = "white")
+}

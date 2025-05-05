@@ -249,13 +249,8 @@ tibble(
                     )
 ) |> 
   
-   # Tabla
-  kbl() |> 
-  kable_styling(bootstrap_options = c("stripped", "condensed"),
-                fixed_thead = TRUE,
-                html_font = "Calibri") |> 
-  row_spec(row = c(0, 1, 7, 10, 15, 18),
-           background = "#2f2e4e", color = "white")
+  # Tabla
+  kbl_format()
 ```
 
 ## Paquetes

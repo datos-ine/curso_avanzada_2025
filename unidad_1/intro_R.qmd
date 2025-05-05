@@ -488,11 +488,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_styling(bootstrap_options = c("stripped", "condensed"),
-                fixed_thead = TRUE,
-                html_font = "Calibri") |> 
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 Los operadores aritméticos se utilizan como si el lenguaje fuese una calculadora:
@@ -560,12 +556,8 @@ tibble(
                     "No igual que")
 ) |> 
   
-  # Tabla
-  kbl() |> 
-  kable_styling(bootstrap_options = c("stripped", "condensed"),
-                fixed_thead = TRUE,
-                html_font = "Calibri") |> 
-  row_spec(0, background = "#2f2e4e", color = "white")
+   # Tabla
+  kbl_format()
 ```
 
 Habitualmente estos operadores se utilizan asiduamente en expresiones para indicar relaciones entre valores.
@@ -611,11 +603,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_styling(bootstrap_options = c("stripped", "condensed"),
-                fixed_thead = TRUE,
-                html_font = "Calibri") |> 
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 Cuando queremos conectar algunas de las expresiones relacionales hacemos uso de estos operadores lógicos típicos (AND, OR, NOT).
@@ -657,11 +645,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_styling(bootstrap_options = c("stripped", "condensed"),
-                fixed_thead = TRUE,
-                html_font = "Calibri") |> 
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 El más relevante de estos valores especiales es el `NA` que sirve para indicar que no hay valor en esa posición o elemento de un objeto.
@@ -1032,8 +1016,6 @@ tibble(
                     "Incluye ambas variables y la interacción entre ellas")
 ) |> 
   
-  # Tabla
-  kbl() |> 
-  kable_paper(html_font = "Calibri") |>
-  row_spec(0, background = "#2f2e4e", color = "white")
+   # Tabla
+  kbl_format()
 ```

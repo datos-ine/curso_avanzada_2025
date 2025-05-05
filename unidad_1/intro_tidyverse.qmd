@@ -576,12 +576,8 @@ tibble(
                     "No es un valor ausente")
 ) |> 
   
-  # Tabla
-  kbl() |> 
-  kable_styling(bootstrap_options = c("stripped", "condensed"),
-                fixed_thead = TRUE,
-                html_font = "Calibri") |> 
-  row_spec(0, background = "#2f2e4e", color = "white")
+   # Tabla
+  kbl_format()
 ```
 
 Lo mismo con los operadores lógicos que se utilizan como conectores entre las expresiones:
@@ -606,11 +602,7 @@ tibble(
 ) |> 
   
   # Tabla
-  kbl() |> 
-  kable_styling(bootstrap_options = c("stripped", "condensed"),
-                fixed_thead = TRUE,
-                html_font = "Calibri") |> 
-  row_spec(0, background = "#2f2e4e", color = "white")
+  kbl_format()
 ```
 
 Cuando usamos múltiples argumentos separados por coma dentro de `filter()`, estas se combinan con un operador **AND** implícito, es decir, cada expresión debe ser verdadera para que la fila sea incluida en la salida.
