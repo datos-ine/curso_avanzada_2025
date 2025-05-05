@@ -117,7 +117,8 @@ div.csl-indent {
     "search-submit-button-title": "Enviar",
     "search-label": "Buscar"
   }
-}</script><style type="text/css">
+}</script><script src="../site_libs/kePrint-0.0.1/kePrint.js"></script><link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<style type="text/css">
 .quarto-reader-toggle .bi::before, .quarto-color-scheme-toggle .bi::before {
   display: inline-block;
   height: 40px;
@@ -514,30 +515,35 @@ Variabilidad \ total = Variabilidad \ regresión \ + \ Variabilidad \ residual
 SCT = SCR + SCE
 \]</span></p>
 <p>A continuación, mostramos cómo estos términos se distribuyen entre los grados de libertad y se obtienen los cuadrados medios correspondientes:</p>
-<table class="tg caption-top table" data-quarto-postprocess="true">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead><tr class="header">
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;"></th>
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Grados de libertad</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">CM</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Grados de libertad</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">CM</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">SCT</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">n-1</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">CMT = SCT/n-1</td>
+<td style="text-align: left;">SCT</td>
+<td style="text-align: left;">n-1</td>
+<td style="text-align: left;">CMT = SCT/n-1</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">SCT</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">k-1</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">CMR = SCR/k-1</td>
+<td style="text-align: left;">SCR</td>
+<td style="text-align: left;">k-1</td>
+<td style="text-align: left;">CMR = SCR/k-1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">SCE</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">n-k-1</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">CME = SCE/n-k-1</td>
+<td style="text-align: left;">SCE</td>
+<td style="text-align: left;">n-k-1</td>
+<td style="text-align: left;">CME = SCE/n-k-1</td>
 </tr>
 </tbody>
-</table></section><section id="test-f-global" class="level3"><h3 class="anchored" data-anchor-id="test-f-global">Test F global</h3>
+</table>
+</div>
+</div>
+</section><section id="test-f-global" class="level3"><h3 class="anchored" data-anchor-id="test-f-global">Test F global</h3>
 <p>El test F global compara el modelo de regresión ajustado con el modelo nulo (sin variables independientes) y evalúa el efecto conjunto de todas las variables independientes. Su fórmula es:</p>
 <p><span class="math display">\[
 F = CMR/CME
@@ -578,30 +584,34 @@ Y = \beta_0+\beta_1F_1
 </ul></section><section id="ejemplo-para-variable-independiente-con-múltiples-categorías" class="level4"><h4 class="anchored" data-anchor-id="ejemplo-para-variable-independiente-con-múltiples-categorías">Ejemplo para variable independiente con múltiples categorías</h4>
 <p>Ahora, consideremos una variable “Región”, que tiene tres categorías: Noreste (NE), Norte (N) y Centro Oeste (CO). Para modelarla como variables <em>dummy</em>, la transformamos en dos variables: <span class="math inline">\(Re_1\)</span> y <span class="math inline">\(Re_2\)</span>, ya que hay <span class="math inline">\(n-1 = 3-1 = 2\)</span> categorías <em>dummy</em>.</p>
 <p>La transformación de las categorías sería:</p>
-<table class="tg caption-top table" data-quarto-postprocess="true">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead><tr class="header">
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Región</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">RE1</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">RE2</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Región</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">RE1</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">RE2</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">NE (basal)</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0</td>
+<td style="text-align: left;">NE (basal)</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">N</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">1</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0</td>
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">CO</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">1</td>
+<td style="text-align: left;">CO</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <p>En este caso:</p>
 <ul>
 <li><p><span class="math inline">\(Re_1 = 1\)</span> si vive en el Norte, <span class="math inline">\(Re_1 = 0\)</span> si vive en otra región.</p></li>
@@ -778,7 +788,7 @@ $ pct_desempleo      &lt;dbl&gt; 5.3, 5.8, 6.1, 6.9, 5.0, 5.9, 5.2, 5.6, 6.5, 5.
 <span>  <span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggcorr.html">ggcorr</a></span><span class="op">(</span>label <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="reg_lineal_multiple_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+<figure class="figure"><p><img src="reg_lineal_multiple_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
@@ -1036,7 +1046,7 @@ Low Correlation
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_model</span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="reg_lineal_multiple_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+<figure class="figure"><p><img src="reg_lineal_multiple_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>

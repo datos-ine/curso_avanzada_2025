@@ -117,7 +117,8 @@ div.csl-indent {
     "search-submit-button-title": "Enviar",
     "search-label": "Buscar"
   }
-}</script><style type="text/css">
+}</script><script src="../site_libs/kePrint-0.0.1/kePrint.js"></script><link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<style type="text/css">
 .quarto-reader-toggle .bi::before, .quarto-color-scheme-toggle .bi::before {
   display: inline-block;
   height: 40px;
@@ -882,34 +883,38 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section><section id="comparaciones-múltiples" class="level3"><h3 class="anchored" data-anchor-id="comparaciones-múltiples">Comparaciones múltiples</h3>
 <p>Una vez que comprobamos que existen diferencias significativas entre grupos, nos interesa saber cuáles grupos son diferentes entre sí. Para ello, existen distintos algoritmos de comparaciones múltiples con sus respectivas correcciones, como el test de <em>Diferencia Honestamente Significativa de Tukey,</em> también llamado Tukey HSD o <strong>test de Tukey</strong>. Esta prueba se aplica para grupos equilibrados (mismo tamaño) y varianzas similares (homocedásticas). Es una prueba conservadora, dado que mantiene bajo el error de tipo I, sacrificando la capacidad de detectar diferencias existentes.</p>
 <p>Si las varianzas son homocedásticas pero los grupos difieren en tamaño, podemos usar el test de Tukey si tenemos que comparar entre varios grupos, o la <strong>corrección de Bonferroni</strong> para grupos más reducidos.</p>
-<table class="tg caption-top table" data-quarto-postprocess="true">
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead><tr class="header">
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Código</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; background-color: #2f2e4e; border-color: #aaa; border-style: solid; border-width: 0px; color: #fff; font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">Rango</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Código</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Rango</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">***</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0 a 0,001</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: left;">0 a 0,001</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">**</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0,001 a 0,01</td>
+<td style="text-align: left;">**</td>
+<td style="text-align: left;">0,001 a 0,01</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">*</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0,01 a 0,05</td>
+<td style="text-align: left;">*</td>
+<td style="text-align: left;">0,01 a 0,05</td>
 </tr>
 <tr class="even">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">.</td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0,05 a 0,1</td>
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">0,05 a 0,1</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;"></td>
-<td style="text-align: left; background-color: #fff; border-color: #aaa; border-style: solid; border-width: 0px; color: #333; font-family: Arial, sans-serif; font-size: 14px; overflow: hidden; padding: 10px 5px; vertical-align: top; word-break: normal;">0,1 a 1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">0,1 a 1</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 <p>El paquete <code>emmeans</code> <span class="citation" data-cites="emmeans">(<a href="#ref-emmeans" role="doc-biblioref">Lenth 2025</a>)</span> es una herramienta muy versátil y poderosa para realizar comparaciones múltiples. Comenzaremos utilizando la función <code><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html">emmeans()</a></code> con el argumento <code>specs = "estado"</code> para crear un objeto que contenga las medias marginales por grupo:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">comp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rvlenth.github.io/emmeans/reference/emmeans.html">emmeans</a></span><span class="op">(</span><span class="va">modelo</span>, specs <span class="op">=</span> <span class="st">"estado"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -945,7 +950,7 @@ P value adjustment: tukey method for comparing a family of 6 estimates </code></
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># tema claro</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="anova_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+<figure class="figure"><p><img src="anova_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
@@ -1035,7 +1040,7 @@ NOTE: n is number in each group</code></pre>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_model</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="anova_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+<figure class="figure"><p><img src="anova_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
