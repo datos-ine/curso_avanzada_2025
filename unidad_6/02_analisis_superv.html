@@ -333,8 +333,6 @@ window.Quarto = {
 <p><strong>Censura a la derecha</strong>: ocurre cuando el tiempo entre el inicio del estudio y el evento de interés, es mayor que el tiempo de observación.</p>
 <p><img src="images/cens_der.png" class="img-fluid" style="width:80.0%"></p>
 </li>
-</ul>
-<!-- --><ul>
 <li>
 <p><strong>Censura a la izquierda</strong>: ocurre cuando el individuo presenta el evento de interés antes de ingresar al estudio, por lo que se sabe que su tiempo de supervivencia no observado es menor que el tiempo de observación.</p>
 <p><img src="images/cens_izq.png" class="img-fluid" style="width:80.0%"></p>
@@ -397,7 +395,16 @@ window.Quarto = {
 </div>
 </div>
 <p>¿Pueden estas diferencias en las experiencias de los participantes afectar a la estimación de la probabilidad de que un participante sufra un infarto de miocardio en un período de 10 años? En breve contestaremos también esta pregunta.</p>
-<p><strong>En el análisis de supervivencia se analiza no sólo el número de participantes que sufren el evento de interés (indicador dicotómico de estado del evento), sino también los momentos en que se producen los acontecimientos (tiempo de supervivencia).</strong></p>
+<div class="callout callout-style-simple callout-warning no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>En el análisis de supervivencia se analiza no sólo el número de participantes que sufren el evento de interés (indicador dicotómico de estado del evento), sino también los momentos en que se producen los acontecimientos (tiempo de supervivencia).</p>
+</div>
+</div>
+</div>
 <p>Si todos los pacientes bajo estudio experimentaran el evento durante el período de observación, sería sencillo calcular la proporción de aquellos que, transcurrido un determinado tiempo desde su inclusión, aún no han presentado el evento: es decir, los “sobrevivientes”. Podríamos entonces representar gráficamente esta proporción en función del tiempo desde la entrada al estudio, y obtendríamos la <strong>función de supervivencia</strong>, denotada como <span class="math inline">\(S(t)\)</span>.</p>
 <p>Sin embargo, las cosas se complican cuando no todos los pacientes presentan el evento. Por ejemplo, un paciente podría haber ingresado a mitad del período de seguimiento, ser observado durante dos años y, al finalizar el estudio, no haber sufrido el evento.</p>
 <p>Como dijimos, en análisis de supervivencia nos interesa el tiempo hasta que ocurre un evento. Este tiempo se conoce como <strong>tiempo de supervivencia</strong>, incluso cuando el evento no sea la muerte. Se trata de una <strong>variable aleatoria continua</strong>, que no puede tomar valores negativos y que rara vez sigue una distribución normal. Ya hemos visto que toda variable aleatoria posee una distribución de probabilidad que describe su comportamiento. Así que, para estimar probabilidades de que el evento ocurra, necesitaremos conocer la distribución de estos tiempos de supervivencia.</p>

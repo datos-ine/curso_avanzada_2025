@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Christian Ballejo">
 <meta name="author" content="Andrea Silva">
+<meta name="author" content="Tamara Ricardo">
 <title>Regresión de Poisson – Curso Epidemiología - Nivel Avanzado</title>
 <style>
 code{white-space: pre-wrap;}
@@ -307,7 +308,7 @@ window.Quarto = {
   <li>
 <a href="#ejemplo-pr%C3%A1ctico-en-r" id="toc-ejemplo-práctico-en-r" class="nav-link" data-scroll-target="#ejemplo-pr%C3%A1ctico-en-r">Ejemplo práctico en R</a>
   <ul class="collapse">
-<li><a href="#offset" id="toc-offset" class="nav-link" data-scroll-target="#offset">Offset</a></li>
+<li><a href="#offset" id="toc-offset" class="nav-link" data-scroll-target="#offset"><em>Offset</em></a></li>
   <li><a href="#bondad-de-ajuste" id="toc-bondad-de-ajuste" class="nav-link" data-scroll-target="#bondad-de-ajuste">Bondad de ajuste</a></li>
   <li><a href="#selecci%C3%B3n-de-variables-explicativas" id="toc-selección-de-variables-explicativas" class="nav-link" data-scroll-target="#selecci%C3%B3n-de-variables-explicativas">Selección de variables explicativas</a></li>
   <li><a href="#interpretaci%C3%B3n-de-los-resultados" id="toc-interpretación-de-los-resultados" class="nav-link" data-scroll-target="#interpretaci%C3%B3n-de-los-resultados">Interpretación de los resultados</a></li>
@@ -330,6 +331,7 @@ window.Quarto = {
     <div class="quarto-title-meta-contents">
              <p>Christian Ballejo <a href="https://orcid.org/0000-0002-7346-5701" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
              <p>Andrea Silva <a href="https://orcid.org/0000-0002-4791-9706" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+             <p>Tamara Ricardo <a href="https://orcid.org/0000-0002-0921-2611" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
           </div>
   </div>
     
@@ -376,7 +378,7 @@ ln(\lambda)=ln \frac{d}{n}=ln(d)-ln(n)
 ln\lambda=\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n
 \]</span> <span class="math display">\[
 ln(d)=ln(n)+\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n  
-\]</span>Al término <span class="math inline">\(ln(n)\)</span> se lo denomina <strong><em>offset</em></strong>. En general, es un valor que debemos proporcionale al <em>software</em> para ajustar un modelo de Poisson y no se estima a partir de los datos.</p>
+\]</span>Al término <span class="math inline">\(ln(n)\)</span> se lo denomina <strong><em>offset</em></strong>. En general, es un valor que debemos proporcionarle al <em>software</em> para ajustar un modelo de Poisson y no se estima a partir de los datos.</p>
 <p>Con la ecuación del modelo establecida, el siguiente paso es estimar los coeficientes y evaluar la calidad del ajuste. Los coeficientes se calculan utilizando métodos como la Estimación de Máxima Verosimilitud (MLE). A partir de estos coeficientes, podemos realizar inferencias, como el test de Wald para evaluar la hipótesis nula (<span class="math inline">\(H_0 : \beta_i = 0\)</span>), calcular los intervalos de confianza (IC), y obtener los riesgos relativos (RR) con sus respectivos IC. La bondad de ajuste del modelo se evaluará a través de la función Deviance siguiendo el mismo esquema jerárquico de evaluación que en el caso de la regresión logística.</p>
 </section><section id="supuestos-del-modelo-de-poisson" class="level2"><h2 class="anchored" data-anchor-id="supuestos-del-modelo-de-poisson">Supuestos del modelo de Poisson</h2>
 <p>A modo de resumen: el modelo de Poisson se utiliza para modelar el conteo de eventos que ocurren en intervalos de tiempo, en poblaciones, o incluso en espacios geográficos. La variable respuesta en este modelo toma valores enteros y positivos, y depende de un solo parámetro (<span class="math inline">\(\lambda\)</span>).</p>
@@ -389,7 +391,7 @@ ln(d)=ln(n)+\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n
 </ol>
 <p>Una característica fundamental de la distribución de Poisson es que la media y la varianza deben ser iguales, lo que se conoce como el supuesto de <strong>equidispersión</strong>. Cuando la varianza observada en los datos excede la varianza esperada bajo este modelo, se enfrenta a un problema de <strong>sobredispersión</strong>. Un método común para detectar sobredispersión es calcular el <strong>coeficiente de variación</strong> (CV), definido como el cociente entre la varianza y la media estimadas. La sobredispersión es frecuente en la práctica y puede afectar la precisión de las estimaciones de los errores estándar de los coeficientes, por lo que es fundamental diagnosticarla y tratarla adecuadamente.</p>
 <p>Otra situación en la que el modelo de Poisson puede no ser adecuado es cuando hay un número excesivo de ceros en los datos, es decir, cuando la frecuencia observada de ceros es mayor de lo que predice el modelo. Esto se debe a que el <span class="math inline">\(ln(0)\)</span> no está definido. De manera particular, es posible que el mecanismo aleatorio que dio origen a los datos de conteo muestre una mayor concentración para algún valor específico, que puede ser el cero (como ocurre con algunas variables vinculadas a salud) o cualquier otro valor positivo. Esto implica que dicho valor tiene una mayor probabilidad de ocurrencia que la especificada por la distribución Poisson o cualquier otra distribución.</p>
-<p>En el <a href="../unidad_5/03_dispersion.html"><strong>siguiente capítulo</strong></a>de esta unidad, exploraremos cómo detectar y manejar tanto la sobredispersión de los datos como el exceso de ceros, para asegurar que el modelo elegido sea el más adecuado para los datos analizados.</p>
+<p>En el <a href="../unidad_5/03_dispersion.html"><strong>siguiente capítulo</strong></a> de esta unidad, exploraremos cómo detectar y manejar tanto la sobredispersión de los datos como el exceso de ceros, para asegurar que el modelo elegido sea el más adecuado para los datos analizados.</p>
 </section><section id="construcción-de-un-modelo-de-poisson-en-r" class="level2"><h2 class="anchored" data-anchor-id="construcción-de-un-modelo-de-poisson-en-r">Construcción de un modelo de Poisson en R</h2>
 <p>La regresión de Poisson está implementada en R como parte de la familia de <strong>Modelos Lineales Generalizados (GLM)</strong>. Esta técnica permite modelar variables de respuesta que representan conteos, asegurando que los valores predichos permanezcan dentro de límites razonables.</p>
 <p>Un criterio importante en la selección de la función de enlace dentro de los GLM es garantizar que los valores ajustados del modelo sean coherentes con la naturaleza de la variable respuesta. Para la distribución de Poisson, la función de enlace predeterminada es el <strong>logaritmo</strong> natural. Esta elección asegura que los recuentos ajustados sean siempre mayores o iguales a cero, lo cual es esencial en el contexto de datos de conteo.</p>
@@ -405,14 +407,14 @@ ln(d)=ln(n)+\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n
 <p>donde:</p>
 <ul>
 <li>
-<strong>formula</strong>: al igual que en los casos anteriores, describe la fórmula del modelo a ajustar con la estructura:</li>
+<code>formula</code>: al igual que en los casos anteriores, describe la fórmula del modelo a ajustar con la estructura:</li>
 </ul>
 <p><span class="math display">\[
 variable\_dependiente \sim variable\_indepen_1 + variable\_indepen_2 +\dots+ variable\_indepen_n
 \]</span></p>
 <ul>
-<li><p><strong>family</strong>: indica la familia de distribuciones utilizadas y su función de enlace.</p></li>
-<li><p><strong>data</strong>: especifica el nombre de la base de datos (<em>dataframe</em>) que contiene las variables del modelo.</p></li>
+<li><p><code>family</code>: indica la familia de distribuciones utilizadas y su función de enlace.</p></li>
+<li><p><code>data</code>: especifica el nombre de la base de datos (<em>dataframe</em>) que contiene las variables del modelo.</p></li>
 </ul>
 <p>Para obtener un resumen de los resultados del modelo se utiliza la función <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>:</p>
 <div class="cell" data-layout-align="center">
@@ -420,14 +422,14 @@ variable\_dependiente \sim variable\_indepen_1 + variable\_indepen_2 +\dots+ var
 </div>
 <p>El resumen del objeto de regresión de Poisson incluye:</p>
 <ul>
-<li><p><strong>Call</strong>: fórmula del modelo</p></li>
-<li><p><strong>Deviance Residuals</strong>: muestra la distribución de los residuos (mediana, mínimo, máximo y percentilos 25-75) obtenidos en la última iteración</p></li>
-<li><p><strong>Coefficients</strong>: Incluye los coeficientes del intercepto y de las variables independientes, junto con los errores estándar, el valor <em>z</em> (estadístico de Wald) y el <em>p</em>-valor correspondiente.</p></li>
-<li><p><strong>Dispersion parameter for poisson family taken to be 1</strong>: indica que el modelo asume el supuesto de equidispersión (media igual a varianza).</p></li>
-<li><p><strong>Null deviance</strong>: devianza del modelo nulo, que solo incluye al intercepto.</p></li>
-<li><p><strong>Residual deviance</strong>: devianza del modelo ajustado.</p></li>
-<li><p><strong>AIC</strong>: criterio de información de Akaike.</p></li>
-<li><p><strong>Number of Fisher Scoring iterations</strong>: cantidad de iteraciones realizadas.</p></li>
+<li><p><code>Call</code>: fórmula del modelo</p></li>
+<li><p><code>Deviance Residuals</code>: muestra la distribución de los residuos (mediana, mínimo, máximo y percentilos 25-75) obtenidos en la última iteración</p></li>
+<li><p><code>Coefficients</code>: Incluye los coeficientes del intercepto y de las variables independientes, junto con los errores estándar, el valor <span class="math inline">\(z\)</span> (estadístico de Wald) y el <span class="math inline">\(p\)</span>-valor correspondiente.</p></li>
+<li><p><code>Dispersion parameter for poisson family taken to be 1</code>: indica que el modelo asume el supuesto de equidispersión (media igual a varianza).</p></li>
+<li><p><code>Null deviance</code>: devianza del modelo nulo, que solo incluye al intercepto.</p></li>
+<li><p><code>Residual deviance</code>: devianza del modelo ajustado.</p></li>
+<li><p><code>AIC</code>: criterio de información de Akaike.</p></li>
+<li><p><code>Number of Fisher Scoring iterations</code>: cantidad de iteraciones realizadas.</p></li>
 </ul>
 <p>El objeto de regresión creado con <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code> pertenece a las clases <code>"glm"</code> y <code>"lm"</code> y está compuesto por varios componentes que pueden ser accedidos usando el nombre del modelo seguido del signo <code>$</code>. Algunos de los componentes más relevantes son:</p>
 <ul>
@@ -471,13 +473,13 @@ $ arsenico     &lt;chr&gt; "&lt;1 año", "1-4 años", "5-14 años", "15+ años",
 </div>
 <p>Las variables de estudio son:</p>
 <ul>
-<li><p><code>muertes</code>: Número de muertes por persona-años (<strong>persona_anio</strong>) en cada categoría. Nuestra variable de interés es la tasa de incidencia de mortalidad.</p></li>
+<li><p><code>muertes</code>: Número de muertes por persona-años (<code>persona_anio</code>) en cada categoría. Nuestra variable de interés es la tasa de incidencia de mortalidad.</p></li>
 <li><p><code>grupo_edad</code>: Grupo de edad de los sujetos.</p></li>
 <li><p><code>periodo</code>: Período de empleo de los sujetos.</p></li>
 <li><p><code>comienzo</code>: Año de inicio del empleo.</p></li>
 <li><p><code>arsenico:</code> Nivel de exposición al arsénico durante el período de estudio.</p></li>
 </ul>
-<p>Las variables <code>grupo_edad</code>, <code>periodo</code>, <code>comienzo</code> y <code>arsenico</code> son de tipo caracter y debemos convertirlas a factor. Podemos hacer esto manualmente para cada variable, o usar el comando <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> que permite modificar varias columnas a la vez:</p>
+<p>Las variables <code>grupo_edad</code>, <code>periodo</code>, <code>comienzo</code> y <code>arsenico</code> son de tipo carácter y debemos convertirlas a factor. Podemos hacer esto manualmente para cada variable, o usar el comando <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> que permite modificar varias columnas a la vez:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>.cols <span class="op">=</span> <span class="va">grupo_edad</span><span class="op">:</span><span class="va">arsenico</span>, </span>
@@ -573,7 +575,7 @@ $ arsenico     &lt;chr&gt; "&lt;1 año", "1-4 años", "5-14 años", "15+ años",
 </div>
 </div>
 <p>En el gráfico anterior, podemos observar que el grupo de mayor edad tiende a tener una incidencia más alta, lo que es consistente con la expectativa de que el riesgo de muerte aumenta con la edad. Sin embargo, para obtener una comprensión más precisa de esta relación, es crucial ajustar por otras covariables. La regresión de Poisson nos permitirá examinar cómo la exposición al arsénico y otros factores afectan la mortalidad, controlando simultáneamente por la edad y otros posibles factores de confusión.</p>
-<section id="offset" class="level3"><h3 class="anchored" data-anchor-id="offset">Offset</h3>
+<section id="offset" class="level3"><h3 class="anchored" data-anchor-id="offset"><em>Offset</em></h3>
 <p>Dado que en este ejemplo nos interesa modelar la tasa de incidencia vamos a necesitar incorporar dentro del modelo un termino de desplazamiento (en inglés <em>“offset”</em>).</p>
 <p>Creamos el modelo saturado para trazar iteraciones <em>backward</em>:</p>
 <div class="cell" data-layout-align="center">
@@ -582,7 +584,7 @@ $ arsenico     &lt;chr&gt; "&lt;1 año", "1-4 años", "5-14 años", "15+ años",
 <span>              family <span class="op">=</span> <span class="va">poisson</span>,</span>
 <span>              data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>El término <code>offset = log(persona_anio)</code> en el modelo de regresión de Poisson permite que la variable <strong>persona_anio</strong> actúe como el denominador en el cálculo de las tasas de mortalidad. La transformación logarítmica es necesaria porque la función de enlace del modelo de Poisson es el logaritmo.</p>
+<p>El término <code>offset = log(persona_anio)</code> en el modelo de regresión de Poisson permite que la variable <code>persona_anio</code> actúe como el denominador en el cálculo de las tasas de mortalidad. La transformación logarítmica es necesaria porque la función de enlace del modelo de Poisson es el logaritmo.</p>
 <p>Para obtener un resumen del modelo ajustado, utilizamos la función <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, que proporciona una visión detallada de los resultados del modelo:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -737,23 +739,23 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod3</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="bdbarzxqqz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bdbarzxqqz table {
+<div id="ekapsmwmly" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ekapsmwmly table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bdbarzxqqz thead, #bdbarzxqqz tbody, #bdbarzxqqz tfoot, #bdbarzxqqz tr, #bdbarzxqqz td, #bdbarzxqqz th {
+#ekapsmwmly thead, #ekapsmwmly tbody, #ekapsmwmly tfoot, #ekapsmwmly tr, #ekapsmwmly td, #ekapsmwmly th {
   border-style: none;
 }
 
-#bdbarzxqqz p {
+#ekapsmwmly p {
   margin: 0;
   padding: 0;
 }
 
-#bdbarzxqqz .gt_table {
+#ekapsmwmly .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -779,12 +781,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_caption {
+#ekapsmwmly .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bdbarzxqqz .gt_title {
+#ekapsmwmly .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -796,7 +798,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-width: 0;
 }
 
-#bdbarzxqqz .gt_subtitle {
+#ekapsmwmly .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -808,7 +810,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-width: 0;
 }
 
-#bdbarzxqqz .gt_heading {
+#ekapsmwmly .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -820,13 +822,13 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_bottom_border {
+#ekapsmwmly .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_col_headings {
+#ekapsmwmly .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -841,7 +843,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_col_heading {
+#ekapsmwmly .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -861,7 +863,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#bdbarzxqqz .gt_column_spanner_outer {
+#ekapsmwmly .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -873,15 +875,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 4px;
 }
 
-#bdbarzxqqz .gt_column_spanner_outer:first-child {
+#ekapsmwmly .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bdbarzxqqz .gt_column_spanner_outer:last-child {
+#ekapsmwmly .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bdbarzxqqz .gt_column_spanner {
+#ekapsmwmly .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -893,11 +895,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   width: 100%;
 }
 
-#bdbarzxqqz .gt_spanner_row {
+#ekapsmwmly .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bdbarzxqqz .gt_group_heading {
+#ekapsmwmly .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -923,7 +925,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   text-align: left;
 }
 
-#bdbarzxqqz .gt_empty_group_heading {
+#ekapsmwmly .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -938,15 +940,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: middle;
 }
 
-#bdbarzxqqz .gt_from_md > :first-child {
+#ekapsmwmly .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bdbarzxqqz .gt_from_md > :last-child {
+#ekapsmwmly .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bdbarzxqqz .gt_row {
+#ekapsmwmly .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -965,7 +967,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#bdbarzxqqz .gt_stub {
+#ekapsmwmly .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -978,7 +980,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#bdbarzxqqz .gt_stub_row_group {
+#ekapsmwmly .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -992,15 +994,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: top;
 }
 
-#bdbarzxqqz .gt_row_group_first td {
+#ekapsmwmly .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bdbarzxqqz .gt_row_group_first th {
+#ekapsmwmly .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bdbarzxqqz .gt_summary_row {
+#ekapsmwmly .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1010,16 +1012,16 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#bdbarzxqqz .gt_first_summary_row {
+#ekapsmwmly .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_first_summary_row.thick {
+#ekapsmwmly .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bdbarzxqqz .gt_last_summary_row {
+#ekapsmwmly .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1029,7 +1031,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_grand_summary_row {
+#ekapsmwmly .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1039,7 +1041,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#bdbarzxqqz .gt_first_grand_summary_row {
+#ekapsmwmly .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1049,7 +1051,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_last_grand_summary_row_top {
+#ekapsmwmly .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1059,11 +1061,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_striped {
+#ekapsmwmly .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bdbarzxqqz .gt_table_body {
+#ekapsmwmly .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1072,7 +1074,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_footnotes {
+#ekapsmwmly .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1086,7 +1088,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_footnote {
+#ekapsmwmly .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1095,7 +1097,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#bdbarzxqqz .gt_sourcenotes {
+#ekapsmwmly .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1109,7 +1111,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#bdbarzxqqz .gt_sourcenote {
+#ekapsmwmly .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1117,72 +1119,72 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#bdbarzxqqz .gt_left {
+#ekapsmwmly .gt_left {
   text-align: left;
 }
 
-#bdbarzxqqz .gt_center {
+#ekapsmwmly .gt_center {
   text-align: center;
 }
 
-#bdbarzxqqz .gt_right {
+#ekapsmwmly .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bdbarzxqqz .gt_font_normal {
+#ekapsmwmly .gt_font_normal {
   font-weight: normal;
 }
 
-#bdbarzxqqz .gt_font_bold {
+#ekapsmwmly .gt_font_bold {
   font-weight: bold;
 }
 
-#bdbarzxqqz .gt_font_italic {
+#ekapsmwmly .gt_font_italic {
   font-style: italic;
 }
 
-#bdbarzxqqz .gt_super {
+#ekapsmwmly .gt_super {
   font-size: 65%;
 }
 
-#bdbarzxqqz .gt_footnote_marks {
+#ekapsmwmly .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bdbarzxqqz .gt_asterisk {
+#ekapsmwmly .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bdbarzxqqz .gt_indent_1 {
+#ekapsmwmly .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bdbarzxqqz .gt_indent_2 {
+#ekapsmwmly .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bdbarzxqqz .gt_indent_3 {
+#ekapsmwmly .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bdbarzxqqz .gt_indent_4 {
+#ekapsmwmly .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bdbarzxqqz .gt_indent_5 {
+#ekapsmwmly .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bdbarzxqqz .katex-display {
+#ekapsmwmly .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bdbarzxqqz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ekapsmwmly div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1338,23 +1340,23 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="wpkbewoemb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wpkbewoemb table {
+<div id="qwjtzwkojd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qwjtzwkojd table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wpkbewoemb thead, #wpkbewoemb tbody, #wpkbewoemb tfoot, #wpkbewoemb tr, #wpkbewoemb td, #wpkbewoemb th {
+#qwjtzwkojd thead, #qwjtzwkojd tbody, #qwjtzwkojd tfoot, #qwjtzwkojd tr, #qwjtzwkojd td, #qwjtzwkojd th {
   border-style: none;
 }
 
-#wpkbewoemb p {
+#qwjtzwkojd p {
   margin: 0;
   padding: 0;
 }
 
-#wpkbewoemb .gt_table {
+#qwjtzwkojd .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1380,12 +1382,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_caption {
+#qwjtzwkojd .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wpkbewoemb .gt_title {
+#qwjtzwkojd .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1397,7 +1399,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-width: 0;
 }
 
-#wpkbewoemb .gt_subtitle {
+#qwjtzwkojd .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1409,7 +1411,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-width: 0;
 }
 
-#wpkbewoemb .gt_heading {
+#qwjtzwkojd .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1421,13 +1423,13 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_bottom_border {
+#qwjtzwkojd .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_col_headings {
+#qwjtzwkojd .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1442,7 +1444,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_col_heading {
+#qwjtzwkojd .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1462,7 +1464,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#wpkbewoemb .gt_column_spanner_outer {
+#qwjtzwkojd .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1474,15 +1476,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 4px;
 }
 
-#wpkbewoemb .gt_column_spanner_outer:first-child {
+#qwjtzwkojd .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wpkbewoemb .gt_column_spanner_outer:last-child {
+#qwjtzwkojd .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wpkbewoemb .gt_column_spanner {
+#qwjtzwkojd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1494,11 +1496,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   width: 100%;
 }
 
-#wpkbewoemb .gt_spanner_row {
+#qwjtzwkojd .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wpkbewoemb .gt_group_heading {
+#qwjtzwkojd .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1524,7 +1526,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   text-align: left;
 }
 
-#wpkbewoemb .gt_empty_group_heading {
+#qwjtzwkojd .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1539,15 +1541,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: middle;
 }
 
-#wpkbewoemb .gt_from_md > :first-child {
+#qwjtzwkojd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wpkbewoemb .gt_from_md > :last-child {
+#qwjtzwkojd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wpkbewoemb .gt_row {
+#qwjtzwkojd .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1566,7 +1568,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#wpkbewoemb .gt_stub {
+#qwjtzwkojd .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1579,7 +1581,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wpkbewoemb .gt_stub_row_group {
+#qwjtzwkojd .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1593,15 +1595,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: top;
 }
 
-#wpkbewoemb .gt_row_group_first td {
+#qwjtzwkojd .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wpkbewoemb .gt_row_group_first th {
+#qwjtzwkojd .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wpkbewoemb .gt_summary_row {
+#qwjtzwkojd .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1611,16 +1613,16 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wpkbewoemb .gt_first_summary_row {
+#qwjtzwkojd .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_first_summary_row.thick {
+#qwjtzwkojd .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wpkbewoemb .gt_last_summary_row {
+#qwjtzwkojd .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1630,7 +1632,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_grand_summary_row {
+#qwjtzwkojd .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1640,7 +1642,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wpkbewoemb .gt_first_grand_summary_row {
+#qwjtzwkojd .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1650,7 +1652,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_last_grand_summary_row_top {
+#qwjtzwkojd .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1660,11 +1662,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_striped {
+#qwjtzwkojd .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wpkbewoemb .gt_table_body {
+#qwjtzwkojd .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1673,7 +1675,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_footnotes {
+#qwjtzwkojd .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1687,7 +1689,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_footnote {
+#qwjtzwkojd .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1696,7 +1698,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wpkbewoemb .gt_sourcenotes {
+#qwjtzwkojd .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1710,7 +1712,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wpkbewoemb .gt_sourcenote {
+#qwjtzwkojd .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1718,72 +1720,72 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wpkbewoemb .gt_left {
+#qwjtzwkojd .gt_left {
   text-align: left;
 }
 
-#wpkbewoemb .gt_center {
+#qwjtzwkojd .gt_center {
   text-align: center;
 }
 
-#wpkbewoemb .gt_right {
+#qwjtzwkojd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wpkbewoemb .gt_font_normal {
+#qwjtzwkojd .gt_font_normal {
   font-weight: normal;
 }
 
-#wpkbewoemb .gt_font_bold {
+#qwjtzwkojd .gt_font_bold {
   font-weight: bold;
 }
 
-#wpkbewoemb .gt_font_italic {
+#qwjtzwkojd .gt_font_italic {
   font-style: italic;
 }
 
-#wpkbewoemb .gt_super {
+#qwjtzwkojd .gt_super {
   font-size: 65%;
 }
 
-#wpkbewoemb .gt_footnote_marks {
+#qwjtzwkojd .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wpkbewoemb .gt_asterisk {
+#qwjtzwkojd .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wpkbewoemb .gt_indent_1 {
+#qwjtzwkojd .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wpkbewoemb .gt_indent_2 {
+#qwjtzwkojd .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wpkbewoemb .gt_indent_3 {
+#qwjtzwkojd .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wpkbewoemb .gt_indent_4 {
+#qwjtzwkojd .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wpkbewoemb .gt_indent_5 {
+#qwjtzwkojd .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wpkbewoemb .katex-display {
+#qwjtzwkojd .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wpkbewoemb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qwjtzwkojd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1860,7 +1862,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </section><section id="interpretación-de-los-resultados" class="level3"><h3 class="anchored" data-anchor-id="interpretación-de-los-resultados">Interpretación de los resultados</h3>
 <p>Concluimos que las personas expuestas al arsénico durante al menos un año tienen un riesgo 2,25 veces mayor de muerte por enfermedad respiratoria en comparación con aquellas no expuestas. Para entender cómo se obtiene este cálculo, consideremos que en los modelos de Poisson, la estructura de compensación (<em>offset</em>) definida como <code>log(persona_anio)</code> transforma el resultado en el logaritmo de la densidad de incidencia.</p>
 <p>El término <code>offset = log(persona_anio)</code> en el modelo de Poisson convierte el recuento de eventos en una densidad de incidencia, ajustada por el tiempo de seguimiento. Esto permite que el modelo estime tasas de incidencia de acuerdo con el tiempo de exposición.</p>
-<p>Los coeficientes del modelo de Poisson se interpretan en términos de tasas de incidencia. En particular, el coeficiente asociado a la variable de exposición al arsénico se transforma mediante la exponenciación para obtener el riesgo relativo. Si el coeficiente de la variable <strong>arsenico</strong> es <span class="math inline">\(\beta\)</span>, el riesgo relativo (RR) se calcula como <span class="math inline">\(e^\beta\)</span>. En nuestro caso, si <span class="math inline">\(e^\beta = 2,25\)</span>, esto indica que las personas expuestas al arsénico durante al menos un año tienen un riesgo 2,25 veces mayor de muerte por enfermedad respiratoria en comparación con las no expuestas.</p>
+<p>Los coeficientes del modelo de Poisson se interpretan en términos de tasas de incidencia. En particular, el coeficiente asociado a la variable de exposición al arsénico se transforma mediante la exponenciación para obtener el riesgo relativo. Si el coeficiente de la variable <code>arsenico</code> es <span class="math inline">\(\beta\)</span>, el riesgo relativo (RR) se calcula como <span class="math inline">\(e^\beta\)</span>. En nuestro caso, si <span class="math inline">\(e^\beta = 2,25\)</span>, esto indica que las personas expuestas al arsénico durante al menos un año tienen un riesgo 2,25 veces mayor de muerte por enfermedad respiratoria en comparación con las no expuestas.</p>
 </section><section id="densidad-de-incidencia" class="level3"><h3 class="anchored" data-anchor-id="densidad-de-incidencia">Densidad de incidencia</h3>
 <p>Para calcular la densidad de incidencia esperada en una población específica, utilizamos el modelo ajustado. Por ejemplo, para una población de 100.000 personas de entre 40 y 49 años expuestas al arsénico durante menos de un año, podemos usar el modelo <code>mod5</code>. En R, esto se hace creando un nuevo conjunto de datos con las características deseadas y utilizando la función <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> para obtener la tasa de incidencia ajustada:</p>
 <div class="cell" data-layout-align="center">
@@ -1878,7 +1880,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 <p>Esta población tendría una densidad de incidencia estimada de 33,26 por 100.000 personas-año.</p>
 <p><strong>Riesgo relativo</strong></p>
-<p>En un estudio de casos y controles, como los vistos en la Unidad 4, el OR se utiliza para comparar la prevalencia de exposición entre casos y controles. En un estudio de cohorte, este valor es igual a la relación entre las probabilidades de contraer una enfermedad entre el grupo expuesto y el no expuesto. La razón de los riesgos para los dos grupos se denomina entonces “razón de riesgo” o <strong>riesgo relativo</strong> (<strong>RR</strong>).</p>
+<p>En un estudio de casos y controles, como los vistos en la <a href="../unidad_4/01_est_caso_control.html"><strong>Unidad 4</strong></a>, el OR se utiliza para comparar la prevalencia de exposición entre casos y controles. En un estudio de cohortes, este valor es igual a la relación entre las probabilidades de contraer una enfermedad entre el grupo expuesto y el no expuesto. La razón de los riesgos para los dos grupos se denomina entonces “razón de riesgo” o <strong>riesgo relativo</strong> (<strong>RR</strong>).</p>
 <p>En un estudio de cohorte real, los sujetos no siempre tienen la misma duración de seguimiento. El riesgo relativo ignora la duración del seguimiento. Por tanto, no es una buena medida de comparación del riesgo entre los dos grupos.</p>
 <p><strong>Razón de densidad de incidencia</strong></p>
 <p>En este ejercicio, todos los sujetos agrupan sus tiempos de seguimiento y este número se denomina “tiempo-persona”, que luego se utiliza como denominador del evento, lo que da como resultado una “densidad de incidencia”.</p>
@@ -1902,30 +1904,30 @@ Number of Fisher Scoring iterations: 5</code></pre>
 2.249864 </code></pre>
 </div>
 </div>
-<p>El código anterior comienza agregando una nueva fila al dataframe <code>newdata</code> que tiene lo mismo que la primera fila, excepto que la variable <code>arsenico_cat</code> es <strong>“1+ años”</strong>.</p>
+<p>El código anterior comienza agregando una nueva fila al <em>dataframe</em> <code>newdata</code> que tiene lo mismo que la primera fila, excepto que la variable <code>arsenico_cat</code> es <strong>“1+ años”</strong>.</p>
 <p>A continuación, se calculan las respuestas o densidades de incidencia de las dos condiciones.</p>
-<p>La RDI se obtiene luego de la división de las densidades de incidencia para <code>arsenico_cat</code> <strong>= “&lt;1 año”</strong> con <code>arsenico_cat</code> <strong>= “1+ años”</strong>. Una forma más corta de obtenerla es mediante el coeficiente de la variable específica <code>arsenico</code>, utilizando R <code>base</code> o el paquete <code>gtsummary</code>.</p>
+<p>La RDI se obtiene luego de la división de las densidades de incidencia para arsenico_cat = “&lt;1 año” con <code>arsenico_cat = "1+ años"</code>. Una forma más corta de obtenerla es mediante el coeficiente de la variable específica <code>arsenico</code>, utilizando R <code>base</code> o el paquete <code>gtsummary</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span>,                </span>
 <span>               include <span class="op">=</span> <span class="st">"arsenico_cat"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="yjximiaxuu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#yjximiaxuu table {
+<div id="jnkxwlqorh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#jnkxwlqorh table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#yjximiaxuu thead, #yjximiaxuu tbody, #yjximiaxuu tfoot, #yjximiaxuu tr, #yjximiaxuu td, #yjximiaxuu th {
+#jnkxwlqorh thead, #jnkxwlqorh tbody, #jnkxwlqorh tfoot, #jnkxwlqorh tr, #jnkxwlqorh td, #jnkxwlqorh th {
   border-style: none;
 }
 
-#yjximiaxuu p {
+#jnkxwlqorh p {
   margin: 0;
   padding: 0;
 }
 
-#yjximiaxuu .gt_table {
+#jnkxwlqorh .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1951,12 +1953,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_caption {
+#jnkxwlqorh .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#yjximiaxuu .gt_title {
+#jnkxwlqorh .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1968,7 +1970,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-width: 0;
 }
 
-#yjximiaxuu .gt_subtitle {
+#jnkxwlqorh .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1980,7 +1982,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-width: 0;
 }
 
-#yjximiaxuu .gt_heading {
+#jnkxwlqorh .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1992,13 +1994,13 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_bottom_border {
+#jnkxwlqorh .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_col_headings {
+#jnkxwlqorh .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2013,7 +2015,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_col_heading {
+#jnkxwlqorh .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2033,7 +2035,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#yjximiaxuu .gt_column_spanner_outer {
+#jnkxwlqorh .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2045,15 +2047,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 4px;
 }
 
-#yjximiaxuu .gt_column_spanner_outer:first-child {
+#jnkxwlqorh .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#yjximiaxuu .gt_column_spanner_outer:last-child {
+#jnkxwlqorh .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#yjximiaxuu .gt_column_spanner {
+#jnkxwlqorh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2065,11 +2067,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   width: 100%;
 }
 
-#yjximiaxuu .gt_spanner_row {
+#jnkxwlqorh .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#yjximiaxuu .gt_group_heading {
+#jnkxwlqorh .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2095,7 +2097,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   text-align: left;
 }
 
-#yjximiaxuu .gt_empty_group_heading {
+#jnkxwlqorh .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2110,15 +2112,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: middle;
 }
 
-#yjximiaxuu .gt_from_md > :first-child {
+#jnkxwlqorh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yjximiaxuu .gt_from_md > :last-child {
+#jnkxwlqorh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yjximiaxuu .gt_row {
+#jnkxwlqorh .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2137,7 +2139,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#yjximiaxuu .gt_stub {
+#jnkxwlqorh .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2150,7 +2152,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#yjximiaxuu .gt_stub_row_group {
+#jnkxwlqorh .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2164,15 +2166,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: top;
 }
 
-#yjximiaxuu .gt_row_group_first td {
+#jnkxwlqorh .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#yjximiaxuu .gt_row_group_first th {
+#jnkxwlqorh .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#yjximiaxuu .gt_summary_row {
+#jnkxwlqorh .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2182,16 +2184,16 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#yjximiaxuu .gt_first_summary_row {
+#jnkxwlqorh .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_first_summary_row.thick {
+#jnkxwlqorh .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#yjximiaxuu .gt_last_summary_row {
+#jnkxwlqorh .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2201,7 +2203,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_grand_summary_row {
+#jnkxwlqorh .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2211,7 +2213,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#yjximiaxuu .gt_first_grand_summary_row {
+#jnkxwlqorh .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2221,7 +2223,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_last_grand_summary_row_top {
+#jnkxwlqorh .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2231,11 +2233,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_striped {
+#jnkxwlqorh .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#yjximiaxuu .gt_table_body {
+#jnkxwlqorh .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2244,7 +2246,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_footnotes {
+#jnkxwlqorh .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2258,7 +2260,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_footnote {
+#jnkxwlqorh .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2267,7 +2269,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#yjximiaxuu .gt_sourcenotes {
+#jnkxwlqorh .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2281,7 +2283,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#yjximiaxuu .gt_sourcenote {
+#jnkxwlqorh .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2289,72 +2291,72 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#yjximiaxuu .gt_left {
+#jnkxwlqorh .gt_left {
   text-align: left;
 }
 
-#yjximiaxuu .gt_center {
+#jnkxwlqorh .gt_center {
   text-align: center;
 }
 
-#yjximiaxuu .gt_right {
+#jnkxwlqorh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yjximiaxuu .gt_font_normal {
+#jnkxwlqorh .gt_font_normal {
   font-weight: normal;
 }
 
-#yjximiaxuu .gt_font_bold {
+#jnkxwlqorh .gt_font_bold {
   font-weight: bold;
 }
 
-#yjximiaxuu .gt_font_italic {
+#jnkxwlqorh .gt_font_italic {
   font-style: italic;
 }
 
-#yjximiaxuu .gt_super {
+#jnkxwlqorh .gt_super {
   font-size: 65%;
 }
 
-#yjximiaxuu .gt_footnote_marks {
+#jnkxwlqorh .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#yjximiaxuu .gt_asterisk {
+#jnkxwlqorh .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#yjximiaxuu .gt_indent_1 {
+#jnkxwlqorh .gt_indent_1 {
   text-indent: 5px;
 }
 
-#yjximiaxuu .gt_indent_2 {
+#jnkxwlqorh .gt_indent_2 {
   text-indent: 10px;
 }
 
-#yjximiaxuu .gt_indent_3 {
+#jnkxwlqorh .gt_indent_3 {
   text-indent: 15px;
 }
 
-#yjximiaxuu .gt_indent_4 {
+#jnkxwlqorh .gt_indent_4 {
   text-indent: 20px;
 }
 
-#yjximiaxuu .gt_indent_5 {
+#jnkxwlqorh .gt_indent_5 {
   text-indent: 25px;
 }
 
-#yjximiaxuu .katex-display {
+#jnkxwlqorh .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#yjximiaxuu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#jnkxwlqorh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2398,7 +2400,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 </div>
 </div>
-<p>También podemos mostrar la salida mediante un gráfico usando el ecosistema de paquetes <code>easystats</code>, tal como vimos en la <strong>unidad anterior</strong>:</p>
+<p>También podemos mostrar la salida mediante un gráfico usando el ecosistema de paquetes <code>easystats</code>, tal como vimos en la <a href="../unidad_4/02_reg_logistica.html"><strong>unidad anterior</strong></a>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">model_parameters</span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>

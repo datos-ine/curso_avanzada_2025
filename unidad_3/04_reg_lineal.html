@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Christian Ballejo">
 <meta name="author" content="Andrea Silva">
+<meta name="author" content="Tamara Ricardo">
 <title>Regresión lineal simple – Curso Epidemiología - Nivel Avanzado</title>
 <style>
 code{white-space: pre-wrap;}
@@ -329,6 +330,7 @@ window.Quarto = {
     <div class="quarto-title-meta-contents">
              <p>Christian Ballejo <a href="https://orcid.org/0000-0002-7346-5701" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
              <p>Andrea Silva <a href="https://orcid.org/0000-0002-4791-9706" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+             <p>Tamara Ricardo <a href="https://orcid.org/0000-0002-0921-2611" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
           </div>
   </div>
     
@@ -339,7 +341,7 @@ window.Quarto = {
 
 
 </header><section id="introducción" class="level2"><h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
-<p>Para entender el modelo de regresión lineal simple, volvamos al ejemplo del peso en niñas menores de 6 meses de la <a href="../unidad_2/dist_muestrales.qmd#ejemplo-práctico-en-r"><strong>unidad anterior</strong></a>, donde habíamos trazado una recta que nos ilustraba la relación lineal del peso en función de la edad.</p>
+<p>Para entender el modelo de regresión lineal simple, volvamos al ejemplo del peso en niñas menores de 6 meses de la <a href="../unidad_2/03_inferencia.html#ejemplo-práctico-en-r"><strong>unidad anterior</strong></a>, donde habíamos trazado una recta que nos ilustraba la relación lineal del peso en función de la edad.</p>
 <p>Según el modelo estadístico para la función lineal de <span class="math inline">\(Y\)</span> según <span class="math inline">\(X\)</span>:</p>
 <p><span class="math display">\[
 Y(X) =  \beta_0 + \beta_1 + X_1
@@ -433,7 +435,7 @@ SCE = \sum_{i=1}^{i=n} (y_i-\hat{y}_i)^2 =  \sum_{i=1}^{i=n}(y_i-(\hat{\beta}_0 
 <p><span class="math display">\[
 H_0: \beta_1 = 0
 \]</span></p>
-<p>Al calcular el modelo de regresión, todos los softwares estiman el coeficiente y el error estándar del mismo (se) y testean el coeficiente.</p>
+<p>Al calcular el modelo de regresión, todos los <em>software</em> estiman el coeficiente y el error estándar del mismo (<span class="math inline">\(SE\)</span>) y testean el coeficiente.</p>
 <p><strong>Bondad de ajuste</strong></p>
 <p>Hasta ahora hemos aprendido a explicar la variación de <span class="math inline">\(y\)</span> según la variación de <span class="math inline">\(x\)</span> mediante un modelo en donde las desviaciones entre el valor observado (“real”) y el estimado (“modelo de regresión”) son las menores posibles.</p>
 <p>Ahora debemos saber, según los datos que tenemos, cuán bueno es el modelo que ajustamos (qué capacidad tiene de explicar la variabilidad de <span class="math inline">\(y\)</span> o, si lo quiero utilizar para realizar una predicción, cuánto se alejará mi valor estimado del verdadero, “real” valor de <span class="math inline">\(y\)</span>). Esta evaluación la realizaremos mediante la descomposición de la varianza del modelo. Por definición la varianza o variabilidad total es la sumatoria de la diferencia entre cada valor de <span class="math inline">\(y\)</span> con el promedio de <span class="math inline">\(y\)</span> (elevado al cuadrado ya que hay valores negativos y positivos que si los sumamos se anularían).</p>
@@ -453,9 +455,10 @@ R^2 = \frac{SCR}{SCT} = 1 - \frac{SCE}{SCT}
 <li><p>Cuando el ajuste es bueno <span class="math inline">\(R^2\)</span> será cercano a 1, cuando el ajuste es malo <span class="math inline">\(R^2\)</span> será cercano a 0.</p></li>
 <li><p>En la Regresión lineal simple el coeficiente de determinación (<span class="math inline">\(R^2\)</span>) es igual al <span class="math inline">\(r\)</span> de Pearson elevado al cuadrado.</p></li>
 </ul>
-<p>Para visualizar simulaciones al respecto pueden visitar <a href="https://seeing-theory.brown.edu/regression-analysis/es.html#section1">Viendo la teoría. Una introducción visual a probabilidad y estadística</a>.</p>
+<p>Para visualizar simulaciones al respecto pueden visitar el siguiente enlace:</p>
+<p>➡️<a href="https://seeing-theory.brown.edu/regression-analysis/es.html#section1"><strong>Viendo la teoría. Una introducción visual a probabilidad y estadística</strong></a></p>
 </section><section id="ejemplo-práctico-en-r" class="level2"><h2 class="anchored" data-anchor-id="ejemplo-práctico-en-r">Ejemplo práctico en R</h2>
-<p>Para llevar a cabo el análisis en R y presentar las funciones y paquetes que nos pueden ayudar en la tarea vamos a trabajar con el set de datos <code>cancer_USA.txt</code> que utilizamos para el ejemplo de <a href="covarianza_correlacion.qmd">covarianza y correlación</a>.</p>
+<p>Para llevar a cabo el análisis en R y presentar las funciones y paquetes que nos pueden ayudar en la tarea vamos a trabajar con el set de datos <code>cancer_USA.txt</code> que utilizamos para el ejemplo de <a href="../unidad_3/03_covarianza_correlacion.html">covarianza y correlación</a>.</p>
 <p>Comenzaremos por cargar los paquetes necesarios para el análisis:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Tablas de coeficientes</span></span>
@@ -561,7 +564,7 @@ sample estimates:
 -0.5041398 </code></pre>
 </div>
 </div>
-<p>El <em>p</em>-valor de la correlación para este ejemplo es menor a 0,05 (<em>p</em>-value: 3.9377479^{-15}), por lo tanto significativa.</p>
+<p>En este ejemplo <span class="math inline">\(p&lt;0,05\)</span>, por lo tanto la correlación es significativa.</p>
 <p>La <strong>homocedasticidad</strong> implica que la varianza de los residuos se mantiene aproximadamente constante a lo largo de los valores de la variable independiente. Se puede evaluar gráficamente mediante la dispersión de los residuos respecto a los valores ajustados o a través de contrastes de hipótesis, como el <strong>test de Breusch-Pagan</strong>.</p>
 <p>Finalmente, la <strong>normalidad</strong> de los residuos se puede evaluar mediante el <strong>test de Lilliefors</strong>, disponible en el paquete <code>nortest</code> <span class="citation" data-cites="nortest">(<a href="#ref-nortest" role="doc-biblioref">Gross y Ligges 2015</a>)</span>:</p>
 <div class="cell" data-layout-align="center">
@@ -599,7 +602,7 @@ D = 0.042152, p-value = 0.4707</code></pre>
 </div>
 <p>Tanto el test de hipótesis como los gráficos de cuantiles nos informan que las distribuciones de la variable dependiente cumple con el criterio de “normalidad”.</p>
 </section><section id="ajuste-del-modelo" class="level3"><h3 class="anchored" data-anchor-id="ajuste-del-modelo">Ajuste del modelo</h3>
-<p>Como vimos <a href="mod_estadistico.qmd"><strong>anteriormente</strong></a>, la función <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> del paquete <code>stats</code> nos permite ajustar modelos de regresión lineal:</p>
+<p>Como vimos <a href="../unidad_3/02_mod_estadistico.html"><strong>anteriormente</strong></a>, la función <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> del paquete <code>stats</code> nos permite ajustar modelos de regresión lineal:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">mediana_ingresos</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -612,7 +615,7 @@ Coefficients:
        201.41284          -0.00052  </code></pre>
 </div>
 </div>
-<p>En este caso, <strong>Intercept</strong> representa el valor de <code>mediana_ingresos</code> cuando <code>tasa_mortalidad</code> vale cero (Ordenada en el origen) y el coeficiente de <code>mediana_ingresos</code> representa la pendiente de la recta.</p>
+<p>En este caso, <code>Intercept</code> representa el valor de <code>mediana_ingresos</code> cuando <code>tasa_mortalidad</code> vale cero (ordenada al origen) y el coeficiente de <code>mediana_ingresos</code> representa la pendiente de la recta.</p>
 <p>Estos resultados obtenidos y aplicados en la fórmula del modelo simple quedarían así:</p>
 <p><span class="math display">\[
 \operatorname{tasa mortalidad} = \alpha + \beta_{1}(\operatorname{mediana ingresos}) + \epsilon
@@ -648,7 +651,7 @@ Multiple R-squared:  0.2542,    Adjusted R-squared:  0.2506
 F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 </div>
 </div>
-<p>La asociación entre la tasa de mortalidad por cáncer y la mediana de ingresos es estadísticamente significativa (<em>p</em> &lt; 0.001).</p>
+<p>La asociación entre la tasa de mortalidad por cáncer y la mediana de ingresos es estadísticamente significativa (<span class="math inline">\(p &lt; 0.001\)</span>).</p>
 <p>Todos los ajustes de modelos lineales que produce la función <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> tienen la forma de una lista.La manera de conocer su clase es <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> y su estructura mediante <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1203,7 +1206,7 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 <p>El <strong>residuo</strong> o <strong>residual</strong> de una estimación se define como la diferencia entre el valor observado y el valor predicho por el modelo de regresión. Son fundamentales para evaluar la bondad de ajuste y verificar los supuestos básicos de los modelos lineales. Para resumir el conjunto de residuales, se pueden emplear dos enfoques:</p>
 <ol type="1">
 <li><p>La <strong>sumatoria del valor absoluto</strong> de cada residual.</p></li>
-<li><p>La <strong>sumatoria del cuadrado</strong> de cada residual (<strong>RSS,</strong> <em>Residual Sum of Squares</em>), basada en el método de losmínimos cuadrados, amplifica las desviaciones extremas y permite minimizar errores en la estimación de parámetros.</p></li>
+<li><p>La <strong>sumatoria del cuadrado</strong> de cada residual (<strong>RSS,</strong> <em>Residual Sum of Squares</em>), basada en el método de los mínimos cuadrados, amplifica las desviaciones extremas y permite minimizar errores en la estimación de parámetros.</p></li>
 </ol>
 <p>Los residuales se almacenan en el objeto de regresión y pueden visualizarse mediante:</p>
 <div class="cell" data-layout-align="center">
@@ -1223,10 +1226,10 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 </div>
 <p>Esta función genera cuatro gráficos automáticos:</p>
 <ul>
-<li><p><strong>Residuals vs Fitted:</strong> Permite evaluar la <strong>linealidad</strong>. La línea roja debería ser lo más horizontal posible y sin curvaturas pronunciadas. Si hay curvatura, podría indicar la necesidad de un término no lineal (cuadrático, logarítmico, etc.) o la omisión de una variable importante en el modelo.</p></li>
-<li><p><strong>Normal Q-Q:</strong> Evalúa la <strong>normalidad</strong> de los residuos. Los puntos deberían ajustarse a la diagonal. Desviaciones importantes sugieren un incumplimiento del supuesto de normalidad.</p></li>
-<li><p><strong>Scale-Location:</strong> Indica si los residuos se distribuyen uniformemente a lo largo del rango de los predictores, verificando la <strong>homocedasticidad</strong>. Una línea aproximadamente horizontal con puntos dispersos de manera aleatoria es una buena señal.</p></li>
-<li><p><strong>Residuals vs Leverage:</strong> Ayuda a identificar <strong>valores influyentes</strong>. Un punto extremo no necesariamente es influyente, pero aquellos fuera de las líneas rojas punteadas (altas puntuaciones de distancia de Cook) pueden estar afectando considerablemente el modelo.</p></li>
+<li><p><code>Residuals vs Fitted</code><strong>:</strong> Permite evaluar la <strong>linealidad</strong>. La línea roja debería ser lo más horizontal posible y sin curvaturas pronunciadas. Si hay curvatura, podría indicar la necesidad de un término no lineal (cuadrático, logarítmico, etc.) o la omisión de una variable importante en el modelo.</p></li>
+<li><p><code>Normal Q-Q</code><strong>:</strong> Evalúa la <strong>normalidad</strong> de los residuos. Los puntos deberían ajustarse a la diagonal. Desviaciones importantes sugieren un incumplimiento del supuesto de normalidad.</p></li>
+<li><p><code>Scale-Location</code><strong>:</strong> Indica si los residuos se distribuyen uniformemente a lo largo del rango de los predictores, verificando la <strong>homocedasticidad</strong>. Una línea aproximadamente horizontal con puntos dispersos de manera aleatoria es una buena señal.</p></li>
+<li><p><code>Residuals vs Leverage</code><strong>:</strong> Ayuda a identificar <strong>valores influyentes</strong>. Un punto extremo no necesariamente es influyente, pero aquellos fuera de las líneas rojas punteadas (altas puntuaciones de distancia de Cook) pueden estar afectando considerablemente el modelo.</p></li>
 </ul>
 <p>Otra opción para evaluar gráficamente los supuestos del modelo es la función <code>check_model()</code> del paquete <code>performance</code> , el cual forma parte del ecosistema <code>easystats</code> <span class="citation" data-cites="easystats">(<a href="#ref-easystats" role="doc-biblioref">Lüdecke et&nbsp;al. 2022</a>)</span>:</p>
 <div class="cell" data-layout-align="center">
@@ -1260,7 +1263,7 @@ data:  modelo
 RESET = 0.82653, df1 = 2, df2 = 209, p-value = 0.439</code></pre>
 </div>
 </div>
-<p>La hipótesis nula indica que las variables se relacionan de forma lineal; un <em>p</em>-valor menor a 0,05 sugiere lo contrario. En nuestro modelo, el valor <em>p</em> de 0.439 respalda la suposición de linealidad.</p>
+<p>La hipótesis nula indica que las variables se relacionan de forma lineal; un <span class="math inline">\(p&lt;0,05\)</span> sugiere lo contrario. En nuestro modelo, el valor <em>p</em> de 0.439 respalda la suposición de linealidad.</p>
 <p>Otro supuesto fundamental es que los residuales deben distribuirse de forma normal (con media 0). Además del QQ-plot, se puede aplicar el test de Lilliefors:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/nortest/man/lillie.test.html">lillie.test</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">$</span><span class="va">residuals</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1273,7 +1276,7 @@ D = 0.05804, p-value = 0.07821</code></pre>
 </div>
 </div>
 <p>Con un <em>p</em>-valor de 0.078 se confirma la normalidad.</p>
-<p>El test de Breusch-Pagan, implementado en <code>lmtest</code> y <code>performance</code>, evalúa si la varianza de los residuos es constante. Parte de la hipótesis nula de <strong>homocedasticidad</strong> o varianza constante en las perturbaciones y la enfrenta a la alternativa de varianza variable, por lo que es válido decir que cumple con el supuesto de homocedasticidad si el valor <span class="math inline">\(p\)</span> es mayor a 0,05:</p>
+<p>El test de Breusch-Pagan, implementado en <code>lmtest</code> y <code>performance</code>, evalúa si la varianza de los residuos es constante. Parte de la hipótesis nula de <strong>homocedasticidad</strong> o varianza constante en las perturbaciones y la enfrenta a la alternativa de varianza variable, por lo que es válido decir que cumple con el supuesto de homocedasticidad si el valor <span class="math inline">\(p&gt;0,05\)</span>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># paquete lmtest</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/bptest.html">bptest</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1291,7 +1294,7 @@ BP = 2.5078, df = 1, p-value = 0.1133</code></pre>
 </div>
 </div>
 <p>Incluso cuando el modelo cumple todos los supuestos, es importante identificar observaciones atípicas o de alto <em>leverage</em>, ya que podrían condicionar el ajuste. Los valores atípicos u <em>outliers</em> son observaciones que no se ajustan bien al modelo, con residuos excesivamente grandes. Por otro lado, los puntos con alto <em>leverage</em> tienen valores extremos en los predictores, lo que los hace potencialmente influyentes.</p>
-<p>Para ello se pueden analizar los residuales estandarizados y los residuales estudentizados. Los <strong>residuales estandarizados</strong> se obtienen normalizando los residuales por su desviación estándar. Esta aproximación permite identificar valores atípicos que se alejan más de ±3 desviaciones estándar. Sin embargo, si un <em>outlier</em> influye lo suficiente en el modelo como para atraer la línea de regresión, su residual podría ser pequeño y pasar desapercibido. Una alternativa más robusta es utilizar los <strong>residuales estudentizados</strong>. Se trata de un proceso iterativo en el que se va excluyendo cada vez una observación <span class="math inline">\(i\)</span> distinta y se reajusta el modelo con las <span class="math inline">\(n-1\)</span> restantes. En cada proceso de exclusión y reajuste se calcula la diferencia (<span class="math inline">\(d_i\)</span>) entre el valor predicho para <span class="math inline">\(i\)</span> habiendo y sin haber excluido esa observación. Finalmente, se normalizan las diferencias <span class="math inline">\(d_i\)</span> . Aquellos valores <span class="math inline">\(d_i\)</span> cuyo residual estudentizado supera ±3 suelen considerarse significativos.</p>
+<p>Para ello se pueden analizar los residuales estandarizados y los residuales estudentizados. Los <strong>residuales estandarizados</strong> se obtienen normalizando los residuales por su desviación estándar. Esta aproximación permite identificar valores atípicos que se alejan más de <span class="math inline">\(\pm3\)</span> desviaciones estándar. Sin embargo, si un <em>outlier</em> influye lo suficiente en el modelo como para atraer la línea de regresión, su residual podría ser pequeño y pasar desapercibido. Una alternativa más robusta es utilizar los <strong>residuales estudentizados</strong>. Se trata de un proceso iterativo en el que se va excluyendo cada vez una observación <span class="math inline">\(i\)</span> distinta y se reajusta el modelo con las <span class="math inline">\(n-1\)</span> restantes. En cada proceso de exclusión y reajuste se calcula la diferencia (<span class="math inline">\(d_i\)</span>) entre el valor predicho para <span class="math inline">\(i\)</span> habiendo y sin haber excluido esa observación. Finalmente, se normalizan las diferencias <span class="math inline">\(d_i\)</span> . Aquellos valores <span class="math inline">\(d_i\)</span> cuyo residual estudentizado supera <span class="math inline">\(\pm 3\)</span> suelen considerarse significativos.</p>
 <p>Estos dos procesos sobre los residuales se pueden calcular en R mediante las funciones <code>rstandar()</code> y <code><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent()</a></code>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Creación del dataset de residuales</span></span>
@@ -1301,7 +1304,7 @@ BP = 2.5078, df = 1, p-value = 0.1133</code></pre>
 <span>  resid_estudentizados <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Podemos visualizar la comparación de estos residuales mediante un gráfico de boxplots usando <em>facets</em>:</p>
+<p>Podemos visualizar la comparación de estos residuales mediante un <em>boxplot</em> usando <em>facets</em>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">residuales</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
@@ -1326,7 +1329,7 @@ BP = 2.5078, df = 1, p-value = 0.1133</code></pre>
 </div>
 </div>
 </div>
-<p>Si encontramos residuales con valores absolutos superiores a 3 en el gráfico de residuales estudentizado<strong>s</strong>, es recomendable investigarlos más a fondo. Podemos identificarlos con:</p>
+<p>Si encontramos residuales con valores absolutos superiores a 3 en el gráfico de residuales estudentizados, es recomendable investigarlos más a fondo. Podemos identificarlos con:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1368,8 +1371,8 @@ FALSE
 </div>
 </div>
 <p>El <span class="math inline">\(R^2\)</span> oscila entre 0 y 1, de modo que valores cercanos a 1 indican un buen ajuste del modelo lineal a los datos. Por otro lado, el <span class="math inline">\(R^2\)</span> ajustado penaliza la inclusión de variables independientes poco relevantes en la explicación de la variable dependiente, razón por la cual su valor es menor o igual al <span class="math inline">\(R^2\)</span>. En nuestro ejemplo los valores de <span class="math inline">\(R^2\)</span> obtenidos nos indican que el modelo lineal simple no se ajusta demasiado bien a los datos. Esto significa que solamente un 25.1 % de la variación en la tasa de mortalidad por cáncer se explica únicamente por la mediana de ingresos como variable explicativa; el restante 74.9 % no se explica, lo que sugiere que agregar otras variables independientes podría mejorar el ajuste y, por ende, la confiabilidad de las predicciones.</p>
-<p>La salida de <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> también incluye un estadístico <span class="math inline">\(F\)</span> de Snedecor y su <em>p-</em>valor correspondiente, que se utilizan en el contraste ómnibus para evaluar, de forma global, la idoneidad del modelo. En nuestro ejemplo, el <em>p</em>-valor es inferior a 0.05, por lo que, al 95 % de confianza, se rechaza la hipótesis nula y se concluye que el modelo lineal es adecuado para el conjunto de datos. Cabe mencionar que, cuando el modelo de regresión tiene una única variable explicativa, este contraste es equivalente al contraste del parámetro <span class="math inline">\(\beta_1​\)</span>.</p>
-<p>Otra forma de verificar de manera independiente la significación del modelo es mediante la función <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code>, que plantea el contraste de la regresión mediante el <a href="anova.qmd"><strong>análisis de la varianza</strong></a>:</p>
+<p>La salida de <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> también incluye un estadístico <span class="math inline">\(F\)</span> de Snedecor y su <span class="math inline">\(p\)</span><em>-</em>valor correspondiente, que se utilizan en el contraste ómnibus para evaluar, de forma global, la idoneidad del modelo. En nuestro ejemplo, <span class="math inline">\(p&gt;0,05\)</span>, por lo que, al 95 % de confianza, se rechaza la hipótesis nula y se concluye que el modelo lineal es adecuado para el conjunto de datos. Cabe mencionar que, cuando el modelo de regresión tiene una única variable explicativa, este contraste es equivalente al contraste del parámetro <span class="math inline">\(\beta_1​\)</span>.</p>
+<p>Otra forma de verificar de manera independiente la significación del modelo es mediante la función <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code>, que plantea el contraste de la regresión mediante el <a href="../unidad_3/05_anova.html"><strong>análisis de la varianza</strong></a>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1383,7 +1386,7 @@ Residuals        211  32021   151.8
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>La tabla de análisis de varianza muestra resultados coherentes con el bloque final de <code>summary(modelo)</code>, presentando un valor <span class="math inline">\(F\)</span> de 71.9 y un <em>p</em>-valor significativo.</p>
+<p>La tabla de análisis de varianza muestra resultados coherentes con el bloque final de <code>summary(modelo)</code>, presentando un valor <span class="math inline">\(F\)</span> de 71.9 y un <span class="math inline">\(p\)</span>-valor significativo.</p>
 </section><section id="interpretación-de-resultados" class="level3"><h3 class="anchored" data-anchor-id="interpretación-de-resultados">Interpretación de resultados</h3>
 <p>Se realizó una regresión lineal simple para analizar la relación entre la mediana de ingresos y la tasa de mortalidad por cáncer en 174 condados de la Costa Este de Estados Unidos. El diagrama de dispersión mostró una relación lineal negativa moderada entre ambas variables, lo que se confirmó con un coeficiente de correlación de Pearson de<br>
 -0.5. Además, el análisis de regresión reveló que la relación es estadísticamente significativa (t = -8.48, <em>p</em> = 0).</p>

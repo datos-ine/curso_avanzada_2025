@@ -351,7 +351,7 @@ window.Quarto = {
 
 
 </header><section id="introducción" class="level2"><h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
-<p>Este material es una continuación del capítulo sobre <a href="../unidad_1/analisis_exploratorio.qmd">Análisis exploratorio de datos</a> de la <strong>Unidad 1</strong>. Recordemos que uno de los objetivos del EDA es conocer cómo se distribuyen los valores de las variables de interés.</p>
+<p>Este material es una continuación del capítulo sobre <a href="../unidad_1/04_analisis_exploratorio.html"><strong>Análisis exploratorio de datos</strong></a> de la <strong>Unidad 1</strong>. Recordemos que uno de los objetivos del EDA es conocer cómo se distribuyen los valores de las variables de interés.</p>
 <p>Las características fundamentales a la hora de decidir si utilizaremos métodos paramétricos o no paramétricos para la inferencia estadística, es que los datos se ajusten a una distribución normal y conocer si tienen una dispersión homogénea o heterogénea. Ahora que conocemos el funcionamiento interno de los test de hipótesis, podemos usar <strong>pruebas de bondad de ajuste</strong> para evaluar los supuestos de normalidad y homocedasticidad.</p>
 </section><section id="normalidad" class="level2"><h2 class="anchored" data-anchor-id="normalidad">Normalidad</h2>
 <p>Determinar que una distribución es aproximadamente normal nos permite decidirnos por test de comparaciones paramétricos.</p>
@@ -512,10 +512,10 @@ W = 0.98615, p-value = 0.383</code></pre>
 <p><strong>Interpretación</strong>: Siendo la hipótesis nula que la población está distribuida normalmente, si el p-valor es menor a <span class="math inline">\(\alpha\)</span> (nivel de significancia, convencionalmente un 0,05) entonces la hipótesis nula es rechazada (se concluye que los datos no provienen de una distribución normal). Si el p-valor es mayor a <span class="math inline">\(\alpha\)</span>, se concluye que no se puede rechazar dicha hipótesis.</p>
 <p>En función de esta interpretación (que es común a todos los test de hipótesis de normalidad), podemos decir que la distribución de la variable <strong>edad</strong> <em>no se ajusta a la normal</em> y no podemos rechazar que la distribución de la variable <strong>peso</strong> se ajuste.</p>
 </section><section id="test-de-kolmogorov-smirnov" class="level4"><h4 class="anchored" data-anchor-id="test-de-kolmogorov-smirnov">Test de Kolmogorov-Smirnov</h4>
-<p>El test de <a href="https://es.wikipedia.org/wiki/Prueba_de_Kolmogorov-Smirnov">Kolmogorov-Smirnov</a> permite estudiar si una muestra procede de una población con una determinada distribución que no está limitado únicamente a la distribución normal.</p>
+<p>El test de <a href="https://es.wikipedia.org/wiki/Prueba_de_Kolmogorov-Smirnov"><strong>Kolmogorov-Smirnov</strong></a> permite estudiar si una muestra procede de una población con una determinada distribución que no está limitado únicamente a la distribución normal.</p>
 <p>El test asume que se conoce la media y varianza poblacional, lo que en la mayoría de los casos no es posible. Para resolver este problema, se realizó una modificación conocida como test Lilliefors.</p>
 </section><section id="test-de-lilliefors" class="level4"><h4 class="anchored" data-anchor-id="test-de-lilliefors">Test de Lilliefors</h4>
-<p>El test de <a href="https://es.wikipedia.org/wiki/Prueba_de_Lilliefors">Lilliefors</a> asume que la media y varianza son desconocidas y está especialmente desarrollado para contrastar la normalidad.</p>
+<p>El test de <a href="https://es.wikipedia.org/wiki/Prueba_de_Lilliefors"><strong>Lilliefors</strong></a> asume que la media y varianza son desconocidas y está especialmente desarrollado para contrastar la normalidad.</p>
 <p>Es la alternativa al test de Shapiro-Wilk cuando el número de observaciones es mayor de 50.</p>
 <p>La función <code><a href="https://rdrr.io/pkg/nortest/man/lillie.test.html">lillie.test()</a></code> del paquete <code>nortest</code> <span class="citation" data-cites="nortest">(<a href="#ref-nortest" role="doc-biblioref">Gross y Ligges 2015</a>)</span> permite aplicarlo:</p>
 <div class="cell" data-layout-align="center">

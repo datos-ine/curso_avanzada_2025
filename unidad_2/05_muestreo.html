@@ -396,13 +396,13 @@ N =\frac{n^1}{1+\frac{n^1}{Población}}
 <p>Calculamos el tamaño muestral en base a los siguientes argumentos:</p>
 <ul>
 <li>
-<strong>e</strong>: número positivo que especifica la precisión que es la mitad del ancho del intervalo de confianza</li>
+<code>e</code>: número positivo que especifica la precisión que es la mitad del ancho del intervalo de confianza</li>
 <li>
-<strong>p</strong>: proporción esperada de eventos con dominio entre los valores 0 y 1.</li>
+<code>p:</code> proporción esperada de eventos con dominio entre los valores 0 y 1.</li>
 <li>
-<strong>N</strong>: número entero positivo para el tamaño de la población. El valor predeterminado es <code>Inf</code>, lo que significa que los cálculos se realizan sin <em>corrección de población finita</em>.</li>
+<code>N</code>: número entero positivo para el tamaño de la población. El valor predeterminado es <code>Inf</code>, lo que significa que los cálculos se realizan sin <em>corrección de población finita</em>.</li>
 <li>
-<strong>level</strong>: nivel de confianza para los intervalos de confianza. El valor predeterminado es 95%.</li>
+<code>level</code>: nivel de confianza para los intervalos de confianza. El valor predeterminado es 95%.</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.samplingbook.manitz.org/reference/sample.size.prop.html">sample.size.prop</a></span><span class="op">(</span>e <span class="op">=</span> <span class="fl">0.02</span>, P <span class="op">=</span> <span class="fl">0.102</span>, N <span class="op">=</span> <span class="fl">600000</span>, level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>

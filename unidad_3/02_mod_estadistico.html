@@ -377,11 +377,11 @@ Y_i = X_i\beta + \epsilon_i
 </ul>
 <section id="casos-específicos-del-mlg" class="level4"><h4 class="anchored" data-anchor-id="casos-específicos-del-mlg">Casos específicos del MLG</h4>
 <ul>
-<li><p><a href="reg_lineal.qmd"><strong>Regresión lineal simple</strong></a>: Examina la relación entre <span class="math inline">\(Y\)</span> y una variable independiente numérica.</p></li>
-<li><p><a href="anova.qmd"><strong>Análisis de la varianza (ANOVA)</strong></a>: Evalúa las diferencias en la media de <span class="math inline">\(Y\)</span> respecto a los niveles de una variable categórica.</p></li>
-<li><p><a href="reg_lineal_multiple.qmd"><strong>Regresión lineal múltiple</strong></a>: Explora la relación entre <span class="math inline">\(Y\)</span> y dos o más variables independientes, que pueden ser numéricas y/o categóricas.</p></li>
+<li><p><a href="../unidad_3/04_reg_lineal.html"><strong>Regresión lineal simple</strong></a>: Examina la relación entre <span class="math inline">\(Y\)</span> y una variable independiente numérica.</p></li>
+<li><p><a href="../unidad_3/05_anova.html"><strong>Análisis de la varianza (ANOVA)</strong></a>: Evalúa las diferencias en la media de <span class="math inline">\(Y\)</span> respecto a los niveles de una variable categórica.</p></li>
+<li><p><a href="../unidad_3/07_reg_lineal_multiple.html"><strong>Regresión lineal múltiple</strong></a>: Explora la relación entre <span class="math inline">\(Y\)</span> y dos o más variables independientes, que pueden ser numéricas y/o categóricas.</p></li>
 </ul>
-<div class="callout callout-style-simple callout-caution">
+<div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -416,15 +416,15 @@ Y_i = X_i\beta + \epsilon_i
 </div>
 <p>La salida de esta función incluye:</p>
 <ul>
-<li><p><strong>Call:</strong> Fórmula del modelo.</p></li>
-<li><p><strong>Residuals:</strong> Distribución de los residuos (mínimo, máximo, mediana y percentiles 25-75).</p></li>
-<li><p><strong>Coefficients:</strong> Incluye el intercepto y la pendiente, junto con errores estándar, valores <em>t</em> y <em>p</em>-valores asociados.</p></li>
-<li><p><strong>Residual standard error:</strong> Error estándar de los residuos con sus grados de libertad.</p></li>
-<li><p><strong>Multiple R-squared:</strong> Coeficiente de determinación <span class="math inline">\(R^2\)</span>.</p></li>
-<li><p><strong>Adjusted R-squared:</strong> Coeficiente <span class="math inline">\(R^2\)</span> ajustado.</p></li>
-<li><p><strong>F-statistic:</strong> Estadístico <span class="math inline">\(F\)</span> y su <em>p</em>-valor asociado.</p></li>
+<li><p><code>Call</code><strong>:</strong> Fórmula del modelo.</p></li>
+<li><p><code>Residuals</code><strong>:</strong> Distribución de los residuos (mínimo, máximo, mediana y percentiles 25-75).</p></li>
+<li><p><code>Coefficients</code><strong>:</strong> Incluye el intercepto y la pendiente, junto con errores estándar, valores <em>t</em> y <em>p</em>-valores asociados.</p></li>
+<li><p><code>Residual standard error</code><strong>:</strong> Error estándar de los residuos con sus grados de libertad.</p></li>
+<li><p><code>Multiple R-squared</code><strong>:</strong> Coeficiente de determinación <span class="math inline">\(R^2\)</span>.</p></li>
+<li><p><code>Adjusted R-squared</code><strong>:</strong> Coeficiente <span class="math inline">\(R^2\)</span> ajustado.</p></li>
+<li><p><code>F-statistic</code><strong>:</strong> Estadístico <span class="math inline">\(F\)</span> y su <em>p</em>-valor asociado.</p></li>
 </ul>
-<p>Además, la salida de <code>summary(modelo)</code> utiliza asteriscos (*) para indicar la significación de los coeficientes. Debajo de la tabla de coeficientes se encuentra la referencia del significado de los códigos, que van desde el 0 hasta el 1 como posible resultado del valor de probabilidad, y donde:</p>
+<p>Además, la salida de <code>summary(modelo)</code> utiliza asteriscos (<code>*</code>) para indicar la significación de los coeficientes. Debajo de la tabla de coeficientes se encuentra la referencia del significado de los códigos, que van desde el 0 hasta el 1 como posible resultado del valor de probabilidad, y donde:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">

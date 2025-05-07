@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Christian Ballejo">
 <meta name="author" content="Andrea Silva">
+<meta name="author" content="Tamara Ricardo">
 <title>Regresión logística – Curso Epidemiología - Nivel Avanzado</title>
 <style>
 code{white-space: pre-wrap;}
@@ -353,6 +354,7 @@ window.Quarto = {
     <div class="quarto-title-meta-contents">
              <p>Christian Ballejo <a href="https://orcid.org/0000-0002-7346-5701" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
              <p>Andrea Silva <a href="https://orcid.org/0000-0002-4791-9706" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+             <p>Tamara Ricardo <a href="https://orcid.org/0000-0002-0921-2611" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
           </div>
   </div>
     
@@ -470,18 +472,18 @@ Number of Fisher Scoring iterations: 4</code></pre>
 </div>
 <p>Los elementos a tener en cuenta son:</p>
 <ul>
-<li><p><strong>Call</strong>: Muestra la fórmula del modelo utilizado.</p></li>
-<li><p><strong>Estimate</strong>: Contiene los coeficientes <span class="math inline">\(\beta\)</span> estimados, incluyendo el intercepto (<span class="math inline">\(\beta_0\)</span>) y las variables explicativas (<span class="math inline">\(\beta_i\)</span>). Al aplicar a estos coeficientes la función <code><a href="https://rdrr.io/r/base/Log.html">exp()</a></code>, que representa la función inversa del logaritmo natural, se obtiene el Odds Ratio (OR). Esto implica que los coeficientes de las variables independientes se interpretan como el OR de que ocurra el evento para cada incremento de la variable independiente, manteniendo constantes las demás variables independientes.</p></li>
-<li><p><strong>Std. Error</strong>: Representa el error estándar asociado a cada coeficiente.</p></li>
-<li><p><strong>z value</strong>: Corresponde al estadístico del test de Wald para evaluar la significancia de cada coeficiente.</p></li>
-<li><p><strong>Pr(&gt;|z|)</strong>: Proporciona los <em>p</em>-valores asociados al test de Wald, que indican si los coeficientes son significativamente diferentes de cero.</p></li>
+<li><p><code>Call</code>: Muestra la fórmula del modelo utilizado.</p></li>
+<li><p><code>Estimate</code>: Contiene los coeficientes <span class="math inline">\(\beta\)</span> estimados, incluyendo el intercepto (<span class="math inline">\(\beta_0\)</span>) y las variables explicativas (<span class="math inline">\(\beta_i\)</span>). Al aplicar a estos coeficientes la función <code><a href="https://rdrr.io/r/base/Log.html">exp()</a></code>, que representa la función inversa del logaritmo natural, se obtiene el Odds Ratio (OR). Esto implica que los coeficientes de las variables independientes se interpretan como el OR de que ocurra el evento para cada incremento de la variable independiente, manteniendo constantes las demás variables independientes.</p></li>
+<li><p><code>Std. Error</code>: Representa el error estándar asociado a cada coeficiente.</p></li>
+<li><p><code>z value</code>: Corresponde al estadístico del test de Wald para evaluar la significancia de cada coeficiente.</p></li>
+<li><p><code>Pr(&gt;|z|)</code>: Proporciona los <em>p</em>-valores asociados al test de Wald, que indican si los coeficientes son significativamente diferentes de cero.</p></li>
 </ul>
 <p>Además, en la parte final de la salida se presentan:</p>
 <ul>
-<li><p><strong>Null deviance</strong>: La devianza del modelo nulo, que asume que ninguna de las variables explicativas tiene efecto.</p></li>
-<li><p><strong>Residual deviance</strong>: La devianza del modelo ajustado, que indica cuánto se reduce la devianza al incluir las variables explicativas.</p></li>
-<li><p><strong>AIC (Criterio de Información de Akaike)</strong>: Una medida de la calidad del modelo, penalizando por la complejidad para favorecer modelos más parsimoniosos.</p></li>
-<li><p><strong>Number of Fisher Scoring iterations</strong>: Número de iteraciones realizadas durante el proceso de estimación de parámetros del modelo.</p></li>
+<li><p><code>Null deviance</code>: La devianza del modelo nulo, que asume que ninguna de las variables explicativas tiene efecto.</p></li>
+<li><p><code>Residual deviance</code>: La devianza del modelo ajustado, que indica cuánto se reduce la devianza al incluir las variables explicativas.</p></li>
+<li><p><code>AIC</code>: Una medida de la calidad del modelo, penalizando por la complejidad para favorecer modelos más parsimoniosos.</p></li>
+<li><p><code>Number of Fisher Scoring iterations</code>: Número de iteraciones realizadas durante el proceso de estimación de parámetros del modelo.</p></li>
 </ul>
 <p>A continuación, profundizaremos en el significado de algunos de estos conceptos.</p>
 <section id="test-de-wald" class="level3"><h3 class="anchored" data-anchor-id="test-de-wald">Test de Wald</h3>
@@ -491,7 +493,7 @@ H_0 : \beta_i = 0
 \]</span></p>
 <p>Expresamos la prueba en términos del coeficiente <span class="math inline">\(\beta_i\)</span> porque esta formulación es análoga a la utilizada en regresión lineal. Sin embargo, en regresión logística, los resultados suelen presentarse en términos de <em>odds-ratio</em> (OR).</p>
 <p>Dado que una pendiente <span class="math inline">\(\beta_i = 0\)</span> implica un OR de 1, la hipótesis nula también puede expresarse como <em>“la razón de probabilidades es 1”</em>. Esto significa que la variable explicativa no tiene capacidad predictiva, ya que las probabilidades de los grupos comparados son iguales.</p>
-<p>La interpretación sigue criterios comunes en inferencia estadística: valores de <em>p</em> menores a 0,05 sugieren evidencia suficiente para rechazar la hipótesis nula, indicando que la variable contribuye significativamente al modelo (<em>p</em> &lt; 0,1 podría considerarse en contextos más flexibles). Es fundamental recordar que, en regresión logística, los coeficientes <span class="math inline">\(\beta_i\)</span> no se interpretan directamente. Para obtener su efecto sobre la razón de probabilidades, se debe calcular su exponencial <span class="math inline">\(\exp(\beta_i)\)</span>.</p>
+<p>La interpretación sigue criterios comunes en inferencia estadística: valores de <span class="math inline">\(p&lt;0,05\)</span> sugieren evidencia suficiente para rechazar la hipótesis nula, indicando que la variable contribuye significativamente al modelo (<span class="math inline">\(p &lt; 0,1\)</span> podría considerarse en contextos más flexibles). Es fundamental recordar que, en regresión logística, los coeficientes <span class="math inline">\(\beta_i\)</span> no se interpretan directamente. Para obtener su efecto sobre la razón de probabilidades, se debe calcular su exponencial <span class="math inline">\(\exp(\beta_i)\)</span>.</p>
 </section><section id="máxima-verosimilitud" class="level3"><h3 class="anchored" data-anchor-id="máxima-verosimilitud">Máxima verosimilitud</h3>
 <p>Mientras que en la regresión lineal múltiple (RLM) los coeficientes <span class="math inline">\(\beta\)</span> se obtenían por el método de los mínimos cuadrados, en la regresión logística (RLOG) se obtienen mediante el método de máxima verosimilitud (ML, por su nombre en inglés, <em>Maximum Likelihood</em>). El fundamento de esta técnica radica en utilizar la información disponible de los datos de la muestra para seleccionar el valor del parámetro que maximiza la probabilidad de observar los resultados muestrales. La ML, entonces, se calcula mediante un proceso iterativo.</p>
 <p>Por lo tanto, una medida adecuada para evaluar la concordancia del modelo con los datos sería el producto de todas las probabilidades (predichas por el modelo), que los <span class="math inline">\(n\)</span> sujetos de la muestra realmente tengan la condición observada. Es decir, un buen modelo sería el que asigne una probabilidad de 1 (<span class="math inline">\(p = 1\)</span>) a cada sujeto que realmente tenga la condición y de 0 (<span class="math inline">\(p = 0\)</span>) a cada sujeto libre de ella, correspondiendo a una ML de 1. Por el contrario, un modelo deficiente tendría una verosimilitud cercana a 0. En consecuencia, la proximidad de la verosimilitud a 1 expresa cuán eficiente ha sido el ajuste realizado para modelar la realidad.</p>
@@ -534,7 +536,7 @@ AIC= 2k – 2ln(D)
 <p>Para comparar dos o más modelos de regresión logística, se pueden utilizar las siguientes técnicas:</p>
 <ul>
 <li>
-<p><strong>AIC</strong>: El primer término de la ecuación del AIC penaliza por la inclusión de variables en el model (<span class="math inline">\(2k\)</span>), mientras que el segundo compensa por la bondad de ajuste (<span class="math inline">\(2ln(D)\)</span>). Por lo tanto, dado un conjunto de modelos para los datos, el modelo preferido es aquel con el valor mínimo de AIC.</p>
+<p><strong>AIC</strong>: El primer término de la ecuación del AIC penaliza por la inclusión de variables en el modelo (<span class="math inline">\(2k\)</span>), mientras que el segundo compensa por la bondad de ajuste (<span class="math inline">\(2ln(D)\)</span>). Por lo tanto, dado un conjunto de modelos para los datos, el modelo preferido es aquel con el valor mínimo de AIC.</p>
 <p>En R, realizamos la comparación con la función <code><a href="https://rdrr.io/r/stats/AIC.html">AIC()</a></code>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Genero modelo más sencillo</span></span>
@@ -582,7 +584,7 @@ mod2   |   glm |  2 |      -2 | 3.18 | 0.204</code></pre>
 </div>
 </div>
 </section><section id="bondad-de-ajuste" class="level3"><h3 class="anchored" data-anchor-id="bondad-de-ajuste">Bondad de ajuste</h3>
-<p>De forma análoga al Coeficiente de Determinación (<span class="math inline">\(R^2\)</span>) utilizado en regresión Lineal, se han desarrollado diversos coeficientes para estimar la proporción de variabilidad explicada por las variables independientes en modelos de regresión logística.</p>
+<p>De forma análoga al Coeficiente de Determinación (<span class="math inline">\(R^2\)</span>) utilizado en regresión lineal, se han desarrollado diversos coeficientes para estimar la proporción de variabilidad explicada por las variables independientes en modelos de regresión logística.</p>
 <p>En R, podemos calcular estos coeficientes utilizando el paquete <code>performance</code>:</p>
 <ul>
 <li>
@@ -639,7 +641,7 @@ mod2   |   glm |  2 |      -2 | 3.18 | 0.204</code></pre>
       p-value:  0.147</code></pre>
 </div>
 </div>
-<p>En un test de bondad de ajuste, la hipótesis nula siempre afirma que el modelo propuesto se ajusta bien a los datos observados. Por lo tanto, un <em>p</em>-valor superior a 0.05 implica que lo observado se ajusta suficientemente bien a lo esperado bajo el modelo.</p>
+<p>En un test de bondad de ajuste, la hipótesis nula siempre afirma que el modelo propuesto se ajusta bien a los datos observados. Por lo tanto, un <span class="math inline">\(p&gt;0,05\)</span> implica que lo observado se ajusta suficientemente bien a lo esperado bajo el modelo.</p>
 </li>
 </ul></section><section id="capacidad-predictiva-del-modelo" class="level3"><h3 class="anchored" data-anchor-id="capacidad-predictiva-del-modelo">Capacidad predictiva del modelo</h3>
 <p>Otro aspecto a evaluar en un modelo de RLOG es su capacidad de <em>discriminación</em>, es decir, la habilidad del modelo para distinguir entre individuos en los que ocurre el evento y aquellos en los que no. Una medida común de esta discriminación es el área bajo la <strong>curva ROC</strong> (<em>Receiver Operating Characteristic</em>), que se construye utilizando las probabilidades predichas por el modelo.</p>
@@ -696,14 +698,14 @@ P(\hat{y}=0|y=0)
 </div>
 <ul>
 <li>
-<strong>Formula:</strong> Especifica la relación entre la variable dependiente y las variables independientes en el modelo. Sigue la estructura estándar:</li>
+<code>formula</code><strong>:</strong> Especifica la relación entre la variable dependiente y las variables independientes en el modelo. Sigue la estructura estándar:</li>
 </ul>
 <p><span class="math display">\[
 variable\_dependiente \sim variable\_indep_1 + variable\_indep_2 +\dots+ variable\_indep_n
 \]</span></p>
 <ul>
 <li>
-<p><strong>Family:</strong> Se refiere a la familia de distribuciones y la función de enlace utilizada para ajustar el modelo. Las opciones comunes incluyen:</p>
+<p><code>family</code><strong>:</strong> Se refiere a la familia de distribuciones y la función de enlace utilizada para ajustar el modelo. Las opciones comunes incluyen:</p>
 <ul>
 <li><p><code><a href="https://rdrr.io/r/stats/family.html">gaussian()</a></code>: Utilizada para variables dependientes continuas con distribución normal. El enlace predeterminado es <code>identity</code>, lo cual es análogo a ajustar un modelo de RLM. Puede emplear también enlaces <code>log</code>, e <code>inverse</code>.</p></li>
 <li><p><code><a href="https://rdrr.io/r/stats/family.html">binomial()</a></code>: Utilizada para variables dependientes binarias (0, 1). El enlace predeterminado es <code>logit</code>, que es el más común en la regresión logística. También admite enlaces como <code>probit</code>, <code>cauchit</code>, <code>log</code>, y <code>cloglog</code>.</p></li>
@@ -712,7 +714,7 @@ variable\_dependiente \sim variable\_indep_1 + variable\_indep_2 +\dots+ variabl
 </ul>
 <p>Si la función de enlace no se especifica, se utiliza el enlace canónico (predeterminado) para cada familia. Por ejemplo, si omitimos el argumento <code>link = "logit"</code>, de todas maneras quedaría definido ese mismo enlace para la familia <code>binomial</code>.</p>
 </li>
-<li><p><strong>Data:</strong> Nombre del dataframe que contiene las variables utilizadas en el modelo.</p></li>
+<li><p><code>data</code><strong>:</strong> Nombre del <em>dataframe</em> que contiene las variables utilizadas en el modelo.</p></li>
 </ul>
 <section id="gestión-de-variables-dicotómicas" class="level3"><h3 class="anchored" data-anchor-id="gestión-de-variables-dicotómicas">Gestión de variables dicotómicas</h3>
 <p>Decíamos que el modelo con enlace <em>logit</em> es un modelo de regresión típico:</p>
@@ -792,7 +794,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Un error común es suponer que los métodos estadísticos pueden sustituir el conocimiento sustantivo del problema. El abuso de modelos de regresión sin una adecuada justificación teórica puede llevar a asociaciones espurias o a resultados estadísticamente significativos pero clínicamente, biológicamente o socialmente irrelevantes.</p>
 <p>Existen diversos métodos estadísticos para la selección de variables en regresión logística. Estos buscan lograr un modelo parsimonioso que se ajuste bien a los datos sin incluir predictores innecesarios. Si bien estos procedimientos son similares a los utilizados en regresión lineal múltiple, algunos criterios de selección específicos varían.</p>
 </section></section><section id="ejemplo-práctico-en-r" class="level2"><h2 class="anchored" data-anchor-id="ejemplo-práctico-en-r">Ejemplo práctico en R</h2>
-<p>Utilizaremos una tabla de datos denominada <code>caminar.txt</code>, que contiene observaciones de un estudio de casos y controles donde se evaluó a 800 niños, con el objetivo de identificar qué factores se asociaban al desarrollo de la marcha.</p>
+<p>Utilizaremos una tabla de datos denominada “<code>caminar.txt</code>”, que contiene observaciones de un estudio de casos y controles donde se evaluó a 800 niños, con el objetivo de identificar qué factores se asociaban al desarrollo de la marcha.</p>
 <p>Comencemos cargando en R los paquetes que utilizaremos:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Tablas de coeficientes y regresiones simples</span></span>
@@ -1306,7 +1308,7 @@ Full model |   glm |  4 |       3 | 609.51 | &lt; .001</code></pre>
       p-value:  0.222</code></pre>
 </div>
 </div>
-<p>El test de bondad de ajuste de Hosmer y Lemeshow nos da un <em>p</em>-valor para el <strong>mod6</strong> de 0.222, por lo que concluimos que el modelo ajusta adecuadamente los datos (no hay diferencia significativa entre los datos observados en relación a los esperados).</p>
+<p>El test de bondad de ajuste de Hosmer y Lemeshow nos da un <em>p</em>-valor para el <code>mod6</code> de 0.222, por lo que concluimos que el modelo ajusta adecuadamente los datos (no hay diferencia significativa entre los datos observados en relación a los esperados).</p>
 </section><section id="curva-roc" class="level3"><h3 class="anchored" data-anchor-id="curva-roc">Curva ROC</h3>
 <p>En R podemos graficar la curva ROC, que es una herramienta más específica de modelos predictivos, para comparar diferentes modelos. La función <code>performance_roc()</code> del paquete <code>performance</code> se aplica de la siguiente manera:</p>
 <div class="cell" data-layout-align="center">
@@ -1956,33 +1958,33 @@ pareja_estSi  5.84  15.59</code></pre>
 <span>  <span class="fu"><a href="https://davidgohel.github.io/flextable/reference/flextable.html">flextable</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="tabwid">
-<style>.cl-265600e6{}.cl-2624722e{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-2652c480{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-2652c48a{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-2652dab0{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2652daba{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2652dabb{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2652dae2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2652dae3{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-2652daec{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="cl-265600e6">
+<style>.cl-e0305f10{}.cl-e00ee3f8{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e02d653a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e02d6544{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-e02d78c2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e02d78cc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e02d78cd{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e02d78ce{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e02d78cf{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e02d78d6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="cl-e0305f10">
 <thead><tr style="overflow-wrap:break-word;">
-<th class="cl-2652dab0"><p class="cl-2652c480"><span class="cl-2624722e">clasif</span></p></th>
-<th class="cl-2652daba"><p class="cl-2652c48a"><span class="cl-2624722e">n</span></p></th>
-<th class="cl-2652daba"><p class="cl-2652c48a"><span class="cl-2624722e">prop</span></p></th>
+<th class="cl-e02d78c2"><p class="cl-e02d653a"><span class="cl-e00ee3f8">clasif</span></p></th>
+<th class="cl-e02d78cc"><p class="cl-e02d6544"><span class="cl-e00ee3f8">n</span></p></th>
+<th class="cl-e02d78cc"><p class="cl-e02d6544"><span class="cl-e00ee3f8">prop</span></p></th>
 </tr></thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-2652dabb"><p class="cl-2652c480"><span class="cl-2624722e">&gt; 2</span></p></td>
-<td class="cl-2652dae2"><p class="cl-2652c48a"><span class="cl-2624722e">16</span></p></td>
-<td class="cl-2652dae2"><p class="cl-2652c48a"><span class="cl-2624722e">0.02000</span></p></td>
+<td class="cl-e02d78cd"><p class="cl-e02d653a"><span class="cl-e00ee3f8">&gt; 2</span></p></td>
+<td class="cl-e02d78ce"><p class="cl-e02d6544"><span class="cl-e00ee3f8">16</span></p></td>
+<td class="cl-e02d78ce"><p class="cl-e02d6544"><span class="cl-e00ee3f8">0.02000</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-2652dabb"><p class="cl-2652c480"><span class="cl-2624722e">&gt; 2.5</span></p></td>
-<td class="cl-2652dae2"><p class="cl-2652c48a"><span class="cl-2624722e">6</span></p></td>
-<td class="cl-2652dae2"><p class="cl-2652c48a"><span class="cl-2624722e">0.00750</span></p></td>
+<td class="cl-e02d78cd"><p class="cl-e02d653a"><span class="cl-e00ee3f8">&gt; 2.5</span></p></td>
+<td class="cl-e02d78ce"><p class="cl-e02d6544"><span class="cl-e00ee3f8">6</span></p></td>
+<td class="cl-e02d78ce"><p class="cl-e02d6544"><span class="cl-e00ee3f8">0.00750</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-2652dabb"><p class="cl-2652c480"><span class="cl-2624722e">&gt; 3</span></p></td>
-<td class="cl-2652dae2"><p class="cl-2652c48a"><span class="cl-2624722e">1</span></p></td>
-<td class="cl-2652dae2"><p class="cl-2652c48a"><span class="cl-2624722e">0.00125</span></p></td>
+<td class="cl-e02d78cd"><p class="cl-e02d653a"><span class="cl-e00ee3f8">&gt; 3</span></p></td>
+<td class="cl-e02d78ce"><p class="cl-e02d6544"><span class="cl-e00ee3f8">1</span></p></td>
+<td class="cl-e02d78ce"><p class="cl-e02d6544"><span class="cl-e00ee3f8">0.00125</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-2652dae3"><p class="cl-2652c480"><span class="cl-2624722e"></span></p></td>
-<td class="cl-2652daec"><p class="cl-2652c48a"><span class="cl-2624722e">777</span></p></td>
-<td class="cl-2652daec"><p class="cl-2652c48a"><span class="cl-2624722e">0.97125</span></p></td>
+<td class="cl-e02d78cf"><p class="cl-e02d653a"><span class="cl-e00ee3f8"></span></p></td>
+<td class="cl-e02d78d6"><p class="cl-e02d6544"><span class="cl-e00ee3f8">777</span></p></td>
+<td class="cl-e02d78d6"><p class="cl-e02d6544"><span class="cl-e00ee3f8">0.97125</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -2031,7 +2033,7 @@ Low Correlation
 </div>
 <p>Los resultados para cada una de las variables independientes es cercano a 1, por lo que descartamos problemas de multicolinealidad.</p>
 </section><section id="interacción" class="level3"><h3 class="anchored" data-anchor-id="interacción">Interacción</h3>
-<p>En este punto aplica el mismo concepto y explicación que la expresada en el material desarrollado en la <a href="https://datos-ine.github.io/unidad_3/conf_interac.html"><strong>Unidad 3</strong></a>.</p>
+<p>En este punto aplica el mismo concepto y explicación que la expresada en el material desarrollado en la <a href="https://datos-ine.github.io/unidad_3/06_conf_interac.html"><strong>Unidad 3</strong></a>.</p>
 <p>Ante la pregunta de la existencia de una variable modificadora de efecto dentro de la regresión múltiple, podemos realizar un análisis comparativo separando por estratos o subgrupos. El objetivo es identificar si la relación de la variable respuesta y una variable independiente cambia de acuerdo al nivel de otra variable independiente.</p>
 <p>Tomemos, por ejemplo, las variables <code>lacto_180</code> y <code>pareja_est</code>. Ambas son estadísticamente significativas dentro del modelo <code>mod6</code>. Construyamos dos modelos que contengan <code>lacto_180</code> y <code>edad_dias</code>, aplicados en dos subgrupos de la tabla <code>datos</code>: uno con niños de madres con pareja estable y otro con madres sin pareja estable.</p>
 <div class="cell" data-layout-align="center">
@@ -3134,9 +3136,9 @@ mod_interaccion |   glm | 501.4 (0.896) | 524.8 (0.452) |     0.622 | 0.307</cod
 </div>
 </div>
 </div>
-<p>El término de interacción es significativo e implica el exceso de la variabilidad de los datos que no puede ser explicada por la suma de las variables consideradas. En este caso la interacción es positiva (sexiste “sinergia” entre las variables) con un OR de 3.67.</p>
+<p>El término de interacción es significativo e implica el exceso de la variabilidad de los datos que no puede ser explicada por la suma de las variables consideradas. En este caso la interacción es positiva (existe “sinergia” entre las variables) con un OR de 3.67.</p>
 </section><section id="tamaño-de-la-muestra-y-número-de-variables-independientes" class="level3"><h3 class="anchored" data-anchor-id="tamaño-de-la-muestra-y-número-de-variables-independientes">Tamaño de la muestra y número de variables independientes</h3>
-<p>En el ámbito epidemiológico, es fundamental asegurarse de que el tamaño de la muestra sea adecuado para obtener estimaciones confiables en un modelo de regresión logística. Una regla general para determinar el tamaño de muestra es la fórmula propuesta por Freeman (1987), que establece que el tamaño de muestra debería ser 10 veces el número de variables independientes a estimar, más uno.</p>
+<p>En el ámbito epidemiológico, es fundamental asegurarse de que el tamaño de la muestra sea adecuado para obtener estimaciones confiables en un modelo de regresión logística. Una regla general para determinar el tamaño de muestra es la fórmula propuesta por <span class="citation" data-cites="freeman1987">Freeman (<a href="#ref-freeman1987" role="doc-biblioref">1987</a>)</span>, que establece que el tamaño de muestra debería ser 10 veces el número de variables independientes a estimar, más uno.</p>
 <p><span class="math display">\[
 n = 10*(k+1)
 \]</span></p>
@@ -3176,7 +3178,6 @@ n = 10*(k+1)
 <p><span class="citation" data-cites="epidat4"><span>«EPIDAT 4.2 - Consellería de Sanidade - Servizo Galego de Saúde»</span> (<a href="#ref-epidat4" role="doc-biblioref">s.&nbsp;f.</a>)</span></p>
 <p><span class="citation" data-cites="escuelasanidad">Escuela Nacional de Sanidad (ENS). Instituto de Salud Carlos III. Ministerio de Ciencias e Innovación. Madrid (<a href="#ref-escuelasanidad" role="doc-biblioref">2009</a>)</span></p>
 <p><span class="citation" data-cites="field2014">Field, Miles, y Field (<a href="#ref-field2014" role="doc-biblioref">2014</a>)</span></p>
-<p><span class="citation" data-cites="freeman1987">Freeman (<a href="#ref-freeman1987" role="doc-biblioref">1987</a>)</span></p>
 <p><span class="citation" data-cites="hernández-ávila2011">Hernández-Ávila (<a href="#ref-hern%C3%A1ndez-%C3%A1vila2011" role="doc-biblioref">2011</a>)</span></p>
 <p><span class="citation" data-cites="ortegacalvo2002">Ortega Calvo y Cayuela Domínguez (<a href="#ref-ortegacalvo2002" role="doc-biblioref">2002</a>)</span></p>
 <p><span class="citation" data-cites="rothman2012">Rothman (<a href="#ref-rothman2012" role="doc-biblioref">2012</a>)</span></p>
