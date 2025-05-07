@@ -1,56 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_6/reg_cox.html</loc>
-    <lastmod>2025-05-05T13:29:37.490Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_6/04_reg_cox.html</loc>
+    <lastmod>2025-05-07T12:34:32.741Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_6/est_experimentales.html</loc>
-    <lastmod>2025-05-05T13:27:13.587Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_5/reg_poisson.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_6/02_analisis_superv.html</loc>
     <lastmod>2025-04-30T14:27:30.336Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_5/dispersion.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_5/03_dispersion.html</loc>
     <lastmod>2025-05-05T13:26:50.816Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/reg_logistica_cond.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_5/01_est_cohortes.html</loc>
+    <lastmod>2025-05-07T12:32:15.410Z</lastmod>
+  </url>
+  <url>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/04_reg_logistica_cond.html</loc>
     <lastmod>2025-04-30T14:27:30.332Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/mod_predict.html</loc>
-    <lastmod>2025-04-30T14:27:30.330Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/02_reg_logistica.html</loc>
+    <lastmod>2025-05-05T13:56:49.487Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/reg_lineal_multiple.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/07_reg_lineal_multiple.html</loc>
     <lastmod>2025-05-05T13:10:34.131Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/mod_estadistico.html</loc>
-    <lastmod>2025-05-05T13:14:56.299Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/covarianza_correlacion.html</loc>
-    <lastmod>2025-04-30T14:27:30.306Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/anova.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/05_anova.html</loc>
     <lastmod>2025-05-05T13:18:48.942Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/muestreo.html</loc>
-    <lastmod>2025-05-05T12:50:59.577Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/03_covarianza_correlacion.html</loc>
+    <lastmod>2025-04-30T14:27:30.306Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/fun_condicionales.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/01_est_ecologicos.html</loc>
+    <lastmod>2025-05-05T12:59:55.971Z</lastmod>
+  </url>
+  <url>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/06_fun_condicionales.html</loc>
     <lastmod>2025-04-30T14:27:30.289Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/est_epidemio.html</loc>
-    <lastmod>2025-05-05T12:47:57.647Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/04_normalidad_heterocedasticidad.html</loc>
+    <lastmod>2025-05-07T14:10:05.612Z</lastmod>
+  </url>
+  <url>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/02_est_transversales.html</loc>
+    <lastmod>2025-05-07T12:40:53.514Z</lastmod>
   </url>
   <url>
     <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_1/05_hoja_estilo.html</loc>
@@ -77,55 +77,55 @@
     <lastmod>2025-05-07T12:16:07.362Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/dist_muestrales.html</loc>
-    <lastmod>2025-05-05T18:22:25.652Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/01_est_epidemiologicos.html</loc>
+    <lastmod>2025-05-07T12:37:11.688Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/est_transversales.html</loc>
-    <lastmod>2025-05-05T12:48:24.064Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/03_inferencia.html</loc>
+    <lastmod>2025-05-07T14:08:32.634Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/IC_complejos.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/05_muestreo.html</loc>
+    <lastmod>2025-05-07T14:05:15.739Z</lastmod>
+  </url>
+  <url>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/07_IC_complejos.html</loc>
     <lastmod>2025-04-30T14:27:30.264Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_2/normalidad_heterocedasticidad.html</loc>
-    <lastmod>2025-04-30T14:27:30.303Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/02_mod_estadistico.html</loc>
+    <lastmod>2025-05-05T13:14:56.299Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/confusion_interaccion.html</loc>
-    <lastmod>2025-04-30T14:27:30.306Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/est_ecologicos.html</loc>
-    <lastmod>2025-05-05T12:59:55.971Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/reg_lineal.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/04_reg_lineal.html</loc>
     <lastmod>2025-04-30T20:22:12.165Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/est_caso_control.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_3/06_confusion_interaccion.html</loc>
+    <lastmod>2025-04-30T14:27:30.306Z</lastmod>
+  </url>
+  <url>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/01_est_caso_control.html</loc>
     <lastmod>2025-04-30T14:27:30.318Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/reg_logistica.html</loc>
-    <lastmod>2025-05-05T13:56:49.487Z</lastmod>
-  </url>
-  <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/sep_datos.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/03_sep_datos.html</loc>
     <lastmod>2025-04-30T14:27:30.333Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_5/est_cohortes.html</loc>
-    <lastmod>2025-05-05T13:26:08.324Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_4/05_mod_predict.html</loc>
+    <lastmod>2025-04-30T14:27:30.330Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_6/analisis_superv.html</loc>
-    <lastmod>2025-04-30T14:27:30.336Z</lastmod>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_5/02_reg_poisson.html</loc>
+    <lastmod>2025-05-07T12:35:51.498Z</lastmod>
   </url>
   <url>
-    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_6/metodos_analisis.html</loc>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_6/01_est_experimentales.html</loc>
+    <lastmod>2025-05-07T12:32:59.508Z</lastmod>
+  </url>
+  <url>
+    <loc>https://datos-ine.github.io/curso_avanzada_2025/unidad_6/03_metodos_analisis_sup.html</loc>
     <lastmod>2025-05-05T13:29:02.733Z</lastmod>
   </url>
 </urlset>

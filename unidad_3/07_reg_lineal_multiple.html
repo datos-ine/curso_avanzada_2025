@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Christian Ballejo">
+<meta name="author" content="Andrea Silva">
+<title>Regresión lineal múltiple – Curso Epidemiología - Nivel Avanzado</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script><script src="../site_libs/kePrint-0.0.1/kePrint.js"></script><link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<style type="text/css">
+.quarto-reader-toggle .bi::before, .quarto-color-scheme-toggle .bi::before {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-size: 20px 20px;
+  background-position: center;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgba(189, 195, 199, 1)" class="bi bi-moon-stars-fill" viewbox="0 0 16 16"> <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"></path> <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"></path> </svg>') !important;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../styles.css">
+</head>
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-announcement" data-announcement-id="4ab7ce5ee7c696df0f91065161a52a26" class="alert alert-dark hidden">
+<i class="bi bi-file-pdf-fill quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>Guardar como PDF: presione <strong>CTRL</strong> + <strong>P</strong></p>
+</div>
+<i class="bi bi-x-lg quarto-announcement-action"></i>
+</div>
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-curso-de-epidemiología-nivel-avanzado" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Curso de Epidemiología: Nivel Avanzado</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-curso-de-epidemiología-nivel-avanzado">
+<li>
+    <a class="dropdown-item" href="../unidad_1/01_intro_R.html">
+ <span class="dropdown-text">Unidad 1: Introducción a R</span></a>
+  </li>  
+        <li class="dropdown-header">Unidad 2: Estudios transversales</li>
+        <li class="dropdown-header">Unidad 3: Estudios ecológicos</li>
+        <li class="dropdown-header">Unidad 4: Estudios de casos y controles</li>
+        <li class="dropdown-header">Unidad 5: Estudios de cohortes</li>
+        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
+    </ul>
+</li>
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-descargas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-cloud-download" role="img">
+</i> 
+ <span class="menu-text">Descargas</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">
+<li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/windows/" target="_blank"><i class="bi bi-windows" role="img">
+</i> 
+ <span class="dropdown-text">R para Windows</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/macosx/" target="_blank"><i class="bi bi-apple" role="img">
+</i> 
+ <span class="dropdown-text">R para macOS</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/linux/" target="_blank"><i class="bi bi-ubuntu" role="img">
+</i> 
+ <span class="dropdown-text">R para Linux</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://posit.co/download/rstudio-desktop/" target="_blank"><i class="bi bi-terminal" role="img">
+</i> 
+ <span class="dropdown-text">RStudio Desktop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank"><i class="bi bi-terminal" role="img">
+</i> 
+ <span class="dropdown-text">RTools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../files/datos_y_paquetes.zip"><i class="bi bi-file-zip" role="img">
+</i> 
+ <span class="dropdown-text">Paquetes y datos para el curso</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Regresión lineal múltiple</li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
+</i> 
+ <span class="menu-text">Unidad 1</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/01_intro_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/02_intro_RStudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Primeros pasos y generalidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/03_intro_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a tidyverse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/04_analisis_exploratorio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis exploratorio de datos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/05_hoja_estilo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja de Estilo del lenguaje R</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contenidos</h2>
+   
+  <ul>
+<li><a href="#introducci%C3%B3n" id="toc-introducción" class="nav-link active" data-scroll-target="#introducci%C3%B3n">Introducción</a></li>
+  <li>
+<a href="#presupuestos-del-modelo-de-rlm" id="toc-presupuestos-del-modelo-de-rlm" class="nav-link" data-scroll-target="#presupuestos-del-modelo-de-rlm">Presupuestos del modelo de RLM</a>
+  <ul class="collapse">
+<li><a href="#independencia" id="toc-independencia" class="nav-link" data-scroll-target="#independencia">Independencia</a></li>
+  <li><a href="#linealidad" id="toc-linealidad" class="nav-link" data-scroll-target="#linealidad">Linealidad</a></li>
+  <li><a href="#homocedasticidad" id="toc-homocedasticidad" class="nav-link" data-scroll-target="#homocedasticidad">Homocedasticidad</a></li>
+  <li><a href="#normalidad" id="toc-normalidad" class="nav-link" data-scroll-target="#normalidad">Normalidad</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#interpretaci%C3%B3n-del-modelo" id="toc-interpretación-del-modelo" class="nav-link" data-scroll-target="#interpretaci%C3%B3n-del-modelo">Interpretación del modelo</a>
+  <ul class="collapse">
+<li><a href="#test-f-parcial" id="toc-test-f-parcial" class="nav-link" data-scroll-target="#test-f-parcial">Test F parcial</a></li>
+  <li><a href="#varianza-residual" id="toc-varianza-residual" class="nav-link" data-scroll-target="#varianza-residual">Varianza residual</a></li>
+  <li><a href="#test-f-global" id="toc-test-f-global" class="nav-link" data-scroll-target="#test-f-global">Test F global</a></li>
+  <li><a href="#coeficiente-de-determinaci%C3%B3n" id="toc-coeficiente-de-determinación" class="nav-link" data-scroll-target="#coeficiente-de-determinaci%C3%B3n">Coeficiente de determinación</a></li>
+  </ul>
+</li>
+  <li><a href="#variables-dummy" id="toc-variables-dummy" class="nav-link" data-scroll-target="#variables-dummy">Variables <em>dummy</em></a></li>
+  <li><a href="#estimaci%C3%B3n-y-predicci%C3%B3n-en-modelos-de-regresi%C3%B3n" id="toc-estimación-y-predicción-en-modelos-de-regresión" class="nav-link" data-scroll-target="#estimaci%C3%B3n-y-predicci%C3%B3n-en-modelos-de-regresi%C3%B3n">Estimación y predicción en modelos de regresión</a></li>
+  <li>
+<a href="#lineamientos-la-selecci%C3%B3n-del-modelo-de-regresi%C3%B3n" id="toc-lineamientos-la-selección-del-modelo-de-regresión" class="nav-link" data-scroll-target="#lineamientos-la-selecci%C3%B3n-del-modelo-de-regresi%C3%B3n">Lineamientos la selección del modelo de regresión</a>
+  <ul class="collapse">
+<li><a href="#identificaci%C3%B3n-de-variables-potencialmente-predictivasexplicativas" id="toc-identificación-de-variables-potencialmente-predictivasexplicativas" class="nav-link" data-scroll-target="#identificaci%C3%B3n-de-variables-potencialmente-predictivasexplicativas">Identificación de variables potencialmente predictivas/explicativas</a></li>
+  <li><a href="#colinealidad" id="toc-colinealidad" class="nav-link" data-scroll-target="#colinealidad">Colinealidad</a></li>
+  <li><a href="#selecci%C3%B3n-de-variables" id="toc-selección-de-variables" class="nav-link" data-scroll-target="#selecci%C3%B3n-de-variables">Selección de variables</a></li>
+  <li><a href="#selecci%C3%B3n-de-modelos" id="toc-selección-de-modelos" class="nav-link" data-scroll-target="#selecci%C3%B3n-de-modelos">Selección de modelos</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#validaci%C3%B3n-y-diagn%C3%B3stico-del-modelo" id="toc-validación-y-diagnóstico-del-modelo" class="nav-link" data-scroll-target="#validaci%C3%B3n-y-diagn%C3%B3stico-del-modelo">Validación y diagnóstico del modelo</a>
+  <ul class="collapse">
+<li><a href="#normalidad-1" id="toc-normalidad-1" class="nav-link" data-scroll-target="#normalidad-1">Normalidad</a></li>
+  <li><a href="#homocedasticidad-y-linealidad" id="toc-homocedasticidad-y-linealidad" class="nav-link" data-scroll-target="#homocedasticidad-y-linealidad">Homocedasticidad y linealidad</a></li>
+  <li><a href="#valores-de-influencia-leverage" id="toc-valores-de-influencia-leverage" class="nav-link" data-scroll-target="#valores-de-influencia-leverage">Valores de influencia (<em>leverage</em>)</a></li>
+  <li><a href="#distancia-de-cook" id="toc-distancia-de-cook" class="nav-link" data-scroll-target="#distancia-de-cook">Distancia de Cook</a></li>
+  <li><a href="#independencia-de-residuos" id="toc-independencia-de-residuos" class="nav-link" data-scroll-target="#independencia-de-residuos">Independencia de residuos</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#ejemplo-pr%C3%A1ctico-en-r" id="toc-ejemplo-práctico-en-r" class="nav-link" data-scroll-target="#ejemplo-pr%C3%A1ctico-en-r">Ejemplo práctico en R</a>
+  <ul class="collapse">
+<li><a href="#lectura-de-datos-y-visualizaci%C3%B3n-de-estructura" id="toc-lectura-de-datos-y-visualización-de-estructura" class="nav-link" data-scroll-target="#lectura-de-datos-y-visualizaci%C3%B3n-de-estructura">Lectura de datos y visualización de estructura</a></li>
+  <li><a href="#an%C3%A1lisis-de-variables-potencialmente-explicativas" id="toc-análisis-de-variables-potencialmente-explicativas" class="nav-link" data-scroll-target="#an%C3%A1lisis-de-variables-potencialmente-explicativas">Análisis de variables potencialmente explicativas</a></li>
+  <li><a href="#estrategia-de-construcci%C3%B3n-del-modelo" id="toc-estrategia-de-construcción-del-modelo" class="nav-link" data-scroll-target="#estrategia-de-construcci%C3%B3n-del-modelo">Estrategia de construcción del modelo</a></li>
+  <li><a href="#comparaci%C3%B3n-de-modelos" id="toc-comparación-de-modelos" class="nav-link" data-scroll-target="#comparaci%C3%B3n-de-modelos">Comparación de modelos</a></li>
+  <li><a href="#colinealidad-1" id="toc-colinealidad-1" class="nav-link" data-scroll-target="#colinealidad-1">Colinealidad</a></li>
+  <li><a href="#an%C3%A1lisis-de-residuales" id="toc-análisis-de-residuales" class="nav-link" data-scroll-target="#an%C3%A1lisis-de-residuales">Análisis de residuales</a></li>
+  <li><a href="#resumen-del-mejor-modelo-elegido" id="toc-resumen-del-mejor-modelo-elegido" class="nav-link" data-scroll-target="#resumen-del-mejor-modelo-elegido">Resumen del mejor modelo elegido</a></li>
+  </ul>
+</li>
+  <li><a href="#funciones-para-modelado-autom%C3%A1tico" id="toc-funciones-para-modelado-automático" class="nav-link" data-scroll-target="#funciones-para-modelado-autom%C3%A1tico">Funciones para modelado automático</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">Regresión lineal múltiple</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autores/as</div>
+    <div class="quarto-title-meta-contents">
+             <p>Christian Ballejo <a href="https://orcid.org/0000-0002-7346-5701" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+             <p>Andrea Silva <a href="https://orcid.org/0000-0002-4791-9706" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="introducción" class="level2"><h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>Los modelos de Regresión Lineal Múltiple (RLM) son herramientas estadísticas ampliamente utilizadas cuando la variable dependiente es continua y existen dos o más variables independientes, que pueden ser tanto continuas como categóricas. En el caso de las covariables categóricas, estas pueden ser dicotómicas, ordinales o tener múltiples niveles.</p>
+<p>Al igual que la Regresión Lineal Simple (RLS), que permite estimar el efecto bruto de una variable independiente sobre la variable dependiente, la RLM nos permite conocer el efecto conjunto de dos o más variables independientes (<span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>,…<span class="math inline">\(X_k\)</span>) sobre la variable dependientea (<span class="math inline">\(Y\)</span>). De esta manera, la RLM nos permite:</p>
+<ul>
+<li><p><strong>Analizar la dirección y fuerza de la asociación</strong> entre la variable dependiente y las variables independientes.</p></li>
+<li><p><strong>Identificar las variables independientes importantes</strong> en la predicción o explicación de la variable dependiente.</p></li>
+<li><p><strong>Describir la relación entre una o más variables independientes</strong>, controlando la confusión.</p></li>
+<li><p><strong>Detectar interacciones</strong>, es decir, cómo cambia la relación entre la variable dependiente y una variable independiente según el nivel de otra variable independiente.</p></li>
+</ul>
+<p>El modelo estadístico de la RLS que expresa la relación entre <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> es:</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1X_1
+\]</span></p>
+<p>Este modelo se representa gráficamente como una recta de ajuste en un plano bidimensional (dos dimensiones).</p>
+<p>Por otro lado, el modelo estadístico de la RLM es:</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ...+\beta_kX_k  
+\]</span></p>
+<p>Donde <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, <span class="math inline">\(\beta_2\)</span>,…,<span class="math inline">\(\beta_k\)</span> son los parámetros de la regresión. Para cada combinación de valores de <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>,…<span class="math inline">\(X_k\)</span> existe una distribución <span class="math inline">\(Y\)</span> cuya <strong>media</strong> es una función lineal de <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>,…, <span class="math inline">\(X_k\)</span>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="07_reg_lineal_multiple_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La representación gráfica de la recta de ajuste en la regresión lineal múltiple se realiza en un espacio de dimensión <span class="math inline">\(K + 1\)</span>, donde <span class="math inline">\(K\)</span> es el número de variables independientes. En el caso de la regresión lineal simple (RLS), la relación se puede representar fácilmente en un plano bidimensional (2D). Sin embargo, a medida que aumentamos el número de variables independientes, la representación gráfica se vuelve más compleja, ya que requerimos más dimensiones, lo que dificulta visualizar el modelo en el espacio.</p>
+<p>En el caso puntual que el modelo tuviera 2 variables independientes, la ecuación sería:</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1 X_1 + \beta_2X_2
+\]</span></p>
+<p>En este caso, la relación podría representarse en un plano tridimensional (3D), donde los ejes corresponden a <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span> y la variable dependiente <span class="math inline">\(Y\)</span>. En este plano, la superficie de ajuste es un plano que describe la relación entre las tres variables, y la orientación de dicho plano estará determinada por los coeficientes <span class="math inline">\(\beta_1\)</span> y <span class="math inline">\(\beta_2\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/rlm.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>En forma similar a la RLS, la interpretación de cada parámetro <span class="math inline">\(\beta\)</span> de la regresión es:</p>
+<ul>
+<li><p><span class="math inline">\(\beta_0\)</span>: es el valor esperado de <span class="math inline">\(Y\)</span> cuando todas las otras variables son iguales a cero.</p></li>
+<li><p><span class="math inline">\(\beta_1\)</span> es la pendiente a lo largo del eje <span class="math inline">\(X_1\)</span> y representa el cambio esperado en la respuesta por unidad de cambio en <span class="math inline">\(X_1\)</span> a valores constantes de <span class="math inline">\(X_2\)</span>.</p></li>
+<li><p><span class="math inline">\(\beta_2\)</span> es la pendiente a lo largo del eje <span class="math inline">\(X_2\)</span> y representa el cambio esperado en la respuesta por unidad de cambio en <span class="math inline">\(X_2\)</span> a valores constantes de <span class="math inline">\(X_1\)</span>.</p></li>
+</ul></section><section id="presupuestos-del-modelo-de-rlm" class="level2"><h2 class="anchored" data-anchor-id="presupuestos-del-modelo-de-rlm">Presupuestos del modelo de RLM</h2>
+<section id="independencia" class="level3"><h3 class="anchored" data-anchor-id="independencia">Independencia</h3>
+<p>Las observaciones <span class="math inline">\(Y_i\)</span> son independientes unas de otras: el efecto de <span class="math inline">\(X_1\)</span> sobre la respuesta media no depende de <span class="math inline">\(X_2\)</span> y viceversa, siempre y cuando no exista interacción. Cuando existe interacción entre <span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> , el efecto de <span class="math inline">\(X_1\)</span> sobre la respuesta media de <span class="math inline">\(Y\)</span> depende <span class="math inline">\(X_2\)</span> y viceversa (<span class="math inline">\(X_1\)</span> e <span class="math inline">\(X_2\)</span> no son independientes cuando existe interacción).</p>
+</section><section id="linealidad" class="level3"><h3 class="anchored" data-anchor-id="linealidad">Linealidad</h3>
+<p>Para cada combinación de valores de las variables independientes (<span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>,…, <span class="math inline">\(X_k\)</span>) el valor medio de <span class="math inline">\(Y\)</span> es función lineal de <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>,…,<span class="math inline">\(X_k\)</span>.. La linealidad se define en relación a los coeficientes de la regresión, por lo tanto el modelo puede incluir términos cuadráticos e interacciones</p>
+<ul>
+<li>Modelo con interacción</li>
+</ul>
+<p><span class="math display">\[
+Y = \beta_0X_1 + \beta_2X_2 + \beta_3X_1X_2
+\]</span></p>
+<ul>
+<li>
+<p>Modelo con términos cuadráticos</p>
+<p><span class="math display">\[
+Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \beta_3X_1^2 + \beta_4X_2^2
+\]</span></p>
+</li>
+</ul></section><section id="homocedasticidad" class="level3"><h3 class="anchored" data-anchor-id="homocedasticidad">Homocedasticidad</h3>
+<p>la varianza de <span class="math inline">\(Y\)</span> para los distintos valores de <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>,…,<span class="math inline">\(X_k\)</span> se mantiene constante.</p>
+</section><section id="normalidad" class="level3"><h3 class="anchored" data-anchor-id="normalidad">Normalidad</h3>
+<p>Los valores de <span class="math inline">\(Y\)</span> tienen una distribución normal según los valores de <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, <span class="math inline">\(X_k\)</span> , ésto nos permite realizar inferencias en relación a los parámetros del modelo.</p>
+<p>Al igual que en la RLS la estimación de los parámetros de la regresión (coeficientes) se realiza mediante el <strong>Método de los Mínimos Cuadrados</strong> <strong>(MMC)</strong>. El mismo consiste en adoptar como estimativas de los parámetros de la regresión los valores que minimicen la suma de los cuadrados de los residuos.</p>
+<p><span class="math display">\[
+\sum_{i=1}^{i=n}e_1^2=\sum_{i=1}^{i=n}(Y_i-\hat{Y_i})^2=\sum_{i=n}^{i=n}(Y_i-(\hat{\beta}_0+\hat{\beta}_1X_1+\dots+\hat{\beta}_kX_k))^2
+\]</span></p>
+</section></section><section id="interpretación-del-modelo" class="level2"><h2 class="anchored" data-anchor-id="interpretación-del-modelo">Interpretación del modelo</h2>
+<p>Comenzaremos aprendiendo cómo interpretar un modelo de regresión lineal múltiple (RLM) antes de abordar su construcción. Para ilustrarlo, observemos en detalle la salida de R para un modelo de RLM en el que modelamos la variable <code>V23</code>, en función de las variables <code>V10</code>, <code>V11</code>, <code>V12</code>, <code>V14</code>, <code>V15</code>, <code>V17</code>, <code>V18</code> y <code>V24</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = V23 ~ ., data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-2.45958 -0.57136  0.05354  0.57868  2.25036 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)  0.09504    0.09502   1.000   0.3199  
+V10         -0.05189    0.09725  -0.534   0.5950  
+V11         -0.11508    0.09711  -1.185   0.2391  
+V12         -0.08137    0.09151  -0.889   0.3763  
+V14         -0.16411    0.09738  -1.685   0.0954 .
+V15         -0.03240    0.10283  -0.315   0.7534  
+V17         -0.04053    0.09040  -0.448   0.6550  
+V18          0.14425    0.09456   1.525   0.1306  
+V24         -0.04953    0.08940  -0.554   0.5809  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9081 on 91 degrees of freedom
+Multiple R-squared:  0.09027,   Adjusted R-squared:  0.0103 
+F-statistic: 1.129 on 8 and 91 DF,  p-value: 0.3518</code></pre>
+</div>
+</div>
+<p>En la salida obtenida, encontramos varios términos clave para interpretar:</p>
+<ul>
+<li><p><strong>Estimate</strong>: muestra los coeficientes estimados (<span class="math inline">\(\beta\)</span>) para el intercepto (<span class="math inline">\(\beta_0\)</span>) y para cada una de las variables explicativas (<span class="math inline">\(\beta_i\)</span>).</p></li>
+<li><p><strong>Std. Error</strong>: el error estándar de cada coeficiente estimado <span class="math inline">\(\beta\)</span>.</p></li>
+<li><p><strong>t-value</strong>: los valores del test t para cada coeficiente, que evalúan si los coeficientes son significativamente diferentes de cero.</p></li>
+<li><p><strong>Pr(&gt;|t|)</strong>: los valores p asociados a los test t para cada coeficiente.</p></li>
+<li><p><strong>Residual standard error</strong>: el error estándar de los residuales.</p></li>
+<li><p><strong>Multiple R-squared</strong>: el coeficiente de determinación <span class="math inline">\(R^2\)</span> múltiple, que indica qué proporción de la variabilidad de la variable dependiente es explicada por el modelo.</p></li>
+<li><p><strong>Adjusted R-squared</strong>: el coeficiente de determinación ajustado, que penaliza por la inclusión de variables que no mejoran el modelo.</p></li>
+<li><p><strong>F-statistic</strong>: el resultado del test F global, que evalúa la significancia del modelo en su conjunto, junto con su valor <em>p</em>.</p></li>
+</ul>
+<section id="test-f-parcial" class="level3"><h3 class="anchored" data-anchor-id="test-f-parcial">Test F parcial</h3>
+<p>En un modelo de regresión, la estimación de los coeficientes se realiza partiendo de una muestra, lo que implica que diferentes muestras pueden generar distintos valores de los parámetros. El test F parcial evalúa la siguiente hipótesis:</p>
+<p><span class="math display">\[
+H_0 = \beta_1 = \beta_2 = ... \beta_n = 0  \\H_1 = \exists\beta_i \neq 0
+\]</span></p>
+<p>Donde <span class="math inline">\(H_0\)</span> indica que todos los coeficientes de las variables independientes son cero, y <span class="math inline">\(H_1\)</span> implica que al menos uno de los coeficientes es diferente de cero. Este test evalúa la contribución de cada variable al modelo, es decir, si la inclusión de esa variable mejora significativamente la explicación de la variabilidad de <span class="math inline">\(Y\)</span>. En modelos de regresión lineales generalizados (GLM), el test de Wald cumple esta misma función, mientras que en los modelos de regresión lineales múltiplos, el test F parcial cumple el mismo rol.</p>
+</section><section id="varianza-residual" class="level3"><h3 class="anchored" data-anchor-id="varianza-residual">Varianza residual</h3>
+<p>Al igual que en el <a href="anova.qmd">análisis de la varianza (ANOVA)</a> y en la <a href="reg_lineal.qmd">regresión lineal simple</a>, podemos descomponer la variabilidad de la variable dependiente <span class="math inline">\(Y\)</span> en dos componentes:</p>
+<ol type="1">
+<li><p>Variabilidad explicada por el modelo.</p></li>
+<li><p>Variabilidad <strong>no explicada</strong> por el modelo, atribuida a factores aleatorios.</p></li>
+</ol>
+<p>Matemáticamente, esto se expresa como:</p>
+<p><span class="math display">\[
+Variabilidad \ total = Variabilidad \ regresión \ + \ Variabilidad \ residual
+\]</span></p>
+<p>De manera equivalente, la suma de cuadrados totales (SCT) se descompone en la suma de cuadrados de la regresión (SCR) y la suma de cuadrados residuales (SCE):</p>
+<p><span class="math display">\[
+\sum (y_i-\bar{y})^2 = \sum (\hat{y}-\bar{y})^2 + \sum (y_i -\hat{y}_i)^2
+\\
+SCT = SCR + SCE
+\]</span></p>
+<p>A continuación, mostramos cómo estos términos se distribuyen entre los grados de libertad y se obtienen los cuadrados medios correspondientes:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;"></th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Grados de libertad</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">CM</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">SCT</td>
+<td style="text-align: left;">n-1</td>
+<td style="text-align: left;">CMT = SCT/n-1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SCR</td>
+<td style="text-align: left;">k-1</td>
+<td style="text-align: left;">CMR = SCR/k-1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">SCE</td>
+<td style="text-align: left;">n-k-1</td>
+<td style="text-align: left;">CME = SCE/n-k-1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="test-f-global" class="level3"><h3 class="anchored" data-anchor-id="test-f-global">Test F global</h3>
+<p>El test F global compara el modelo de regresión ajustado con el modelo nulo (sin variables independientes) y evalúa el efecto conjunto de todas las variables independientes. Su fórmula es:</p>
+<p><span class="math display">\[
+F = CMR/CME
+\\
+gl = (k -1, n - k - 1)
+\]</span></p>
+</section><section id="coeficiente-de-determinación" class="level3"><h3 class="anchored" data-anchor-id="coeficiente-de-determinación">Coeficiente de determinación</h3>
+<p>Al igual de lo que aprendimos en la RLS la bondad de ajuste del modelo de RLM se valora con el coeficiente de determinación (<span class="math inline">\(R^2\)</span>), que nos dice qué proporción de la variabilidad de <span class="math inline">\(Y\)</span> es explicada por los coeficientes de la regresión del modelo en estudio. Su valor se calcula como:</p>
+<p><span class="math display">\[ R^2 = \frac{SCT-SCE}{SCT}=\frac{SCR}{SCT} \]</span></p>
+<p>Sin embargo, al agregar más variables al modelo, <span class="math inline">\(R^2\)</span> siempre mejora, incluso si la nueva variable no mejora sustancialmente el modelo. Este fenómeno se debe a que <span class="math inline">\(R^2\)</span> solo refleja la proporción de variabilidad explicada, pero no penaliza la inclusión de variables que no aportan al modelo.</p>
+<p>Por esta razón, se utiliza el <span class="math inline">\(R^2\)</span> ajustado, que corrige el <span class="math inline">\(R^2\)</span> penalizando la inclusión de variables que no aportan significativamente:</p>
+<p><span class="math display">\[ R^2_a = 1 - \bigg [ \frac{n-1}{n-(k+1)}\bigg]\frac{SCE}{SCT}=1-\bigg[\frac{n-1}{n-(k+1)}\bigg](1-R^2)  \]</span></p>
+<p>Como el término <span class="math inline">\(1 - R^2\)</span> es constante y <span class="math inline">\(n\)</span> es mayor que <span class="math inline">\(k\)</span>, a medida que agregamos variables, el cociente entre paréntesis crece, lo que hace que la penalización por agregar variables no significativas también aumente. Esto hace que el <span class="math inline">\(R^2\)</span> ajustado sea una medida más fiable de la calidad del modelo.</p>
+<div class="callout callout-style-simple callout-caution">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Cuando tenemos que elegir el mejor modelo será necesario utilizar distintos criterios para compararlos y basar nuestra decisión en elegir el modelo que mejor explique la variación de <span class="math inline">\(Y\)</span> con el menor número de variables independientes, el modelo más simple y efectivo, también llamado el modelo más <strong>parsimonioso</strong>.</p>
+</div>
+</div>
+</div>
+</section></section><section id="variables-dummy" class="level2"><h2 class="anchored" data-anchor-id="variables-dummy">Variables <em>dummy</em>
+</h2>
+<p>En los modelos de regresión, podemos incluir tanto variables cuantitativas como variables categóricas. Las variables categóricas pueden ser dicotómicas (por ejemplo, sexo: femenino/masculino; hábito de fumar: sí/no) o tener más de dos categorías (por ejemplo, grupo sanguíneo, religión, color de ojos).</p>
+<p>Para modelar las variables categóricas, cada categoría se transforma en una variable dicotómica (binaria), con un número de categorías menos uno. Es decir, para una variable con <span class="math inline">\(n\)</span> categorías, se crearán <span class="math inline">\(n-1\)</span> variables <em>dummy</em>, donde <span class="math inline">\(1\)</span> indica la presencia de esa categoría y <span class="math inline">\(0\)</span> indica su ausencia. En estos casos, se selecciona como grupo basal (o grupo de referencia) la categoría con el valor más bajo.</p>
+<section id="ejemplo-para-variable-independiente-dicotómica" class="level4"><h4 class="anchored" data-anchor-id="ejemplo-para-variable-independiente-dicotómica">Ejemplo para variable independiente dicotómica</h4>
+<p>Supongamos que tenemos una variable cualitativa dicotómica, como “Hábito de Fumar”, que toma los valores 1 (si fuma) y 0 (si no fuma). Si ajustamos un modelo con esta variable, la ecuación sería:</p>
+<p><span class="math display">\[
+Y = \beta_0+\beta_1F_1  
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><p><span class="math inline">\(Y\)</span> es la variable dependiente.</p></li>
+<li><p><span class="math inline">\(\beta_0\)</span> es el intercepto (valor basal de <span class="math inline">\(Y\)</span> cuando el individuo no fuma).</p></li>
+<li><p><span class="math inline">\(\beta_1\)</span> es el coeficiente asociado al hábito de fumar, que indica el cambio en <span class="math inline">\(Y\)</span> cuando el individuo fuma (es decir, la diferencia entre el grupo de fumadores y no fumadores).</p></li>
+</ul></section><section id="ejemplo-para-variable-independiente-con-múltiples-categorías" class="level4"><h4 class="anchored" data-anchor-id="ejemplo-para-variable-independiente-con-múltiples-categorías">Ejemplo para variable independiente con múltiples categorías</h4>
+<p>Ahora, consideremos una variable “Región”, que tiene tres categorías: Noreste (NE), Norte (N) y Centro Oeste (CO). Para modelarla como variables <em>dummy</em>, la transformamos en dos variables: <span class="math inline">\(Re_1\)</span> y <span class="math inline">\(Re_2\)</span>, ya que hay <span class="math inline">\(n-1 = 3-1 = 2\)</span> categorías <em>dummy</em>.</p>
+<p>La transformación de las categorías sería:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead><tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Región</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">RE1</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">RE2</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NE (basal)</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">N</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CO</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>En este caso:</p>
+<ul>
+<li><p><span class="math inline">\(Re_1 = 1\)</span> si vive en el Norte, <span class="math inline">\(Re_1 = 0\)</span> si vive en otra región.</p></li>
+<li><p><span class="math inline">\(Re_2 = 1\)</span> si vive en el Centro Oeste, <span class="math inline">\(Re_2 = 0\)</span> si vive en otra región.</p></li>
+</ul>
+<p>Ahora imaginemos el modelo de regresión entre <span class="math inline">\(Y\)</span> y la variable <em>“región”</em> (supongamos que <span class="math inline">\(Y\)</span> es la Tasa de Mortalidad Infantil):</p>
+<p><span class="math display">\[
+Y = \beta_0+\beta_1Re_1 + \beta_2Re_2
+\]</span></p>
+<p>Para interpretar el modelo:</p>
+<ul>
+<li>Si el individuo vive en la región Norte (<span class="math inline">\(Re_1 = 1\)</span> y <span class="math inline">\(Re_2 = 0\)</span>), la ecuación se reduce a:</li>
+</ul>
+<p><span class="math display">\[
+Y=\beta_0+\beta_1Re_1  
+\]</span></p>
+<ul>
+<li>Si el individuo vive en la región Centro Oeste (<span class="math inline">\(Re_1 = 0\)</span> y <span class="math inline">\(Re_2 = 1\)</span>), la ecuación sería:</li>
+</ul>
+<p><span class="math display">\[ Y=\beta_0+\beta_2Re_2  \]</span></p>
+<ul>
+<li>Si el individuo vive en la región Noreste (grupo basal, <span class="math inline">\(Re_1 = 0\)</span> y <span class="math inline">\(Re_2 = 0\)</span>), la ecuación se reduce a:</li>
+</ul>
+<p><span class="math display">\[ Y=\beta_0 \]</span></p>
+<p>En este contexto, <span class="math inline">\(\beta_1\)</span> y <span class="math inline">\(\beta_2\)</span> nos estarán indicando cuánto se modifica la TMI según consideremos la región Norte o Centro Oeste. El coeficiente <span class="math inline">\(\beta_0\)</span> es el valor basal medio de la TMI considerada en la región Noreste</p>
+<p>Las variables <em>dummy</em> o indicadoras no tienen un significado por sí solas, ya que su interpretación depende de cómo se comparan con el grupo basal. Es importante que todas las categorías de la variable cualitativa estén representadas en el modelo, y la inclusión de estas variables debe ser contrastada en bloque, incluso si algunos de los tests <span class="math inline">\(F\)</span> parciales para una categoría no son significativos.</p>
+<p>Además, al agregar una variable <em>dummy</em> al modelo, esta incrementa los grados de libertad de la regresión en función de la cantidad de categorías de la variable. Por ejemplo, si una variable tiene <span class="math inline">\(n\)</span> categorías, se agregarán <span class="math inline">\(n-1\)</span> variables <em>dummy</em>, cada una con su respectivo grado de libertad.</p>
+<p>Cuando trabajamos en R, el lenguaje se encarga de construir las variables <em>dummy</em> automáticamente siempre que su estructura sea <strong>factor</strong>. Los tipos de datos <strong>factor</strong> tienen una estructura de niveles donde el primero de ellos es el de referencia. Para modificar el nivel de referencia podemos utilizar las funciones <code><a href="https://rdrr.io/r/stats/relevel.html">relevel()</a></code> de R <code>base</code> o <code><a href="https://forcats.tidyverse.org/reference/fct_relevel.html">fct_relevel()</a></code> de <code>tidyverse</code>.</p>
+</section></section><section id="estimación-y-predicción-en-modelos-de-regresión" class="level2"><h2 class="anchored" data-anchor-id="estimación-y-predicción-en-modelos-de-regresión">Estimación y predicción en modelos de regresión</h2>
+<p>La regresión es una herramienta clave en los análisis tanto explicativos como predictivos, y se utiliza de las siguientes maneras:</p>
+<ol type="1">
+<li><p><strong>Con fines explicativos</strong>: Este uso tiene como objetivo obtener estimaciones precisas sobre variables de interés para realizar inferencias o cuantificar relaciones entre variables, controlando por otras. Aquí se busca entender cómo los cambios en las variables independientes afectan a la variable dependiente.</p></li>
+<li><p><strong>Con fines predictivos</strong>: La regresión también se utiliza para predecir el comportamiento de la variable dependiente (<span class="math inline">\(Y\)</span>) basándose en los valores de las variables independientes (<span class="math inline">\(X_k\)</span>) observados en la muestra. Sin embargo, la predicción solo debe hacerse si existe una correlación lineal adecuada y si el modelo ajustado es adecuado para los datos.</p></li>
+</ol>
+<section id="consideraciones-para-la-predicción" class="level4"><h4 class="anchored" data-anchor-id="consideraciones-para-la-predicción">Consideraciones para la predicción:</h4>
+<ul>
+<li><p><strong>No utilizar el modelo si no hay correlación lineal</strong>: Si no existe una correlación lineal significativa entre <span class="math inline">\(Y\)</span> y las <span class="math inline">\(X_k\)</span>, la predicción no será válida. En estos casos, la mejor predicción es la media muestral de <span class="math inline">\(Y\)</span>.</p></li>
+<li><p><strong>No extrapolar más allá de los valores muestrales conocidos</strong>: Las predicciones fuera del rango de los datos observados pueden ser inexactas.</p></li>
+<li><p><strong>Datos actualizados</strong>: La predicción debe basarse en datos recientes y relevantes.</p></li>
+<li><p><strong>No predecir para poblaciones distintas</strong>: El modelo debe ser usado solo para hacer predicciones dentro de la población de la cual se obtuvieron los datos muestrales.</p></li>
+<li><p><strong>Relación no necesariamente causal para modelos predictivos</strong>: Mientras que para modelos explicativos la relación entre <span class="math inline">\(X\)</span> y <span class="math inline">\(Y\)</span> debe ser causal (en términos temporales y lógicos), para la predicción basta con que exista una correlación.</p></li>
+</ul></section></section><section id="lineamientos-la-selección-del-modelo-de-regresión" class="level2"><h2 class="anchored" data-anchor-id="lineamientos-la-selección-del-modelo-de-regresión">Lineamientos la selección del modelo de regresión</h2>
+<p>Dada una variable dependiente <span class="math inline">\(Y\)</span> y un conjunto de <span class="math inline">\(k\)</span> variables independientes <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>, <span class="math inline">\(X_3\)</span>….,<span class="math inline">\(X_k\)</span> , nuestro interés es definir el mejor conjunto de <span class="math inline">\(p\)</span> predictores (<span class="math inline">\(p \leq k\)</span>) y el correspondiente modelo de regresión para describir la relación entre <span class="math inline">\(Y\)</span> y las variables <span class="math inline">\(X\)</span>.</p>
+<p>Para ello, debemos seguir los siguientes pasos:</p>
+<ol type="1">
+<li>Especificar el conjunto de variables potencialmente predictivas/explicativas</li>
+<li>Evaluar colinealidad</li>
+<li>Especificar un criterio estadístico para la elección de las variables</li>
+<li>Especificar una estrategia para seleccionar modelos</li>
+<li>Conducir el análisis específico</li>
+<li>Evaluar los presupuestos del modelo</li>
+<li>Evaluar la confiabilidad del modelo escogido</li>
+</ol>
+<section id="identificación-de-variables-potencialmente-predictivasexplicativas" class="level3"><h3 class="anchored" data-anchor-id="identificación-de-variables-potencialmente-predictivasexplicativas">Identificación de variables potencialmente predictivas/explicativas</h3>
+<p>El primer paso para construir un modelo de regresión es seleccionar un conjunto adecuado de variables predictivas. Esto implica identificar aquellas variables que mejor expliquen la variable dependiente sin que ninguna de ellas sea combinación lineal de las restantes.</p>
+<p>El primer paso a seguir es identificar las relaciones entre la variable dependiente y las variables independientes de forma bivariada utilizando tests de correlación y gráficos de dispersión para las variables explicativas continuas y tests de asociación para las variables explicativas categóricas.</p>
+</section><section id="colinealidad" class="level3"><h3 class="anchored" data-anchor-id="colinealidad">Colinealidad</h3>
+<p>Un problema frecuente en los modelos de RLM es el de la <strong>multicolinealidad</strong>, que ocurre cuando las variables independientes están relacionadas entre sí en forma lineal. Si bien no implica una violación de las hipótesis o presupuestos del modelo, puede ocasionar problemas en la inferencia, ya que:</p>
+<ul>
+<li><p>Aumenta las varianzas y covarianzas de los estimadores.</p></li>
+<li><p>Los errores de las estimaciones serán grandes.</p></li>
+<li><p>Tiende a producir estimadores con valores absolutos grandes.</p></li>
+<li><p>Los coeficientes de cada variable independiente difieren notablemente de los que se obtendrían por RLS.</p></li>
+<li><p>No se puede identificar de forma precisa el efecto individual de cada variable colineal sobre la variable respuesta.</p></li>
+</ul>
+<p>A la hora de plantear modelos de RLM conviene estudiar previamente la existencia de casi-colinealidad (la colinealidad exacta no es necesario estudiarla previamente, ya que todos los algoritmos la detectan, de hecho no pueden acabar la estimación). Como medida de la misma hay varios estadísticos propuestos:</p>
+<ul>
+<li><p>Podemos examinar la matriz de correlación</p></li>
+<li><p>Realizar gráficos de dispersión entre las variables explicativas/predictivas</p></li>
+<li><p>Cálculo del factor de inflación de la varianza (VIF por sus siglas en inglés):</p></li>
+</ul>
+<p><span class="math display">\[
+VIF = \frac{1}{1-R^2_i}
+\]</span></p>
+<p>Una regla empírica, citada por <span class="citation" data-cites="kleinbaum1988">Kleinbaum et&nbsp;al. (<a href="#ref-kleinbaum1988" role="doc-biblioref">1988</a>)</span>, consiste en considerar que existen problemas de colinealidad si algún VIF es superior a 10. Por otro lado <span class="citation" data-cites="kim2019">Kim (<a href="#ref-kim2019" role="doc-biblioref">2019</a>)</span> considera que un VIF entre 5 y 10 indican la presencia de colinealidad. En caso de detectar colinealidad entre dos predictores, existen dos posibles soluciones:</p>
+<ul>
+<li><p>Excluir uno de los predictores problemáticos intentando conservar el que, a juicio del investigador, está influyendo realmente en la variable respuesta</p></li>
+<li><p>Combinar las variables colineales en un único predictor, aunque con el riesgo de perder su interpretación</p></li>
+</ul></section><section id="selección-de-variables" class="level3"><h3 class="anchored" data-anchor-id="selección-de-variables">Selección de variables</h3>
+<p>Generalmente incluiremos en el modelo aquellas variables que resultaron significativas en el análisis bivariado y otras que, aun cuando no resultaran significativas, decidamos mantener por cuestiones teóricas, porque se necesitan establecer predicciones para distintas categorías de dicha variable, etc.</p>
+<p>El proceso de selección de variables puede realizarse en forma manual o automática, siendo este último desaconsejado por la mayoría de los autores, ya que en el proceso de ajuste de un modelo no sólo se involucran criterios estadísticos sino también conceptuales. Existen tres estrategias para realizar el proceso , basadas en el valor del test <span class="math inline">\(F\)</span> parcial:</p>
+<ul>
+<li><p><strong>Método jerárquico o <em>forward:</em></strong> se basa en el criterio del investigador que introduce predictores determinados en un orden específico en relación al marco teórico. Comienza con un modelo nulo que solo contiene el intercepto (<span class="math inline">\(\beta_0\)</span>) y agrega secuencialmente una variable a la vez, eligiendo la que proporciona el mayor beneficio en términos de ajuste del modelo. Este proceso continúa hasta que agregar más variables no mejore significativamente el ajuste del modelo.</p></li>
+<li><p><strong>Método de entrada forzada o <em>backward</em></strong>: es el método inverso al anterior. Se introducen todos los predictores simultáneamente y, en cada paso, elimina la variable que tenga el menor impacto en el ajuste del modelo. Este proceso continúa hasta que eliminar más variables no mejore significativamente el ajuste del modelo. Permite evaluar cada variable en presencia de las otras.</p></li>
+<li><p><strong>Método paso a paso o <em>stepwise</em></strong>: emplea criterios matemáticos para decidir qué predictores contribuyen significativamente al modelo y en qué orden se introducen. Se trata de una combinación de la selección <em>forward</em> y <em>backward.</em> Comienza con un modelo nulo, pero tras cada nueva incorporación se realiza un test de extracción de predictores no útiles como en el <em>backward.</em> Presenta la ventaja de que si a medida que se añaden predictores, alguno de los ya presentes deja de contribuir al modelo, se elimina.</p></li>
+</ul></section><section id="selección-de-modelos" class="level3"><h3 class="anchored" data-anchor-id="selección-de-modelos">Selección de modelos</h3>
+<p>Hasta ahora hemos desarrollado algunos criterios que se pueden utilizar para comparar modelos como <span class="math inline">\(R^2\)</span>, <span class="math inline">\(R^2\)</span> ajustado y <span class="math inline">\(F\)</span> global. Como hemos mencionado anteriormente el uso de <span class="math inline">\(R^2\)</span> como único criterio de selección tiene varias desventajas: tiende a sobreestimar, al adicionar variables siempre aumenta, por lo que si fuera el único criterio elegiría modelos con el mayor número de variables, no tiene en consideración la relación entre parámetros y tamaño muestral.</p>
+<p>Para modelos anidados, podemos realizar una comparación entre ambos modelos mediante un ANOVA. Existen otros criterios como el Criterio de Información de Akaike (<strong>AIC</strong>), el Criterio de Información Bayesiano (<strong>BIC</strong>), etc. Tanto el BIC como el AIC, son funciones del logaritmo de la verosimilitud y un término de penalidad basado en el número de parámetros del modelo.</p>
+<p>Recuerden que frente a <span class="math inline">\(p\)</span> variables independientes existen <span class="math inline">\(2^p\)</span> posibles modelos. No necesariamente el modelo con mayor número de variables es el mejor. Debemos priorizar siempre el principio de parsimonia (el modelo más simple que mejor explique). El tamaño de la muestra también es importante, algunos autores recomiendan que el número de observaciones sea como mínimo entre 10 y 20 veces el número de predictores del modelo.</p>
+</section></section><section id="validación-y-diagnóstico-del-modelo" class="level2"><h2 class="anchored" data-anchor-id="validación-y-diagnóstico-del-modelo">Validación y diagnóstico del modelo</h2>
+<p>Utilizaremos el análisis de los residuales para realizar los contrastes <em>a posteriori</em> de las hipótesis del modelo. Recordemos que los residuos o residuales se definen como la diferencia entre el valor observado y el valor predicho por el modelo.</p>
+<p><span class="math display">\[
+y-\hat{y}=e~(residuo~ o ~error~ residual)
+\]</span></p>
+<p>El planteamiento habitual es considerar que, como dijimos inicialmente, los valores de <span class="math inline">\(Y\)</span> tienen una distribución normal según los valores de <span class="math inline">\(X_1\)</span>, <span class="math inline">\(X_2\)</span>,… <span class="math inline">\(X_k\)</span>., entonces, los residuos también tendrán una distribución normal. Los residuos tienen unidades de medida y, por tanto no se puede determinar si es grande o pequeño a simple vista. Para solucionar este problema se define el residuo estandarizado como el cociente entre el residuo y su desvío standard. Se considera que un residuo tiene un valor alto, y por lo tanto puede influir negativamente en el análisis, si su residuo estandarizado es mayor a 3 en valor absoluto. También se trabaja con los residuos tipificados o con los residuos estudentizados.</p>
+<section id="normalidad-1" class="level3"><h3 class="anchored" data-anchor-id="normalidad-1">Normalidad</h3>
+<p>El análisis de normalidad de los residuos lo realizaremos gráficamente (Histograma y gráfico de probabilidad normal) y analíticamente (Contraste de Kolmogorov-Smirnov) o similar.</p>
+</section><section id="homocedasticidad-y-linealidad" class="level3"><h3 class="anchored" data-anchor-id="homocedasticidad-y-linealidad">Homocedasticidad y linealidad</h3>
+<p>La hipótesis de homocedasticidad establece que la variabilidad de los residuos es independiente de las variables explicativas. En general, la variabilidad de los residuos estará en función de las variables explicativas, pero como las variables explicativas están fuertemente correlacionadas con la variable dependiente, bastara con examinar el gráfico de valores pronosticados versus residuos (a veces residuos al cuadrado).</p>
+<p>Comprobamos la hipótesis de homogeneidad de las varianzas gráficamente representando los residuos tipificados frente a los valores predichos por el modelo. El análisis de este gráfico puede revelar una posible violación de la hipótesis de homocedasticidad, por ejemplo si detectamos que el tamaño de los residuos aumenta o disminuye de forma sistemática para algunos valores ajustados de la variable <span class="math inline">\(Y\)</span>, si observamos que el gráfico muestra forma de embudo. Si por el contrario dicho gráfico no muestra patrón alguno, entonces no podemos rechazar la hipótesis de igualdad de varianzas.</p>
+</section><section id="valores-de-influencia-leverage" class="level3"><h3 class="anchored" data-anchor-id="valores-de-influencia-leverage">Valores de influencia (<em>leverage</em>)</h3>
+<p>Se considera que una observación es influyente <em>a priori</em> si su inclusión en el análisis modifica sustancialmente el sentido del mismo. Una observación puede ser influyente si es un <em>outlier</em> respecto a alguna de las variables explicativas. Para detectar estos problemas se utiliza la medida de <strong>Leverage</strong>:</p>
+<p><span class="math display">\[
+l(i)=\frac{1}{n}\bigg(1+\frac{(x_i-\bar{x})^2}{S^2_x}\bigg)  
+\]</span></p>
+<p>Este estadístico mide la distancia de un punto a la media de la distribución. Valores cercanos a 2/<span class="math inline">\(n\)</span> indican casos que pueden influir negativamente en la estimación del modelo introduciendo un fuerte sesgo en el valor de los estimadores.</p>
+</section><section id="distancia-de-cook" class="level3"><h3 class="anchored" data-anchor-id="distancia-de-cook">Distancia de Cook</h3>
+<p>Es una medida de cómo influye la observación <em>i</em>-ésima sobre la estimación de <span class="math inline">\(\beta\)</span> al ser retirada del conjunto de datos. Una distancia de Cook grande significa que una observación tiene un peso grande en la estimación de <span class="math inline">\(\beta\)</span>. Son puntos influyentes las observaciones que presenten</p>
+<p><span class="math display">\[ D_i=\frac{4}{n-p-2}  \]</span></p>
+</section><section id="independencia-de-residuos" class="level3"><h3 class="anchored" data-anchor-id="independencia-de-residuos">Independencia de residuos</h3>
+<p>La hipótesis de independencia de los residuos la realizaremos mediante el contraste de <em>Durbin-Watson</em>.</p>
+</section></section><section id="ejemplo-práctico-en-r" class="level2"><h2 class="anchored" data-anchor-id="ejemplo-práctico-en-r">Ejemplo práctico en R</h2>
+<p>En el documento <a href="mod_estadistico.qmd">Introducción al modelado estadístico</a> vimos como generar en R una fórmula para una regresión lineal simple:</p>
+<p><span class="math display">\[ variable \ dependiente \; \sim variable  \ independiente \]</span></p>
+<p>Para generar fórmulas que contengan más de una variable independiente o predictora (necesario para que sea una regresión lineal múltiple) debemos agregarlas mediante el símbolo <span class="math inline">\(+\)</span></p>
+<p><span class="math display">\[ variable \ dependiente \ \sim var\_indepen\_1 \ + \ var\_indepen\_2 \ + \; \dots \ + \ var\_indepen\_n \]</span></p>
+<p>Si luego de la <code>~</code> incluímos <strong>un punto</strong> como notación de “todas”, estamos creando un <em>modelo saturado</em> con todas las variables incluidas dentro del dataframe:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span><span class="va">.</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Esto es útil cuando tenemos muchas posibles variables explicativas y queremos conocer cuáles tienen una correlación significativa.</p>
+<p>También se puede descartar alguna o algunas variables explicativas en particular basado en la misma estructura, mediante el símbolo <span class="math inline">\(-\)</span></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">.</span><span class="op">-</span><span class="va">x2</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>En la línea anterior, incluimos dentro del modelo a todas las variables de <code>data</code> menos <code>x2</code>.</p>
+<p>Usaremos para el ejemplo el dataset “<code>cancer_USA.txt</code>”, que contiene información sobre la tasa de mortalidad por cáncer cada 100.000 habitantes de distintos condados de Estados Unidos.</p>
+<section id="lectura-de-datos-y-visualización-de-estructura" class="level3"><h3 class="anchored" data-anchor-id="lectura-de-datos-y-visualización-de-estructura">Lectura de datos y visualización de estructura</h3>
+<p>Para comenzar, cargamos los paquetes de R necesarios para el análisis:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># correlogramaas </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggobi.github.io/ggally/">GGally</a></span><span class="op">)</span> </span>
+<span></span>
+<span><span class="co"># chequeo de supuestos y análisis de residuales  </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/easystats/">easystats</a></span><span class="op">)</span> </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">gvlma</span><span class="op">)</span>  </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">lmtest</span><span class="op">)</span>   </span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">nortest</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># manejo de datos  </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>      </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>A continuación leemos los datos y realizamos una exploración rápida</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carga datos</span></span>
+<span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/cancer_USA.txt"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Explora datos</span></span>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 213
+Columns: 10
+$ condado            &lt;chr&gt; "Belknap County", "Carroll County", "Cheshire Count…
+$ estado             &lt;chr&gt; "New Hampshire", "New Hampshire", "New Hampshire", …
+$ tasa_mortalidad    &lt;dbl&gt; 182.6, 168.8, 162.8, 181.6, 155.0, 163.2, 173.1, 17…
+$ mediana_edad       &lt;dbl&gt; 46.1, 50.3, 42.0, 48.1, 41.9, 40.1, 42.6, 43.5, 37.…
+$ mediana_edad_cat   &lt;chr&gt; "45+ años", "45+ años", "36-39 años", "45+ años", "…
+$ mediana_ingresos   &lt;dbl&gt; 59831, 57556, 56008, 42491, 56353, 71233, 62429, 79…
+$ pct_pobreza        &lt;dbl&gt; 10.0, 10.7, 11.8, 14.9, 11.6, 8.7, 9.5, 6.1, 11.8, …
+$ pct_salud_publica  &lt;dbl&gt; 16.8, 13.4, 12.7, 22.5, 14.0, 12.7, 13.1, 9.0, 12.4…
+$ pct_sec_incompleta &lt;dbl&gt; 15.4, 14.8, 6.1, 13.2, 6.6, 12.9, 10.9, 13.5, 6.1, …
+$ pct_desempleo      &lt;dbl&gt; 5.3, 5.8, 6.1, 6.9, 5.0, 5.9, 5.2, 5.6, 6.5, 5.8, 1…</code></pre>
+</div>
+</div>
+<p>La base de datos tiene 100 observaciones y 9 variables. La variable dependiente es <code>tasa_mortalidad</code> y hay 3 variables independientes categóricas y 6 variables independientes numéricas o continuas.</p>
+</section><section id="análisis-de-variables-potencialmente-explicativas" class="level3"><h3 class="anchored" data-anchor-id="análisis-de-variables-potencialmente-explicativas">Análisis de variables potencialmente explicativas</h3>
+<p>Analizaremos la relación entre las variables explicativas numéricas y la variable dependiente mediante un correlograma con el paquete <code>GGally</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># selecciono variables numéricas</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  </span>
+<span>  <span class="co"># correlograma</span></span>
+<span>  <span class="fu"><a href="https://ggobi.github.io/ggally/reference/ggcorr.html">ggcorr</a></span><span class="op">(</span>label <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="07_reg_lineal_multiple_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Como habíamos observado en el capítulo sobre <a href="covarianza_correlacion.qmd">covarianza y correlación</a>, la <code>tasa_mortalidad</code> tiene correlación negativa moderada con <code>mediana_ingresos</code>, también que existe una correlación negativa fuerte entre <code>pct_pobreza</code> y <code>mediana_ingresos</code> y moderada con <code>pct_salud_publica</code>.</p>
+</section><section id="estrategia-de-construcción-del-modelo" class="level3"><h3 class="anchored" data-anchor-id="estrategia-de-construcción-del-modelo">Estrategia de construcción del modelo</h3>
+<p>Al momento de seleccionar las variables independientes que formarán parte del modelo, una de las herramientas más utilizadas es el Criterio de Información de Akaike (AIC) que ajusta mediante <em>máxima verosimilitud</em>. Al penalizar la complejidad excesiva, el AIC ayuda a prevenir el sobreajuste y favorece la inclusión de variables relevantes buscando el modelo equilibrado que describa adecuadamente la relación y tenga el mínimo AIC. Podemos consultar el AIC de un modelo en R mediante la función <code><a href="https://rdrr.io/r/stats/AIC.html">AIC()</a></code>.</p>
+<p>Como vimos anteriormente, la selección de variables se puede hacer mediante métodos <em>forward</em>, <em>backward</em> o <em>stepwise</em>. La función <code><a href="https://rdrr.io/r/stats/step.html">step()</a></code> de R <code>base</code> permite encontrar de forma automática el mejor modelo basado en AIC utilizando cualquiera de las 3 variantes del método paso a paso. Por otro lado, la función <code><a href="https://rdrr.io/r/stats/add1.html">drop1()</a></code> de <code>R base</code> nos permite realizar un proceso <em>backward</em> manual, eligiendo que variable quitar del modelo en cada caso según su contribución al AIC. Siempre es oportuno aclarar que estos últimos métodos se basan en cálculos matemático/estadísticos que no tienen en cuenta criterios conceptuales epidemiológicos que surjan del marco teórico, por lo que exigen un control especial del analista.</p>
+<p>el lenguaje R ofrece una variedad de funciones para abordar y facilitar la tarea de seleccionar el mejor modelo de regresión (más parsimonioso). Como existe correlación fuerte entre <code>mediana_ingresos</code>, <code>pct_pobreza</code> y <code>pct_salud_publica</code> sólo usaremos la que presente mayor correlación con <code>tasa_mortalidad</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modelo saturado</span></span>
+<span><span class="va">mod_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">mediana_ingresos</span> <span class="op">+</span> <span class="va">mediana_edad</span> <span class="op">+</span></span>
+<span>             <span class="va">pct_sec_incompleta</span> <span class="op">+</span> <span class="va">pct_desempleo</span> <span class="op">+</span> <span class="va">estado</span>,</span>
+<span>           data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Mediana ingresos</span></span>
+<span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">mediana_ingresos</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Mediana edad</span></span>
+<span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">mediana_edad</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Secundaria incompleta</span></span>
+<span><span class="va">mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">pct_sec_incompleta</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Desempleo</span></span>
+<span><span class="va">mod4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">pct_desempleo</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Estado</span></span>
+<span><span class="va">mod5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">estado</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Mediante <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> observamos sus resultados:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modelo saturado</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ mediana_ingresos + mediana_edad + 
+    pct_sec_incompleta + pct_desempleo + estado, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-31.475  -7.254   1.161   7.192  29.261 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          1.488e+02  1.487e+01  10.006  &lt; 2e-16 ***
+mediana_ingresos    -3.810e-04  8.165e-05  -4.666 5.62e-06 ***
+mediana_edad         5.005e-01  2.588e-01   1.934  0.05453 .  
+pct_sec_incompleta   1.652e-01  1.945e-01   0.849  0.39681    
+pct_desempleo        1.643e+00  5.781e-01   2.842  0.00494 ** 
+estadoMaine          1.462e+01  5.662e+00   2.582  0.01054 *  
+estadoMassachusetts  6.389e+00  5.344e+00   1.196  0.23328    
+estadoNew Hampshire  1.166e+01  5.963e+00   1.955  0.05198 .  
+estadoNew Jersey     1.020e+01  5.010e+00   2.036  0.04302 *  
+estadoNew York       7.909e+00  4.706e+00   1.680  0.09443 .  
+estadoPennsylvania   9.905e+00  4.867e+00   2.035  0.04315 *  
+estadoRhode Island   5.131e+00  7.359e+00   0.697  0.48646    
+estadoVermont        1.325e+01  5.814e+00   2.278  0.02377 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 11.93 on 200 degrees of freedom
+Multiple R-squared:  0.3373,    Adjusted R-squared:  0.2975 
+F-statistic: 8.483 on 12 and 200 DF,  p-value: 6.303e-13</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modelos simples</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ mediana_ingresos, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-33.040  -8.210   1.093   7.637  35.932 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       2.014e+02  3.521e+00  57.200  &lt; 2e-16 ***
+mediana_ingresos -5.200e-04  6.133e-05  -8.479 3.94e-15 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 12.32 on 211 degrees of freedom
+Multiple R-squared:  0.2542,    Adjusted R-squared:  0.2506 
+F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
+</div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ mediana_edad, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-31.870  -9.631   0.512   9.539  46.770 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  134.7306    10.9761  12.275  &lt; 2e-16 ***
+mediana_edad   0.8961     0.2600   3.447 0.000684 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 13.88 on 211 degrees of freedom
+Multiple R-squared:  0.05332,   Adjusted R-squared:  0.04883 
+F-statistic: 11.88 on 1 and 211 DF,  p-value: 0.0006835</code></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ pct_sec_incompleta, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-33.903  -9.319   1.485   9.185  41.404 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)        162.9089     2.8037  58.106  &lt; 2e-16 ***
+pct_sec_incompleta   0.7202     0.1997   3.607 0.000387 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 13.84 on 211 degrees of freedom
+Multiple R-squared:  0.05808,   Adjusted R-squared:  0.05362 
+F-statistic: 13.01 on 1 and 211 DF,  p-value: 0.0003867</code></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod4</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ pct_desempleo, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-35.594  -8.948   0.508   9.029  40.157 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   158.9950     4.1741  38.091  &lt; 2e-16 ***
+pct_desempleo   1.7906     0.5418   3.305  0.00112 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 13.91 on 211 degrees of freedom
+Multiple R-squared:  0.04922,   Adjusted R-squared:  0.04471 
+F-statistic: 10.92 on 1 and 211 DF,  p-value: 0.001117</code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ estado, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-32.840  -9.533   0.360   9.100  36.641 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          157.713      4.785  32.960  &lt; 2e-16 ***
+estadoMaine           25.438      5.860   4.341 2.24e-05 ***
+estadoMassachusetts    7.087      5.998   1.182 0.238741    
+estadoNew Hampshire   13.167      6.420   2.051 0.041533 *  
+estadoNew Jersey      10.921      5.623   1.942 0.053491 .  
+estadoNew York        13.928      5.084   2.739 0.006700 ** 
+estadoPennsylvania    17.347      5.075   3.418 0.000762 ***
+estadoRhode Island     8.263      8.288   0.997 0.319968    
+estadoVermont         18.559      5.998   3.094 0.002251 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 13.53 on 204 degrees of freedom
+Multiple R-squared:  0.1297,    Adjusted R-squared:  0.09555 
+F-statistic:   3.8 on 8 and 204 DF,  p-value: 0.0003514</code></pre>
+</div>
+</div>
+<p>En los resúmenes observamos que todos los coeficientes de las variables involucradas son significativas y que los valores mostrados tienen forma de lista, es decir no son tablas “ordenadas”, por lo que muchas veces cuando trabajamos con numerosas variables, se hace difícil la comparación de resultados.</p>
+</section><section id="comparación-de-modelos" class="level3"><h3 class="anchored" data-anchor-id="comparación-de-modelos">Comparación de modelos</h3>
+<p>El comando <code>compare_performance()</code> del paquete <code>performance</code> permite comparar de manera sencilla entre modelos anidados:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod_full</span>,</span>
+<span>                    <span class="va">mod1</span>, <span class="va">mod2</span>, <span class="va">mod3</span>, <span class="va">mod4</span>, <span class="va">mod5</span>,</span>
+<span>                    metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name     | Model |  AIC (weights) |  BIC (weights) |    R2 | R2 (adj.) |   RMSE
+-------------------------------------------------------------------------------
+mod_full |    lm | 1675.0 (0.830) | 1722.1 (&lt;.001) | 0.337 |     0.298 | 11.557
+mod1     |    lm | 1678.2 (0.170) | 1688.3 (&gt;.999) | 0.254 |     0.251 | 12.261
+mod2     |    lm | 1729.0 (&lt;.001) | 1739.1 (&lt;.001) | 0.053 |     0.049 | 13.814
+mod3     |    lm | 1727.9 (&lt;.001) | 1738.0 (&lt;.001) | 0.058 |     0.054 | 13.779
+mod4     |    lm | 1729.9 (&lt;.001) | 1740.0 (&lt;.001) | 0.049 |     0.045 | 13.844
+mod5     |    lm | 1725.1 (&lt;.001) | 1758.7 (&lt;.001) | 0.130 |     0.096 | 13.245</code></pre>
+</div>
+</div>
+<p>Las métricas comunes extraídas de los objetos de regresión, presentadas en una tabla, son:</p>
+<ul>
+<li><p><strong>AIC</strong>: Criterio de información de Akaike</p></li>
+<li><p><strong>BIC</strong>: Criterio de información bayesiano</p></li>
+<li><p><strong>R2</strong>: Coeficiente de determinación <span class="math inline">\(R^2\)</span></p></li>
+<li><p><strong>R2 (adj.)</strong>: Coeficiente de determinación ajustado</p></li>
+<li><p><strong>RMSE</strong>: Error cuadrático medio</p></li>
+</ul>
+<p>También podemos ordenar los modelos de mejor a peor con el argumento <code>rank = TRUE</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod_full</span>,</span>
+<span>                    <span class="va">mod1</span>, <span class="va">mod2</span>, <span class="va">mod3</span>, <span class="va">mod4</span>, <span class="va">mod5</span>,</span>
+<span>                    metrics <span class="op">=</span> <span class="st">"common"</span>,</span>
+<span>                    rank <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name     | Model |    R2 | R2 (adj.) |   RMSE | AIC weights | BIC weights | Performance-Score
+---------------------------------------------------------------------------------------------
+mod_full |    lm | 0.337 |     0.298 | 11.557 |       0.830 |    4.58e-08 |            80.00%
+mod1     |    lm | 0.254 |     0.251 | 12.261 |       0.170 |       1.000 |            68.44%
+mod5     |    lm | 0.130 |     0.096 | 13.245 |    1.12e-11 |    5.15e-16 |            14.85%
+mod3     |    lm | 0.058 |     0.054 | 13.779 |    2.71e-12 |    1.60e-11 |             1.89%
+mod2     |    lm | 0.053 |     0.049 | 13.814 |    1.59e-12 |    9.36e-12 |             0.87%
+mod4     |    lm | 0.049 |     0.045 | 13.844 |    1.00e-12 |    5.90e-12 |         1.18e-10%</code></pre>
+</div>
+</div>
+<p>Podemos ver que el modelo saturado tiene un menor AIC y performance global que los modelos univariados.</p>
+</section><section id="colinealidad-1" class="level3"><h3 class="anchored" data-anchor-id="colinealidad-1">Colinealidad</h3>
+<p>Hay varias maneras de detectar la presencia de colinealidad entre variables independientes:</p>
+<ul>
+<li><p>Antes de ajustar el modelo, al comparar los coeficientes de correlación.</p></li>
+<li><p>Una vez ajustado el modelo, si tenemos un <span class="math inline">\(R^2\)</span> alto y muchas variables independientes que no son estadísticamente significativas.</p></li>
+</ul>
+<p>Cuando hemos intuido que tenemos multicolinealidad y queremos comprobar, el paquete <code>performance</code> nos ofrece la función <code>check_collinearity()</code> que implementa el método de factor de inflación de la varianza (VIF):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_collinearity</span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Check for Multicollinearity
+
+Low Correlation
+
+               Term  VIF   VIF 95% CI Increased SE Tolerance Tolerance 95% CI
+   mediana_ingresos 1.89 [1.60, 2.31]         1.38      0.53     [0.43, 0.62]
+       mediana_edad 1.34 [1.19, 1.63]         1.16      0.75     [0.61, 0.84]
+ pct_sec_incompleta 1.28 [1.14, 1.56]         1.13      0.78     [0.64, 0.88]
+      pct_desempleo 1.55 [1.34, 1.88]         1.24      0.65     [0.53, 0.75]
+             estado 2.52 [2.09, 3.12]         1.59      0.40     [0.32, 0.48]</code></pre>
+</div>
+</div>
+<p>Los resultados del ejemplo muestra VIF de entre 1.28 y 2.52 (no hay colinealidad). Recordemos que el umbral de detección parte de valores cercanos a 5 y un VIF <span class="math inline">\(\geq\)</span> 10 indicaría que el modelo de regresión lineal presenta un grado de multicolinealidad preocupante.</p>
+</section><section id="análisis-de-residuales" class="level3"><h3 class="anchored" data-anchor-id="análisis-de-residuales">Análisis de residuales</h3>
+<p>Como vimos para la regresión lineal simple, podemos analizar gráficamente los residuales con la función <code>check_model()</code> del paquete <code>performance</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_model</span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="07_reg_lineal_multiple_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Por otra parte, también tenemos las funciones de análisis para los supuestos (independencia, linealidad, normalidad, homocedasticidad).</p>
+<ul>
+<li>
+<strong>Independencia:</strong> El paquete <code>lmtest</code> permite evaluar independencia según estadístico de Durbin-Watson.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/dwtest.html">dwtest</a></span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Durbin-Watson test
+
+data:  mod_full
+DW = 2.1769, p-value = 0.7772
+alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+</div>
+<ul>
+<li>
+<strong>Linealidad:</strong> El paquete <code>lmtest</code> implementa el <em>Ramsey’s RESET</em> bajo la función <code><a href="https://rdrr.io/pkg/lmtest/man/resettest.html">resettest()</a></code>
+</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/resettest.html">resettest</a></span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    RESET test
+
+data:  mod_full
+RESET = 0.66971, df1 = 2, df2 = 198, p-value = 0.513</code></pre>
+</div>
+</div>
+<ul>
+<li>
+<strong>Normalidad:</strong> El paquete <code>nortest</code> permite chequear normalidad mediante test de Lilliefors.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/nortest/man/lillie.test.html">lillie.test</a></span><span class="op">(</span><span class="va">mod_full</span><span class="op">$</span><span class="va">residuals</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Lilliefors (Kolmogorov-Smirnov) normality test
+
+data:  mod_full$residuals
+D = 0.060065, p-value = 0.05954</code></pre>
+</div>
+</div>
+<ul>
+<li>
+<strong>Homocedasticidad:</strong> El paquete <code>performance</code> permite chequear homocedasticidad con el test de Breush-Pagan.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_heteroscedasticity</span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Warning: Heteroscedasticity (non-constant error variance) detected (p = 0.012).</code></pre>
+</div>
+</div>
+<p>Finalmente presentamos un paquete interesante para validar supuestos de modelos lineales denominado <code>gvlma</code><span class="citation" data-cites="gvlma">(<a href="#ref-gvlma" role="doc-biblioref">Pena y Slate 2019</a>)</span>. Su función, de mismo nombre <code><a href="https://rdrr.io/pkg/gvlma/man/gvlma.html">gvlma()</a></code>, implementa un procedimiento global sobre vector residual estandarizado para probar los cuatro supuestos del modelo lineal.</p>
+<p>Si el procedimiento global indica una violación de al menos uno de los supuestos, los componentes se pueden utilizar para obtener información sobre qué supuestos se han violado.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/gvlma/man/gvlma.html">gvlma</a></span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ mediana_ingresos + mediana_edad + 
+    pct_sec_incompleta + pct_desempleo + estado, data = datos)
+
+Coefficients:
+        (Intercept)     mediana_ingresos         mediana_edad  
+         148.784543            -0.000381             0.500486  
+ pct_sec_incompleta        pct_desempleo          estadoMaine  
+           0.165173             1.643031            14.617808  
+estadoMassachusetts  estadoNew Hampshire     estadoNew Jersey  
+           6.388818            11.657941            10.203316  
+     estadoNew York   estadoPennsylvania   estadoRhode Island  
+           7.908722             9.905042             5.131109  
+      estadoVermont  
+          13.245742  
+
+
+ASSESSMENT OF THE LINEAR MODEL ASSUMPTIONS
+USING THE GLOBAL TEST ON 4 DEGREES-OF-FREEDOM:
+Level of Significance =  0.05 
+
+Call:
+ gvlma(x = mod_full) 
+
+                    Value p-value                Decision
+Global Stat        2.3043  0.6800 Assumptions acceptable.
+Skewness           0.9587  0.3275 Assumptions acceptable.
+Kurtosis           0.0572  0.8110 Assumptions acceptable.
+Link Function      0.4246  0.5147 Assumptions acceptable.
+Heteroscedasticity 0.8639  0.3527 Assumptions acceptable.</code></pre>
+</div>
+</div>
+</section><section id="resumen-del-mejor-modelo-elegido" class="level3"><h3 class="anchored" data-anchor-id="resumen-del-mejor-modelo-elegido">Resumen del mejor modelo elegido</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_full</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ mediana_ingresos + mediana_edad + 
+    pct_sec_incompleta + pct_desempleo + estado, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-31.475  -7.254   1.161   7.192  29.261 
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)          1.488e+02  1.487e+01  10.006  &lt; 2e-16 ***
+mediana_ingresos    -3.810e-04  8.165e-05  -4.666 5.62e-06 ***
+mediana_edad         5.005e-01  2.588e-01   1.934  0.05453 .  
+pct_sec_incompleta   1.652e-01  1.945e-01   0.849  0.39681    
+pct_desempleo        1.643e+00  5.781e-01   2.842  0.00494 ** 
+estadoMaine          1.462e+01  5.662e+00   2.582  0.01054 *  
+estadoMassachusetts  6.389e+00  5.344e+00   1.196  0.23328    
+estadoNew Hampshire  1.166e+01  5.963e+00   1.955  0.05198 .  
+estadoNew Jersey     1.020e+01  5.010e+00   2.036  0.04302 *  
+estadoNew York       7.909e+00  4.706e+00   1.680  0.09443 .  
+estadoPennsylvania   9.905e+00  4.867e+00   2.035  0.04315 *  
+estadoRhode Island   5.131e+00  7.359e+00   0.697  0.48646    
+estadoVermont        1.325e+01  5.814e+00   2.278  0.02377 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 11.93 on 200 degrees of freedom
+Multiple R-squared:  0.3373,    Adjusted R-squared:  0.2975 
+F-statistic: 8.483 on 12 and 200 DF,  p-value: 6.303e-13</code></pre>
+</div>
+</div>
+<p>El modelo <code>mod_full</code> es capaz de explicar el 29,8% de la variabilidad observada en la tasa de mortalidad por cáncer en estos condados (<span class="math inline">\(R^2_{ajustado}\)</span>: 0,2975). El test F global muestra que es significativo (<em>p</em>-valor &lt; 0.001).</p>
+<p>Los coeficientes se pueden interpretar como:</p>
+<ul>
+<li><p><strong>Mediana de ingresos</strong>: Cada aumento de una unidad en la mediana de ingresos reduce la tasa de mortalidad en 0,0004 unidades.</p></li>
+<li><p><strong>Mediana de edad</strong>: Cuando aumento una unidad en la mediana de edad incrementa la tasa de mortalidad en 0,5 unidades.</p></li>
+<li><p><strong>Porcentaje de población con secundaria incompleta</strong>: Cada aumento de una unidad en este porcentaje incrementa la tasa de mortalidad en 0,17 unidades, pero esta relación no es significativa.</p></li>
+<li><p><strong>Porcentaje de desempleo</strong>: Cada aumento de una unidad en el desempleo incrementa la tasa de mortalidad en 1.64 unidades.</p></li>
+<li><p><strong>Estados</strong>: Las tasas de mortalidad varían entre los estados, con algunos efectos significativos, como en Maine, New Jersey, Pennsylvania y Vermont, todos con tasas de mortalidad más altas que el estado de referencia. Es decir, la recta de regresión para cada estado tendrá un intercepto diferente.</p></li>
+</ul></section></section><section id="funciones-para-modelado-automático" class="level2"><h2 class="anchored" data-anchor-id="funciones-para-modelado-automático">Funciones para modelado automático</h2>
+<p>El uso de la función <code><a href="https://rdrr.io/r/stats/step.html">step()</a></code> se enmarca en los procedimientos automáticos y puede ser <em>forward</em>, <em>backward</em> o mixto. La sintaxis básica de la función es:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/step.html">step</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">modelo</span>, direction <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"both"</span>, <span class="st">"backward"</span>, <span class="st">"forward"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>donde:</p>
+<ul>
+<li>
+<strong>object</strong>: es el modelo inicial de regresión lineal (nulo o saturado).</li>
+<li>
+<strong>direction</strong>: es la dirección que indicamos. Puede ser “<em>forward</em>”, “<em>backward</em>” o “<em>both</em>” (predeterminado, si no se define).</li>
+</ul>
+<p>Generalmente conviene partir del modelo saturado y utilizar la dirección por defecto, donde se usan ambas direcciones.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo_step</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/step.html">step</a></span><span class="op">(</span><span class="va">mod_full</span>, direction <span class="op">=</span> <span class="st">"both"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Start:  AIC=1068.56
+tasa_mortalidad ~ mediana_ingresos + mediana_edad + pct_sec_incompleta + 
+    pct_desempleo + estado
+
+                     Df Sum of Sq   RSS    AIC
+- estado              8   1470.71 29922 1063.3
+- pct_sec_incompleta  1    102.58 28554 1067.3
+&lt;none&gt;                            28452 1068.6
+- mediana_edad        1    532.09 28984 1070.5
+- pct_desempleo       1   1149.28 29601 1075.0
+- mediana_ingresos    1   3096.96 31549 1088.6
+
+Step:  AIC=1063.3
+tasa_mortalidad ~ mediana_ingresos + mediana_edad + pct_sec_incompleta + 
+    pct_desempleo
+
+                     Df Sum of Sq   RSS    AIC
+- pct_sec_incompleta  1      79.5 30002 1061.9
+&lt;none&gt;                            29922 1063.3
+- mediana_edad        1    1033.9 30956 1068.5
+- pct_desempleo       1    1036.6 30959 1068.5
++ estado              8    1470.7 28452 1068.6
+- mediana_ingresos    1    6922.4 36845 1105.6
+
+Step:  AIC=1061.86
+tasa_mortalidad ~ mediana_ingresos + mediana_edad + pct_desempleo
+
+                     Df Sum of Sq   RSS    AIC
+&lt;none&gt;                            30002 1061.9
++ pct_sec_incompleta  1      79.5 29922 1063.3
++ estado              8    1447.7 28554 1067.3
+- pct_desempleo       1    1176.8 31179 1068.1
+- mediana_edad        1    1302.7 31305 1068.9
+- mediana_ingresos    1    7528.4 37530 1107.5</code></pre>
+</div>
+</div>
+<p>Observamos que el proceso automático nos indica que debemos eliminar las variables explicativas <code>pct_sec_incompleta</code> y <code>estado</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo_step</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = tasa_mortalidad ~ mediana_ingresos + mediana_edad + 
+    pct_desempleo, data = datos)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-31.570  -7.621   1.269   7.564  32.218 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)       1.574e+02  1.271e+01  12.388  &lt; 2e-16 ***
+mediana_ingresos -4.517e-04  6.237e-05  -7.242 8.34e-12 ***
+mediana_edad      7.065e-01  2.345e-01   3.013  0.00291 ** 
+pct_desempleo     1.397e+00  4.881e-01   2.863  0.00462 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 11.98 on 209 degrees of freedom
+Multiple R-squared:  0.3012,    Adjusted R-squared:  0.2912 
+F-statistic: 30.03 on 3 and 209 DF,  p-value: 3.488e-16</code></pre>
+</div>
+</div>
+<p>Si bien en el ejemplo mostramos como usar el método <em>stepwise</em> automático para la selección de variables, no se recomienda su uso ya que está basado únicamente en criterios matemáticos y no en la relevancia en el mundo real.</p>
+<p>Además, cuenta con las siguientes limitaciones:</p>
+<ul>
+<li><p>Sensibilidad a la selección de variables</p></li>
+<li><p>Propensión al sobreajuste</p></li>
+<li><p>Violación de supuestos estadísticos</p></li>
+<li><p>Inclusión de variables irrelevantes</p></li>
+</ul>
+<p>Para evitar estos inconvenientes, es recomendable usar métodos alternativos de selección de variables tales como:</p>
+<ul>
+<li><p><strong>Selección manual de variables</strong>, según su relevancia teórica y conocimiento experto del tema.</p></li>
+<li><p><strong>Selección de variables por AIC o BIC</strong> (Criterio de Información Bayesiano).</p></li>
+<li><p><strong>Regularización</strong> por regresión LASSO (<em>Least Absolute Shrinkage and Selection Operator</em>), que penaliza los coeficientes de las variables menos importantes, favoreciendo modelos más simples y generalizables. Para conocer más sobre este método pueden entrar <a href="https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df">aquí</a>.</p></li>
+<li><p><strong>Árboles de decisión</strong> (<em>random forest</em> y <em>gradient boosting),</em> herramientas de aprendizaje automático que permiten manejar automáticamente la selección de variables con menor probabilidad de sobreajuste. Para conocer más sobre este método pueden entrar <a href="https://www.ibm.com/es-es/think/topics/decision-trees">aquí</a>.</p></li>
+</ul>
+<p>Estos dos últimos métodos escapan al alcance del curso. Sin embargo, invitamos a quienes tengan interés a explorar las múltiples posibilidades que ofrecen, en particular al momento de analizar datasets grandes y con múltiples variables explicativas.</p>
+<div class="hidden">
+<p><span class="citation" data-cites="deirala2001">De Irala, Martínez-González, y Guillén Grima (<a href="#ref-deirala2001" role="doc-biblioref">2001a</a>)</span></p>
+<p><span class="citation" data-cites="deirala2001a">De Irala, Martínez-González, y Guillén Grima (<a href="#ref-deirala2001a" role="doc-biblioref">2001b</a>)</span></p>
+<p><span class="citation" data-cites="gordis2017">Gordis (<a href="#ref-gordis2017" role="doc-biblioref">2017</a>)</span></p>
+<p><span class="citation" data-cites="kim2019">Kim (<a href="#ref-kim2019" role="doc-biblioref">2019</a>)</span></p>
+<p><span class="citation" data-cites="kleinbaum1988">Kleinbaum et&nbsp;al. (<a href="#ref-kleinbaum1988" role="doc-biblioref">1988</a>)</span></p>
+<p><span class="citation" data-cites="macmahon1972">MacMahon (<a href="#ref-macmahon1972" role="doc-biblioref">1972</a>)</span></p>
+<p><span class="citation" data-cites="base"> (<a href="#ref-base" role="doc-biblioref">2025</a>)</span></p>
+<p><span class="citation" data-cites="tidyverse">Wickham et&nbsp;al. (<a href="#ref-tidyverse" role="doc-biblioref">2019</a>)</span></p>
+<p><span class="citation" data-cites="GGally">Schloerke et&nbsp;al. (<a href="#ref-GGally" role="doc-biblioref">2024</a>)</span></p>
+<p><span class="citation" data-cites="easystats">Lüdecke et&nbsp;al. (<a href="#ref-easystats" role="doc-biblioref">2022</a>)</span></p>
+<p><span class="citation" data-cites="lmtest">Zeileis y Hothorn (<a href="#ref-lmtest" role="doc-biblioref">2002</a>)</span></p>
+</div>
+
+
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-deirala2001" class="csl-entry" role="listitem">
+De Irala, Jokin, Miguel Ángel Martínez-González, y Francisco Guillén Grima. 2001a. <span>«¿Qué es una variable de confusión?»</span> <em>Medicina Clínica</em> 117 (10): 377-85. <a href="https://doi.org/10.1016/S0025-7753(01)72121-5">https://doi.org/10.1016/S0025-7753(01)72121-5</a>.
+</div>
+<div id="ref-deirala2001a" class="csl-entry" role="listitem">
+———. 2001b. <span>«¿Qué es una variable modificadora del efecto?»</span> <em>Medicina Clínica</em> 117 (8): 297-302. <a href="https://doi.org/10.1016/S0025-7753(01)72092-1">https://doi.org/10.1016/S0025-7753(01)72092-1</a>.
+</div>
+<div id="ref-gordis2017" class="csl-entry" role="listitem">
+Gordis, Leon. 2017. <em>Epidemiologia</em>. Thieme Revinter Publicações LTDA.
+</div>
+<div id="ref-kim2019" class="csl-entry" role="listitem">
+Kim, Jong Hae. 2019. <span>«Multicollinearity and Misleading Statistical Results»</span>. <em>Korean Journal of Anesthesiology</em> 72 (6): 558-69. <a href="https://doi.org/10.4097/kja.19087">https://doi.org/10.4097/kja.19087</a>.
+</div>
+<div id="ref-kleinbaum1988" class="csl-entry" role="listitem">
+Kleinbaum, David G, Lawrence L Kupper, Keith E Muller, y Azhar Nizam. 1988. <em>Applied regression analysis and other multivariable methods</em>. Vol. 601. Duxbury press Belmont, CA.
+</div>
+<div id="ref-easystats" class="csl-entry" role="listitem">
+Lüdecke, Daniel, Mattan S. Ben-Shachar, Indrajeet Patil, Brenton M. Wiernik, Etienne Bacher, Rémi Thériault, y Dominique Makowski. 2022. <span>«easystats: Framework for Easy Statistical Modeling, Visualization, and Reporting»</span>. <a href="https://doi.org/10.32614/CRAN.package.easystats">https://doi.org/10.32614/CRAN.package.easystats</a>.
+</div>
+<div id="ref-macmahon1972" class="csl-entry" role="listitem">
+MacMahon, B. 1972. <span>«Concepts of multiple factors»</span>. <em>Multiple factors in the causation of environmentally induced disease. Academic Press, New York</em>.
+</div>
+<div id="ref-gvlma" class="csl-entry" role="listitem">
+Pena, Edsel A., y Elizabeth H. Slate. 2019. <span>«gvlma: Global Validation of Linear Models Assumptions»</span>. <a href="https://CRAN.R-project.org/package=gvlma">https://CRAN.R-project.org/package=gvlma</a>.
+</div>
+<div id="ref-base" class="csl-entry" role="listitem">
+R Core Team. 2025. <span>«R: A Language and Environment for Statistical Computing»</span>. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-GGally" class="csl-entry" role="listitem">
+Schloerke, Barret, Di Cook, Joseph Larmarange, Francois Briatte, Moritz Marbach, Edwin Thoen, Amos Elberg, y Jason Crowley. 2024. <span>«GGally: Extension to ’ggplot2’»</span>. <a href="https://CRAN.R-project.org/package=GGally">https://CRAN.R-project.org/package=GGally</a>.
+</div>
+<div id="ref-tidyverse" class="csl-entry" role="listitem">
+Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino McGowan, Romain François, Garrett Grolemund, et&nbsp;al. 2019. <span>«Welcome to the <span></span>tidyverse<span></span>»</span> 4: 1686. <a href="https://doi.org/10.21105/joss.01686">https://doi.org/10.21105/joss.01686</a>.
+</div>
+<div id="ref-lmtest" class="csl-entry" role="listitem">
+Zeileis, Achim, y Torsten Hothorn. 2002. <span>«Diagnostic Checking in Regression Relationships»</span> 2. <a href="https://CRAN.R-project.org/doc/Rnews/">https://CRAN.R-project.org/doc/Rnews/</a>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reutilización</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.es">CC BY-NC 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Este material es parte del curso de Epidemiología - Nivel Avanzado © 2025 Instituto Nacional de Epidemiología “Dr.&nbsp;Juan H. Jara” (ANLIS)</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>

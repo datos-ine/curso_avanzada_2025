@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="Christian Ballejo">
 <meta name="author" content="Tamara Ricardo">
-<title>Primeros pasos y generalidades – Curso Epidemiología - Nivel Avanzado</title>
+<title>Introducción al modelado estadístico – Curso Epidemiología - Nivel Avanzado</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -53,7 +52,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
@@ -61,8 +80,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../unidad_1/03_intro_tidyverse.html" rel="next">
-<link href="../unidad_1/01_intro_R.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -109,7 +126,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgba(189, 195, 199, 1)" class="bi bi-moon-stars-fill" viewbox="0 0 16 16"> <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"></path> <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"></path> </svg>') !important;
 }
 </style>
-<link rel="stylesheet" href="../styles.css">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="../styles.css">
 </head>
 <body class="nav-sidebar floating nav-fixed">
 
@@ -193,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_1/01_intro_R.html">Unidad 1</a></li><li class="breadcrumb-item"><a href="../unidad_1/02_intro_RStudio.html">Primeros pasos y generalidades</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Introducción al modelado estadístico</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -227,7 +269,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/02_intro_RStudio.html" class="sidebar-item-text sidebar-link active">
+  <a href="../unidad_1/02_intro_RStudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Primeros pasos y generalidades</span></a>
   </div>
 </li>
@@ -259,42 +301,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contenidos</h2>
    
   <ul>
-<li><a href="#introducci%C3%B3n-a-rstudio" id="toc-introducción-a-rstudio" class="nav-link active" data-scroll-target="#introducci%C3%B3n-a-rstudio">Introducción a RStudio</a></li>
-  <li>
-<a href="#proyectos-de-rstudio" id="toc-proyectos-de-rstudio" class="nav-link" data-scroll-target="#proyectos-de-rstudio">Proyectos de RStudio</a>
+<li>
+<a href="#introducci%C3%B3n" id="toc-introducción" class="nav-link active" data-scroll-target="#introducci%C3%B3n">Introducción</a>
   <ul class="collapse">
-<li><a href="#crear-un-proyecto" id="toc-crear-un-proyecto" class="nav-link" data-scroll-target="#crear-un-proyecto">Crear un proyecto</a></li>
-  <li><a href="#abrir-un-proyecto-existente" id="toc-abrir-un-proyecto-existente" class="nav-link" data-scroll-target="#abrir-un-proyecto-existente">Abrir un proyecto existente</a></li>
+<li><a href="#modelos-determin%C3%ADsticos" id="toc-modelos-determinísticos" class="nav-link" data-scroll-target="#modelos-determin%C3%ADsticos">Modelos determinísticos</a></li>
+  <li><a href="#modelos-probabil%C3%ADsticos-o-de-regresi%C3%B3n" id="toc-modelos-probabilísticos-o-de-regresión" class="nav-link" data-scroll-target="#modelos-probabil%C3%ADsticos-o-de-regresi%C3%B3n">Modelos probabilísticos o de regresión</a></li>
   </ul>
 </li>
   <li>
-<a href="#scripts-en-rstudio" id="toc-scripts-en-rstudio" class="nav-link" data-scroll-target="#scripts-en-rstudio">Scripts en RStudio</a>
+<a href="#modelo-lineal-general" id="toc-modelo-lineal-general" class="nav-link" data-scroll-target="#modelo-lineal-general">Modelo lineal general</a>
   <ul class="collapse">
-<li><a href="#crear-un-nuevo-script" id="toc-crear-un-nuevo-script" class="nav-link" data-scroll-target="#crear-un-nuevo-script">Crear un nuevo script</a></li>
-  <li><a href="#ejecutar-scripts" id="toc-ejecutar-scripts" class="nav-link" data-scroll-target="#ejecutar-scripts">Ejecutar scripts</a></li>
-  <li><a href="#edici%C3%B3n-de-scripts" id="toc-edición-de-scripts" class="nav-link" data-scroll-target="#edici%C3%B3n-de-scripts">Edición de scripts</a></li>
-  <li><a href="#guardado-de-scripts" id="toc-guardado-de-scripts" class="nav-link" data-scroll-target="#guardado-de-scripts">Guardado de scripts</a></li>
-  <li><a href="#abrir-scripts-existentes" id="toc-abrir-scripts-existentes" class="nav-link" data-scroll-target="#abrir-scripts-existentes">Abrir scripts existentes</a></li>
-  <li><a href="#c%C3%B3mo-trabajaremos-en-este-curso" id="toc-cómo-trabajaremos-en-este-curso" class="nav-link" data-scroll-target="#c%C3%B3mo-trabajaremos-en-este-curso">¿Cómo trabajaremos en este curso?</a></li>
+<li><a href="#supuestos-del-mlg" id="toc-supuestos-del-mlg" class="nav-link" data-scroll-target="#supuestos-del-mlg">Supuestos del MLG:</a></li>
   </ul>
 </li>
-  <li>
-<a href="#herramientas-de-rstudio" id="toc-herramientas-de-rstudio" class="nav-link" data-scroll-target="#herramientas-de-rstudio">Herramientas de RStudio</a>
-  <ul class="collapse">
-<li><a href="#asistente-de-c%C3%B3digo" id="toc-asistente-de-código" class="nav-link" data-scroll-target="#asistente-de-c%C3%B3digo">Asistente de código</a></li>
-  <li><a href="#ayuda-en-l%C3%ADnea" id="toc-ayuda-en-línea" class="nav-link" data-scroll-target="#ayuda-en-l%C3%ADnea">Ayuda en línea</a></li>
-  <li><a href="#historial-de-comandos" id="toc-historial-de-comandos" class="nav-link" data-scroll-target="#historial-de-comandos">Historial de comandos</a></li>
-  </ul>
-</li>
-  <li><a href="#atajos-de-teclado-windows" id="toc-atajos-de-teclado-windows" class="nav-link" data-scroll-target="#atajos-de-teclado-windows">Atajos de teclado (Windows)</a></li>
-  <li><a href="#paquetes" id="toc-paquetes" class="nav-link" data-scroll-target="#paquetes">Paquetes</a></li>
-  <li><a href="#lectura-de-archivos-de-datos" id="toc-lectura-de-archivos-de-datos" class="nav-link" data-scroll-target="#lectura-de-archivos-de-datos">Lectura de archivos de datos</a></li>
-  <li><a href="#buenas-pr%C3%A1cticas" id="toc-buenas-prácticas" class="nav-link" data-scroll-target="#buenas-pr%C3%A1cticas">Buenas prácticas</a></li>
+  <li><a href="#construcci%C3%B3n-del-mlg-en-r" id="toc-construcción-del-mlg-en-r" class="nav-link" data-scroll-target="#construcci%C3%B3n-del-mlg-en-r">Construcción del MLG en R</a></li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_1/01_intro_R.html">Unidad 1</a></li><li class="breadcrumb-item"><a href="../unidad_1/02_intro_RStudio.html">Primeros pasos y generalidades</a></li></ol></nav><div class="quarto-title">
-<h1 class="title">Primeros pasos y generalidades</h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">Introducción al modelado estadístico</h1>
 </div>
 
 
@@ -302,9 +327,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Autores/as</div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
     <div class="quarto-title-meta-contents">
-             <p>Christian Ballejo <a href="https://orcid.org/0000-0002-7346-5701" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
              <p>Tamara Ricardo <a href="https://orcid.org/0000-0002-0921-2611" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
           </div>
   </div>
@@ -315,326 +339,184 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 
 
-</header><div class="quarto-figure quarto-figure-center">
-<figure class="figure"><div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="https://allisonhorst.com/"><img src="images/cracked_setwd.png" class="quarto-figure quarto-figure-center figure-img" width="500" height="300" alt="Artwork por @allison_horst"></a></p>
-</figure>
-</div>
-<figcaption>Artwork por @allison_horst</figcaption></figure>
-</div>
-<section id="introducción-a-rstudio" class="level2"><h2 class="anchored" data-anchor-id="introducción-a-rstudio">Introducción a RStudio</h2>
-<p>RStudio Desktop <a href="https://posit.co/products/open-source/rstudio/">(2025, Posit Software)</a> es un <strong>entorno de desarrollo integrado</strong> (<em>IDE</em>, por sus siglas en inglés) diseñado específicamente para trabajar con el lenguaje R.</p>
-<p>Es una herramienta <strong>multiplataforma y de código abierto</strong> que facilita la programación, el análisis de datos y la elaboración de informes científicos. Ofrece una integración fluida con otros componentes del ecosistema de R, como R Markdown, Quarto, control de versiones (por ejemplo, Git) y la gestión de proyectos.</p>
-<p>RStudio presenta una interfaz unificada compuesta por distintos paneles, lo que permite organizar el trabajo de forma clara y eficiente:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/rstudio.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:95.0%"></p>
-</figure>
-</div>
-<ol type="1">
-<li><p><strong>Editor de scripts</strong> (<em>Source</em>): permite crear y editar scripts de R, así como documentos R Markdown o Quarto.</p></li>
-<li><p><strong>Consola de R</strong> (<em>Console</em>): muestra la salida del código ejecutado y ejecuta código de R de forma inmediata.</p></li>
-<li><p><strong>Entorno</strong> (<em>Environment</em>): muestra los objetos creados durante la sesión, como vectores, <em>dataframes</em> o funciones.</p></li>
-<li><p><strong>Panel de resultados</strong> (<em>Output</em>): presenta los gráficos, tablas, visualizaciones en HTML y también incluye un explorador de archivos, visor de paquetes instalados y panel de ayuda.</p></li>
-</ol>
-<p>Para garantizar la reproducibilidad de los resultados, es recomendable evitar el guardado automático del historial de objetos entre sesiones, ya que puede generar confusión. Para desactivar esta opción, ir a <code>Tools &gt; Global Options</code> y desmarcar las casillas de las opciones <strong>Workspace</strong> y <strong>History</strong> como se muestra en la siguiente imagen:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/global_opts.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-</section><section id="proyectos-de-rstudio" class="level2"><h2 class="anchored" data-anchor-id="proyectos-de-rstudio">Proyectos de RStudio</h2>
-<p>Los proyectos de RStudio permiten organizar de forma estructurada todo el material asociado a un análisis: scripts, informes, bases de datos, imágenes, etc. Cada proyecto se vincula a una carpeta específica del sistema de archivos, y RStudio la utiliza como directorio de trabajo por defecto. Esta carpeta puede estar ubicada en cualquier parte del sistema de almacenamiento que deseemos (disco rígido, pendrive, disco externo, etc).</p>
-<p>Trabajar con proyectos facilita la importación de datos y evita errores relacionados con rutas relativas o absolutas.</p>
-<section id="crear-un-proyecto" class="level3"><h3 class="anchored" data-anchor-id="crear-un-proyecto">Crear un proyecto</h3>
-<p>Para crear un nuevo proyecto, se puede utilizar el menú <code>File &gt; New Project...</code>. También accedemos a generar un proyecto nuevo a partir de pulsar el acceso directo <code>New Project...</code> ubicado en la esquina superior derecha de la interfaz:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/proyecto01.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-<p>En cualquiera de los dos casos aparecerá un cuadro de diálogo que presenta tres opciones para crear el <strong>nuevo proyecto</strong> de RStudio:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/proyecto02.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
+</header><section id="introducción" class="level2"><h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>Uno de los propósitos fundamentales del modelado estadístico es explicar la realidad de la manera más “simple” posible, centrándose en su esencia y omitiendo elementos cuya variabilidad podría introducir ruido en la interpretación de los fenómenos. Existen eventos en la naturaleza que pueden ser explicados con exactitud si se cuenta con los datos adecuados. Por ejemplo, el cálculo del volumen de un cubo o la predicción de la trayectoria de un objeto en caída libre bajo condiciones ideales. Los modelos que explican estos fenómenos se denominan <strong>modelos determinísticos</strong>.</p>
+<p>Sin embargo, cuando se estudian fenómenos en sistemas complejos, la situación se vuelve más desafiante debido a la influencia de factores externos que impiden explicar completamente la variable dependiente a partir de otras variables. Para abordar esta incertidumbre, se emplean modelos que incorporan un componente de error, conocidos como <strong>modelos probabilísticos</strong>. Estos modelos constituyen la base de la estadística inferencial y se utilizan en el análisis de regresión para describir y predecir relaciones entre variables.</p>
+<section id="modelos-determinísticos" class="level3"><h3 class="anchored" data-anchor-id="modelos-determinísticos">Modelos determinísticos</h3>
+<p>En los modelos determinísticos, se asume una relación exacta entre las variables. Esto significa que tanto los parámetros como las variables son conocidos sin error, y el modelo genera siempre el mismo resultado para un conjunto de datos dado. Sin embargo, estos modelos no consideran la variabilidad causada por el azar o la incertidumbre.</p>
+<p>Un ejemplo clásico de modelos determinísticos son los <strong>modelos SIR</strong> (Susceptibles, Infectados, Recuperados), empleados para estudiar la propagación de enfermedades en poblaciones cerradas. Estos modelos asumen tasas de transmisión y recuperación constantes, ignorando la variabilidad individual y otros factores externos.</p>
+</section><section id="modelos-probabilísticos-o-de-regresión" class="level3"><h3 class="anchored" data-anchor-id="modelos-probabilísticos-o-de-regresión">Modelos probabilísticos o de regresión</h3>
+<p>Los modelos probabilísticos asumen que los fenómenos observados no son completamente predecibles, ya que ciertas variables están sujetas al azar. Estos modelos no generan un único resultado, sino una <strong>distribución de resultados</strong> expresada en términos de probabilidades.</p>
+<p>Un modelo de regresión describe la relación entre la variable dependiente (<span class="math inline">\(Y\)</span>) y una o más variables independientes (<span class="math inline">\(X\)</span>), incorporando un <strong>componente sistemático</strong> (función del modelo) y un <strong>componente aleatorio</strong> (residuo o error residual).</p>
+<p>Matemáticamente, esto se representa como:</p>
+<p><span class="math display">\[
+Y = \underbrace{\beta_0 + \beta_1 X_1}_{Componente \: sistemático} + \underbrace{\epsilon}_{Componente \: aleatorio}
+\]</span></p>
+<p>La función puede ser lineal o no lineal según la naturaleza y distribución de la variable dependiente. El componente aleatorio es esa parte de la variación de <span class="math inline">\(Y\)</span> que no puede ser totalmente explicada por la variación de la/s variable/s independiente/s. En algunos casos el error tendrá valor positivo y en otros tendrá valor negativo. El promedio del error es igual a 0.</p>
+<p>Una vez establecida esta función estaremos en condiciones de:</p>
 <ul>
-<li><p><strong>New Directory</strong>: crea una nueva carpeta para el proyecto a la que deberemos asignarle un nombre, es la opción más habitual. Todos los archivos de configuración aparecerán asociados a esta nueva carpeta.</p></li>
-<li><p><strong>Existing Directory</strong>: vincula el proyecto a una <em>carpeta ya existente</em> que contenga archivos previos con los que deseamos trabajar.</p></li>
-<li><p><strong>Version Control</strong>: permite clonar un repositorio (Git o SVN). Esta opción no se utilizará durante el curso.</p></li>
+<li><p>Comprender cómo se comporta la variable respuesta <span class="math inline">\(Y\)</span> en función de la/s variable/s independientes (<span class="math inline">\(X\)</span>).</p></li>
+<li><p>Estimar o predecir el valor de <span class="math inline">\(Y\)</span> para determinados valores de <span class="math inline">\(X\)</span>.</p></li>
+<li><p>Calcular intervalos de confianza para estas estimaciones o predicciones.</p></li>
 </ul>
-<p>Una vez que creamos un nuevo proyecto con la opción <strong>New Directory</strong>, aparecerá una pantalla con una lista de tipos de proyectos que se pueden crear en RStudio:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/proyecto03.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<p>Durante este curso utilizaremos siempre la <strong>primera opción</strong> (<strong>New Project</strong>). Las demás opciones están pensadas para usos más específicos, como el desarrollo de paquetes de R, sitios web o documentos con Quarto o R Markdown.</p>
-<p>Al seleccionar <strong>New Project</strong>, se abrirá una nueva ventana con los siguientes campos:</p>
+<p>Los modelos probabilísticos pueden clasificarse en:</p>
 <ul>
-<li><p><strong>Directory name:</strong> aquí debemos escribir el nombre del nuevo directorio (carpeta) que también será el nombre del proyecto. Por ejemplo, podemos llamarlo <code>Practicas_R</code>.</p></li>
-<li><p><strong>Create project as subdirectory of:</strong> este campo permite definir en qué ubicación del sistema de archivos se guardará el proyecto. Podemos hacer clic en el botón <strong>Browse…</strong> para abrir el explorador de archivos y seleccionar la carpeta contenedora. En nuestro ejemplo, lo ubicaremos dentro de <strong>Mis Documentos</strong>.</p></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/proyecto04.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="479"></p>
-</figure>
-</div>
-<p>Una vez completados estos campos, hacemos clic en <strong>Create Project</strong>.</p>
-<p>Los proyectos en RStudio tienen entornos independientes, lo que significa que si cerramos un proyecto o cambiamos a otro, la configuración de cada uno se mantendrá inalterable sin interferir con los demás.</p>
-<p>Esto incluye los scripts abiertos, el directorio de trabajo, las pestañas que dejamos activas y otros elementos del entorno que puedan ser necesarios para continuar con un análisis. Este sistema permite mantener organizados los distintos trabajos que llevamos adelante.</p>
-<p>Echemos un vistazo a lo que RStudio realizó:</p>
+<li><p><strong>Paramétricos</strong>: Asumen que los datos provienen de una distribución específica con un conjunto fijo de parámetros (por ejemplo, media, varianza).</p></li>
+<li><p><strong>No paramétricos</strong>: Se utilizan cuando la distribución subyacente de los datos es desconocida o no sigue un patrón estándar.</p></li>
+</ul></section></section><section id="modelo-lineal-general" class="level2"><h2 class="anchored" data-anchor-id="modelo-lineal-general">Modelo lineal general</h2>
+<p>El modelo lineal general (MLG) describe la relación lineal entre una variable respuesta numérica con distribución normal (<span class="math inline">\(Y\)</span>) y una o más variables independientes. Se expresa matemáticamente como:</p>
+<p><span class="math display">\[
+Y_i = X_i\beta + \epsilon_i
+\]</span></p>
+<p>Donde:</p>
 <ul>
-<li><p>En primer lugar el panel <strong>Files</strong> (pantalla inferior derecha) apunta a la nueva carpeta <strong>Practicas_R</strong> y dentro de ella vemos un nuevo archivo el nombre del proyecto y la extensión <code>.Rproj</code>. Este archivo contiene todas las configuraciones para su proyecto.</p></li>
-<li><p>El otro cambio se observa en la parte superior derecha, que muestra el nombre del proyecto. Si hacemos click en él, se desplegará el menú de proyectos. Desde aquí se puede abrir y cerrar proyectos, navegar rápidamente a proyectos que se han abierto recientemente y configurar las opciones de RStudio para cada uno de ellos.</p></li>
+<li><p><span class="math inline">\(Y_i\)</span>: Vector de valores de la variable dependiente (también llamada variable respuesta o resultado), que representa el efecto observado de un proceso o interacción causal.</p></li>
+<li><p><span class="math inline">\(X_i\)</span>: Matriz de diseño que contiene las variables independientes (variables explicativas o predictores), las cuales representan la influencia medida sobre la variable dependiente.</p></li>
+<li><p><span class="math inline">\(\beta\)</span>: Vector de coeficientes (parámetros), que cuantifican la magnitud y dirección de la influencia de cada predictor.</p></li>
+<li><p><span class="math inline">\(\epsilon_i\)</span>: Error aleatorio, que refleja la variabilidad no explicada por las variables independientes. Este componente puede deberse a diferencias individuales, errores de medición o calibración, y puede controlarse aumentando el tamaño muestral.</p></li>
 </ul>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/proyecto05.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-</section><section id="abrir-un-proyecto-existente" class="level3"><h3 class="anchored" data-anchor-id="abrir-un-proyecto-existente">Abrir un proyecto existente</h3>
-<p>Cuando el proyecto ya existe, sea porque lo creamos nosotros o porque alguien nos pasó una carpeta con un proyecto de RStudio creado vamos a visualizar dentro de esa carpeta un archivo con extensión <code>.Rproj</code>.</p>
-<p>La forma más veloz para abrir el proyecto es ejecutar este archivo (debería abrir una sesión de RStudio con el proyecto activo). La otra forma es desde el menú superior derecho de RStudio en la opción <strong>Open project…</strong> y luego buscando en nuestro directorio el mismo archivo <code>.Rproj</code>.</p>
-<div class="callout callout-style-simple callout-warning no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
+<section id="casos-específicos-del-mlg" class="level4"><h4 class="anchored" data-anchor-id="casos-específicos-del-mlg">Casos específicos del MLG</h4>
+<ul>
+<li><p><a href="reg_lineal.qmd"><strong>Regresión lineal simple</strong></a>: Examina la relación entre <span class="math inline">\(Y\)</span> y una variable independiente numérica.</p></li>
+<li><p><a href="anova.qmd"><strong>Análisis de la varianza (ANOVA)</strong></a>: Evalúa las diferencias en la media de <span class="math inline">\(Y\)</span> respecto a los niveles de una variable categórica.</p></li>
+<li><p><a href="reg_lineal_multiple.qmd"><strong>Regresión lineal múltiple</strong></a>: Explora la relación entre <span class="math inline">\(Y\)</span> y dos o más variables independientes, que pueden ser numéricas y/o categóricas.</p></li>
+</ul>
+<div class="callout callout-style-simple callout-caution">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
+<i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-Nota
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>El menú de proyectos del área superior derecha va guardando como elementos recientes los proyectos que se van abriendo y también es una forma rápida de acceder a ellos pulsando sobre estos atajos.</p>
+<div class="callout-body-container">
+<p>La principal fuente del “error” se debe a la variabilidad entre individuos propia de la naturaleza (error aleatorio). Puede haber otras fuentes de error, incluso no detectadas y que deben ser tenidas en cuenta, como pueden ser errores en la medición, calibración o incluso por una mala elección del método.</p>
 </div>
 </div>
-</section></section><section id="scripts-en-rstudio" class="level2"><h2 class="anchored" data-anchor-id="scripts-en-rstudio">Scripts en RStudio</h2>
-<p>Como vimos <a href="../unidad_1/01_intro_R.html#scripts-de-r"><strong>anteriormente</strong></a>, un script es un archivo de código que contiene una secuencia de instrucciones escritas en R. Estos scripts pueden ser reutilizados, modificados y compartidos, lo que los convierte en una herramienta fundamental para garantizar la reproducibilidad del trabajo.</p>
-<section id="crear-un-nuevo-script" class="level3"><h3 class="anchored" data-anchor-id="crear-un-nuevo-script">Crear un nuevo script</h3>
-<p>Tenemos varias formas de crear un script nuevo:</p>
-<ul>
-<li><p>Desde el menú superior: <code>File &gt; New File &gt; R Script</code></p></li>
-<li><p>Con el atajo de teclado: <code>Ctrl + Shift + N</code></p></li>
-<li><p>Desde la barra de herramientas: presionando el ícono <img src="images/script_new.png" class="img-fluid"></p></li>
-</ul></section><section id="ejecutar-scripts" class="level3"><h3 class="anchored" data-anchor-id="ejecutar-scripts">Ejecutar scripts</h3>
-<p>La forma habitual de ejecutar el contenido de un script es línea por línea, usando alguna de las siguientes opciones:</p>
-<ul>
-<li><p>Presionando el botón <img src="images/script_run.png" class="img-fluid"> del editor de código de RStudio</p></li>
-<li><p>Mediante el atajo de teclado <code>Ctrl + Enter</code></p></li>
-</ul>
-<p>Para ejecutar una línea, simplemente ubicamos el cursor en cualquier parte de ella y presionamos el comando correspondiente. Luego de ejecutarse, el cursor avanzará automáticamente a la siguiente línea de código.</p>
-<p>Mientras ejecutamos cada línea debemos ir observando la salida en la consola (panel inferior izquierdo) y también los cambios que se dan en el panel <em>Environment</em> (panel superior derecho) donde aparecerán los objetos que vayamos creando y manipulando.</p>
-</section><section id="edición-de-scripts" class="level3"><h3 class="anchored" data-anchor-id="edición-de-scripts">Edición de scripts</h3>
-<p>Modificar o agregar líneas al script puede hacerse directamente en el editor. Cada vez que realizamos un cambio, es necesario <strong>volver a ejecutar la línea</strong> o bloque modificado para que los cambios se reflejen en el entorno de trabajo.</p>
-<p>Podemos probar y modificar tantas veces como sea necesario. Sin embargo, debemos tener presente que cada manipulación en los objetos se mantiene hasta que se vuelvan a cambiar y a veces, cuando los objetos están vinculados con otras líneas de código posteriores tenemos que tener cuidado que se mantenga la consistencia del script.</p>
-<p>Por ejemplo: si definimos un vector numérico para realizar cálculos matemáticos, pero luego lo sobrescribimos con un valor de tipo caracter, los cálculos posteriores producirán un error y RStudio nos informará de esto en la consola.</p>
-<p>Por eso, es clave observar el contenido de los objetos en el panel <strong>Environment</strong>, lo que nos ayuda a evitar errores y operaciones incoherentes.</p>
-</section><section id="guardado-de-scripts" class="level3"><h3 class="anchored" data-anchor-id="guardado-de-scripts">Guardado de scripts</h3>
-<p>Cualquier agregado o modificación que hayamos realizado al script y nos interese mantener nos obligará a guardar el archivo de código editado.</p>
-<p>Existen distintas formas de guardar un script:</p>
-<ul>
-<li><p>Desde el menú superior: <code>File &gt; Save</code></p></li>
-<li><p>Con el atajo de teclado: <code>Ctrl + S</code></p></li>
-<li><p>Presionando el ícono del disquete azul 💾</p></li>
-</ul>
-<p>Si en cambio quisiera guardarlo como otro archivo para mantener el script original, podemos guardarlo con diferente nombre o en otra ubicación mediante <code>File &gt; Save As...</code></p>
-</section><section id="abrir-scripts-existentes" class="level3"><h3 class="anchored" data-anchor-id="abrir-scripts-existentes">Abrir scripts existentes</h3>
-<p>Los scripts que construyamos o nos compartan siempre tendrán extensión <code>.R</code> y, por lo general, se encontrarán dentro de un proyecto.</p>
-<p>Para abrir estos archivos <code>.R</code> podemos:</p>
-<ul>
-<li><p>Desde el menú superior: <code>File &gt; Open file...</code></p></li>
-<li><p>Con el atajo de teclado: <code>Ctrl + O</code></p></li>
-<li><p>Haciendo click sobre el archivo desde el panel <em>Files</em></p></li>
-<li><p>Presionando el botón de la carpeta amarilla 📂</p></li>
-</ul>
-<p>Esto abrirá el script en una nueva pestaña dentro del editor de código.</p>
-</section><section id="cómo-trabajaremos-en-este-curso" class="level3"><h3 class="anchored" data-anchor-id="cómo-trabajaremos-en-este-curso">¿Cómo trabajaremos en este curso?</h3>
-<p>En general, utilizaremos scripts dentro de <strong>proyectos de RStudio</strong>. La secuencia recomendada será:</p>
+</div>
+</section><section id="supuestos-del-mlg" class="level3"><h3 class="anchored" data-anchor-id="supuestos-del-mlg">Supuestos del MLG:</h3>
+<p>Para garantizar la validez del modelo, deben cumplirse los siguientes supuestos:</p>
 <ol type="1">
-<li><p><strong>Descargar</strong> desde el Aula Virtual un archivo comprimido conteniendo la carpeta, el proyecto, los scripts y archivos de datos.</p></li>
-<li><p><strong>Descomprimir</strong> el archivo en la ubicación que deseamos (recomendamos crear una carpeta destinada al curso).</p></li>
-<li><p>Abrir la carpeta y ejecutar el archivo de proyecto <code>.Rproj</code>.</p></li>
-<li><p>Una vez abierto RStudio con el proyecto activo, ubicamos los scripts desde el panel <strong>Files</strong>.</p></li>
-<li><p><strong>Ejecutar</strong> cada línea del script, leyendo la documentación del código y observando la salida en la consola y los cambios en el entorno</p></li>
-</ol></section></section><section id="herramientas-de-rstudio" class="level2"><h2 class="anchored" data-anchor-id="herramientas-de-rstudio">Herramientas de RStudio</h2>
-<p>Algunas de las herramientas fundamentales de RStudio son el asistente de código, la ayuda en línea y el historial de comandos.</p>
-<section id="asistente-de-código" class="level3"><h3 class="anchored" data-anchor-id="asistente-de-código">Asistente de código</h3>
-<p>Al escribir en el editor o la consola, la tecla <code>Tab</code> activa el autocompletado de funciones, nombres de objetos y argumentos, agilizando la escritura y reduciendo errores de sintaxis. En versiones recientes, el asistente también permite la previsualización de colores en los gráficos, resaltar los paréntesis de cierre en funciones anidadas con distintos colores y gestionar automáticamente la indentación del código.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/asistente.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
+<li><p><strong>Linealidad:</strong> Relación lineal entre la variable dependiente e independientes.</p></li>
+<li><p><strong>Independencia:</strong> Las observaciones deben ser independientes.</p></li>
+<li><p><strong>Homoscedasticidad:</strong> La varianza de los errores debe ser constante.</p></li>
+<li><p><strong>Normalidad de los errores:</strong> Los errores deben seguir una distribución normal.</p></li>
+</ol>
+<p>Si alguno de estos supuestos se viola, podría ser necesario aplicar transformaciones a los datos, emplear técnicas alternativas o ajustar el modelo según corresponda.</p>
+</section></section><section id="construcción-del-mlg-en-r" class="level2"><h2 class="anchored" data-anchor-id="construcción-del-mlg-en-r">Construcción del MLG en R</h2>
+<p>Para ajustar un MLG en R, se utiliza la función <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> cuyas letras vienen de <em>linear models</em> (modelos lineales), ingresando los argumentos el formato fórmula. Esto significa especificar primero el nombre de la variable dependiente y luego la variable independiente.</p>
+<p>La estructura sintáctica es:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">variable_dependiente</span> <span class="op">~</span> <span class="va">variable_independiente</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Muchas de estas opciones se pueden configurar desde el menú <code>Code</code> y desde <code>Tools &gt; Global Options &gt; Code</code>(pestañas <strong>Editing</strong> y <strong>Display</strong>).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/code_display.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
+<p>La función muestra resultados básicos, tales como la relación entre las variables que son parte del modelo y los coeficientes. Habitualmente <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> suele asignarse a un objeto de regresión para que contenga todos los resultados producto del ajuste:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">variable_dependiente</span> <span class="op">~</span> <span class="va">variable_independiente</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="ayuda-en-línea" class="level3"><h3 class="anchored" data-anchor-id="ayuda-en-línea">Ayuda en línea</h3>
-<p>Al posicionar el cursor sobre el nombre de una función en el editor y presionar <code>F1</code>, se accede directamente a la documentación correspondiente en el panel <strong>Help</strong> (habitualmente ubicado en la esquina inferior derecha).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/help.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
+<p>Todos los ajustes de modelos lineales que produce la función <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> tienen la forma de una lista de 12 componentes. Sus componentes pueden ser llamados en resúmenes más completos, usando la función:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="historial-de-comandos" class="level3"><h3 class="anchored" data-anchor-id="historial-de-comandos">Historial de comandos</h3>
-<p>En la consola, al usar las teclas de flecha arriba/abajo, se puede navegar por los comandos ejecutados durante la sesión actual. Además, el panel <strong>History</strong> (parte superior derecha) almacena los comandos de todas las sesiones previas, permitiendo reutilizarlos con un clic en <strong>To Console</strong> (<code>Enter</code>) o <strong>To Source</strong> (<code>Shift + Enter</code>), según se desee insertarlos en la consola o en el script activo.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/historial.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="600"></p>
-</figure>
-</div>
-</section></section><section id="atajos-de-teclado-windows" class="level2"><h2 class="anchored" data-anchor-id="atajos-de-teclado-windows">Atajos de teclado (Windows)</h2>
+<p>La salida de esta función incluye:</p>
+<ul>
+<li><p><strong>Call:</strong> Fórmula del modelo.</p></li>
+<li><p><strong>Residuals:</strong> Distribución de los residuos (mínimo, máximo, mediana y percentiles 25-75).</p></li>
+<li><p><strong>Coefficients:</strong> Incluye el intercepto y la pendiente, junto con errores estándar, valores <em>t</em> y <em>p</em>-valores asociados.</p></li>
+<li><p><strong>Residual standard error:</strong> Error estándar de los residuos con sus grados de libertad.</p></li>
+<li><p><strong>Multiple R-squared:</strong> Coeficiente de determinación <span class="math inline">\(R^2\)</span>.</p></li>
+<li><p><strong>Adjusted R-squared:</strong> Coeficiente <span class="math inline">\(R^2\)</span> ajustado.</p></li>
+<li><p><strong>F-statistic:</strong> Estadístico <span class="math inline">\(F\)</span> y su <em>p</em>-valor asociado.</p></li>
+</ul>
+<p>Además, la salida de <code>summary(modelo)</code> utiliza asteriscos (*) para indicar la significación de los coeficientes. Debajo de la tabla de coeficientes se encuentra la referencia del significado de los códigos, que van desde el 0 hasta el 1 como posible resultado del valor de probabilidad, y donde:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
 <thead><tr class="header">
-<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Menú</th>
-<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Descripción</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Código</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Rango</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Archivo (File)</td>
+<td style="text-align: left;">***</td>
+<td style="text-align: left;">0 a 0,001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">**</td>
+<td style="text-align: left;">0,001 a 0,01</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">*</td>
+<td style="text-align: left;">0,01 a 0,05</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">.</td>
+<td style="text-align: left;">0,05 a 0,1</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ctrl + Shift + N</td>
-<td style="text-align: left;">Crea un nuevo script</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ctrl + O</td>
-<td style="text-align: left;">Abre un script guardado</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ctrl + S</td>
-<td style="text-align: left;">Guarda el script activo</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ctrl + W</td>
-<td style="text-align: left;">Cierra el script activo</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ctrl + Q</td>
-<td style="text-align: left;">Sale del programa RStudio</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Edición (Edit)</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ctrl + F</td>
-<td style="text-align: left;">Abre la ventana de búsqueda (para buscar palabras dentro de un script)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ctrl + L</td>
-<td style="text-align: left;">Limpia la consola</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Código (Code)</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ctrl + Enter</td>
-<td style="text-align: left;">Ejecuta la línea de código donde está situado el cursor</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ctrl + Alt + R</td>
-<td style="text-align: left;">Ejecuta todo el código del script activo</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ctrl + Shift + N</td>
-<td style="text-align: left;">Inserta nueva sección de código</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ctrl + Shift + R</td>
-<td style="text-align: left;">Inserta nueva sección de comentarios de texto</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Sesión (Session)</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Ctrl + Shift + H</td>
-<td style="text-align: left;">Abre la ventana para establecer directorio de trabajo</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ctrl + Shift + F10</td>
-<td style="text-align: left;">Reinicia la sesión de R</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Herramientas (Tools)</td>
-<td style="text-align: left;"></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Alt + Shift + K</td>
-<td style="text-align: left;">Abre la lista de ayuda de atajos de teclado</td>
+<td style="text-align: left;">0,1 a 1</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-</section><section id="paquetes" class="level2"><h2 class="anchored" data-anchor-id="paquetes">Paquetes</h2>
-<p>Existen dos formas principales de descargar paquetes: directamente desde RStudio o desde el <a href="https://cran.r-project.org/web/packages/"><strong>sitio web de CRAN</strong></a>, descargándolos como archivos comprimidos. Si el equipo cuenta con conexión a Internet, lo más práctico es realizar la descarga directamente desde RStudio. En cambio, si no se dispone de acceso permanente a la red, es posible descargar los paquetes desde otro equipo y luego transferirlos como archivos <code>.zip</code> o <code>.tar.gz</code> al equipo donde se encuentra instalado R.</p>
-<p>Cuando accedemos al sitio web de CRAN y buscamos un paquete específico, encontraremos información útil como una breve descripción del paquete, el número de versión, la fecha de publicación, el nombre del autor, documentación asociada y enlaces de descarga específicos para cada sistema operativo.</p>
-<p>Dado que la mayoría de las computadoras hoy en día cuentan con acceso a Internet, en este curso nos enfocaremos en la instalación y activación de paquetes directamente desde RStudio.</p>
-<p>Dentro del entorno de RStudio, la gestión de paquetes se realiza desde la pestaña <em>Packages</em>, ubicada en el panel inferior derecho. Esta interfaz facilita tareas como la instalación, actualización y activación de paquetes, y cada acción que realizamos desde la interfaz gráfica se traduce internamente en la ejecución de funciones del lenguaje R que pueden observarse en la consola.</p>
-<p>Para instalar un paquete nuevo, simplemente pulsamos el botón <em>Install</em> dentro de la pestaña <em>Packages</em>, lo cual abrirá una ventana emergente.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/rstudio_paquetes01.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<p>Allí podemos escribir el nombre del paquete que deseamos instalar. Para asegurarnos de que también se descarguen e instalen automáticamente los paquetes de los que depende, es importante tildar la opción <em>Install dependencies</em>.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="images/rstudio_paquetes02.png" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
-</figure>
-</div>
-<p>Como alternativa, también podemos realizar la instalación desde el editor de scripts mediante el siguiente comando:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"nombre_del_paquete"</span>, </span>
-<span>                 dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="callout callout-style-simple callout-note no-icon">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Para facilitar la instalación de los paquetes requeridos durante el curso, recomendamos descargar el archivo <strong>“<a href="../files/datos_y_paquetes.zip">Paquetes y datos para el curso</a>”</strong>, descomprimirlo y ejecutar el script que se encuentra en su interior.</p>
-</div>
-</div>
-</div>
-</section><section id="lectura-de-archivos-de-datos" class="level2"><h2 class="anchored" data-anchor-id="lectura-de-archivos-de-datos">Lectura de archivos de datos</h2>
-<p>R permite importar tablas de datos desde diversos formatos, tanto utilizando funciones de <strong>R base</strong> como funciones provistas por paquetes específicos.</p>
-<p>El formato más común es el <strong>texto plano</strong> (ASCII), donde los valores están organizados en columnas separadas por caracteres delimitadores. Los separadores más habituales incluyen:</p>
+<p>Los elementos de la lista también pueden llamarse de forma independiente, siendo los más importantes:</p>
 <ul>
-<li><p>Coma (<code>,</code>)</p></li>
-<li><p>Punto y coma (<code>;</code>)</p></li>
-<li><p>Tabulación (<code>\t</code>)</p></li>
-<li><p>Barra vertical (<code>|</code>)</p></li>
-</ul>
-<p>Estos archivos suelen tener una <strong>cabecera</strong> (<em>header</em>) en la primera fila con los nombres de las variables, y cada columna debe contener datos del mismo tipo (números, texto, lógicos, etc.).</p>
-<p>Para importar correctamente un archivo es importante conocer su estructura:</p>
-<ul>
-<li><p>Si incluye o no cabecera.</p></li>
-<li><p>Qué carácter se usa como separador.</p></li>
-<li><p>El tipo de codificación (UTF-8, Latin1, etc.).</p></li>
-</ul>
-<p>Dado que son archivos de texto, pueden visualizarse con editores simples como el Bloc de Notas o desde RStudio, lo que facilita su inspección previa.</p>
-<p>Para cargar los datos desde un archivo de texto plano usamos el código:</p>
+<li>
+<p><code>coefficients</code><strong>:</strong> Vector con los coeficientes del modelo, pueden visualizarse usando alguno de los siguientes comandos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu">read.xxx</span><span class="op">(</span><span class="st">"mis_datos.xxx"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>(Se debe reemplazar <code>read.xxx()</code> por la función correspondiente: <code><a href="https://rdrr.io/r/utils/read.table.html">read.table()</a></code>, <code><a href="https://rdrr.io/r/utils/read.table.html">read.csv()</a></code>, <code>read_delim()</code>, <code>read_excel()</code>, etc., según la extensión del archivo).</p>
-<p>R también permite cargar bases de datos incluidas en paquetes instalados mediante:</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">nombre_datos</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo</span><span class="op">$</span><span class="va">coefficients</span></span>
 <span></span>
-<span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">nombre_datos</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section><section id="buenas-prácticas" class="level2"><h2 class="anchored" data-anchor-id="buenas-prácticas">Buenas prácticas</h2>
-<p>Adoptar buenas prácticas desde el inicio mejora la reproducibilidad, facilita el trabajo colaborativo y reduce errores. Algunas recomendaciones clave son:</p>
-<ul>
-<li><p>Trabajar <strong>siempre</strong> dentro de un <strong>proyecto de RStudio</strong> (<code>.Rproj</code>). Esto permite organizar los archivos, mantener rutas relativas consistentes y acceder a funcionalidades específicas como control de versiones o panel de archivos integrados.</p></li>
-<li><p>Incluir al comienzo de cada script las líneas de <strong>activación de paquetes</strong> necesarios, utilizando la función <code><a href="https://rdrr.io/r/base/library.html">library()</a></code>.</p></li>
-<li><p><strong>Cargar los datos</strong> una vez activados los paquetes, para garantizar que todas las funciones requeridas estén disponibles.</p></li>
-<li><p>Documentar el código mediante <strong>comentarios</strong> iniciados con <code>#</code>. Esto permite entender qué hace cada bloque de código, facilitando futuras modificaciones o revisiones.</p></li>
-<li><p><strong>Usar espacios e indentación adecuada</strong> para mejorar la legibilidad. Esto es especialmente importante en estructuras anidadas (como condicionales, bucles o funciones).</p></li>
+</li>
+<li>
+<p><code>residuals</code><strong>:</strong> Los residuos o residuales para cada valor que surgen de la diferencia entre los valores predictivos calculados por el modelo y los valores reales. Se visualizan desde el objeto resultado de la regresión:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo</span><span class="op">$</span><span class="va">residuals</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>O bien usando el comando:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+<li>
+<p><code>fitted.values</code><strong>:</strong> Los valores calculados por el modelo en base a los datos existentes en la variable independiente. Los encontramos en:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo</span><span class="op">$</span><span class="va">fitted.values</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>O usando la función:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/fitted.values.html">fitted</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
+<li>
+<p>Otra función interesante para el análisis del objeto de regresión es <code><a href="https://rdrr.io/r/stats/confint.html">confint()</a></code> que calcula los intervalos de confianza de los coeficientes o parámetros del modelo de regresión. Para este modelo la línea de ejecución de la función es:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Si agregamos la función <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code> podemos redondear los valores con la cantidad de decimales que necesitemos.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span>,<span class="fl">2</span><span class="op">)</span>  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>En forma predeterminada los IC se calculan al 95%, pero mediante el argumento <code>level</code> podemos modificarlo, por ejemplo al 99%:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/confint.html">confint</a></span><span class="op">(</span><span class="va">modelo</span>, level <span class="op">=</span> <span class="fl">0.99</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</li>
 </ul>
+<div class="hidden">
+<p><span class="citation" data-cites="agresti2015">Agresti (<a href="#ref-agresti2015" role="doc-biblioref">2015</a>)</span></p>
+<p><span class="citation" data-cites="triola2018">Triola (<a href="#ref-triola2018" role="doc-biblioref">2018</a>)</span></p>
+</div>
 
 
-</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reutilización</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.es">CC BY-NC 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-agresti2015" class="csl-entry" role="listitem">
+Agresti, Alan. 2015. <em>Foundations of Linear and Generalized Linear Models</em>. Wiley Series En Probability y Statistics. Hoboken, New Jersey: John Wiley &amp; Sons, Inc.
+</div>
+<div id="ref-triola2018" class="csl-entry" role="listitem">
+Triola, Mario F. 2018. <em>ESTADÍSTICA Decimosegunda Edicion</em>. Pearson Educación de México, SA de CV.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reutilización</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.es">CC BY-NC 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1197,17 +1079,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
-      <a href="../unidad_1/01_intro_R.html" class="pagination-link" aria-label="Introducción a R">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introducción a R</span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../unidad_1/03_intro_tidyverse.html" class="pagination-link" aria-label="Introducción a tidyverse">
-        <span class="nav-page-text">Introducción a tidyverse</span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
+</script>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
