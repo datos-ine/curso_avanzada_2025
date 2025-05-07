@@ -62,7 +62,7 @@ Una vez que creamos un nuevo proyecto con la opción **New Directory**, aparecer
 
 ![](images/proyecto03.png){fig-align="center"}
 
-Durante este curso utilizaremos siempre la **primera opción** (New Project). Las demás opciones están pensadas para usos más específicos, como el desarrollo de paquetes de R, sitios web o documentos con Quarto o R Markdown.
+Durante este curso utilizaremos siempre la **primera opción** (**New Project**). Las demás opciones están pensadas para usos más específicos, como el desarrollo de paquetes de R, sitios web o documentos con Quarto o R Markdown.
 
 Al seleccionar **New Project**, se abrirá una nueva ventana con los siguientes campos:
 
@@ -100,7 +100,7 @@ El menú de proyectos del área superior derecha va guardando como elementos rec
 
 ## Scripts en RStudio
 
-Como vimos [**anteriormente**](intro_R.qmd#scripts-de-r), un script es un archivo de código que contiene una secuencia de instrucciones escritas en R. Estos scripts pueden ser reutilizados, modificados y compartidos, lo que los convierte en una herramienta fundamental para garantizar la reproducibilidad del trabajo.
+Como vimos [**anteriormente**](01_intro_R.qmd#scripts-de-r), un script es un archivo de código que contiene una secuencia de instrucciones escritas en R. Estos scripts pueden ser reutilizados, modificados y compartidos, lo que los convierte en una herramienta fundamental para garantizar la reproducibilidad del trabajo.
 
 ### Crear un nuevo script
 

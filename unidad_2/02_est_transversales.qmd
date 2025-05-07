@@ -62,48 +62,10 @@ Una vez obtenidos los datos, éstos pueden representarse gráficamente, resumirs
 
 -   Si el objetivo es **describir los resultados** en la muestra, las herramientas descriptivas pueden ser suficientes.
 
--   Si se busca **extrapolar a la población general,** es necesario aplicar métodos de inferencia estadística, fundamentados en la teoría de la probabilidad.
-
-### Inferencia estadística
-
-La estadística inferencial se basa en el cálculo de probabilidades, que proporciona el marco teórico para analizar fenómenos aleatorios y extrapolar los resultados de una muestra a la población. Como las conclusiones inferidas a partir de una muestra pueden no ser ciertas, es fundamental utilizar siempre un lenguaje **probabilístico** al comunicarlas.
-
-Las dos actividades principales en este proceso son:
-
--   Estimación de **parámetros** poblacionales. Por ejemplo:
-
-    -   *Calcular la prevalencia de una enfermedad X en la población.*
-
--   **Pruebas de hipótesis** sobre parámetros poblacionales. Por ejemplo:*:*
-
-    -   *¿La prevalencia de la enfermedad X en Argentina es menor que en Uruguay?*
-
-    -   *¿La prevalencia de la enfermedad X en Argentina en 2010 fue menor que en el año 2000?*
-
-Al trabajar con muestras, subyace el concepto de **teoría del muestreo**, que no abordaremos aquí en profundidad, pero que es clave para comprender cómo se relacionan los valores observados en la muestra con aquellos de la población.
-
-Esta teoría estudia las relaciones entre la distribución de una variable en la población y su comportamiento en las muestras extraídas aleatoriamente de ella. Los matemáticos llaman a las medidas de descripción o asociación que hayamos obtenido a partir de nuestra muestra como **estimadores,** “estadísticos muestrales”, o simplemente “estadísticos”. Por otra parte, se denomina **parámetros** a los correlatos de esos estimadores en la población de la que hemos obtenido esa muestra.
-
-Por ejemplo, supongamos que queremos conocer el valor medio de colesterol total de la población de Mar del Plata y tomamos una muestra de tamaño $n$.
-
--   La media de colesterol total de toda la población es el parámetro y se representa con la letra griega $\mu$.
-
--   La media de colesterol total en la muestra es lo que se denomina estadístico muestral o **estimador** y se lo representa como $\bar{x}$.
+-   Si se busca **extrapolar a la población general,** es necesario aplicar métodos de [**inferencia estadística**](03_inferencia.qmd), fundamentados en la teoría de la probabilidad.
 
 ::: hidden
 @rodríguez2018
 
 @hernández-ávila2011
-
-@ríusdíaz2012
-
-@daniel2002
-
-@alvarez2007
-
-@triola2018
-
-@normangr1996
-
-@glantzs2006
 :::

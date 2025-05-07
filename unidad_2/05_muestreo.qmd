@@ -36,7 +36,7 @@ Al tomar una muestra para estimar lo que sucede en la realidad, debemos aceptar 
 
 ## Cálculo del tamaño muestral
 
-Como se mencionó en la [**sección anterior**](est_transversales.qmd), se requiere conocer algunos datos para el cálculo del tamaño de muestra requerido, entre los que destacan:
+Como se mencionó anteriormente, se requiere conocer algunos datos para el cálculo del tamaño de muestra requerido, entre los que destacan:
 
 -   **La proporción esperada del evento:** Aunque resulte paradójico, ya que es el parámetro que se desea estimar, el investigador suele contar con información previa que permite delimitar sus posibles valores. Si no fuera el caso, se utiliza el peor escenario, es decir, una proporción del 50%, ya que este valor maximiza el producto $p(1-p)$ y, por ende, exige el mayor tamaño muestral. De esta forma, muchas veces se recurre a esto para tener al menos una idea del “límite superior” que estaríamos manejando.
 

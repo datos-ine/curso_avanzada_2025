@@ -1,8 +1,10 @@
 ---
-title: "Distribuciones muestrales y estimación"
+title: "Inferencia estadística"
 author: 
   - name: Andrea Silva
     orcid: 0000-0002-4791-9706
+  - name: Tamara Ricardo
+    orcid: 0000-0002-0921-2611
 bibliography: references.bib
 ---
 
@@ -13,13 +15,40 @@ source("../setup.R")
 
 ## Introducción
 
-La **distribución muestral** de un estadístico es la distribución de todos los valores posibles que este puede tomar al calcularse en muestras aleatorias del mismo tamaño extraídas de la misma población. Este concepto es central en la inferencia estadística, ya que permite cuantificar la incertidumbre asociada a las estimaciones realizadas.
+La **estadística inferencial** es la rama de la estadística que permite formular conclusiones sobre una población a partir del análisis de una muestra. Se apoya en el cálculo de probabilidades, que proporciona el marco teórico para modelar fenómenos aleatorios y generalizar los resultados muestrales a toda la población. Dado que las inferencias basadas en muestras están sujetas a incertidumbre, es fundamental expresarlas siempre en términos **probabilísticos**.
 
-Para comprender mejor lo que es una distribución muestral, y cómo se elabora, ingresen a la siguiente videoclase:
+Las dos actividades principales en este proceso son:
 
-➡️ [Distribuciones Muestrales](https://youtu.be/UgWW88s5vYQ)
+-    **Estimación de parámetros**: consiste en calcular, a partir de los datos muestrales, valores que aproximen parámetros desconocidos de la población.
 
-Dado que elaborar la distribución muestral es una tarea dificultosa si la población es de un tamaño muy grande, e imposible si la población es infinita, es posible obtener aproximaciones de las distribuciones muestrales tomando un gran número de muestras de un tamaño dado.
+    -    *Ejemplo: Estimar la prevalencia de una enfermedad X en la población.*
+
+-    **Pruebas de hipótesis**: implica evaluar con base estadística afirmaciones acerca de uno o más parámetros.\
+    *Ejemplos:*
+
+    -   *¿La prevalencia de la enfermedad X en Argentina es menor que en Uruguay?*
+
+    -   *¿La prevalencia de la enfermedad X en Argentina en 2010 fue menor que en el año 2000?*
+
+Al trabajar con muestras, entra en juego el concepto de **teoría del muestreo**, que, si bien no abordaremos en profundidad aquí, es clave para comprender cómo se relacionan los valores observados en la muestra con los de la población.
+
+Esta teoría estudia la relación entre la distribución de una variable en la población y el comportamiento de dicha variable en muestras aleatorias extraídas de ella. A las medidas obtenidas a partir de la muestra se las denomina **estadísticos muestrales** o simplemente *estadísticos*, mientras que sus contrapartes en la población se denominan **parámetros**.
+
+Por ejemplo, supongamos que queremos conocer el valor medio de colesterol total de la población de Mar del Plata y tomamos una muestra de tamaño $n$.
+
+-   La media poblacional del colesterol total se representa con la letra griega $\mu$ y corresponde al **parámetro**.
+
+-   La media muestral, que se obtiene a partir de los datos de la muestra, se representa como $\bar{x}$ y es un **estimador** o estadístico muestral.
+
+![](images/poblacion_muestra.svg){fig-align="center" width="75%"}
+
+La **distribución muestral de un estadístico** es la distribución de todos los valores posibles que ese estadístico puede tomar al calcularse en muestras aleatorias del mismo tamaño extraídas de una misma población. Este concepto es central en la inferencia estadística, ya que permite cuantificar la incertidumbre asociada a las estimaciones.
+
+Para comprender mejor qué es una distribución muestral y cómo se construye, pueden ver la siguiente videoclase:
+
+➡️ [**Distribuciones Muestrales**](https://youtu.be/UgWW88s5vYQ)
+
+Como construir una distribución muestral puede resultar muy laborioso cuando la población es grande, y directamente imposible si es infinita, se suelen utilizar aproximaciones basadas en la toma de un gran número de muestras aleatorias del mismo tamaño.
 
 ## Intervalos de Confianza (IC)
 
@@ -288,11 +317,11 @@ Dado que un intervalo de confianza implica una declaración probabilística, su 
 
 Para profundizar y visualizar simulaciones sobre estos conceptos, pueden explorar recursos interactivos como:
 
-➡️ [Viendo la teoría: Una introducción visual a probabilidad y estadística](https://seeing-theory.brown.edu/frequentist-inference/es.html#section2)
+➡️ [**Viendo la teoría: Una introducción visual a probabilidad y estadística**](https://seeing-theory.brown.edu/frequentist-inference/es.html#section2)
 
 Además, existe un ejemplo práctico de cálculo de IC para la media utilizando la distribución $t$ de Student en el siguiente enlace:
 
-➡️ [Intervalos de confianza con R](https://cballejo.github.io/R_Epi_Avanzada/Unidad2/IC/)
+➡️ [**Intervalos de confianza con R**](https://cballejo.github.io/R_Epi_Avanzada/Unidad2/IC/)
 
 ## Test de hipótesis
 
@@ -400,130 +429,176 @@ Los componentes básicos de cualquier test de contraste de hipótesis son:
 
 ### Tipos de contrastes
 
-Los contrastes de hipótesis se pueden clasificar en función de la forma de la hipótesis alternativa ($H_1$). Esto determina si el contraste es bilateral o unilateral (de cola izquierda o de cola derecha), también denominado prueba de dos colas, de cola izquierda o de cola derecha.
+Los contrastes de hipótesis se clasifican según la forma de la hipótesis alternativa ($H_1$). Esta clasificación determina si la prueba es **unilateral** de cola izquierda o derecha) o **bilateral** (de dos colas). Siendo las colas de la distribución las regiones extremas limitadas por los valores críticos.
 
-Las colas en una distribución son las regiones extremas limitadas por los valores críticos. Se conocen:
+#### Test de cola izquierda
 
-#### Contraste Bilateral (Prueba de Dos Colas)
+La hipótesis alternativa plantea que la media del primer grupo es significativamente **menor** que la del segundo:
 
--   **Hipótesis Alternativa:** $H_1: \mu_1 \neq \mu_2$
+$$
+H_1: \mu_1 < \mu_2
+$$
 
-    Es decir, se plantea que existe una diferencia, sin especificar la dirección.
+La región crítica se encuentra en el extremo izquierdo de la distribución. Todo el área crítica tiene un tamaño $\alpha$ con un valor crítico de $-1,645$.
 
--   **Región Crítica:** Se ubica en ambos extremos de la distribución del estadístico de prueba.
+```{r}
+#| echo: false
+# Test cola izquierda
+tibble(x = c(-4, 4)) |> 
+  
+  # Plot  
+  ggplot(mapping = aes(x = x)) +
+  
+  # Curva normal
+  stat_function(fun = dnorm, linewidth = 1) +
+  
+  # Sombreado
+  stat_function(fun = crit_n(dnorm, min = -1.645, max = Inf),
+                geom = "area", 
+                fill = pal[4], 
+                alpha = 0.4) +
+  
+  stat_function(fun = crit_n(dnorm, min = -Inf, max = -1.645), 
+                geom = "area", 
+                fill = pal[2], 
+                alpha = 0.7) +
+  
+  # Región crítica
+  annotate(geom = "text", 
+           label = "Rechazo H0\n α = 0,05",
+           x = -3, 
+           y = .1) +
+  
+  # Líneas región crítica
+  geom_vline(xintercept = -1.645, lty = 2) +
+  
+  scale_x_continuous(breaks = c(-Inf, -1.645, 0, Inf)) +
+  
+  # Títulos
+  labs(x = "Z-score", y = "") +
+  
+  # Tema
+  theme_minimal() + 
+  
+  theme(axis.text = element_text(face = "bold", size = 12))
+```
 
--   **Nivel de Significación:** El nivel de significación total $\alpha$ se reparte equitativamente entre ambas colas, asignando $\alpha/2$ a cada una.
+#### Test de cola derecha
 
-    ```{r}
-    #| echo: false
-    ## Dos colas
-    g1 +
-      # Sombreado
-      stat_function(fun = crit_n(dnorm, min = -Inf, max = -1.96), 
-                    geom = "area", 
-                    fill = pal[2], alpha = 0.7) +
-      
-      stat_function(fun = crit_n(dnorm, min = 1.96, max = Inf), 
-                    geom = "area", 
-                    fill = pal[2], alpha = 0.7) +
-      
-      # Región crítica
-      annotate(geom = "text", 
-               label = "zona de rechazo", x = -3, y = .1) +
-      
-      annotate(geom = "text", 
-               label = "zona de rechazo", x = 3, y = .1) +
-      
-      annotate(geom = "text",
-               label = expression(Z*1-alpha/2),
-               x = -1, y = .1) +
-      
-       annotate(geom = "text",
-               label = expression(Z*alpha/2),
-               x = 1, y = .1) +
-      
-      # Líneas región crítica
-      geom_vline(xintercept = -1.96, lty = 2) +
-      
-      geom_vline(xintercept = 1.96, lty = 2) +
-      
-      # Etiquetas
-      scale_x_continuous(breaks = c(-Inf, -1.96, 0, 1.96, Inf),
-                         labels = c("", expression(alpha/2), "",
-                                    expression(alpha/2), ""))
-    ```
+La hipótesis alternativa establece que la media del primer grupo es significativamente **mayor** que la del segundo:
 
-#### Contraste unilateral izquierdo (Prueba de cola izquierda)
+$$ H_1: \mu_1 > \mu_2 $$
 
--   **Hipótesis Alternativa:** $H_1: \mu_1 < \mu_2$
+La región crítica se concentra en el extremo derecho de la distribución y toda el área crítica tiene un tamaño $\alpha$ con un valor crítico de $1,645$.
 
-    Se plantea que la media del primer grupo es menor que la del segundo.
+```{r}
+#| echo: false
+# Test cola derecha
+tibble(x = c(-4, 4)) |> 
+  
+  # Plot  
+  ggplot(mapping = aes(x = x)) +
+  
+  # Curva normal
+  stat_function(fun = dnorm, linewidth = 1) +
+  
+  # Sombreado
+  stat_function(fun = crit_n(dnorm, min = -Inf, max = 1.645),
+            geom = "area", 
+            fill = pal[4], 
+            alpha = 0.4) +
+  
+  stat_function(fun = crit_n(dnorm, min = 1.645, max = Inf), 
+            geom = "area", 
+            fill = pal[2], 
+            alpha = 0.7) +
+  
+  # Región crítica
+  annotate(geom = "text", 
+           label = "Rechazo H0\n α = 0,05",
+           x = 3, 
+           y = .1) +
+  
+  # Líneas región crítica
+  geom_vline(xintercept = 1.645, lty = 2) +
+  
+  scale_x_continuous(breaks = c(-Inf, 1.645, 0, Inf)) +
+  
+  # Títulos
+  labs(x = "Z-score", 
+   y = "") +
+  
+  # Tema
+  theme_minimal() + 
+  
+  theme(axis.text = element_text(face = "bold", size = 12))
+```
 
--   **Región Crítica:** Se concentra en el extremo izquierdo de la distribución.
+#### Pruebas bilaterales
 
--   **Nivel de Significación:** Toda el área crítica tiene un tamaño $\alpha$.
+La hipótesis alternativa afirma que existen diferencias entre los grupos, **sin especificar la dirección**:
 
-    ```{r}
-    #| echo: false
-    g1 + 
-      # Sombreado
-      stat_function(fun = crit_n(dnorm, min = -Inf, max = -1.645), 
-                    geom = "area", 
-                    fill = pal[2], alpha = 0.7) +
-      
-      # Región crítica
-      annotate(geom = "text", 
-               label = "zona de rechazo", 
-               x = -3, y = .1) +
-      
-      
-      annotate(geom = "text", 
-               label = expression(Z*1-alpha), 
-               x = -1, y = .1) +
-      
-      # Líneas región crítica
-      geom_vline(xintercept = -1.645, lty = 2) +
-      
-      
-      # Etiquetas
-      scale_x_continuous(breaks = c(-Inf, -1.645, 0, Inf),
-                         labels = c("", expression(alpha), "",""))
-    ```
+$$
+H_1: \mu_1 \neq \mu_2
+$$
 
-#### Contraste unilateral derecho (Prueba de cola derecha)
+La región crítica se divide entre ambos extremos de la distribución, con valores críticos de $\pm 1,96$. El nivel de significación total ($\alpha$) se reparte en partes iguales entre las dos colas ($\alpha/2$ en cada una), lo que implica un 2,5% de probabilidad en cada cola si $H_0$ es verdadera.
 
--   **Hipótesis Alternativa:** $H_1: \mu_1 > \mu_2$
-
-    Se plantea que la media del primer grupo es mayor que la del segundo.
-
--   **Región Crítica:** Se concentra en el extremo derecho de la distribución.
-
--   **Nivel de Significación:** Toda el área crítica tiene un tamaño $\alpha$.
-
-    ```{r}
-    #| echo: false
-    g1 + 
-      # Sombreado
-      stat_function(fun = crit_n(dnorm, min = 1.645, max = Inf), 
-                    geom = "area", 
-                    fill = pal[2], alpha = 0.7) +
-      
-      # Región crítica
-      annotate(geom = "text", 
-               label = "zona de rechazo", x = 3, y = .1) +
-      
-      annotate(geom = "text", 
-               label = expression(Z*alpha), 
-               x = 1, y = .1) +
-      
-      # Líneas región crítica
-      geom_vline(xintercept = 1.645, lty = 2) +
-      
-      
-      # Etiquetas
-      scale_x_continuous(breaks = c(-Inf, 0, 1.645, Inf),
-                         labels = c("", "", expression(alpha),""))
-    ```
+```{r}
+#| echo: false
+# Test 2 colas
+tibble(x = c(-4, 4)) |> 
+  
+  # Plot  
+  ggplot(mapping = aes(x = x)) +
+  
+  # Curva normal
+  stat_function(fun = dnorm, 
+                linewidth = 1) +
+  
+  # Sombreado centro
+  stat_function(fun = crit_n(dnorm, min = -1.96, max = 1.96),
+                geom = "area", 
+                fill = pal[4], 
+                alpha = 0.4) +
+  
+  # Sombreado región crítica
+  stat_function(fun = crit_n(dnorm, min = -Inf, max = -1.96), 
+                geom = "area", 
+                fill = pal[2], 
+                alpha = 0.7) +
+  
+  stat_function(fun = crit_n(dnorm, min = 1.96, max = Inf), 
+                geom = "area", 
+                fill = pal[2], 
+                alpha = 0.7) +
+  
+  # Texto región crítica
+  annotate(geom = "text", 
+           label = "Rechazo H0\n α = 0,025",
+           x = -3, 
+           y = .1) +
+  
+  annotate(geom = "text",
+           label = "Rechazo H0\n α = 0,025",
+           x = 3, 
+           y = .1) +
+  
+  # Líneas región crítica
+  geom_vline(xintercept = -1.96, lty = 2) +
+  
+  geom_vline(xintercept = 1.96, lty = 2) +
+  
+  scale_x_continuous(breaks = c(-Inf, -1.96, 0, 1.96, Inf)) +
+  
+  # Títulos
+  labs(x = "Z-score", 
+       y = ""
+       ) +
+  
+  theme_minimal() + 
+  theme(axis.text = element_text(face = "bold", size = 12))
+```
 
 ### Errores
 
@@ -833,7 +908,7 @@ Para sistematizar los contrastes de hipótesis, es útil responder dos preguntas
 
 Cuando la variable de interés es cuantitativa, la comparación de grupos generalmente se traduce en comparar las medias de dichos grupos. En este contexto, se deben responder una tercera pregunta y es si dicha variable se *distribuye normalmente*, porque si no fuera así, debemos recurrir a los contrastes *no paramétricos*.
 
-> En la [siguiente sección](normalidad_heterocedasticidad.qmd) detallaremos las pruebas de normalidad y heterogeneidad de varianzas y su aplicación en R.
+> En la [**siguiente sección**](04_normalidad_heterocedasticidad.qmd) detallaremos las pruebas de normalidad y heterogeneidad de varianzas y su aplicación en R.
 
 Por ejemplo, para comparar dos grupos se plantearía:
 
@@ -844,11 +919,128 @@ Se calcula el estadístico de prueba (por ejemplo, $t$ de Student o $Z$, según 
 
 A continuación presentamos un esquema que sirve de guía para potenciales situaciones:
 
-![](images/var_cuanti.png){fig-align="center" width="100%"}
+```{dot}
+//| echo: false
+digraph G {
+    rankdir = LR
+    node [shape = box, style = filled, fontname = "Calibri", color = none]
+
+    n1 [label = "Variable respuesta \n cuantitativa", 
+    fillcolor = "#1B0D33", 
+    fontcolor = "white"]
+    
+    A [label = "Comparación de grupos", 
+    fillcolor = "#65394C",
+    fontcolor = "white"]
+    
+    B [label = "Distribución normal", 
+    fillcolor = "#65394C",
+    fontcolor = "white"]
+    
+    C [label = "Comparación antes y después \n de un tratamiento", 
+    fillcolor = "#94CB78"]
+    
+    D [label = "Distribución normal", 
+    fillcolor = "#94CB78"]
+    
+    b1[label = "t de Student", 
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    b2[label = "Mann-Whitney",
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    b3[label = "ANOVA", 
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    b4[label = "Kruskal-Wallis",
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    d1[label = "t de Student \n (datos apareados)",
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    d2[label = "Wilcoxon",
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    d3[label = "ANOVA \n (medidas repetidas)", 
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    d4[label = "Friedman",
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    n1 -> A -> B
+    n1 -> C -> D
+    B -> b1 [label = "Si (2 grupos)"]
+    B -> b2 [label = "No (2 grupos)"]
+    B -> b3 [label = "Si (3+ grupos)"]
+    B -> b4 [label = "No (3+ grupos)"]
+    
+    D -> d1[label = "Si (mismo grupo)"]
+    D -> d2[label = "No (mismo grupo)"]
+    D -> d3[label = "Si (2+ grupos)"]
+    D -> d4[label = "No (2+ grupos)"]
+
+}
+```
 
 Hay algo más que los estadísticos nos “obligan” a considerar en el caso que compare medias independientes y se haya verificado la normalidad de la distribución, y se trata de considerar si las varianzas de las poblaciones que comparo son iguales o diferentes. El algoritmo de resolución es el siguiente:
 
-![](images/comp_medias.png){fig-align="center"}
+```{dot}
+//| echo: false
+digraph G {
+    # rankdir=LR;
+    node [shape = box, style = filled, fontname = "Calibri", color = none]
+
+    A [label = "Comparo medias", 
+    fillcolor = "#1B0D33", 
+    fontcolor = "white"]
+    
+    B [label = "Muestras independientes", 
+    fillcolor = "#65394C", 
+    fontcolor = "white"]
+    
+    C [label = "Muestras pareadas", 
+    fillcolor = "#94CB78", 
+    fontcolor = "black"]
+    
+    b1 [label = "Varianzas conocidas",
+    fillcolor = "#65394C", 
+    fontcolor = "white"]
+    
+    b2 [label = "Prueba Z (normal)",
+    fillcolor = "#65394C", 
+    fontcolor = "white"]
+    
+    b3 [label = "Prueba t", 
+    fillcolor = "#65394C", 
+    fontcolor = "white"]
+    
+    c1 [label = "Mismo tamaño de muestra", 
+    fillcolor = "#94CB78", 
+    fontcolor = "black"]
+    
+    c2 [label = "Prueba t", 
+    fillcolor = "#94CB78", 
+    fontcolor = "black"]
+
+    A -> B
+    A -> C
+
+    B -> b1
+    b1 -> b2 [label = "Sí"]
+    b1 -> b3 [label = "No"]
+
+    C -> c1
+    c1 -> c2
+}
+```
 
 Cuando trabajamos con muestras independientes, a menudo nos encontramos en el escenario de *varianzas desconocidas*. Esto nos obliga a realizar, de manera previa, un test de homogeneidad de varianzas para determinar si se puede asumir que son iguales o si, por el contrario, difieren. La razón es que, aunque se utiliza el estadístico $t$ de Student para comparar las medias, su cálculo y la forma en que se distribuye varían en función de si las varianzas de los grupos son iguales o no.
 
@@ -858,7 +1050,58 @@ Cuando la variable dependiente es cualitativa (categórica), como por ejemplo En
 
 A continuación, presentamos una guía análoga a la anterior:
 
-![](images/var_cuali.png){fig-align="center" width="100%"}
+```{dot}
+//| echo: false
+digraph G {
+    # rankdir = LR
+    node [shape = box, style = filled, fontname = "Calibri", color = none]
+
+    n1 [label = "Variable respuesta \n cualitativa", 
+    fillcolor = "#1B0D33", 
+    fontcolor = "white"]
+    
+    A [label = "Comparación de grupos", 
+    fillcolor = "#65394C", 
+    fontcolor = "white"]
+    
+    B [label = "n > 30 y frecuencia \n por grupo >= 5",
+    fillcolor = "#65394C", 
+    fontcolor = "white"]
+    
+    C [label = "Comparación antes y después \n de un tratamiento", 
+    fillcolor = "#94CB78"]
+    
+    D [label = "Mismo grupo \n (dos categorías)", 
+    fillcolor = "#94CB78"]
+    
+    E [label = "Varios grupos \n (n >= 4 y k >= 24)",
+    fillcolor = "#94CB78"]
+    
+    b1[label = "test de proporciones/ \n Chi-cuadrado", 
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    b2[label = "test exacto de Fisher", 
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    d1[label = "Mc Nemar", 
+    fillcolor = "grey", 
+    fontcolor = "white"]
+    
+    e1[label = "Cochrane Q", 
+    fillcolor = "grey",
+    fontcolor = "white"]
+    
+    n1 -> A -> B
+    B -> b1 [label = "Si (2+ grupos)"]
+    B -> b2 [label = "No (2+ grupos)"]
+    n1 -> C 
+    C -> D -> d1
+    C -> E -> e1
+    
+}
+```
 
 ## Ejemplo práctico en R
 

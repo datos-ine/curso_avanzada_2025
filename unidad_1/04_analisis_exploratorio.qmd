@@ -412,7 +412,7 @@ En R, los gráficos más útiles para explorar la distribución **univariada** d
 
 El lenguaje R soporta una serie de sistemas gráficos asociados a paquetes como `graphics`, `lattice`, `ggplot2`, etc. que sirven de base incluso para otros paquetes con funciones más específicas. Actualmente el estándar gráfico en R es `ggplot2`.
 
-En el documento dedicado a [**tidyverse**](intro_tidyverse.qmd#gráficos-estadísticos-con-ggplot2) ya explicamos cómo funciona `ggplot2`. Aquí nos concentraremos únicamente en aplicar distintos elementos geométricos (`geoms`) para representar las variables según su tipo.
+En el documento dedicado a [**tidyverse**](03_intro_tidyverse.qmd#gráficos-estadísticos-con-ggplot2) ya explicamos cómo funciona `ggplot2`. Aquí nos concentraremos únicamente en aplicar distintos elementos geométricos (`geoms`) para representar las variables según su tipo.
 
 #### Barras (univariado)
 

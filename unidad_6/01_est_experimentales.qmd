@@ -125,7 +125,7 @@ Durante el estudio de intervención, los sujetos pueden suspender o modificar su
 
 En un estudio experimental, se realiza un seguimiento de una cohorte. Lo más habitual en ensayos clínicos controlados es medir la incidencia de un evento en ambos grupos durante un período definido. Los eventos se categorizan de manera dicotómica (presencia/ausencia) y se presentan como la proporción de sujetos que presentan el desenlace (por ejemplo, infarto, recurrencia, muerte). Al tratarse de una cohorte, es posible calcular el riesgo relativo (RR), la diferencia de riesgos o la reducción relativa del riesgo. También se utiliza el **número necesario a tratar (NNT)**, que indica cuántos pacientes deben recibir la intervención para evitar un caso adicional.
 
-Una metodología frecuentemente utilizada es el [**análisis de supervivencia**](analisis_superv.qmd), donde el tiempo hasta la ocurrencia del evento cobra un rol central. Como ya se vio en la [unidad anterior](unidad_5/est_cohortes), esta técnica también puede aplicarse a estudios de cohortes. A continuación avanzaremos en su comprensión.
+Una metodología frecuentemente utilizada es el [**análisis de supervivencia**](02_analisis_superv.qmd), donde el tiempo hasta la ocurrencia del evento cobra un rol central. Como ya se vio en la [**unidad anterior**](unidad_5/01_est_cohortes.qmd), esta técnica también puede aplicarse a estudios de cohortes. A continuación avanzaremos en su comprensión.
 
 ::: hidden
 @escuelasanidad2009

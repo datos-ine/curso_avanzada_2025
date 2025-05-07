@@ -3,6 +3,8 @@ title: "Estudios epidemiológicos"
 author: 
   - name: Andrea Silva
     orcid: 0000-0002-4791-9706
+  - name: Tamara Ricardo
+    orcid: 0000-0002-0921-2611
 bibliography: references.bib
 ---
 
@@ -130,9 +132,9 @@ STROBE incluye una lista de **22 ítems**, organizados en secciones del manuscri
 
 Puede descargarse desde el sitio oficial de STROBE:
 
-➡️[Guía completa y *checklist*](https://www.strobe-statement.org/strobe-publications/)
+➡**️[Guía completa y *checklist*](https://www.strobe-statement.org/strobe-publications/)**
 
-➡️ [Versión en español](https://www.strobe-statement.org/download/spanish-translation-of-strobe-statement)
+➡️ [**Versión en español**](https://www.strobe-statement.org/download/spanish-translation-of-strobe-statement)
 
 La declaración STROBE ha sido adaptada para contextos específicos mediante extensiones temáticas:
 
@@ -140,19 +142,19 @@ La declaración STROBE ha sido adaptada para contextos específicos mediante ext
 
 STROME-ID (*Strengthening the Reporting of Molecular Epidemiology for Infectious Diseases*), tiene como objetivo establecer recomendaciones que respalden un adecuado informe científico de estudios en epidemiología molecular de enfermedades infecciosas. Incentiva un reporte adecuado que considere amenazas específicas a la validez, como errores de clasificación, contaminación cruzada, o sesgos derivados de los métodos de laboratorio y análisis genético.
 
-➡️[Descargar **STROME-ID**](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(13)70324-4/fulltext)
+➡**️[Descargar STROME-ID](https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(13)70324-4/fulltext)**
 
 #### STROBE-VET
 
 STROBE-VET (*STROBE - Veterinary Extension*), orienta el reporte de estudios observacionales en medicina veterinaria, salud pública, zoonosis y seguridad alimentaria. Facilita la evaluación crítica y reproducibilidad en investigaciones con poblaciones animales.
 
-➡️ [Descargar **STROBE-VET**](https://strobevetstatement.wordpress.com/strobe-vet-statement/)
+➡**️ [Descargar STROBE-VET](https://strobevetstatement.wordpress.com/strobe-vet-statement/)**
 
 #### RECORD
 
 RECORD (*Reporting of studies Conducted using Observational Routinely-collected health Data*) fue creada para estudios que utilizan datos rutinarios, como registros electrónicos de salud, bases de datos administrativas o registros poblacionales.
 
-➡️ [Descargar **RECORD**](https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1001885)
+➡️ [**Descargar RECORD**](https://journals.plos.org/plosmedicine/article?id=10.1371/journal.pmed.1001885)
 
 ### Declaración CONSORT
 
@@ -164,10 +166,10 @@ CONSORT establece un conjunto mínimo de 25 ítems organizados en secciones del 
 
 Puede descargarse desde el sitio oficial de CONSORT:
 
-➡️ <https://www.consort-spirit.org/>
+➡️ [**https://www.consort-spirit.org/**](https://www.consort-spirit.org/){.uri}
 
 ::: {.callout-warning appearance="simple"}
-En este curso nos centraremos en los aspectos metodológicos y en el análisis de datos según el diseño del estudio. Para ello, utilizaremos el [**lenguaje R**](../unidad_1/intro_R.qmd), un entorno especializado en análisis estadístico que permitirá explorar diferentes enfoques adaptados a cada tipo de diseño epidemiológico. Partiremos de cada diseño y discutiremos posibles caminos de análisis, reconociendo que dichos caminos no siempre son únicos y que ciertos elementos del análisis pueden ser comunes a varios diseños.
+En este curso nos centraremos en los aspectos metodológicos y en el análisis de datos según el diseño del estudio. Para ello, utilizaremos el [**lenguaje R**](../unidad_1/01_intro_R.qmd), un entorno especializado en análisis estadístico que permitirá explorar diferentes enfoques adaptados a cada tipo de diseño epidemiológico. Partiremos de cada diseño y discutiremos posibles caminos de análisis, reconociendo que dichos caminos no siempre son únicos y que ciertos elementos del análisis pueden ser comunes a varios diseños.
 :::
 
 ::: hidden
