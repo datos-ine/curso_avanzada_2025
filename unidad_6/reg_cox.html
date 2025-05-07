@@ -175,7 +175,7 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-curso-de-epidemiología-nivel-avanzado">
 <li>
-    <a class="dropdown-item" href="../unidad_1/intro_R.html">
+    <a class="dropdown-item" href="../unidad_1/01_intro_R.html">
  <span class="dropdown-text">Unidad 1: Introducción a R</span></a>
   </li>  
         <li class="dropdown-header">Unidad 2: Estudios transversales</li>
@@ -264,31 +264,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/intro_R.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/01_intro_R.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introducción a R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/intro_RStudio.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/02_intro_RStudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Primeros pasos y generalidades</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/intro_tidyverse.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/03_intro_tidyverse.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introducción a tidyverse</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/analisis_exploratorio.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/04_analisis_exploratorio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Análisis exploratorio de datos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/hoja_estilo.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/05_hoja_estilo.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hoja de Estilo del lenguaje R</span></a>
   </div>
 </li>
@@ -649,7 +649,7 @@ Score (logrank) test = 38.43  on 4 df,   p=9e-08</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>Surv(tiempo, status) ~ fase + decr + deag + sexo
-&lt;environment: 0x00000157652365b8&gt;</code></pre>
+&lt;environment: 0x000001af6133b2a0&gt;</code></pre>
 </div>
 </div>
 <p>En general, el criterio que se utiliza para “sacar” variables del modelo, es sacar aquellas cuyo <span class="math inline">\(\beta\)</span> haya resultado no significativo. En el caso de <code>m3</code> serían los <span class="math inline">\(\beta\)</span> correspondientes a las variables <code>sexo</code> y <code>fase</code>.</p>
@@ -738,7 +738,7 @@ Score (logrank) test = 38.43  on 3 df,   p=2e-08</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>Surv(tiempo, status) ~ fase + decr + deag
-&lt;environment: 0x00000157679c10a8&gt;</code></pre>
+&lt;environment: 0x000001af63947e40&gt;</code></pre>
 </div>
 </div>
 <p>Saco <code>fase</code>, dado que su coeficiente resultó no significativo.</p>

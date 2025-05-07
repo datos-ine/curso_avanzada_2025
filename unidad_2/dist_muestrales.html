@@ -174,7 +174,7 @@ window.Quarto = {
     </a>
     <ul class="dropdown-menu" aria-labelledby="nav-menu-curso-de-epidemiología-nivel-avanzado">
 <li>
-    <a class="dropdown-item" href="../unidad_1/intro_R.html">
+    <a class="dropdown-item" href="../unidad_1/01_intro_R.html">
  <span class="dropdown-text">Unidad 1: Introducción a R</span></a>
   </li>  
         <li class="dropdown-header">Unidad 2: Estudios transversales</li>
@@ -263,31 +263,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/intro_R.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/01_intro_R.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introducción a R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/intro_RStudio.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/02_intro_RStudio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Primeros pasos y generalidades</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/intro_tidyverse.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/03_intro_tidyverse.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Introducción a tidyverse</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/analisis_exploratorio.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/04_analisis_exploratorio.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Análisis exploratorio de datos</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_1/hoja_estilo.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_1/05_hoja_estilo.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Hoja de Estilo del lenguaje R</span></a>
   </div>
 </li>
@@ -353,7 +353,7 @@ window.Quarto = {
 <p>➡️ <a href="https://youtu.be/UgWW88s5vYQ">Distribuciones Muestrales</a></p>
 <p>Dado que elaborar la distribución muestral es una tarea dificultosa si la población es de un tamaño muy grande, e imposible si la población es infinita, es posible obtener aproximaciones de las distribuciones muestrales tomando un gran número de muestras de un tamaño dado.</p>
 </section><section id="intervalos-de-confianza-ic" class="level2"><h2 class="anchored" data-anchor-id="intervalos-de-confianza-ic">Intervalos de Confianza (IC)</h2>
-<p>Una forma eficaz de abordar la inferencia estadística es a través de los&nbsp;<strong>intervalos de confianza (IC)</strong>, ya que, aunque son procedimientos inferenciales, están estrechamente vinculados con la estadística descriptiva.</p>
+<p>Una forma eficaz de abordar la inferencia estadística es a través de los <strong>intervalos de confianza (IC)</strong>, ya que, aunque son procedimientos inferenciales, están estrechamente vinculados con la estadística descriptiva.</p>
 <p>Supongamos que queremos estimar la <strong>media de colesterol</strong> de la población de Mar del Plata. Sería inviable medir el colesterol de cada habitante, por lo que optamos por tomar una muestra de, por ejemplo, 100, 200 o 300 individuos (más adelante veremos cómo determinar el tamaño adecuado de la muestra). Debemos recordar que diferentes muestras producirán en general medias diferentes. Existe, por tanto, un grado de incertidumbre asociado. Si hiciéramos una estimación puntual, obtendríamos un solo valor, pero sin información sobre su variabilidad. No sabríamos qué tan cerca o lejos está nuestra estimación (<span class="math inline">\(\bar{x}\)</span>) de la verdadera media poblacional (<span class="math inline">\(\mu\)</span>).</p>
 <p>El <strong>intervalo de confianza</strong> proporciona un rango de valores dentro del cual se espera que se encuentre el valor verdadero del parámetro poblacional, con un cierto nivel de confianza. A diferencia de la estimación puntual que proporciona un único valor numérico, el intervalo consta de dos valores entre los cuales se supone está contenido el parámetro estimado. Entonces, el intervalo de confianza puede expresarse como:</p>
 <p><span class="math display">\[ IC = estimador~puntual \pm (coeficiente~de~confiabilidad) * (error~ estandar) \]</span></p>
@@ -372,7 +372,7 @@ window.Quarto = {
 <p><span class="math display">\[
 SE = \frac{\sigma}{\sqrt{n}}
 \]</span></p>
-<p>​Donde <span class="math inline">\(\sigma\)</span> es la desviación estándar poblacional y <span class="math inline">\(n\)</span> el tamaño de la muestra. Si se estima un IC para una proporción, el error estándar es:</p>
+<p>Donde <span class="math inline">\(\sigma\)</span> es la desviación estándar poblacional y <span class="math inline">\(n\)</span> el tamaño de la muestra. Si se estima un IC para una proporción, el error estándar es:</p>
 <p><span class="math display">\[
 SE = \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}}
 \]</span></p>
@@ -502,7 +502,7 @@ SE = \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
 <li><p>Un valor <span class="math inline">\(p\)</span> muy pequeño indica que es muy poco probable obtener los resultados observados para el estadístico muestral si <span class="math inline">\(H_0\)</span> fuese cierta, por lo que debemos rechazarla.</p></li>
 <li><p>Esto significa que si el valor <span class="math inline">\(p \leq \alpha\)</span>, es posible rechazar <span class="math inline">\(H_0\)</span>; mientras que si <span class="math inline">\(p &gt; \alpha\)</span>, no es posible rechazar la hipótesis nula.</p></li>
 </ul>
-<p>Por ejemplo, si en un test de contraste de dos proporciones se obtiene un estadístico <span class="math inline">\(Z= 3,034\)</span> y un valor <span class="math inline">\(p = 0.0024\)</span>, esto significa que la probabilidad de obtener un valor de <span class="math inline">\(Z\)</span> de 3.034 o mayor, suponiendo que <span class="math inline">\(H_0\)</span>​ es cierta, es del 0.24%. Dado que este valor es mucho menor que un nivel de significación del 5% (o incluso del 1%), se rechaza <span class="math inline">\(H_0\)</span> y se concluye que la diferencia observada es estadísticamente significativa. En otras palabras, si bajo un supuesto dado, la probabilidad de un suceso observado particular es excepcionalmente pequeña, concluimos que el supuesto probablemente es incorrecto (<em>regla del suceso infrecuente</em>).</p>
+<p>Por ejemplo, si en un test de contraste de dos proporciones se obtiene un estadístico <span class="math inline">\(Z= 3,034\)</span> y un valor <span class="math inline">\(p = 0.0024\)</span>, esto significa que la probabilidad de obtener un valor de <span class="math inline">\(Z\)</span> de 3.034 o mayor, suponiendo que <span class="math inline">\(H_0\)</span> es cierta, es del 0.24%. Dado que este valor es mucho menor que un nivel de significación del 5% (o incluso del 1%), se rechaza <span class="math inline">\(H_0\)</span> y se concluye que la diferencia observada es estadísticamente significativa. En otras palabras, si bajo un supuesto dado, la probabilidad de un suceso observado particular es excepcionalmente pequeña, concluimos que el supuesto probablemente es incorrecto (<em>regla del suceso infrecuente</em>).</p>
 </li>
 </ul></section><section id="tipos-de-contrastes" class="level3"><h3 class="anchored" data-anchor-id="tipos-de-contrastes">Tipos de contrastes</h3>
 <p>Los contrastes de hipótesis se pueden clasificar en función de la forma de la hipótesis alternativa (<span class="math inline">\(H_1\)</span>). Esto determina si el contraste es bilateral o unilateral (de cola izquierda o de cola derecha), también denominado prueba de dos colas, de cola izquierda o de cola derecha.</p>

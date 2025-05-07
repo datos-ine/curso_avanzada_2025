@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Christian Ballejo">
+<title>Análisis exploratorio de datos – Curso Epidemiología - Nivel Avanzado</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../unidad_1/05_hoja_estilo.html" rel="next">
+<link href="../unidad_1/03_intro_tidyverse.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "language": {
+    "search-no-results-text": "Sin resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script><style type="text/css">
+.quarto-reader-toggle .bi::before, .quarto-color-scheme-toggle .bi::before {
+  display: inline-block;
+  height: 40px;
+  width: 40px;
+  background-size: 20px 20px;
+  background-position: center;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgba(189, 195, 199, 1)" class="bi bi-moon-stars-fill" viewbox="0 0 16 16"> <path d="M6 .278a.77.77 0 0 1 .08.858 7.2 7.2 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277q.792-.001 1.533-.16a.79.79 0 0 1 .81.316.73.73 0 0 1-.031.893A8.35 8.35 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.75.75 0 0 1 6 .278"></path> <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.73 1.73 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.73 1.73 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.73 1.73 0 0 0 1.097-1.097zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.16 1.16 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.16 1.16 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732z"></path> </svg>') !important;
+}
+</style>
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><div id="quarto-announcement" data-announcement-id="4ab7ce5ee7c696df0f91065161a52a26" class="alert alert-dark hidden">
+<i class="bi bi-file-pdf-fill quarto-announcement-icon"></i><div class="quarto-announcement-content">
+<p>Guardar como PDF: presione <strong>CTRL</strong> + <strong>P</strong></p>
+</div>
+<i class="bi bi-x-lg quarto-announcement-action"></i>
+</div>
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-curso-de-epidemiología-nivel-avanzado" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Curso de Epidemiología: Nivel Avanzado</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-curso-de-epidemiología-nivel-avanzado">
+<li>
+    <a class="dropdown-item" href="../unidad_1/01_intro_R.html">
+ <span class="dropdown-text">Unidad 1: Introducción a R</span></a>
+  </li>  
+        <li class="dropdown-header">Unidad 2: Estudios transversales</li>
+        <li class="dropdown-header">Unidad 3: Estudios ecológicos</li>
+        <li class="dropdown-header">Unidad 4: Estudios de casos y controles</li>
+        <li class="dropdown-header">Unidad 5: Estudios de cohortes</li>
+        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
+    </ul>
+</li>
+</ul>
+<ul class="navbar-nav navbar-nav-scroll ms-auto">
+<li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-descargas" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="bi bi-cloud-download" role="img">
+</i> 
+ <span class="menu-text">Descargas</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-descargas">
+<li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/windows/" target="_blank"><i class="bi bi-windows" role="img">
+</i> 
+ <span class="dropdown-text">R para Windows</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/macosx/" target="_blank"><i class="bi bi-apple" role="img">
+</i> 
+ <span class="dropdown-text">R para macOS</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.rstudio.com/bin/linux/" target="_blank"><i class="bi bi-ubuntu" role="img">
+</i> 
+ <span class="dropdown-text">R para Linux</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://posit.co/download/rstudio-desktop/" target="_blank"><i class="bi bi-terminal" role="img">
+</i> 
+ <span class="dropdown-text">RStudio Desktop</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://cran.r-project.org/bin/windows/Rtools/" target="_blank"><i class="bi bi-terminal" role="img">
+</i> 
+ <span class="dropdown-text">RTools</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../files/datos_y_paquetes.zip"><i class="bi bi-file-zip" role="img">
+</i> 
+ <span class="dropdown-text">Paquetes y datos para el curso</span></a>
+  </li>  
+    </ul>
+</li>
+</ul>
+</div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_1/01_intro_R.html">Unidad 1</a></li><li class="breadcrumb-item"><a href="../unidad_1/04_analisis_exploratorio.html">Análisis exploratorio de datos</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
+</i> 
+ <span class="menu-text">Unidad 1</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/01_intro_R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a R</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/02_intro_RStudio.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Primeros pasos y generalidades</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/03_intro_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción a tidyverse</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/04_analisis_exploratorio.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Análisis exploratorio de datos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_1/05_hoja_estilo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Hoja de Estilo del lenguaje R</span></a>
+  </div>
+</li>
+      </ul>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contenidos</h2>
+   
+  <ul>
+<li><a href="#introducci%C3%B3n" id="toc-introducción" class="nav-link active" data-scroll-target="#introducci%C3%B3n">Introducción</a></li>
+  <li><a href="#conocer-la-estructura-de-la-tabla-de-datos-y-sus-tipos-de-variable" id="toc-conocer-la-estructura-de-la-tabla-de-datos-y-sus-tipos-de-variable" class="nav-link" data-scroll-target="#conocer-la-estructura-de-la-tabla-de-datos-y-sus-tipos-de-variable">Conocer la estructura de la tabla de datos y sus tipos de variable</a></li>
+  <li><a href="#detectar-observaciones-incompletas" id="toc-detectar-observaciones-incompletas" class="nav-link" data-scroll-target="#detectar-observaciones-incompletas">Detectar observaciones incompletas</a></li>
+  <li>
+<a href="#conocer-la-distribuci%C3%B3n-de-las-variables-de-inter%C3%A9s" id="toc-conocer-la-distribución-de-las-variables-de-interés" class="nav-link" data-scroll-target="#conocer-la-distribuci%C3%B3n-de-las-variables-de-inter%C3%A9s">Conocer la distribución de las variables de interés</a>
+  <ul class="collapse">
+<li><a href="#resumir-variables-cuantitativas" id="toc-resumir-variables-cuantitativas" class="nav-link" data-scroll-target="#resumir-variables-cuantitativas">Resumir variables cuantitativas</a></li>
+  <li><a href="#resumir-variables-cualitativas" id="toc-resumir-variables-cualitativas" class="nav-link" data-scroll-target="#resumir-variables-cualitativas">Resumir variables cualitativas</a></li>
+  <li><a href="#explorar-variables-mediante-gr%C3%A1ficos" id="toc-explorar-variables-mediante-gráficos" class="nav-link" data-scroll-target="#explorar-variables-mediante-gr%C3%A1ficos">Explorar variables mediante gráficos</a></li>
+  </ul>
+</li>
+  <li><a href="#detecci%C3%B3n-de-valores-at%C3%ADpicos" id="toc-detección-de-valores-atípicos" class="nav-link" data-scroll-target="#detecci%C3%B3n-de-valores-at%C3%ADpicos">Detección de valores atípicos</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_1/01_intro_R.html">Unidad 1</a></li><li class="breadcrumb-item"><a href="../unidad_1/04_analisis_exploratorio.html">Análisis exploratorio de datos</a></li></ol></nav><div class="quarto-title">
+<h1 class="title">Análisis exploratorio de datos</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
+    <div class="quarto-title-meta-contents">
+             <p>Christian Ballejo <a href="https://orcid.org/0000-0002-7346-5701" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header><div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/EDA_packages.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:44.0%"></p>
+</figure>
+</div>
+<section id="introducción" class="level2"><h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
+<p>El análisis exploratorio de datos (conocido como <strong>EDA</strong>, su sigla en inglés) es un enfoque de análisis fundamental para resumir y visualizar las características importantes de un conjunto de datos.</p>
+<p><a href="https://es.wikipedia.org/wiki/John_W._Tukey"><strong>John Tukey</strong></a>, estadístico estadounidense, fue uno de los principales impulsores de este enfoque. En 1977 publicó el libro <em>Exploratory Data Analysis</em>, donde, entre otras contribuciones, introdujo el gráfico <em>boxplot</em> (diagrama de caja y bigotes).</p>
+<p>En términos sencillos, antes de avanzar hacia el análisis formal o la construcción de modelos estadísticos, resulta esencial explorar, conocer y describir las variables presentes en nuestra tabla de datos.</p>
+<p>Entre los principales objetivos perseguidos por EDA se encuentran:</p>
+<ul>
+<li>Conocer la estructura de la tabla de datos y sus tipos de variable.</li>
+<li>Detectar observaciones incompletas (valores <em>missing</em> o <code>NA</code>).</li>
+<li>Explorar la distribución de las variables de interés a partir de:
+<ul>
+<li>Estadísticos descriptivos</li>
+<li>Representaciones gráficas</li>
+</ul>
+</li>
+<li>Detectar valores atípicos (<em>outliers</em>).</li>
+</ul>
+<section id="aclaración" class="level4"><h4 class="anchored" data-anchor-id="aclaración">Aclaración</h4>
+<p>En este documento utilizaremos funciones del lenguaje R basadas en la filosofía <em>tidyverse</em>, junto con otros paquetes diseñados para tareas específicas. Esto no implica que no se puedan emplear funciones del R base; sin embargo, el ecosistema <code>tidyverse</code> facilita la comprensión y legibilidad del código.</p>
+<p>Presentaremos estas diferentes funciones de distintos paquetes que pueden servir en cada etapa de un EDA. Los paquetes con los que trabajaremos son:</p>
+<ul>
+<li><code>tidyverse</code></li>
+<li><code>skimr</code></li>
+<li><code>dlookr</code></li>
+<li><code>janitor</code></li>
+</ul>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Nota:</strong> Algunos paquetes, como <code>dlookr</code>, pueden generar falsos positivos en la detección del antivirus durante el proceso de instalación. Sugerimos desactivar momentáneamente el antivirus para evitar inconvenientes.</p>
+</div>
+</div>
+</div>
+<p>Una vez instalados, podemos activar los paquetes con el siguiente código:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carga de paquetes</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/skimr/">skimr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/choonghyunryu/dlookr/">dlookr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Se recomienda cargar <code>tidyverse</code> al final de la lista para evitar conflictos con funciones que puedan solaparse entre paquetes.</p>
+<blockquote class="blockquote">
+<p>Es importante destacar que no existe un único camino y/o función para realizar un análisis exploratorio. Esta selección de herramientas puede adaptarse según las preferencias y necesidades de cada usuario. Por lo tanto, quienes ya tengan familiaridad con otras funciones o paquetes pueden continuar utilizándolos sin inconvenientes.</p>
+</blockquote>
+<p>Para ilustrar los pasos del análisis exploratorio, utilizaremos un archivo con datos ficticios llamado “<code>datos2.txt</code>”, que contiene variables de distintos tipos.</p>
+</section></section><section id="conocer-la-estructura-de-la-tabla-de-datos-y-sus-tipos-de-variable" class="level2"><h2 class="anchored" data-anchor-id="conocer-la-estructura-de-la-tabla-de-datos-y-sus-tipos-de-variable">Conocer la estructura de la tabla de datos y sus tipos de variable</h2>
+<p>El primer paso en la exploración de un conjunto de datos es conocer su estructura y tamaño:</p>
+<ul>
+<li><p>El <strong>tamaño</strong> se refiere a la cantidad de observaciones (filas) y de variables (columnas).</p></li>
+<li><p>La <strong>estructura</strong> incluye cómo están organizadas las variables, qué tipo de datos contiene cada una y qué categorías o valores pueden tomar.</p></li>
+</ul>
+<p>Comenzaremos por cargar los datos de ejemplo con la función <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2()</a></code> de <code>tidyverse</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/datos2.txt"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Una vez cargados los datos, la función <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code> permite obtener una visión general de la tabla:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 74
+Columns: 7
+$ id      &lt;dbl&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,…
+$ sexo    &lt;chr&gt; "M", "M", "M", "M", "M", "M", "M", "M", NA, "F", "F", "M", "F"…
+$ edad    &lt;dbl&gt; 76, 68, 50, 49, 51, 68, 70, 64, 60, 57, 83, 76, 27, 34, 17, 45…
+$ peso    &lt;dbl&gt; 71, 71, 79, 71, 87, 75, 80, 83, 69, 73, 60, 70, 648, 718, 61, …
+$ talla   &lt;dbl&gt; 167, 164, 164, 164, 1675, 170, 166, 160, 160, 155, 155, 167, 1…
+$ trabaja &lt;lgl&gt; FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, NA, TRUE, TRUE, TRUE, …
+$ fecha   &lt;date&gt; 2020-10-20, 2020-10-20, 2020-10-20, 2020-11-05, 2020-11-05, 2…</code></pre>
+</div>
+</div>
+<p>Esta función nos informa que la tabla contiene, por ejemplo, 74 observaciones y 7 variables, mostrando el tipo de dato de cada una y los primeros valores que aparecen.</p>
+<p>Entre los tipos de datos más comunes que podemos encontrar se incluyen:</p>
+<ul>
+<li><p><code>int</code> (<em>integer</em>): números enteros.</p></li>
+<li><p><code>dbl</code> (<em>double</em>): números reales.</p></li>
+<li><p><code>lgl</code> (<em>logical</em>): valores lógicos (<code>TRUE</code>, <code>FALSE</code>).</p></li>
+<li><p><code>chr</code> (<em>character</em>): texto o cadenas de caracteres.</p></li>
+<li><p><code>Date</code>: fechas.</p></li>
+<li><p><code>fct</code> (<em>factor</em>): variables categóricas con niveles.</p></li>
+<li><p><code>dttm</code> (<em>date-time</em>): fechas y horas.</p></li>
+</ul>
+<p>Esta primera revisión de la estructura suele complementarse con el <strong>diccionario de datos</strong>, un recurso fundamental que describe el significado, tipo, unidad y codificación de cada variable. Este diccionario puede acompañar tanto a bases de datos generadas en investigaciones propias (fuentes primarias) como a datos provenientes de fuentes secundarias.</p>
+<p>Es importante tener en cuenta que el tipo de dato en R no siempre coincide con la naturaleza estadística de la variable. Por ejemplo:</p>
+<ul>
+<li><p>Una variable codificada como <code>dbl</code> puede representar una medida cuantitativa continua, como la edad o el peso.</p></li>
+<li><p>Pero también puede representar una variable cualitativa codificada con números. Por ejemplo, si una variable que registra respuestas “Sí” y “No” fue codificada como <code>1</code> y <code>0</code>, su tipo de dato será numérico (<code>dbl</code> o <code>int</code>), aunque conceptualmente sea una variable categórica.</p></li>
+</ul>
+<p>Por esta razón, además de inspeccionar el tipo de datos en R, es importante revisar el significado y el uso previsto de cada variable dentro del contexto del análisis.</p>
+</section><section id="detectar-observaciones-incompletas" class="level2"><h2 class="anchored" data-anchor-id="detectar-observaciones-incompletas">Detectar observaciones incompletas</h2>
+<p>Los valores perdidos o faltantes (conocidos como <em>missing</em> en inglés), representados en R por el valor especial <code>NA</code>, constituyen un desafío importante en el análisis de datos. Su presencia puede afectar la calidad del análisis y condicionar las decisiones estadísticas posteriores.</p>
+<p>Existen numerosos enfoques para el tratamiento de valores faltantes, incluyendo técnicas de imputación y modelado específico. Sin embargo, en este curso nos enfocaremos exclusivamente en cómo <strong>detectar</strong>, <strong>contabilizar</strong> y, en algunos casos, <strong>excluir</strong> valores faltantes utilizando funciones del lenguaje R.</p>
+<p>Una forma sencilla de detectar valores faltantes es mediante la función <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> del paquete <code>dplyr</code>. Al aplicarla a una variable, la salida incluye una fila adicional que informa cuántos valores <code>NA</code> hay:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">trabaja</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  trabaja     n
+  &lt;lgl&gt;   &lt;int&gt;
+1 FALSE      26
+2 TRUE       39
+3 NA          9</code></pre>
+</div>
+</div>
+<p>Una alternativa más completa es la función <code><a href="https://choonghyunryu.github.io/dlookr/reference/find_na.html">find_na()</a></code> del paquete <code>dlookr</code> <span class="citation" data-cites="dlookr">(<a href="#ref-dlookr" role="doc-biblioref">Ryu 2024</a>)</span>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://choonghyunryu.github.io/dlookr/reference/find_na.html">find_na</a></span><span class="op">(</span><span class="va">datos</span>, rate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     id    sexo    edad    peso   talla trabaja   fecha 
+  0.000   4.054   0.000   0.000   0.000  12.162   0.000 </code></pre>
+</div>
+</div>
+<p>Esta función se puede aplicar al conjunto de datos completo y devuelve, para cada variable, la cantidad y el porcentaje de valores <code>NA</code>. Por ejemplo, podríamos observar que la variable <code>sexo</code> tiene alrededor de un 4 % de valores faltantes, y la variable <code>trabaja</code>, algo más del 12 %.</p>
+<p>Estos porcentajes pueden ayudarnos a decidir si una variable debe incluirse en un análisis o si es conveniente excluir ciertas observaciones con datos incompletos, siempre que los <code>NA</code> sean el resultado de una ausencia real de información.</p>
+<p>El mismo paquete trae una función gráfica llamada <code><a href="https://choonghyunryu.github.io/dlookr/reference/plot_na_pareto.html">plot_na_pareto()</a></code>, que genera un gráfico de barras ordenados por frecuencia de valores faltantes:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://choonghyunryu.github.io/dlookr/reference/plot_na_pareto.html">plot_na_pareto</a></span><span class="op">(</span><span class="va">datos</span>, only_na <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finalmente, para un diagnóstico más integral de la calidad de las variables, puede utilizarse la función <code><a href="https://choonghyunryu.github.io/dlookr/reference/diagnose.data.frame.html">diagnose()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://choonghyunryu.github.io/dlookr/reference/diagnose.data.frame.html">diagnose</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 7 × 6
+  variables types     missing_count missing_percent unique_count unique_rate
+  &lt;chr&gt;     &lt;chr&gt;             &lt;int&gt;           &lt;dbl&gt;        &lt;int&gt;       &lt;dbl&gt;
+1 id        numeric               0            0              74      1     
+2 sexo      character             3            4.05            3      0.0405
+3 edad      numeric               0            0              45      0.608 
+4 peso      numeric               0            0              56      0.757 
+5 talla     numeric               0            0              38      0.514 
+6 trabaja   logical               9           12.2             3      0.0405
+7 fecha     Date                  0            0              11      0.149 </code></pre>
+</div>
+</div>
+<p>Esta función ofrece un resumen detallado que incluye el tipo de variable, la cantidad de valores faltantes, la proporción de valores únicos, entre otros indicadores de utilidad para la exploración inicial.</p>
+</section><section id="conocer-la-distribución-de-las-variables-de-interés" class="level2"><h2 class="anchored" data-anchor-id="conocer-la-distribución-de-las-variables-de-interés">Conocer la distribución de las variables de interés</h2>
+<section id="resumir-variables-cuantitativas" class="level3"><h3 class="anchored" data-anchor-id="resumir-variables-cuantitativas">Resumir variables cuantitativas</h3>
+<p>La instalación básica de R tiene incorporadas múltiples funciones estadísticas que permiten calcular medidas resumen para variables cuantitativas. Estas funciones pueden integrarse a la función <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> de <code>tidyverse</code>.</p>
+<section id="medidas-de-tendencia-central" class="level4"><h4 class="anchored" data-anchor-id="medidas-de-tendencia-central">Medidas de tendencia central</h4>
+<p>Las medidas de tendencia central forman parte del grupo de medidas de posición o localización, pero su objetivo principal es resumir la información en torno a un valor que representa el “centro” de la distribución. Es decir, un valor respecto al cual tienden a agruparse los demás valores.</p>
+<p>Podemos obtener la media y la mediana de nuestros datos con el siguiente código:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Media</span></span>
+<span>    media <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span>,</span>
+<span>    <span class="co"># Mediana</span></span>
+<span>    mediana <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  media mediana
+  &lt;dbl&gt;   &lt;dbl&gt;
+1  48.1    52.5</code></pre>
+</div>
+</div>
+<p>En cambio, R base no incluye una función específica para calcular la <strong>moda</strong>. Para obtenerla, debemos escribir una función propia o utilizar algún paquete adicional que la implemente (por ejemplo, <code>modeest::mlv()</code>).</p>
+</section><section id="medidas-de-posición" class="level4"><h4 class="anchored" data-anchor-id="medidas-de-posición">Medidas de posición</h4>
+<p>Las medidas de posición dividen los datos en grupos con igual número de observaciones. Entre las más utilizadas se encuentran los <strong>cuartiles</strong> y <strong>percentiles</strong>.</p>
+<p>La función <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> del paquete base <code>stats</code> permite calcular cuartiles u otros percentiles. Por ejemplo, para calcular los cuartiles Q1 y Q3, indicamos en el argumento <code>probs</code> los valores 0.25 y 0.75:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Primer cuartil</span></span>
+<span>    cuartil1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">edad</span>, probs <span class="op">=</span> <span class="fl">0.25</span><span class="op">)</span>,</span>
+<span>    <span class="co"># Tercer cuartil</span></span>
+<span>    cuartil3 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">edad</span>, probs <span class="op">=</span> <span class="fl">0.75</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  cuartil1 cuartil3
+     &lt;dbl&gt;    &lt;dbl&gt;
+1       28       64</code></pre>
+</div>
+</div>
+<p>Para obtener el mínimo y máximo de estos valores numéricos usamos el siguiente código:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Mínimo</span></span>
+<span>    minimo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span>,</span>
+<span>    <span class="co"># Máximo</span></span>
+<span>    maximo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  minimo maximo
+   &lt;dbl&gt;  &lt;dbl&gt;
+1     13     86</code></pre>
+</div>
+</div>
+</section><section id="medidas-de-dispersión" class="level4"><h4 class="anchored" data-anchor-id="medidas-de-dispersión">Medidas de dispersión</h4>
+<p>Las medidas de dispersión nos permiten conocer cuán dispersos o variables son los valores dentro del conjunto de datos.</p>
+<p>Entre las más clásicas se encuentran la <strong>varianza</strong> y el <strong>desvío estándar</strong>, que se calculan fácilmente con las funciones <code><a href="https://rdrr.io/r/stats/cor.html">var()</a></code> y <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Varianza</span></span>
+<span>    varianza <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">var</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span>,</span>
+<span>    <span class="co"># Desvío estándar</span></span>
+<span>    desvio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  varianza desvio
+     &lt;dbl&gt;  &lt;dbl&gt;
+1     405.   20.1</code></pre>
+</div>
+</div>
+<p>También puede ser útil calcular el <strong>rango</strong>, que se obtiene como la diferencia entre el valor máximo y el mínimo, y el <strong>rango intercuartílico (RIC)</strong>, mediante <code><a href="https://rdrr.io/r/stats/IQR.html">IQR()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Rango</span></span>
+<span>    rango <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span>,</span>
+<span>    <span class="co"># Rango intercuartílico</span></span>
+<span>    ric <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/IQR.html">IQR</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  rango   ric
+  &lt;dbl&gt; &lt;dbl&gt;
+1    73    36</code></pre>
+</div>
+</div>
+<p>El paquete <code>dlookr</code> ofrece la función <code><a href="https://choonghyunryu.github.io/dlookr/reference/describe.data.frame.html">describe()</a></code> para generar un resumen completo de las variables numéricas:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://choonghyunryu.github.io/dlookr/reference/describe.data.frame.html">describe</a></span><span class="op">(</span><span class="va">datos</span>, <span class="op">-</span><span class="va">id</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 26
+  described_variables     n    na  mean    sd se_mean   IQR skewness kurtosis
+  &lt;chr&gt;               &lt;int&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 edad                   74     0  48.1  20.1    2.34  36     -0.211    -1.11
+2 peso                   74     0 358.  323.    37.6  626.     0.451    -1.41
+3 talla                  74     0 363.  505.    58.7   12.8    2.19      2.90
+# ℹ 17 more variables: p00 &lt;dbl&gt;, p01 &lt;dbl&gt;, p05 &lt;dbl&gt;, p10 &lt;dbl&gt;, p20 &lt;dbl&gt;,
+#   p25 &lt;dbl&gt;, p30 &lt;dbl&gt;, p40 &lt;dbl&gt;, p50 &lt;dbl&gt;, p60 &lt;dbl&gt;, p70 &lt;dbl&gt;,
+#   p75 &lt;dbl&gt;, p80 &lt;dbl&gt;, p90 &lt;dbl&gt;, p95 &lt;dbl&gt;, p99 &lt;dbl&gt;, p100 &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<p>Esta función puede aplicarse directamente sobre todo el conjunto de datos. Si bien selecciona automáticamente las variables numéricas, en este caso estamos excluyendo explícitamente la variable <code>id</code>, ya que un identificador no tiene interés estadístico.</p>
+<p>El resumen que devuelve incluye:</p>
+<ul>
+<li><p><code>na</code>: cantidad de observaciones con datos y con <code>NA.</code></p></li>
+<li><p><code>mean</code>: media aritmética.</p></li>
+<li><p><code>sd</code>: desvío estándar de la media.</p></li>
+<li><p><code>se_mean</code>: error estándar de la media.</p></li>
+<li><p><code>IQR</code>: rango intercuartílico.</p></li>
+<li><p>Medidas de forma como la simetría (<code>skewness</code>) y la curtosis (<code>kurtosis</code>).</p></li>
+<li><p>Percentiles, incluyendo la mediana (<code>P50</code>) y los cuartiles (<code>P25</code> y <code>P75</code>).</p></li>
+</ul></section></section><section id="resumir-variables-cualitativas" class="level3"><h3 class="anchored" data-anchor-id="resumir-variables-cualitativas">Resumir variables cualitativas</h3>
+<p>Las variables cualitativas o categóricas pueden encontrarse en R bajo los tipos de dato <code>character</code> o <code>factor</code>. En ocasiones será necesario convertirlas a <code>factor</code>, ya que este tipo permite aplicar ciertos procedimientos específicos para variables categóricas.</p>
+<section id="frecuencias" class="level4"><h4 class="anchored" data-anchor-id="frecuencias">Frecuencias</h4>
+<p>Podemos resumir individualmente variables cualitativas mediante las frecuencias absolutas y relativas de sus categorías. La función <code><a href="https://dplyr.tidyverse.org/reference/count.html">count()</a></code> de <code>dplyr</code> nos muestra el conteo absoluto:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  sexo      n
+  &lt;chr&gt; &lt;int&gt;
+1 F        27
+2 M        44
+3 &lt;NA&gt;      3</code></pre>
+</div>
+</div>
+<p>En la salida se incluirán, además de las categorías presentes, las observaciones con valores faltantes (<code>NA</code>).</p>
+<p>La inclusión o no de los valores faltantes dependerá del propósito del análisis. Para excluirlos, podemos utilizar <code><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Saltea los valores NA</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span>  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  sexo      n
+  &lt;chr&gt; &lt;int&gt;
+1 F        27
+2 M        44</code></pre>
+</div>
+</div>
+<p>Para obtener frecuencias relativas en porcentaje:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="co"># Saltea los valores NA</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Transforma a porcentajes</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>porc <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  sexo      n  porc
+  &lt;chr&gt; &lt;int&gt; &lt;dbl&gt;
+1 F        27  38.0
+2 M        44  62.0</code></pre>
+</div>
+</div>
+<p>Redondeamos el valor del porcentaje con <code><a href="https://rdrr.io/r/base/Round.html">round()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="co"># Saltea los valores NA</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Transforma a porcentajes y redondea decimales</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
+<span>    porc <span class="op">=</span> <span class="fl">100</span> <span class="op">*</span> <span class="va">n</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span>,</span>
+<span>    porc <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">porc</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 3
+  sexo      n  porc
+  &lt;chr&gt; &lt;int&gt; &lt;dbl&gt;
+1 F        27  38.0
+2 M        44  62.0</code></pre>
+</div>
+</div>
+<p>El paquete <code>janitor</code> <span class="citation" data-cites="janitor">(<a href="#ref-janitor" role="doc-biblioref">Firke 2024</a>)</span> ofrece una alternativa más completa mediante la función <code><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> sexo  n    percent valid_percent
+    F 27 0.36486486     0.3802817
+    M 44 0.59459459     0.6197183
+ &lt;NA&gt;  3 0.04054054            NA</code></pre>
+</div>
+</div>
+<p>Esta función muestra tanto frecuencias absolutas como relativas, incluyendo y excluyendo los valores <code>NA</code> (porcentaje sobre el total de valores válidos).</p>
+<p>Podemos mejorar la presentación combinando otras funciones del paquete:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="co"># Excluímos valores NA</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sexo</span>, show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Añadimos totales por fila</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="co"># Redondea porcentajes a 2 decimales</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sexo  n percent
+     F 27  38.03%
+     M 44  61.97%
+ Total 71 100.00%</code></pre>
+</div>
+</div>
+</section><section id="tablas-de-contingencia" class="level4"><h4 class="anchored" data-anchor-id="tablas-de-contingencia">Tablas de contingencia</h4>
+<p>La forma más adecuada de describir la relación entre dos variables cualitativas es a través de una <strong>tabla de contingencia</strong>, en la cual:</p>
+<ul>
+<li><p>Las filas representan las categorías de una variable.</p></li>
+<li><p>Las columnas representan las categorías de otra variable.</p></li>
+<li><p>Las celdas muestran el número de observaciones correspondientes a cada combinación de categorías.</p></li>
+</ul>
+<p>La función <code><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl()</a></code> también permite crear este tipo de tablas. A continuación, un ejemplo entre <code>sexo</code> y <code>trabaja</code> (aunque <code>trabaja</code> sea lógica, puede tratarse como categórica):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">trabaja</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> sexo FALSE TRUE NA_
+    F     8   15   4
+    M    17   22   5
+ &lt;NA&gt;     1    2   0</code></pre>
+</div>
+</div>
+<p>Recordemos que el orden dentro de los paréntesis de la función es igual al de los índices, el primer argumento es la variable que aparecerá en las filas y el segundo la variable de las columnas. Por ese motivo, en la tabla de contingencia absoluta tenemos <code>sexo</code> en las filas y <code>trabaja</code> en las columnas.</p>
+<p>Se puede mejorar la tabla excluyendo los valores <code>NA</code> y agregando totales por fila:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="co"># Excluímos valores NA</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">trabaja</span>, show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Añadimos totales por fila</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sexo FALSE TRUE
+     F     8   15
+     M    17   22
+ Total    25   37</code></pre>
+</div>
+</div>
+<p>Para calcular frecuencias relativas porcentuales por columna usamos el siguiente código:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="co"># Excluímos valores NA</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">trabaja</span>, show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Añadimos totales</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Añadimos porcentajes por columna</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Redondea porcentajes a 2 decimales</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  sexo   FALSE    TRUE
+     F  32.00%  40.54%
+     M  68.00%  59.46%
+ Total 100.00% 100.00%</code></pre>
+</div>
+</div>
+<p>Calculamos frecuencias relativas porcentuales por fila:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="co"># Excluímos valores NA</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">trabaja</span>, show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Añadimos totales por columna</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Añadimos porcentajes por fila</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Redondea porcentajes a 2 decimales</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> sexo  FALSE   TRUE   Total
+    F 34.78% 65.22% 100.00%
+    M 43.59% 56.41% 100.00%</code></pre>
+</div>
+</div>
+<p>Cambiando el argumento <code>denominator</code> por <code>"all"</code> se calculan frecuencias relativas al total:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<span>  <span class="co"># Excluímos valores NA</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">trabaja</span>, show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Añadimos totales por columna</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_totals.html">adorn_totals</a></span><span class="op">(</span>where <span class="op">=</span> <span class="st">"col"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Añadimos porcentajes al total</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span>denominator <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Redondea porcentajes a 2 decimales</span></span>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span>digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> sexo  FALSE   TRUE  Total
+    F 12.90% 24.19% 37.10%
+    M 27.42% 35.48% 62.90%</code></pre>
+</div>
+</div>
+</section></section><section id="explorar-variables-mediante-gráficos" class="level3"><h3 class="anchored" data-anchor-id="explorar-variables-mediante-gráficos">Explorar variables mediante gráficos</h3>
+<p>Uno de los aportes más importantes de John Tukey al análisis de datos es la incorporación de los gráficos como herramienta exploratoria. A través de representaciones visuales podemos detectar rápidamente patrones, anomalías, valores extremos, asimetrías o relaciones entre variables.</p>
+<p>En R, los gráficos más útiles para explorar la distribución <strong>univariada</strong> de las variables son:</p>
+<ul>
+<li><p>Para variables <strong>cualitativas</strong>: gráficos de barras</p></li>
+<li><p>Para variables <strong>cuantitativas</strong>: histogramas, gráficos de densidad, boxplots y violin plots</p></li>
+<li>
+<p>Cuando queremos explorar la relación entre <strong>dos o más variables</strong>, los tipos de gráficos más comunes incluyen:</p>
+<ul>
+<li><p>Diagramas de dispersión (puntos)</p></li>
+<li><p>Gráficos de líneas</p></li>
+<li><p>Gráficos de mosaico para variables categóricas cruzadas</p></li>
+</ul>
+</li>
+</ul>
+<p>El lenguaje R soporta una serie de sistemas gráficos asociados a paquetes como <code>graphics</code>, <code>lattice</code>, <code>ggplot2</code>, etc. que sirven de base incluso para otros paquetes con funciones más específicas. Actualmente el estándar gráfico en R es <code>ggplot2</code>.</p>
+<p>En el documento dedicado a <a href="intro_tidyverse.qmd#gráficos-estadísticos-con-ggplot2"><strong>tidyverse</strong></a> ya explicamos cómo funciona <code>ggplot2</code>. Aquí nos concentraremos únicamente en aplicar distintos elementos geométricos (<code>geoms</code>) para representar las variables según su tipo.</p>
+<section id="barras-univariado" class="level4"><h4 class="anchored" data-anchor-id="barras-univariado">Barras (univariado)</h4>
+<p>El gráfico de barras permite visualizar la frecuencia de las categorías de una variable cualitativa:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Omitimos los NA de sexo</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Generamos histograma</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"palevioletred4"</span>, <span class="st">"orange"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="barras-bivariado" class="level4"><h4 class="anchored" data-anchor-id="barras-bivariado">Barras (bivariado)</h4>
+<p>Cuando cruzamos dos variables categóricas, podemos representar la relación entre ambas modificando el argumento <code>position</code> de <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>.</p>
+<p>El argumento <code>position = "stack"</code> nos muestra los valores absolutos acumulados:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Omitimos los NA de sexo y trabaja</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">trabaja</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Generamos gráfico de barras</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">trabaja</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"stack"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Por otro lado, el argumento <code>position = "dodge"</code> muestra las barras lado a lado, permitiendo comparar proporciones entre grupos:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Omitimos los NA de sexo y trabaja</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">trabaja</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Generamos gráfico de barras</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">trabaja</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Finalmente, <code>position = "fill"</code> convierte las alturas en proporciones sobre el total por grupo:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Omitimos los NA de sexo y trabaja</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">trabaja</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Generamos gráfico de barras</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">trabaja</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="histograma" class="level4"><h4 class="anchored" data-anchor-id="histograma">Histograma</h4>
+<p>Representa la frecuencia de valores en intervalos definidos. Útil para observar la forma general de la distribución:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Genera histograma</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">edad</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>                 fill <span class="op">=</span> <span class="st">"royalblue1"</span>,</span>
+<span>                 color <span class="op">=</span> <span class="st">"white"</span></span>
+<span>                <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="densidad" class="level4"><h4 class="anchored" data-anchor-id="densidad">Densidad</h4>
+<p>Es una estimación suave de la distribución de frecuencias:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">edad</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"thistle1"</span><span class="op">)</span>  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-31-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="boxplot" class="level4"><h4 class="anchored" data-anchor-id="boxplot"><em>Boxplot</em></h4>
+<p>Muestra el rango intercuartílico, la mediana y los valores atípicos. Ideal para detectar asimetrías y <em>outliers</em>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Genera boxplot</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">edad</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"seagreen4"</span><span class="op">)</span>  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-32-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="violinplot" class="level4"><h4 class="anchored" data-anchor-id="violinplot"><em>Violinplot</em></h4>
+<p>Combina el <em>boxplot</em> con una curva de densidad reflejada. Permite visualizar tanto la forma de la distribución como los cuantiles:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Omitimos los NA de sexo</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Genera violinplot</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">edad</span>, y <span class="op">=</span> <span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-33-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong><em>Q-Q Plot</em></strong></p>
+<p>Los gráficos Q-Q (cuantil-cuantil) permiten evaluar visualmente si una variable sigue una distribución teórica, como la normal. Suelen usarse como método gráfico para analizar “normalidad”, es decir cuanto se asemeja la distribución de la variable a la distribución normal o gaussiana.</p>
+<p>La función <code><a href="https://choonghyunryu.github.io/dlookr/reference/plot_normality.data.frame.html">plot_normality()</a></code> de <code>dlookr</code> muestra un diagnóstico gráfico de normalidad de una variable usando histogramas y Q-Q plot. Además muestra otros histogramas con conversiones de datos (logarítmico y raíz cuadrada por defecto, pero también “Box-Cox” y otras):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Sobre la variable edad</span></span>
+<span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://choonghyunryu.github.io/dlookr/reference/plot_normality.data.frame.html">plot_normality</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Sobre la variable peso</span></span>
+<span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://choonghyunryu.github.io/dlookr/reference/plot_normality.data.frame.html">plot_normality</a></span><span class="op">(</span><span class="va">peso</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-34-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Podemos decir que la variable <code>peso</code> se ajusta mejor a una distribución normal, ya que los puntos del Q-Q plot se alinean más cercanamente a la diagonal teórica.</p>
+<blockquote class="blockquote">
+<p><strong>Nota</strong>: Este análisis gráfico de normalidad suele complementarse con pruebas estadísticas específicas, que abordaremos en la próxima unidad.</p>
+</blockquote>
+</section></section></section><section id="detección-de-valores-atípicos" class="level2"><h2 class="anchored" data-anchor-id="detección-de-valores-atípicos">Detección de valores atípicos</h2>
+<p>Un valor atípico (<em>outlier</em>) es una observación que se encuentra numéricamente alejada del resto de los datos. Su presencia puede tener diferentes causas, y su tratamiento dependerá del contexto:</p>
+<ul>
+<li><p><strong>Errores de carga o procedimiento</strong>: deben corregirse si se detectan.</p></li>
+<li><p><strong>Valores extremos plausibles</strong>: pueden ser válidos, pero conviene evaluarlos en detalle.</p></li>
+<li><p><strong>Eventos extraordinarios o causas desconocidas</strong>: si no se pueden justificar, suelen excluirse del análisis.</p></li>
+</ul>
+<p>Estos valores pueden afectar sensiblemente ciertos estadísticos como la media, distorsionando su interpretación.</p>
+<p>Una forma gráfica común de detectar valores atípicos es mediante los <em>boxplots</em>. Los puntos situados fuera de los “bigotes” representan posibles <em>outliers</em>.</p>
+<p>A continuación, se presenta un ejemplo con la variable <code>peso</code>, donde se observa un valor extremo en el límite superior de la distribución (punto rojo):</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">peso</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"darkkhaki"</span>, </span>
+<span>               outlier.color <span class="op">=</span> <span class="st">"red"</span></span>
+<span>              <span class="op">)</span>  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="04_analisis_exploratorio_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Este valor coincide con el máximo observado:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">peso</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1105</code></pre>
+</div>
+</div>
+<p>El paquete <code>dlookr</code> incluye la función <code><a href="https://choonghyunryu.github.io/dlookr/reference/diagnose_outlier.data.frame.html">diagnose_outlier()</a></code> para la detección automatizada de valores atípicos en todas las variables numéricas de un conjunto de datos:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://choonghyunryu.github.io/dlookr/reference/diagnose_outlier.data.frame.html">diagnose_outlier</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 6
+  variables outliers_cnt outliers_ratio outliers_mean with_mean without_mean
+  &lt;chr&gt;            &lt;int&gt;          &lt;dbl&gt;         &lt;dbl&gt;     &lt;dbl&gt;        &lt;dbl&gt;
+1 id                   0            0             NaN      37.5         37.5
+2 edad                 0            0             NaN      48.1         48.1
+3 peso                 0            0             NaN     358.         358. 
+4 talla               10           13.5          1630     363.         165. </code></pre>
+</div>
+</div>
+<p>Esta función devuelve una tabla que incluye, para cada variable: cantidad y proporción de <em>outliers</em> detectados, media de la variable incluyendo los <em>outliers</em>, media de la variable excluyendo los <em>outliers</em>. En función de estos dos estadísticos se puede comparar el efecto de los valores atípicos en la media.</p>
+<p>El paquete <code>skimr</code> <span class="citation" data-cites="skimr">(<a href="#ref-skimr" role="doc-biblioref">Waring et&nbsp;al. 2022</a>)</span> permite obtener un resumen estadístico compacto y amigable de un conjunto de datos mediante la función <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">datos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">74</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">character</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Date</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">logical</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 13%">
+<col style="width: 19%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 15%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">min</th>
+<th style="text-align: right;">max</th>
+<th style="text-align: right;">empty</th>
+<th style="text-align: right;">n_unique</th>
+<th style="text-align: right;">whitespace</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: left;">sexo</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.96</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0</td>
+</tr></tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 12%">
+<col style="width: 17%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 11%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: left;">min</th>
+<th style="text-align: left;">max</th>
+<th style="text-align: left;">median</th>
+<th style="text-align: right;">n_unique</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: left;">fecha</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2020-10-20</td>
+<td style="text-align: left;">2020-12-15</td>
+<td style="text-align: left;">2020-11-11</td>
+<td style="text-align: right;">11</td>
+</tr></tbody>
+</table>
+<p><strong>Variable type: logical</strong></p>
+<table class="caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: left;">count</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td style="text-align: left;">trabaja</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">0.88</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: left;">TRU: 39, FAL: 26</td>
+</tr></tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 11%">
+<col style="width: 16%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 4%">
+<col style="width: 8%">
+<col style="width: 6%">
+<col style="width: 8%">
+<col style="width: 5%">
+<col style="width: 6%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">id</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">37.50</td>
+<td style="text-align: right;">21.51</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19.25</td>
+<td style="text-align: right;">37.5</td>
+<td style="text-align: right;">55.75</td>
+<td style="text-align: right;">74</td>
+<td style="text-align: left;">▇▇▇▇▇</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">edad</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">48.07</td>
+<td style="text-align: right;">20.12</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">28.00</td>
+<td style="text-align: right;">52.5</td>
+<td style="text-align: right;">64.00</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: left;">▇▃▇▇▃</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peso</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">358.05</td>
+<td style="text-align: right;">323.31</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">75.00</td>
+<td style="text-align: right;">91.5</td>
+<td style="text-align: right;">700.50</td>
+<td style="text-align: right;">1105</td>
+<td style="text-align: left;">▇▁▂▃▁</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">talla</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">363.09</td>
+<td style="text-align: right;">504.93</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">161.00</td>
+<td style="text-align: right;">166.0</td>
+<td style="text-align: right;">173.75</td>
+<td style="text-align: right;">1745</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Además, puede integrarse fácilmente con la gramática <code>tidyverse</code>. Por ejemplo, podemos explorar estadísticas descriptivas de variables numéricas agrupadas por <code>sexo</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Excluye NAs de sexo</span></span>
+<span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># Agrupa por sexo</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="co"># Solo variables numéricas - id</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>, <span class="op">-</span><span class="va">id</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="co"># Explora outliers</span></span>
+<span>  <span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Name</td>
+<td style="text-align: left;">select(…)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Number of rows</td>
+<td style="text-align: left;">71</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Number of columns</td>
+<td style="text-align: left;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">_______________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Column type frequency:</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">numeric</td>
+<td style="text-align: left;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">________________________</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Group variables</td>
+<td style="text-align: left;">sexo</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 5%">
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 4%">
+<col style="width: 7%">
+<col style="width: 6%">
+<col style="width: 7%">
+<col style="width: 5%">
+<col style="width: 6%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">skim_variable</th>
+<th style="text-align: left;">sexo</th>
+<th style="text-align: right;">n_missing</th>
+<th style="text-align: right;">complete_rate</th>
+<th style="text-align: right;">mean</th>
+<th style="text-align: right;">sd</th>
+<th style="text-align: right;">p0</th>
+<th style="text-align: right;">p25</th>
+<th style="text-align: right;">p50</th>
+<th style="text-align: right;">p75</th>
+<th style="text-align: right;">p100</th>
+<th style="text-align: left;">hist</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">edad</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">41.89</td>
+<td style="text-align: right;">19.64</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">26.00</td>
+<td style="text-align: right;">39.0</td>
+<td style="text-align: right;">54.50</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: left;">▇▃▅▃▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">edad</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">51.59</td>
+<td style="text-align: right;">19.56</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">40.75</td>
+<td style="text-align: right;">55.5</td>
+<td style="text-align: right;">64.75</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: left;">▅▂▅▇▂</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">peso</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">426.78</td>
+<td style="text-align: right;">300.85</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">70.50</td>
+<td style="text-align: right;">516.0</td>
+<td style="text-align: right;">677.00</td>
+<td style="text-align: right;">856</td>
+<td style="text-align: left;">▇▁▃▃▆</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">peso</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">306.95</td>
+<td style="text-align: right;">331.27</td>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">78.00</td>
+<td style="text-align: right;">86.5</td>
+<td style="text-align: right;">647.00</td>
+<td style="text-align: right;">1105</td>
+<td style="text-align: left;">▇▁▁▂▁</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">talla</td>
+<td style="text-align: left;">F</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">421.74</td>
+<td style="text-align: right;">562.57</td>
+<td style="text-align: right;">148</td>
+<td style="text-align: right;">155.50</td>
+<td style="text-align: right;">161.0</td>
+<td style="text-align: right;">167.50</td>
+<td style="text-align: right;">1625</td>
+<td style="text-align: left;">▇▁▁▁▂</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">talla</td>
+<td style="text-align: left;">M</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">340.77</td>
+<td style="text-align: right;">485.79</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">164.00</td>
+<td style="text-align: right;">168.5</td>
+<td style="text-align: right;">177.25</td>
+<td style="text-align: right;">1745</td>
+<td style="text-align: left;">▇▁▁▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>En este ejemplo, mostramos resultados de variables numéricas menos de <code>id</code> agrupados por <code>sexo</code> (sin considerar valores <code>NA</code> en las categorías de sexo).</p>
+
+
+
+</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-janitor" class="csl-entry" role="listitem">
+Firke, Sam. 2024. <span>«janitor: Simple Tools for Examining and Cleaning Dirty Data»</span>. <a href="https://CRAN.R-project.org/package=janitor">https://CRAN.R-project.org/package=janitor</a>.
+</div>
+<div id="ref-dlookr" class="csl-entry" role="listitem">
+Ryu, Choonghyun. 2024. <span>«<span></span>dlookr<span></span>: Tools for Data Diagnosis, Exploration, Transformation»</span>. <a href="https://CRAN.R-project.org/package=dlookr">https://CRAN.R-project.org/package=dlookr</a>.
+</div>
+<div id="ref-skimr" class="csl-entry" role="listitem">
+Waring, Elin, Michael Quinn, Amelia McNamara, Eduardo Arino de la Rubia, Hao Zhu, y Shannon Ellis. 2022. <span>«skimr: Compact and Flexible Summaries of Data»</span>. <a href="https://CRAN.R-project.org/package=skimr">https://CRAN.R-project.org/package=skimr</a>.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reutilización</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.es">CC BY-NC 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+    const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+    const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+    let newTheme = '';
+    if(darkModeDefault) {
+      newTheme = isAlternate ? baseTheme : alternateTheme;
+    } else {
+      newTheme = isAlternate ? alternateTheme : baseTheme;
+    }
+    const changeGiscusTheme = () => {
+      // From: https://github.com/giscus/giscus/issues/336
+      const sendMessage = (message) => {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+      }
+      sendMessage({
+        setConfig: {
+          theme: newTheme
+        }
+      });
+    }
+    const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+    if (isGiscussLoaded) {
+      changeGiscusTheme();
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  const darkModeDefault = false;
+  let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+    toggleGiscusIfUsed(toAlternate, darkModeDefault);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiado");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiado");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="../unidad_1/03_intro_tidyverse.html" class="pagination-link" aria-label="Introducción a tidyverse">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Introducción a tidyverse</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../unidad_1/05_hoja_estilo.html" class="pagination-link" aria-label="Hoja de Estilo del lenguaje R">
+        <span class="nav-page-text">Hoja de Estilo del lenguaje R</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Este material es parte del curso de Epidemiología - Nivel Avanzado © 2025 Instituto Nacional de Epidemiología “Dr.&nbsp;Juan H. Jara” (ANLIS)</p>
+</div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+</body></html>
