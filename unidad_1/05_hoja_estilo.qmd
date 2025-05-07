@@ -47,11 +47,11 @@ filter ( mpg,cty>10,     class=="compact" )
 
 Las tres primeras versiones son más legibles. El resto, aunque válidas, son difíciles de seguir, especialmente en trabajos colaborativos o materiales docentes.
 
-## Guía de estilo de tidyverse
+## Guía de estilo de **`tidyverse`**
 
 Para ayudar a mejorar la legibilidad y facilitar el compartir código con otros, el equipo de Tidyverse publicó una guía concisa con ejemplos claros de buenas y malas formas de escribir código, nombres de variables, sangría, líneas largas, y más:
 
-🔗 [style.tidyverse.org](https://style.tidyverse.org/)
+➡️ [**https://style.tidyverse.org/**](https://style.tidyverse.org/){.uri}
 
 Además, RStudio incluye herramientas para aplicar estas convenciones automáticamente. Por ejemplo, seleccionando el código y presionando `Ctrl + i` (Windows) se puede reidentar el texto. No siempre es perfecto, pero es realmente útil para lograr la sangría correcta sin tener que presionar manualmente espacio muchas veces.
 

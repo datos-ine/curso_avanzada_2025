@@ -28,7 +28,7 @@ RStudio presenta una interfaz unificada compuesta por distintos paneles, lo que 
 
 2.  **Consola de R** (*Console*): muestra la salida del código ejecutado y ejecuta código de R de forma inmediata.
 
-3.  **Entorno** (*Environment*): muestra los objetos creados durante la sesión, como vectores, dataframes o funciones.
+3.  **Entorno** (*Environment*): muestra los objetos creados durante la sesión, como vectores, *dataframes* o funciones.
 
 4.  **Panel de resultados** (*Output*): presenta los gráficos, tablas, visualizaciones en HTML y también incluye un explorador de archivos, visor de paquetes instalados y panel de ayuda.
 
@@ -60,7 +60,7 @@ En cualquiera de los dos casos aparecerá un cuadro de diálogo que presenta tre
 
 Una vez que creamos un nuevo proyecto con la opción **New Directory**, aparecerá una pantalla con una lista de tipos de proyectos que se pueden crear en RStudio:
 
-![](images/proyecto03.png){fig-align="center" width="479"}
+![](images/proyecto03.png){fig-align="center"}
 
 Durante este curso utilizaremos siempre la **primera opción** (New Project). Las demás opciones están pensadas para usos más específicos, como el desarrollo de paquetes de R, sitios web o documentos con Quarto o R Markdown.
 
@@ -84,7 +84,7 @@ Echemos un vistazo a lo que RStudio realizó:
 
 -   El otro cambio se observa en la parte superior derecha, que muestra el nombre del proyecto. Si hacemos click en él, se desplegará el menú de proyectos. Desde aquí se puede abrir y cerrar proyectos, navegar rápidamente a proyectos que se han abierto recientemente y configurar las opciones de RStudio para cada uno de ellos.
 
-![](images/proyecto_05.png){fig-align="center" width="85%"}
+![](images/proyecto05.png){fig-align="center"}
 
 ### Abrir un proyecto existente
 
@@ -188,7 +188,9 @@ Al escribir en el editor o la consola, la tecla `Tab` activa el autocompletado d
 
 ![](images/asistente.png){fig-align="center" width="600"}
 
-Muchas de estas opciones se pueden configurar desde el menú `Code` y desde `Tools > Global Options > Code`(pestañas **Editing** y **Format**).
+Muchas de estas opciones se pueden configurar desde el menú `Code` y desde `Tools > Global Options > Code`(pestañas **Editing** y **Display**).
+
+![](images/code_display.png){fig-align="center"}
 
 ### Ayuda en línea
 
@@ -340,7 +342,3 @@ Adoptar buenas prácticas desde el inicio mejora la reproducibilidad, facilita e
 -   Documentar el código mediante **comentarios** iniciados con `#`. Esto permite entender qué hace cada bloque de código, facilitando futuras modificaciones o revisiones.
 
 -   **Usar espacios e indentación adecuada** para mejorar la legibilidad. Esto es especialmente importante en estructuras anidadas (como condicionales, bucles o funciones).
-
-Una guía de estilo ampliamente recomendada —aunque no oficial— es la de `tidyverse`. Incluye ejemplos concretos de buenas y malas prácticas para nombrar variables, manejar líneas largas, usar sangrías, entre otros aspectos. Al [**final de la unidad**](hoja_estilo.qmd) incluimos una versión resumida de la misma, pero puede consultarse completa en:
-
-➡️ [**https://style.tidyverse.org/**](https://style.tidyverse.org/){.uri}

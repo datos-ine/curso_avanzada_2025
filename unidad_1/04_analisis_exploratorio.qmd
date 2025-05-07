@@ -18,7 +18,7 @@ showtext::showtext_opts(dpi = 500)
 
 El análisis exploratorio de datos (conocido como **EDA**, su sigla en inglés) es un enfoque de análisis fundamental para resumir y visualizar las características importantes de un conjunto de datos.
 
-[John Tukey](https://es.wikipedia.org/wiki/John_W._Tukey), estadístico estadounidense, fue uno de los principales impulsores de este enfoque. En 1977 publicó el libro *Exploratory Data Analysis*, donde, entre otras contribuciones, introdujo el gráfico *boxplot* (diagrama de caja y bigotes).
+[**John Tukey**](https://es.wikipedia.org/wiki/John_W._Tukey), estadístico estadounidense, fue uno de los principales impulsores de este enfoque. En 1977 publicó el libro *Exploratory Data Analysis*, donde, entre otras contribuciones, introdujo el gráfico *boxplot* (diagrama de caja y bigotes).
 
 En términos sencillos, antes de avanzar hacia el análisis formal o la construcción de modelos estadísticos, resulta esencial explorar, conocer y describir las variables presentes en nuestra tabla de datos.
 
@@ -46,7 +46,7 @@ Presentaremos estas diferentes funciones de distintos paquetes que pueden servir
 **Nota:** Algunos paquetes, como `dlookr`, pueden generar falsos positivos en la detección del antivirus durante el proceso de instalación. Sugerimos desactivar momentáneamente el antivirus para evitar inconvenientes.
 :::
 
-Una vez [instalados](files/paquetes_curso.zip), podemos activar los paquetes con el siguiente código:
+Una vez instalados, podemos activar los paquetes con el siguiente código:
 
 ```{r}
 # Carga de paquetes
@@ -412,7 +412,7 @@ En R, los gráficos más útiles para explorar la distribución **univariada** d
 
 El lenguaje R soporta una serie de sistemas gráficos asociados a paquetes como `graphics`, `lattice`, `ggplot2`, etc. que sirven de base incluso para otros paquetes con funciones más específicas. Actualmente el estándar gráfico en R es `ggplot2`.
 
-En el documento dedicado a [**tidyverse**](intro_tidyverse.qmd) ya explicamos cómo funciona `ggplot2`. Aquí nos concentraremos únicamente en aplicar distintos elementos geométricos (`geoms`) para representar las variables según su tipo.
+En el documento dedicado a [**tidyverse**](intro_tidyverse.qmd#gráficos-estadísticos-con-ggplot2) ya explicamos cómo funciona `ggplot2`. Aquí nos concentraremos únicamente en aplicar distintos elementos geométricos (`geoms`) para representar las variables según su tipo.
 
 #### Barras (univariado)
 
@@ -446,7 +446,7 @@ datos |>
   theme_minimal()
 ```
 
-Por otro lado, el argumento position = "dodge" muestra las barras lado a lado, permitiendo comparar proporciones entre grupos:
+Por otro lado, el argumento `position = "dodge"` muestra las barras lado a lado, permitiendo comparar proporciones entre grupos:
 
 ```{r}
 datos |> 
@@ -540,7 +540,7 @@ datos |>
 
 Podemos decir que la variable `peso` se ajusta mejor a una distribución normal, ya que los puntos del Q-Q plot se alinean más cercanamente a la diagonal teórica.
 
-> **Nota**: Este análisis gráfico de normalidad suele complementarse con pruebas estadísticas específicas, que abordaremos en la Unidad 2.
+> **Nota**: Este análisis gráfico de normalidad suele complementarse con pruebas estadísticas específicas, que abordaremos en la próxima unidad.
 
 ## Detección de valores atípicos
 
@@ -578,7 +578,7 @@ El paquete `dlookr` incluye la función `diagnose_outlier()` para la detección 
 diagnose_outlier(datos)
 ```
 
-Esta función devuelve una tabla que incluye, para cada variable: cantidad y proporción de outliers detectados, media de la variable incluyendo los outliers, media de la variable excluyendo los outliers. En función de estos dos estadísticos se puede comparar el efecto de los valores atípicos en la media.
+Esta función devuelve una tabla que incluye, para cada variable: cantidad y proporción de *outliers* detectados, media de la variable incluyendo los *outliers*, media de la variable excluyendo los *outliers*. En función de estos dos estadísticos se puede comparar el efecto de los valores atípicos en la media.
 
 El paquete `skimr` [@skimr] permite obtener un resumen estadístico compacto y amigable de un conjunto de datos mediante la función `skim()`:
 
@@ -586,7 +586,7 @@ El paquete `skimr` [@skimr] permite obtener un resumen estadístico compacto y a
 skim(datos)
 ```
 
-Además, puede integrarse fácilmente con la gramática `tidyverse`. Por ejemplo, podemos explorar estadísticas descriptivas de variables numéricas agrupadas por sexo:
+Además, puede integrarse fácilmente con la gramática `tidyverse`. Por ejemplo, podemos explorar estadísticas descriptivas de variables numéricas agrupadas por `sexo`:
 
 ```{r}
 datos |> 
@@ -600,4 +600,4 @@ datos |>
   skim()
 ```
 
-En este ejemplo, mostramos resultados de variables numéricas menos de id agrupados por sexo (sin considerar valores `NA` en las categorías de sexo).
+En este ejemplo, mostramos resultados de variables numéricas menos de `id` agrupados por `sexo` (sin considerar valores `NA` en las categorías de sexo).

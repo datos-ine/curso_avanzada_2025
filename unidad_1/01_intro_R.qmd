@@ -18,7 +18,7 @@ Estos materiales, que forman parte del **Módulo 1 del Curso de Epidemiología A
 
 ## ¿Qué es R?
 
-El sitio oficial [r-project.org](https://www.r-project.org/) define a R como *"un entorno de software libre para gráficos y computación estadística. Se compila y se ejecuta en una amplia variedad de plataformas UNIX, Windows y MacOS."*
+El sitio oficial [**r-project.org**](https://www.r-project.org/) define a R como *"un entorno de software libre para gráficos y computación estadística. Se compila y se ejecuta en una amplia variedad de plataformas UNIX, Windows y MacOS."*
 
 Profundizando en su descripción, podemos decir que R es un *lenguaje de programación interpretado, orientado a objetos, multiplataforma y de código abierto (open source) aplicado al manejo y análisis de datos estadísticos.*
 
@@ -48,11 +48,11 @@ R se distribuye gratuitamente bajo licencia GNU - GPL (*General Public License*)
 
 R tiene su origen en el lenguaje **S**, desarrollado en los años 70 en los laboratorios Bell de AT&T (actualmente Lucent Technologies). Posteriormente, S dio lugar a una versión comercial llamada **S-Plus**, distribuida por Insightful Corporation.
 
-En 1995, los profesores de estadística [Ross Ihaka](https://en.wikipedia.org/wiki/Ross_Ihaka) y [Robert Gentleman](https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician)), de la Universidad de Auckland (Nueva Zelanda) iniciaron el ["Proyecto R"](https://en.wikipedia.org/wiki/R_(programming_language)), con la intención de desarrollar un programa estadístico inspirado en el lenguaje S pero de dominio público.
+En 1995, los profesores de estadística [**Ross Ihaka**](https://en.wikipedia.org/wiki/Ross_Ihaka) y [**Robert Gentleman**](https://en.wikipedia.org/wiki/Robert_Gentleman_(statistician)), de la Universidad de Auckland (Nueva Zelanda) iniciaron el [**"Proyecto R"**](https://en.wikipedia.org/wiki/R_(programming_language)), con la intención de desarrollar un programa estadístico inspirado en el lenguaje S pero de dominio público.
 
 Aunque R es considerado un dialecto de S, existen diferencias importantes en el diseño de ambos lenguajes.
 
-El software está desarrollado principalmente en lenguaje C++, con algunas rutinas en Fortran. El nombre “R” hace referencia a las iniciales de sus creadores: Ross y Robert. Actualmente, R es mantenido por un grupo internacional de desarrolladores voluntarios conocido como el [Core Development Team](https://www.r-project.org/contributors.html).
+El software está desarrollado principalmente en lenguaje C++, con algunas rutinas en Fortran. El nombre “R” hace referencia a las iniciales de sus creadores: Ross y Robert. Actualmente, R es mantenido por un grupo internacional de desarrolladores voluntarios conocido como el [**Core Development Team**](https://www.r-project.org/contributors.html).
 
 ## Scripts de R
 
@@ -320,7 +320,7 @@ Los objetos contenedores de datos más simples pertenecen a cinco clases atómic
 
 -   `logical` (valores lógicos: `TRUE` o `FALSE`)
 
-![](images/tipo_datos.png){fig-align="center" width="80%"}
+![](images/tipo_datos.png){fig-align="center"}
 
 Sin embargo, cada una de estas clases de datos no se encuentran de manera aislada, sino encapsuladas dentro de la clase de objeto más básica de R, a la que se denomina **vector**.
 
@@ -425,7 +425,7 @@ Creamos el objeto `factor`1 con 6 elementos caracteres y tres niveles sin orden.
 
 Además de la practicidad de trabajar con factores, muchas funciones de R requieren que las variables categóricas estén en formato factor para funcionar correctamente.
 
-### Dataframe
+### *Dataframe*
 
 Un *dataframe* es un objeto diseñado para contener conjuntos de datos y representa una estructura bidimensional similar a una tabla, con filas y columnas. Cada columna puede almacenar elementos de distintos tipos (por ejemplo, numéricos, de texto o lógicos), siempre que todos tengan la misma longitud.
 
@@ -453,10 +453,10 @@ df1 <- data.frame(HC, edad, sexo)
 df1
 ```
 
-Creamos tres vectores con datos de supuestos individuos, su historia clinica, la edad y el sexo. Luego mediante la función `data.frame()` "unimos" esos vectores en forma vertical para formar un dataframe de 3 variables y 4 observaciones.
+Creamos tres vectores con datos de supuestos individuos, su historia clinica, la edad y el sexo. Luego mediante la función `data.frame()` "unimos" esos vectores en forma vertical para formar un *dataframe* de 3 variables y 4 observaciones.
 
 ::: {.callout-warning appearance="simple"}
-Existen otras estructuras de datos que aparecen en la siguiente figura. Las más habituales en nuestro trabajo son los vectores y los dataframes. Los factores serán necesarios cuando tengamos que especificar distintos órdenes de niveles.
+Existen otras estructuras de datos que aparecen en la siguiente figura. Las más habituales en nuestro trabajo son los vectores y los *dataframes*. Los factores serán necesarios cuando tengamos que especificar distintos órdenes de niveles.
 
 ![](images/objetos_R.png){fig-align="center" width="600"}
 :::
@@ -739,7 +739,7 @@ z
 
 Estos ejemplos muestran las múltiples posibilidades que ofrece el uso de índices para manipular objetos en R, lo que hace al lenguaje muy poderoso y versátil.
 
-Cuando se aplican índices a estructuras bidimensionales, como matrices o dataframes, la notación general es:
+Cuando se aplican índices a estructuras bidimensionales, como matrices o *dataframes*, la notación general es:
 
 ```{r}
 #| eval: false
@@ -857,7 +857,7 @@ nivsalud
 
 Al incorporar este argumento, estamos diciendo que los niveles tienen orden natural. Esto puede observarse en la salida donde se muestra que `"Mala"` \< `"Regular"` \< `"Buena"` \< `"Muy buena"`.
 
-## Gestión de dataframes
+## Gestión de *dataframes*
 
 En R, la estructura utilizada para almacenar datos provenientes de fuentes externas (como archivos .csv, planillas de cálculo, bases SQL, etc.) es el *dataframe*.
 
@@ -888,7 +888,7 @@ trabaja <- c(T, T, F, F, T)
 datos <- data.frame(id, edad, sexo, trabaja)
 ```
 
-Aunque para el ejemplo construimos un dataframe manualmente, lo habitual en la práctica es leer archivos externos que se importan directamente como dataframes.
+Aunque para el ejemplo construimos un *dataframe* manualmente, lo habitual en la práctica es leer archivos externos que se importan directamente como *dataframes*.
 
 Algunas de las funciones generales que podemos aplicar son:
 
@@ -911,7 +911,7 @@ str(datos)
 
 Esta salida nos informa que:
 
--   `datos` es un dataframe con 5 observaciones y 4 variables.
+-   `datos` es un *dataframe* con 5 observaciones y 4 variables.
 
 -   `id` es un entero (`int`).
 
@@ -921,9 +921,9 @@ Esta salida nos informa que:
 
 -   `trabaja` es lógica (`logi`).
 
-Además, `str()` muestra los primeros valores de cada variable, que en este caso son todos, ya que el dataframe tiene solo 5 registros.
+Además, `str()` muestra los primeros valores de cada variable, que en este caso son todos, ya que el *dataframe* tiene solo 5 registros.
 
-Cuando necesitemos llamar al contenido de alguna columna o variable del dataframe, utilizamos la siguiente notación:
+Cuando necesitemos llamar al contenido de alguna columna o variable del *dataframe*, utilizamos la siguiente notación:
 
 ```{r}
 #| eval: false
@@ -938,7 +938,7 @@ datos$sexo
 
 Esto devuelve todos los valores de la variable `sexo`.
 
-También podemos acceder a los elementos del dataframe usando **indexación por filas y columnas**:
+También podemos acceder a los elementos del *dataframe* usando **indexación por filas y columnas**:
 
 ```{r}
 # pedimos la tercer variable (sexo)
@@ -994,7 +994,7 @@ regresion_lineal <- lm(variable_respuesta ~ variable_explicativa,
                        data = datos)
 ```
 
-Además de la fórmula, la función `lm()` incluye el argumento `data =`, que es fundamental: allí se le indica a R el dataframe en el que debe buscar las variables involucradas en el modelo.
+Además de la fórmula, la función `lm()` incluye el argumento `data =`, que es fundamental: allí se le indica a R el *dataframe* en el que debe buscar las variables involucradas en el modelo.
 
 La siguiente tabla muestra los usos de los los operadores más comunes dentro de una formula:
 

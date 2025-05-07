@@ -26,7 +26,7 @@ website:
       - text: "Curso de Epidemiología: Nivel Avanzado"
         menu: 
           - text: "Unidad 1: Introducción a R"
-            href: unidad_1/intro_R.qmd
+            href: unidad_1/01_intro_R.qmd
           - text: "Unidad 2: Estudios transversales"
             # href: unidad_2/est_epidemio.qmd
           - text: "Unidad 3: Estudios ecológicos"
@@ -72,11 +72,11 @@ website:
       - section: "Unidad 1"
         icon: file-earmark-bar-graph
         contents:
-          - unidad_1/intro_R.qmd
-          - unidad_1/intro_RStudio.qmd
-          - unidad_1/intro_tidyverse.qmd
-          - unidad_1/analisis_exploratorio.qmd
-          - unidad_1/hoja_estilo.qmd
+          - unidad_1/01_intro_R.qmd
+          - unidad_1/02_intro_RStudio.qmd
+          - unidad_1/03_intro_tidyverse.qmd
+          - unidad_1/04_analisis_exploratorio.qmd
+          - unidad_1/05_hoja_estilo.qmd
           
       # - section: "Unidad 2"
       #   icon: file-earmark-bar-graph

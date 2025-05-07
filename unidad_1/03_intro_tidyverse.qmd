@@ -17,7 +17,7 @@ source("../setup.R")
 
 ## Introducción
 
-*Tidyverse* [@tidyverse] es el nombre que recibe el conjunto de paquetes desarrollados y/o promovidos por [Hadley Wickham](https://en.wikipedia.org/wiki/Hadley_Wickham) (jefe científico en Posit/RStudio) y su equipo, orientado al trabajo de ciencia de datos con R. Estos paquetes están diseñados para integrarse de manera coherente, compartiendo una misma filosofía de diseño conocida como [*The tidy tools manifesto*](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html).
+*Tidyverse* [@tidyverse] es el nombre que recibe el conjunto de paquetes desarrollados y/o promovidos por [**Hadley Wickham**](https://en.wikipedia.org/wiki/Hadley_Wickham) (jefe científico en Posit/RStudio) y su equipo, orientado al trabajo de ciencia de datos con R. Estos paquetes están diseñados para integrarse de manera coherente, compartiendo una misma filosofía de diseño conocida como [***The tidy tools manifesto***](https://cran.r-project.org/web/packages/tidyverse/vignettes/manifesto.html).
 
 Los cuatro principios básicos sobre los que se construye *tidyverse* son:
 
@@ -92,14 +92,14 @@ Además, existen muchos otros paquetes que siguen la misma filosofía pero no es
 ::: {.callout-warning appearance="simple"}
 Para profundizar el uso de `tidyverse`, se recomienda consultar las siguientes fuentes:
 
--   Sitio oficial: <https://www.tidyverse.org/>
+-   Sitio oficial: [**https://www.tidyverse.org/**](https://www.tidyverse.org/){.uri}
 
--   Libro *R para Ciencia de Datos:* [r4ds](https://es.r4ds.hadley.nz/index.html) o la nueva versión [*r4ds 2e*](https://r4ds.hadley.nz/) (por ahora solo disponible en inglés).
+-   Libro *R para Ciencia de Datos:* [**r4ds**](https://es.r4ds.hadley.nz/index.html) o la nueva versión [***r4ds 2e***](https://r4ds.hadley.nz/) (por ahora solo disponible en inglés).
 
--   [EpiRhandbook en español](https://www.epirhandbook.com/es/index.es.html)
+-   [**EpiRhandbook en español**](https://www.epirhandbook.com/es/index.es.html)
 :::
 
-## Dataframes con `tibble`
+## *Dataframes* con `tibble`
 
 [![](images/tibble.png){fig-align="center" width="20%"}](https://tibble.tidyverse.org/)
 
@@ -164,7 +164,7 @@ mtcars |>
   head()
 ```
 
-Las tuberías le dan mucha mas claridad al código separandolo en partes, como si fuesen oraciones de un párrafo.
+Las tuberías le dan mucha mas claridad al código separándolo en partes, como si fuesen oraciones de un párrafo.
 
 ## Lectura y escritura de datos
 
@@ -257,7 +257,7 @@ En estos ejemplos:
 
 Al leer un archivo, `readr` intenta adivinar automáticamente el tipo de dato de cada columna (*parse*). Si no hay cabecera, los nombres de columna serán `X1`, `X2`, etc.
 
-Podemos inspeccionar la estructura de un dataframe con `glimpse()`:
+Podemos inspeccionar la estructura de un *dataframe* con `glimpse()`:
 
 ```{r}
 glimpse(info)
@@ -285,7 +285,7 @@ read_delim("ejemplo-datos-header-skip.txt",
            delim = "|")
 ```
 
-> **Importante:** No olvides asignar la lectura a un nombre para guardar el dataframe dentro del entorno de trabajo (por ejemplo: `datos <-`).
+> **Importante:** No olvides asignar la lectura a un nombre para guardar el *dataframe* dentro del entorno de trabajo (por ejemplo: `datos <-`).
 
 #### Funciones de escritura
 
@@ -833,7 +833,7 @@ Tiene un par de argumentos opcionales:
 
 [![](images/ggplot.png){fig-align="center" width="20%"}](https://ggplot2.tidyverse.org/)
 
-El paquete `ggplot2` [@ggplot2] se autodefine como una librería para “*crear elegantes visualizaciones de datos utilizando una gramática de gráficos*”. Proporciona una forma intuitiva de construir gráficos basada en [The Grammar of Graphics](https://www.springer.com/gp/book/9780387245447) a través de un sistema basado en tres componentes básicos:
+El paquete `ggplot2` [@ggplot2] se autodefine como una librería para “*crear elegantes visualizaciones de datos utilizando una gramática de gráficos*”. Proporciona una forma intuitiva de construir gráficos basada en [**The Grammar of Graphics**](https://www.springer.com/gp/book/9780387245447) a través de un sistema basado en tres componentes básicos:
 
 -   datos
 -   coordenadas
