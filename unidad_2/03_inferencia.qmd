@@ -19,11 +19,11 @@ La **estadística inferencial** es la rama de la estadística que permite formul
 
 Las dos actividades principales en este proceso son:
 
--    **Estimación de parámetros**: consiste en calcular, a partir de los datos muestrales, valores que aproximen parámetros desconocidos de la población.
+-   **Estimación de parámetros**: consiste en calcular, a partir de los datos muestrales, valores que aproximen parámetros desconocidos de la población.
 
-    -    *Ejemplo: Estimar la prevalencia de una enfermedad X en la población.*
+    -   *Ejemplo: Estimar la prevalencia de una enfermedad X en la población.*
 
--    **Pruebas de hipótesis**: implica evaluar con base estadística afirmaciones acerca de uno o más parámetros.\
+-   **Pruebas de hipótesis**: implica evaluar con base estadística afirmaciones acerca de uno o más parámetros.\
     *Ejemplos:*
 
     -   *¿La prevalencia de la enfermedad X en Argentina es menor que en Uruguay?*

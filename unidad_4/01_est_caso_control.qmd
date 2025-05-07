@@ -1,5 +1,10 @@
 ---
 title: "Estudios de casos y controles"
+author: 
+  - name: Christian Ballejo
+    orcid: 0000-0002-7346-5701
+  - name: Andrea Silva
+    orcid: 0000-0002-4791-9706
 bibliography: references.bib
 ---
 
@@ -65,7 +70,7 @@ En los últimos tiempos, se ha profundizado en los aspectos metodológicos de lo
 
 -   **Estudios de caso-caso**. En esta estrategia se compara la historia de exposición en subgrupos de casos. En el caso de enfermedades infecciosas, es posible conformar diversos subgrupos de enfermedad, partiendo de datos de vigilancia epidemiológica.
 
-Quienes desean profundizar estos tópicos sobre el diseño de los CyC, pueden leer el capítulo correspondiente de *“Epidemiología. Diseño y análisis de estudios”* de Hernández-Ávila (2011) . Comenzaremos ahora con la parte de análisis de estos diseños.
+Quienes desean profundizar estos tópicos sobre el diseño de los CyC, pueden leer el capítulo correspondiente de *“Epidemiología. Diseño y análisis de estudios”* de @hernández-ávila2011 . Comenzaremos ahora con la parte de análisis de estos diseños.
 
 ## Análisis de estudios de casos y controles
 
@@ -75,7 +80,7 @@ $$
 OR = \frac{Odds~exposición~casos}{Odds~exposición~controles}
 $$
 
-El modelo multivariado a utilizar para estudios de casos y controles no apareados es la [**regresión logística**](reg_logistica.qmd), que desarrollaremos a continuación. Por otro lado, los estudios de CC apareados se analizan mediante modelos de [**regresión logística condicional**](reg_logistica_cond.qmd), los cuales abordaremos brevemente al final de la unidad.
+El modelo multivariado a utilizar para estudios de casos y controles no apareados es la [**regresión logística**](02_reg_logistica.qmd), que desarrollaremos a continuación. Por otro lado, los estudios de casos y controles apareados se analizan mediante modelos de [**regresión logística condicional**](04_reg_logistica_cond.qmd), los cuales abordaremos brevemente al final de la unidad.
 
 ::: hidden
 @escuelasanidad

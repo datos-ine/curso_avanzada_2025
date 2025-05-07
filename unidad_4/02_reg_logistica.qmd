@@ -183,25 +183,25 @@ summary(modelo)
 
 Los elementos a tener en cuenta son:
 
--   **Call**: Muestra la fórmula del modelo utilizado.
+-   `Call`: Muestra la fórmula del modelo utilizado.
 
--   **Estimate**: Contiene los coeficientes $\beta$ estimados, incluyendo el intercepto ($\beta_0$) y las variables explicativas ($\beta_i$). Al aplicar a estos coeficientes la función `exp()`, que representa la función inversa del logaritmo natural, se obtiene el Odds Ratio (OR). Esto implica que los coeficientes de las variables independientes se interpretan como el OR de que ocurra el evento para cada incremento de la variable independiente, manteniendo constantes las demás variables independientes.
+-   `Estimate`: Contiene los coeficientes $\beta$ estimados, incluyendo el intercepto ($\beta_0$) y las variables explicativas ($\beta_i$). Al aplicar a estos coeficientes la función `exp()`, que representa la función inversa del logaritmo natural, se obtiene el Odds Ratio (OR). Esto implica que los coeficientes de las variables independientes se interpretan como el OR de que ocurra el evento para cada incremento de la variable independiente, manteniendo constantes las demás variables independientes.
 
--   **Std. Error**: Representa el error estándar asociado a cada coeficiente.
+-   `Std. Error`: Representa el error estándar asociado a cada coeficiente.
 
--   **z value**: Corresponde al estadístico del test de Wald para evaluar la significancia de cada coeficiente.
+-   `z value`: Corresponde al estadístico del test de Wald para evaluar la significancia de cada coeficiente.
 
--   **Pr(\>\|z\|)**: Proporciona los *p*-valores asociados al test de Wald, que indican si los coeficientes son significativamente diferentes de cero.
+-   `Pr(>|z|)`: Proporciona los *p*-valores asociados al test de Wald, que indican si los coeficientes son significativamente diferentes de cero.
 
 Además, en la parte final de la salida se presentan:
 
--   **Null deviance**: La devianza del modelo nulo, que asume que ninguna de las variables explicativas tiene efecto.
+-   `Null deviance`: La devianza del modelo nulo, que asume que ninguna de las variables explicativas tiene efecto.
 
--   **Residual deviance**: La devianza del modelo ajustado, que indica cuánto se reduce la devianza al incluir las variables explicativas.
+-   `Residual deviance`: La devianza del modelo ajustado, que indica cuánto se reduce la devianza al incluir las variables explicativas.
 
--   **AIC (Criterio de Información de Akaike)**: Una medida de la calidad del modelo, penalizando por la complejidad para favorecer modelos más parsimoniosos.
+-   `AIC`: Una medida de la calidad del modelo, penalizando por la complejidad para favorecer modelos más parsimoniosos.
 
--   **Number of Fisher Scoring iterations**: Número de iteraciones realizadas durante el proceso de estimación de parámetros del modelo.
+-   `Number of Fisher Scoring iterations`: Número de iteraciones realizadas durante el proceso de estimación de parámetros del modelo.
 
 A continuación, profundizaremos en el significado de algunos de estos conceptos.
 
@@ -217,7 +217,7 @@ Expresamos la prueba en términos del coeficiente $\beta_i$ porque esta formulac
 
 Dado que una pendiente $\beta_i = 0$ implica un OR de 1, la hipótesis nula también puede expresarse como *"la razón de probabilidades es 1"*. Esto significa que la variable explicativa no tiene capacidad predictiva, ya que las probabilidades de los grupos comparados son iguales.
 
-La interpretación sigue criterios comunes en inferencia estadística: valores de *p* menores a 0,05 sugieren evidencia suficiente para rechazar la hipótesis nula, indicando que la variable contribuye significativamente al modelo (*p* \< 0,1 podría considerarse en contextos más flexibles). Es fundamental recordar que, en regresión logística, los coeficientes $\beta_i$ no se interpretan directamente. Para obtener su efecto sobre la razón de probabilidades, se debe calcular su exponencial $\exp(\beta_i)$.
+La interpretación sigue criterios comunes en inferencia estadística: valores de $p<0,05$ sugieren evidencia suficiente para rechazar la hipótesis nula, indicando que la variable contribuye significativamente al modelo ($p < 0,1$ podría considerarse en contextos más flexibles). Es fundamental recordar que, en regresión logística, los coeficientes $\beta_i$ no se interpretan directamente. Para obtener su efecto sobre la razón de probabilidades, se debe calcular su exponencial $\exp(\beta_i)$.
 
 ### Máxima verosimilitud
 
@@ -277,7 +277,7 @@ El AIC proporciona un método para la selección de modelos, donde valores menor
 ::: {.callout-warning appearance="simple"}
 Para comparar dos o más modelos de regresión logística, se pueden utilizar las siguientes técnicas:
 
--   **AIC**: El primer término de la ecuación del AIC penaliza por la inclusión de variables en el model ($2k$), mientras que el segundo compensa por la bondad de ajuste ($2ln(D)$). Por lo tanto, dado un conjunto de modelos para los datos, el modelo preferido es aquel con el valor mínimo de AIC.
+-   **AIC**: El primer término de la ecuación del AIC penaliza por la inclusión de variables en el modelo ($2k$), mientras que el segundo compensa por la bondad de ajuste ($2ln(D)$). Por lo tanto, dado un conjunto de modelos para los datos, el modelo preferido es aquel con el valor mínimo de AIC.
 
     En R, realizamos la comparación con la función `AIC()`:
 
@@ -306,7 +306,7 @@ Para comparar dos o más modelos de regresión logística, se pueden utilizar la
 
 ### Bondad de ajuste
 
-De forma análoga al Coeficiente de Determinación ($R^2$) utilizado en regresión Lineal, se han desarrollado diversos coeficientes para estimar la proporción de variabilidad explicada por las variables independientes en modelos de regresión logística.
+De forma análoga al Coeficiente de Determinación ($R^2$) utilizado en regresión lineal, se han desarrollado diversos coeficientes para estimar la proporción de variabilidad explicada por las variables independientes en modelos de regresión logística.
 
 En R, podemos calcular estos coeficientes utilizando el paquete `performance`:
 
@@ -342,7 +342,7 @@ En R, podemos calcular estos coeficientes utilizando el paquete `performance`:
     performance_hosmer(modelo)
     ```
 
-    En un test de bondad de ajuste, la hipótesis nula siempre afirma que el modelo propuesto se ajusta bien a los datos observados. Por lo tanto, un *p*-valor superior a 0.05 implica que lo observado se ajusta suficientemente bien a lo esperado bajo el modelo.
+    En un test de bondad de ajuste, la hipótesis nula siempre afirma que el modelo propuesto se ajusta bien a los datos observados. Por lo tanto, un $p>0,05$ implica que lo observado se ajusta suficientemente bien a lo esperado bajo el modelo.
 
 ### Capacidad predictiva del modelo
 
@@ -397,13 +397,13 @@ El ajuste de un modelo de regresión logística en R se realiza utilizando la fu
 glm(formula, family = binomial(link = "logit"), data)
 ```
 
--   **Formula:** Especifica la relación entre la variable dependiente y las variables independientes en el modelo. Sigue la estructura estándar:
+-   `formula`**:** Especifica la relación entre la variable dependiente y las variables independientes en el modelo. Sigue la estructura estándar:
 
 $$
 variable\_dependiente \sim variable\_indep_1 + variable\_indep_2 +\dots+ variable\_indep_n
 $$
 
--   **Family:** Se refiere a la familia de distribuciones y la función de enlace utilizada para ajustar el modelo. Las opciones comunes incluyen:
+-   `family`**:** Se refiere a la familia de distribuciones y la función de enlace utilizada para ajustar el modelo. Las opciones comunes incluyen:
 
     -   `gaussian()`: Utilizada para variables dependientes continuas con distribución normal. El enlace predeterminado es `identity`, lo cual es análogo a ajustar un modelo de RLM. Puede emplear también enlaces `log`, e `inverse`.
 
@@ -415,7 +415,7 @@ $$
 
     Si la función de enlace no se especifica, se utiliza el enlace canónico (predeterminado) para cada familia. Por ejemplo, si omitimos el argumento `link = "logit"`, de todas maneras quedaría definido ese mismo enlace para la familia `binomial`.
 
--   **Data:** Nombre del dataframe que contiene las variables utilizadas en el modelo.
+-   `data`**:** Nombre del *dataframe* que contiene las variables utilizadas en el modelo.
 
 ### Gestión de variables dicotómicas
 
@@ -485,7 +485,7 @@ Existen diversos métodos estadísticos para la selección de variables en regre
 
 ## Ejemplo práctico en R
 
-Utilizaremos una tabla de datos denominada `caminar.txt`, que contiene observaciones de un estudio de casos y controles donde se evaluó a 800 niños, con el objetivo de identificar qué factores se asociaban al desarrollo de la marcha.
+Utilizaremos una tabla de datos denominada "`caminar.txt`", que contiene observaciones de un estudio de casos y controles donde se evaluó a 800 niños, con el objetivo de identificar qué factores se asociaban al desarrollo de la marcha.
 
 Comencemos cargando en R los paquetes que utilizaremos:
 
@@ -739,7 +739,7 @@ Entre las pruebas de *bondad de ajuste* basadas en la agrupación de las probabi
 performance_hosmer(mod6)
 ```
 
-El test de bondad de ajuste de Hosmer y Lemeshow nos da un *p*-valor para el **mod6** de `r performance_hosmer(mod6)$p.value |> round(3)`, por lo que concluimos que el modelo ajusta adecuadamente los datos (no hay diferencia significativa entre los datos observados en relación a los esperados).
+El test de bondad de ajuste de Hosmer y Lemeshow nos da un *p*-valor para el `mod6` de `r performance_hosmer(mod6)$p.value |> round(3)`, por lo que concluimos que el modelo ajusta adecuadamente los datos (no hay diferencia significativa entre los datos observados en relación a los esperados).
 
 ### Curva ROC
 
@@ -894,7 +894,7 @@ Los resultados para cada una de las variables independientes es cercano a 1, por
 
 ### Interacción
 
-En este punto aplica el mismo concepto y explicación que la expresada en el material desarrollado en la [**Unidad 3**](https://datos-ine.github.io/unidad_3/conf_interac.html).
+En este punto aplica el mismo concepto y explicación que la expresada en el material desarrollado en la [**Unidad 3**](https://datos-ine.github.io/unidad_3/06_conf_interac.html).
 
 Ante la pregunta de la existencia de una variable modificadora de efecto dentro de la regresión múltiple, podemos realizar un análisis comparativo separando por estratos o subgrupos. El objetivo es identificar si la relación de la variable respuesta y una variable independiente cambia de acuerdo al nivel de otra variable independiente.
 
@@ -956,11 +956,11 @@ Observamos que el modelo con interacción tiene mejor AIC y $R^2$ que el `mod6`.
 tbl_regression(mod_interaccion, exponentiate = T)
 ```
 
-El término de interacción es significativo e implica el exceso de la variabilidad de los datos que no puede ser explicada por la suma de las variables consideradas. En este caso la interacción es positiva (sexiste "sinergia" entre las variables) con un OR de `r mod_interaccion$coefficients[5] |> exp() |> round(2)`.
+El término de interacción es significativo e implica el exceso de la variabilidad de los datos que no puede ser explicada por la suma de las variables consideradas. En este caso la interacción es positiva (existe "sinergia" entre las variables) con un OR de `r mod_interaccion$coefficients[5] |> exp() |> round(2)`.
 
 ### Tamaño de la muestra y número de variables independientes
 
-En el ámbito epidemiológico, es fundamental asegurarse de que el tamaño de la muestra sea adecuado para obtener estimaciones confiables en un modelo de regresión logística. Una regla general para determinar el tamaño de muestra es la fórmula propuesta por Freeman (1987), que establece que el tamaño de muestra debería ser 10 veces el número de variables independientes a estimar, más uno.
+En el ámbito epidemiológico, es fundamental asegurarse de que el tamaño de la muestra sea adecuado para obtener estimaciones confiables en un modelo de regresión logística. Una regla general para determinar el tamaño de muestra es la fórmula propuesta por @freeman1987, que establece que el tamaño de muestra debería ser 10 veces el número de variables independientes a estimar, más uno.
 
 $$
 n = 10*(k+1)
@@ -1005,8 +1005,6 @@ La base de datos tiene 419 casos donde la variable de respuesta es 1 y 381 casos
 @escuelasanidad
 
 @field2014
-
-@freeman1987
 
 @hernández-ávila2011
 

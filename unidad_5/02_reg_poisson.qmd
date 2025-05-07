@@ -63,7 +63,7 @@ $$
 ln\lambda=\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n 
 $$ $$ 
 ln(d)=ln(n)+\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n  
-$$Al término $ln(n)$ se lo denomina ***offset***. En general, es un valor que debemos proporcionale al *software* para ajustar un modelo de Poisson y no se estima a partir de los datos.
+$$Al término $ln(n)$ se lo denomina ***offset***. En general, es un valor que debemos proporcionarle al *software* para ajustar un modelo de Poisson y no se estima a partir de los datos.
 
 Con la ecuación del modelo establecida, el siguiente paso es estimar los coeficientes y evaluar la calidad del ajuste. Los coeficientes se calculan utilizando métodos como la Estimación de Máxima Verosimilitud (MLE). A partir de estos coeficientes, podemos realizar inferencias, como el test de Wald para evaluar la hipótesis nula ($H_0 : \beta_i = 0$), calcular los intervalos de confianza (IC), y obtener los riesgos relativos (RR) con sus respectivos IC. La bondad de ajuste del modelo se evaluará a través de la función Deviance siguiendo el mismo esquema jerárquico de evaluación que en el caso de la regresión logística.
 
@@ -85,7 +85,7 @@ Una característica fundamental de la distribución de Poisson es que la media y
 
 Otra situación en la que el modelo de Poisson puede no ser adecuado es cuando hay un número excesivo de ceros en los datos, es decir, cuando la frecuencia observada de ceros es mayor de lo que predice el modelo. Esto se debe a que el $ln(0)$ no está definido. De manera particular, es posible que el mecanismo aleatorio que dio origen a los datos de conteo muestre una mayor concentración para algún valor específico, que puede ser el cero (como ocurre con algunas variables vinculadas a salud) o cualquier otro valor positivo. Esto implica que dicho valor tiene una mayor probabilidad de ocurrencia que la especificada por la distribución Poisson o cualquier otra distribución.
 
-En el [**siguiente capítulo**](03_dispersion.qmd)de esta unidad, exploraremos cómo detectar y manejar tanto la sobredispersión de los datos como el exceso de ceros, para asegurar que el modelo elegido sea el más adecuado para los datos analizados.
+En el [**siguiente capítulo**](03_dispersion.qmd) de esta unidad, exploraremos cómo detectar y manejar tanto la sobredispersión de los datos como el exceso de ceros, para asegurar que el modelo elegido sea el más adecuado para los datos analizados.
 
 ## Construcción de un modelo de Poisson en R
 
@@ -111,15 +111,15 @@ glm(formula, family = poisson, data = datos)
 
 donde:
 
--   **formula**: al igual que en los casos anteriores, describe la fórmula del modelo a ajustar con la estructura:
+-   `formula`: al igual que en los casos anteriores, describe la fórmula del modelo a ajustar con la estructura:
 
 $$ 
 variable\_dependiente \sim variable\_indepen_1 + variable\_indepen_2 +\dots+ variable\_indepen_n 
 $$
 
--   **family**: indica la familia de distribuciones utilizadas y su función de enlace.
+-   `family`: indica la familia de distribuciones utilizadas y su función de enlace.
 
--   **data**: especifica el nombre de la base de datos (*dataframe*) que contiene las variables del modelo.
+-   `data`: especifica el nombre de la base de datos (*dataframe*) que contiene las variables del modelo.
 
 Para obtener un resumen de los resultados del modelo se utiliza la función `summary()`:
 
@@ -131,21 +131,21 @@ summary(modelo)
 
 El resumen del objeto de regresión de Poisson incluye:
 
--   **Call**: fórmula del modelo
+-   `Call`: fórmula del modelo
 
--   **Deviance Residuals**: muestra la distribución de los residuos (mediana, mínimo, máximo y percentilos 25-75) obtenidos en la última iteración
+-   `Deviance Residuals`: muestra la distribución de los residuos (mediana, mínimo, máximo y percentilos 25-75) obtenidos en la última iteración
 
--   **Coefficients**: Incluye los coeficientes del intercepto y de las variables independientes, junto con los errores estándar, el valor *z* (estadístico de Wald) y el *p*-valor correspondiente.
+-   `Coefficients`: Incluye los coeficientes del intercepto y de las variables independientes, junto con los errores estándar, el valor $z$ (estadístico de Wald) y el $p$-valor correspondiente.
 
--   **Dispersion parameter for poisson family taken to be 1**: indica que el modelo asume el supuesto de equidispersión (media igual a varianza).
+-   `Dispersion parameter for poisson family taken to be 1`: indica que el modelo asume el supuesto de equidispersión (media igual a varianza).
 
--   **Null deviance**: devianza del modelo nulo, que solo incluye al intercepto.
+-   `Null deviance`: devianza del modelo nulo, que solo incluye al intercepto.
 
--   **Residual deviance**: devianza del modelo ajustado.
+-   `Residual deviance`: devianza del modelo ajustado.
 
--   **AIC**: criterio de información de Akaike.
+-   `AIC`: criterio de información de Akaike.
 
--   **Number of Fisher Scoring iterations**: cantidad de iteraciones realizadas.
+-   `Number of Fisher Scoring iterations`: cantidad de iteraciones realizadas.
 
 El objeto de regresión creado con `glm()` pertenece a las clases `"glm"` y `"lm"` y está compuesto por varios componentes que pueden ser accedidos usando el nombre del modelo seguido del signo `$`. Algunos de los componentes más relevantes son:
 
@@ -192,7 +192,7 @@ glimpse(datos)
 
 Las variables de estudio son:
 
--   `muertes`: Número de muertes por persona-años (**persona_anio**) en cada categoría. Nuestra variable de interés es la tasa de incidencia de mortalidad.
+-   `muertes`: Número de muertes por persona-años (`persona_anio`) en cada categoría. Nuestra variable de interés es la tasa de incidencia de mortalidad.
 
 -   `grupo_edad`: Grupo de edad de los sujetos.
 
@@ -202,7 +202,7 @@ Las variables de estudio son:
 
 -   `arsenico:` Nivel de exposición al arsénico durante el período de estudio.
 
-Las variables `grupo_edad`, `periodo`, `comienzo` y `arsenico` son de tipo caracter y debemos convertirlas a factor. Podemos hacer esto manualmente para cada variable, o usar el comando `across()` que permite modificar varias columnas a la vez:
+Las variables `grupo_edad`, `periodo`, `comienzo` y `arsenico` son de tipo carácter y debemos convertirlas a factor. Podemos hacer esto manualmente para cada variable, o usar el comando `across()` que permite modificar varias columnas a la vez:
 
 ```{r}
 datos <- datos |> 
@@ -285,7 +285,7 @@ datos |>
 
 En el gráfico anterior, podemos observar que el grupo de mayor edad tiende a tener una incidencia más alta, lo que es consistente con la expectativa de que el riesgo de muerte aumenta con la edad. Sin embargo, para obtener una comprensión más precisa de esta relación, es crucial ajustar por otras covariables. La regresión de Poisson nos permitirá examinar cómo la exposición al arsénico y otros factores afectan la mortalidad, controlando simultáneamente por la edad y otros posibles factores de confusión.
 
-### Offset
+### *Offset*
 
 Dado que en este ejemplo nos interesa modelar la tasa de incidencia vamos a necesitar incorporar dentro del modelo un termino de desplazamiento (en inglés *"offset"*).
 
@@ -298,7 +298,7 @@ modelo <- glm(muertes ~ periodo + grupo_edad + arsenico,
               data = datos)
 ```
 
-El término `offset = log(persona_anio)` en el modelo de regresión de Poisson permite que la variable **persona_anio** actúe como el denominador en el cálculo de las tasas de mortalidad. La transformación logarítmica es necesaria porque la función de enlace del modelo de Poisson es el logaritmo.
+El término `offset = log(persona_anio)` en el modelo de regresión de Poisson permite que la variable `persona_anio` actúe como el denominador en el cálculo de las tasas de mortalidad. La transformación logarítmica es necesaria porque la función de enlace del modelo de Poisson es el logaritmo.
 
 Para obtener un resumen del modelo ajustado, utilizamos la función `summary()`, que proporciona una visión detallada de los resultados del modelo:
 
@@ -437,7 +437,7 @@ Concluimos que las personas expuestas al arsénico durante al menos un año tien
 
 El término `offset = log(persona_anio)` en el modelo de Poisson convierte el recuento de eventos en una densidad de incidencia, ajustada por el tiempo de seguimiento. Esto permite que el modelo estime tasas de incidencia de acuerdo con el tiempo de exposición.
 
-Los coeficientes del modelo de Poisson se interpretan en términos de tasas de incidencia. En particular, el coeficiente asociado a la variable de exposición al arsénico se transforma mediante la exponenciación para obtener el riesgo relativo. Si el coeficiente de la variable **arsenico** es $\beta$, el riesgo relativo (RR) se calcula como $e^\beta$. En nuestro caso, si $e^\beta = 2,25$, esto indica que las personas expuestas al arsénico durante al menos un año tienen un riesgo 2,25 veces mayor de muerte por enfermedad respiratoria en comparación con las no expuestas.
+Los coeficientes del modelo de Poisson se interpretan en términos de tasas de incidencia. En particular, el coeficiente asociado a la variable de exposición al arsénico se transforma mediante la exponenciación para obtener el riesgo relativo. Si el coeficiente de la variable `arsenico` es $\beta$, el riesgo relativo (RR) se calcula como $e^\beta$. En nuestro caso, si $e^\beta = 2,25$, esto indica que las personas expuestas al arsénico durante al menos un año tienen un riesgo 2,25 veces mayor de muerte por enfermedad respiratoria en comparación con las no expuestas.
 
 ### Densidad de incidencia
 
@@ -457,7 +457,7 @@ Esta población tendría una densidad de incidencia estimada de 33,26 por 100.00
 
 **Riesgo relativo**
 
-En un estudio de casos y controles, como los vistos en la Unidad 4, el OR se utiliza para comparar la prevalencia de exposición entre casos y controles. En un estudio de cohorte, este valor es igual a la relación entre las probabilidades de contraer una enfermedad entre el grupo expuesto y el no expuesto. La razón de los riesgos para los dos grupos se denomina entonces "razón de riesgo" o **riesgo relativo** (**RR**).
+En un estudio de casos y controles, como los vistos en la [**Unidad 4**](../unidad_4/01_est_caso_control.qmd), el OR se utiliza para comparar la prevalencia de exposición entre casos y controles. En un estudio de cohortes, este valor es igual a la relación entre las probabilidades de contraer una enfermedad entre el grupo expuesto y el no expuesto. La razón de los riesgos para los dos grupos se denomina entonces "razón de riesgo" o **riesgo relativo** (**RR**).
 
 En un estudio de cohorte real, los sujetos no siempre tienen la misma duración de seguimiento. El riesgo relativo ignora la duración del seguimiento. Por tanto, no es una buena medida de comparación del riesgo entre los dos grupos.
 
@@ -484,18 +484,18 @@ rdi.arsenico <- di[2] / di[1]
 rdi.arsenico
 ```
 
-El código anterior comienza agregando una nueva fila al dataframe `newdata` que tiene lo mismo que la primera fila, excepto que la variable `arsenico_cat` es **"1+ años"**.
+El código anterior comienza agregando una nueva fila al *dataframe* `newdata` que tiene lo mismo que la primera fila, excepto que la variable `arsenico_cat` es **"1+ años"**.
 
 A continuación, se calculan las respuestas o densidades de incidencia de las dos condiciones.
 
-La RDI se obtiene luego de la división de las densidades de incidencia para `arsenico_cat` **= "\<1 año"** con `arsenico_cat` **= "1+ años"**. Una forma más corta de obtenerla es mediante el coeficiente de la variable específica `arsenico`, utilizando R `base` o el paquete `gtsummary`.
+La RDI se obtiene luego de la división de las densidades de incidencia para arsenico_cat = "\<1 año" con `arsenico_cat = "1+ años"`. Una forma más corta de obtenerla es mediante el coeficiente de la variable específica `arsenico`, utilizando R `base` o el paquete `gtsummary`.
 
 ```{r}
 tbl_regression(mod5, exponentiate = T,                
                include = "arsenico_cat")
 ```
 
-También podemos mostrar la salida mediante un gráfico usando el ecosistema de paquetes `easystats`, tal como vimos en la **unidad anterior**:
+También podemos mostrar la salida mediante un gráfico usando el ecosistema de paquetes `easystats`, tal como vimos en la [**unidad anterior**](../unidad_4/02_reg_logistica.qmd):
 
 ```{r}
 model_parameters(mod5, exponentiate = T) |> 

@@ -51,7 +51,7 @@ Mide la pérdida en precisión al utilizar un diseño muestral complejo en lugar
 
 El paquete más conocido y utilizado del lenguaje R para trabajar con datos provenientes de muestreos complejos es `survey` [@survey]. Desarrollado por *Thomas Lumley* que a su vez es autor del libro *Complex Surveys - A Guide to Analysis Using R (2010)*.
 
-Las funciones que lo integran utilizan en sus argumentos la sintaxis fórmula preferentemente y no son compatibles con el universo "ordenado" de `tidyverse`. Con el objetivo de hacer compatible estas funciones crearon un paquete "wrapper" (envoltorio) llamado `srvyr` [@srvyr], que incorpora sintaxis *tidy*, haciendo uso de tuberías y funciones tales como `group_by()`, `summarise()`, entre otras.
+Las funciones que lo integran utilizan en sus argumentos la sintaxis fórmula preferentemente y no son compatibles con el universo "ordenado" de `tidyverse`. Con el objetivo de hacer compatible estas funciones crearon un paquete "*wrapper*" (envoltorio) llamado `srvyr` [@srvyr], que incorpora sintaxis *tidy*, haciendo uso de tuberías y funciones tales como `group_by()`, `summarise()`, entre otras.
 
 El primer paso para trabajar con las funciones de `srvyr` es crear un objeto con la información relacionada con el diseño muestral. Esta tarea se realiza con la función `as_survey_design()` que tiene estos argumentos principales:
 

@@ -50,7 +50,7 @@ tibble(
   kbl_format()
 ```
 
-> **Nota**: Los aspectos metodológicos esenciales para el reporte de estudios transversales pueden consultarse en la [**Declaración STROBE**](est_epidemio.qmd#declaracion_strobe), sección *Métodos*.
+> **Nota**: Los aspectos metodológicos esenciales para el reporte de estudios transversales pueden consultarse en la [**Declaración STROBE**](01_est_epidemio.qmd#declaracion_strobe), sección *Métodos*.
 
 ## Análisis de estudios transversales
 

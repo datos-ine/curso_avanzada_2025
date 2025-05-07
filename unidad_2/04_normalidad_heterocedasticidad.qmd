@@ -13,7 +13,7 @@ source("../setup.R")
 
 ## Introducción
 
-Este material es una continuación del capítulo sobre [Análisis exploratorio de datos](../unidad_1/analisis_exploratorio.qmd) de la **Unidad 1**. Recordemos que uno de los objetivos del EDA es conocer cómo se distribuyen los valores de las variables de interés.
+Este material es una continuación del capítulo sobre [**Análisis exploratorio de datos**](../unidad_1/04_analisis_exploratorio.qmd) de la **Unidad 1**. Recordemos que uno de los objetivos del EDA es conocer cómo se distribuyen los valores de las variables de interés.
 
 Las características fundamentales a la hora de decidir si utilizaremos métodos paramétricos o no paramétricos para la inferencia estadística, es que los datos se ajusten a una distribución normal y conocer si tienen una dispersión homogénea o heterogénea. Ahora que conocemos el funcionamiento interno de los test de hipótesis, podemos usar **pruebas de bondad de ajuste** para evaluar los supuestos de normalidad y homocedasticidad.
 
@@ -156,13 +156,13 @@ En función de esta interpretación (que es común a todos los test de hipótesi
 
 #### Test de Kolmogorov-Smirnov
 
-El test de [Kolmogorov-Smirnov](https://es.wikipedia.org/wiki/Prueba_de_Kolmogorov-Smirnov) permite estudiar si una muestra procede de una población con una determinada distribución que no está limitado únicamente a la distribución normal.
+El test de [**Kolmogorov-Smirnov**](https://es.wikipedia.org/wiki/Prueba_de_Kolmogorov-Smirnov) permite estudiar si una muestra procede de una población con una determinada distribución que no está limitado únicamente a la distribución normal.
 
 El test asume que se conoce la media y varianza poblacional, lo que en la mayoría de los casos no es posible. Para resolver este problema, se realizó una modificación conocida como test Lilliefors.
 
 #### Test de Lilliefors
 
-El test de [Lilliefors](https://es.wikipedia.org/wiki/Prueba_de_Lilliefors) asume que la media y varianza son desconocidas y está especialmente desarrollado para contrastar la normalidad.
+El test de [**Lilliefors**](https://es.wikipedia.org/wiki/Prueba_de_Lilliefors) asume que la media y varianza son desconocidas y está especialmente desarrollado para contrastar la normalidad.
 
 Es la alternativa al test de Shapiro-Wilk cuando el número de observaciones es mayor de 50.
 

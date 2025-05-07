@@ -192,7 +192,7 @@ compare_performance(mod_cond, mod_cond1, mod_cond2, mod_cond3,
                     metrics = "common", rank = T)
 ```
 
-El modelo sin `fuma` tiene mejor performance que el modelo saturado:
+El modelo sin `fuma` tiene mejor *performance* que el modelo saturado:
 
 ```{r}
 # Salida modelo condicional 1
@@ -225,13 +225,13 @@ compare_performance(mod_cond1b, mod_cond1c,
                     metrics = "common")
 ```
 
-Nos quedamos con el modelo que tiene solo `fib4_cat` como variable explicativa.
+Nos quedamos con el modelo que tiene solo `fib4_cat` como variable explicativa:
 
 ```{r}
 tbl_regression(mod_cond1c, exponentiate = T)
 ```
 
-En el modelo final, las personas con alto riesgo de fibrosis hepática presentan 3,7 veces más probabilidades de morir (95% IC: 2,45-5,57) que aquellas sin la condición.
+En el modelo final, las personas con alto riesgo de fibrosis hepática presentan 3,7 veces más probabilidades de morir ($95% IC: 2,45-5,57$) que aquellas sin la condición.
 
 ::: hidden
 @agresti2015

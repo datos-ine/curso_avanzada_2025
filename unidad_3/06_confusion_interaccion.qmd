@@ -13,7 +13,7 @@ source("../setup.R")
 
 ## Introducción
 
-Antes de comenzar a construir modelos de [regresión lineal múltiple](reg_lineal_multiple.qmd), es necesario repasar algunos conceptos fundamentales...
+Antes de comenzar a construir modelos de [**regresión lineal múltiple**](07_reg_lineal_multiple.qmd), es necesario repasar algunos conceptos fundamentales...
 
 Los estudios epidemiológicos suelen partir de modelos teóricos conocidos y vinculados con el problema de investigación. Las variables recolectadas se definen en la etapa de diseño del estudio, cada una cumpliendo un rol específico. Generalmente, se identifican dos variables principales y excluyentes: la exposición (variable independiente) y el resultado (variable dependiente). Una vez seleccionadas la variable dependiente e independiente, aas demás variables medidas o no medidas en el estudio se denominan **covariables**.
 
@@ -37,6 +37,10 @@ Según @gordis2017, en un estudio que evalúa si la exposición ($X$) causa un r
 
 Para conceptualizar este y otros mecanismos, es útil utilizar gráficos acíclicos dirigidos (DAGs, por sus siglas en inglés). Estos diagramas representan las relaciones causales sin formar ciclos cerrados y conectan variables mediante flechas dirigidas.
 
+```{dot}
+
+```
+
 ![](images/DAG1.svg){fig-align="center" width="70%"}
 
 Para quienes necesiten profundizar, se recomienda leer el artículo:
@@ -58,7 +62,7 @@ El ajuste estadístico, característico de los análisis multivariados, permite 
 
 Un criterio comúnmente aceptado es que un factor se considera confusor si su ajuste provoca un cambio de al menos el 10% en la magnitud de la asociación. Por ejemplo, edad y sexo son variables frecuentemente confusoras en estudios epidemiológicos y generalmente son pocos los trabajos que no presentan datos ajustados por estas covariables..
 
-En este curso utilizaremos la [regresión lineal múltiple](reg_lineal_multiple.qmd) y los modelos lineales generalizados para manejar la confusión, ajustando por múltiples covariables. A continuación, se ejemplifica gráficamente con un diagrama de dispersión.
+En este curso utilizaremos la [**regresión lineal múltiple**](07_reg_lineal_multiple.qmd) y los modelos lineales generalizados para manejar la confusión, ajustando por múltiples covariables. A continuación, se ejemplifica gráficamente con un diagrama de dispersión.
 
 ```{r}
 #| echo: false

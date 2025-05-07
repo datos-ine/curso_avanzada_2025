@@ -523,21 +523,21 @@ glimpse(datos)
 
 La base de datos tiene `r nrow(datos)` observaciones y `r ncol(datos)` variables. La variable dependiente es `tasa_mortalidad` y hay 3 variables independientes categóricas y 6 variables independientes numéricas o continuas:
 
--   **tasa_mortalidad**: Tasa de mortalidad por cáncer a nivel de condado (datos agregados).
+-   `tasa_mortalidad`: Tasa de mortalidad por cáncer a nivel de condado (datos agregados).
 
--   **pct_salud_publica**: Porcentaje de personas con cobertura exclusiva de salud pública en el condado.
+-   `pct_salud_publica`: Porcentaje de personas con cobertura exclusiva de salud pública en el condado.
 
--   **pct_pobreza**: Porcentaje de personas por debajo de la línea de pobreza en el condado.
+-   `pct_pobreza`: Porcentaje de personas por debajo de la línea de pobreza en el condado.
 
--   **pct_sec_incompleta**: Porcentaje de personas con estudios secundarios incompletos en el condado.
+-   `pct_sec_incompleta`: Porcentaje de personas con estudios secundarios incompletos en el condado.
 
--   **mediana_edad**: Mediana de la edad de fallecimiento por cáncer en el condado.
+-   `mediana_edad`: Mediana de la edad de fallecimiento por cáncer en el condado.
 
--   **mediana_edad_cat**: Versión categorizada de la mediana de edad al fallecer por cáncer en el condado.
+-   `mediana_edad_cat`: Versión categorizada de la mediana de edad al fallecer por cáncer en el condado.
 
--   **condado**: Condado de residencia.
+-   `condado`: Condado de residencia.
 
--   **estado**: Estado de residencia.
+-   `estado`: Estado de residencia.
 
 La función `cor()` estima la correlación entre dos variables. El método predeterminado devuelve la correlación de Pearson y puede modificarse el argumento `method` para obtener la correlación de Kendall o Spearman:
 
@@ -652,7 +652,7 @@ datos |>
          method = c("pairwise", "kendall")) # coeficiente de Kendall
 ```
 
-Para explicar la forma de esta correlación e incluso predecir los valores que puede alcanzar una variable dependiente numérica en función de una variable independiente también numérica podemos utilizar la [**regresión lineal simple**](reg_lineal.qmd).
+Para explicar la forma de esta correlación e incluso predecir los valores que puede alcanzar una variable dependiente numérica en función de una variable independiente también numérica podemos utilizar la [**regresión lineal simple**](04_reg_lineal.qmd).
 
 ::: hidden
 @triola2018

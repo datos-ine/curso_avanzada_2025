@@ -89,8 +89,6 @@ La **censura**, se refiere a la pérdida de información e indica que no se ha o
 
     ![](images/cens_der.png){width="80%"}
 
-<!-- -->
-
 -   **Censura a la izquierda**: ocurre cuando el individuo presenta el evento de interés antes de ingresar al estudio, por lo que se sabe que su tiempo de supervivencia no observado es menor que el tiempo de observación.
 
     ![](images/cens_izq.png){width="80%"}
@@ -211,7 +209,9 @@ datos |>
 
 ¿Pueden estas diferencias en las experiencias de los participantes afectar a la estimación de la probabilidad de que un participante sufra un infarto de miocardio en un período de 10 años? En breve contestaremos también esta pregunta.
 
-**En el análisis de supervivencia se analiza no sólo el número de participantes que sufren el evento de interés (indicador dicotómico de estado del evento), sino también los momentos en que se producen los acontecimientos (tiempo de supervivencia).**
+::: {.callout-warning appearance="minimal" icon="false"}
+En el análisis de supervivencia se analiza no sólo el número de participantes que sufren el evento de interés (indicador dicotómico de estado del evento), sino también los momentos en que se producen los acontecimientos (tiempo de supervivencia).
+:::
 
 Si todos los pacientes bajo estudio experimentaran el evento durante el período de observación, sería sencillo calcular la proporción de aquellos que, transcurrido un determinado tiempo desde su inclusión, aún no han presentado el evento: es decir, los "sobrevivientes". Podríamos entonces representar gráficamente esta proporción en función del tiempo desde la entrada al estudio, y obtendríamos la **función de supervivencia**, denotada como $S(t)$.
 

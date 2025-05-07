@@ -1,6 +1,8 @@
 ---
 title: "Separación de datos binomiales"
-author: "Tamara Ricardo"
+author: 
+  - name: Tamara Ricardo
+    orcid: 0000-0002-0921-2611
 bibliography: references.bib
 ---
 
@@ -23,7 +25,7 @@ También conocida como separación perfecta o completa, ocurre cuando un predict
 
 La separación parcial se presenta cuando un predictor o combinación lineal de predictores predice perfectamente la variable respuesta solo en algunos niveles de las variables independientes. Es decir, separa en gran medida las categorías de la variable respuesta. Esto puede llevar a la estimación de coeficientes y errores estándar extremadamente grandes, con intervalos de confianza muy amplios, lo que hace que las inferencias realizadas sean poco fiables.
 
-Tomemos como ejemplo la base `covid_cancer.txt`, que contiene datos de un estudio de casos y controles realizado en la ciudad de Santa Fe, Argentina en pacientes con cáncer hospitalizados por formas severas de COVID-19[^1].
+Tomemos como ejemplo la base "`covid_cancer.txt`", que contiene datos de un estudio de casos y controles realizado en la ciudad de Santa Fe, Argentina en pacientes con cáncer hospitalizados por formas severas de COVID-19[^1].
 
 [^1]: Gastiazoro MP, Cardozo MA, Ricardo T, Ramos JG, Ballina A, Maillo M, et al. Clinical features in cancer patients with COVID-19 in Santa Fe and Buenos Aires, Argentina. J Clin Images Med Case Rep \[Internet\]. el 14 de febrero de 2023 \[citado el 9 de agosto de 2024\];4(2). Disponible en: <https://jcimcr.org/articles/JCIMCR-v4-2285.html>
 

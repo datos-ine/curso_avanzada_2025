@@ -71,13 +71,13 @@ Donde:
 
 #### Casos específicos del MLG
 
--   [**Regresión lineal simple**](reg_lineal.qmd): Examina la relación entre $Y$ y una variable independiente numérica.
+-   [**Regresión lineal simple**](04_reg_lineal.qmd): Examina la relación entre $Y$ y una variable independiente numérica.
 
--   [**Análisis de la varianza (ANOVA)**](anova.qmd): Evalúa las diferencias en la media de $Y$ respecto a los niveles de una variable categórica.
+-   [**Análisis de la varianza (ANOVA)**](05_anova.qmd): Evalúa las diferencias en la media de $Y$ respecto a los niveles de una variable categórica.
 
--   [**Regresión lineal múltiple**](reg_lineal_multiple.qmd): Explora la relación entre $Y$ y dos o más variables independientes, que pueden ser numéricas y/o categóricas.
+-   [**Regresión lineal múltiple**](07_reg_lineal_multiple.qmd): Explora la relación entre $Y$ y dos o más variables independientes, que pueden ser numéricas y/o categóricas.
 
-::: {.callout-caution appearance="simple"}
+::: {.callout-warning appearance="simple"}
 La principal fuente del "error" se debe a la variabilidad entre individuos propia de la naturaleza (error aleatorio). Puede haber otras fuentes de error, incluso no detectadas y que deben ser tenidas en cuenta, como pueden ser errores en la medición, calibración o incluso por una mala elección del método.
 :::
 
@@ -122,21 +122,21 @@ summary(modelo)
 
 La salida de esta función incluye:
 
--   **Call:** Fórmula del modelo.
+-   `Call`**:** Fórmula del modelo.
 
--   **Residuals:** Distribución de los residuos (mínimo, máximo, mediana y percentiles 25-75).
+-   `Residuals`**:** Distribución de los residuos (mínimo, máximo, mediana y percentiles 25-75).
 
--   **Coefficients:** Incluye el intercepto y la pendiente, junto con errores estándar, valores *t* y *p*-valores asociados.
+-   `Coefficients`**:** Incluye el intercepto y la pendiente, junto con errores estándar, valores *t* y *p*-valores asociados.
 
--   **Residual standard error:** Error estándar de los residuos con sus grados de libertad.
+-   `Residual standard error`**:** Error estándar de los residuos con sus grados de libertad.
 
--   **Multiple R-squared:** Coeficiente de determinación $R^2$.
+-   `Multiple R-squared`**:** Coeficiente de determinación $R^2$.
 
--   **Adjusted R-squared:** Coeficiente $R^2$ ajustado.
+-   `Adjusted R-squared`**:** Coeficiente $R^2$ ajustado.
 
--   **F-statistic:** Estadístico $F$ y su *p*-valor asociado.
+-   `F-statistic`**:** Estadístico $F$ y su *p*-valor asociado.
 
-Además, la salida de `summary(modelo)` utiliza asteriscos (\*) para indicar la significación de los coeficientes. Debajo de la tabla de coeficientes se encuentra la referencia del significado de los códigos, que van desde el 0 hasta el 1 como posible resultado del valor de probabilidad, y donde:
+Además, la salida de `summary(modelo)` utiliza asteriscos (`*`) para indicar la significación de los coeficientes. Debajo de la tabla de coeficientes se encuentra la referencia del significado de los códigos, que van desde el 0 hasta el 1 como posible resultado del valor de probabilidad, y donde:
 
 ```{r}
 #| echo: false

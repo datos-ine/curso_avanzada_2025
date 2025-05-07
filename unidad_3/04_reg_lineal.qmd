@@ -8,14 +8,12 @@ bibliography: references.bib
 source("../setup.R")
 
 # Paquetes extra
-pacman::p_load(
-  MASS,
-  patchwork)
+library(MASS)
 ```
 
 ## Introducción
 
-Para entender el modelo de regresión lineal simple, volvamos al ejemplo del peso en niñas menores de 6 meses de la [**unidad anterior**](../unidad_2/dist_muestrales.qmd#ejemplo-práctico-en-r), donde habíamos trazado una recta que nos ilustraba la relación lineal del peso en función de la edad.
+Para entender el modelo de regresión lineal simple, volvamos al ejemplo del peso en niñas menores de 6 meses de la [**unidad anterior**](../unidad_2/03_inferencia.qmd#ejemplo-práctico-en-r), donde habíamos trazado una recta que nos ilustraba la relación lineal del peso en función de la edad.
 
 Según el modelo estadístico para la función lineal de $Y$ según $X$:
 
@@ -275,7 +273,7 @@ $$
 H_0: \beta_1 = 0
 $$
 
-Al calcular el modelo de regresión, todos los softwares estiman el coeficiente y el error estándar del mismo (se) y testean el coeficiente.
+Al calcular el modelo de regresión, todos los *software* estiman el coeficiente y el error estándar del mismo ($SE$) y testean el coeficiente.
 
 **Bondad de ajuste**
 
@@ -305,11 +303,13 @@ $R^2$ expresa la proporción de la variación total que logra explicar el modelo
 
 -   En la Regresión lineal simple el coeficiente de determinación ($R^2$) es igual al $r$ de Pearson elevado al cuadrado.
 
-Para visualizar simulaciones al respecto pueden visitar [Viendo la teoría. Una introducción visual a probabilidad y estadística](https://seeing-theory.brown.edu/regression-analysis/es.html#section1).
+Para visualizar simulaciones al respecto pueden visitar el siguiente enlace:
+
+➡️[**Viendo la teoría. Una introducción visual a probabilidad y estadística**](https://seeing-theory.brown.edu/regression-analysis/es.html#section1)
 
 ## Ejemplo práctico en R
 
-Para llevar a cabo el análisis en R y presentar las funciones y paquetes que nos pueden ayudar en la tarea vamos a trabajar con el set de datos `cancer_USA.txt` que utilizamos para el ejemplo de [covarianza y correlación](covarianza_correlacion.qmd).
+Para llevar a cabo el análisis en R y presentar las funciones y paquetes que nos pueden ayudar en la tarea vamos a trabajar con el set de datos `cancer_USA.txt` que utilizamos para el ejemplo de [covarianza y correlación](03_covarianza_correlacion.qmd).
 
 Comenzaremos por cargar los paquetes necesarios para el análisis:
 
@@ -390,7 +390,7 @@ El valor es negativo, lo que confirma lo observado en la nube de puntos anterior
 cor.test(datos$mediana_ingresos, datos$tasa_mortalidad)
 ```
 
-El *p*-valor de la correlación para este ejemplo es menor a 0,05 (*p*-value: `r cor.test(datos$mediana_ingresos, datos$tasa_mortalidad)$p.value`), por lo tanto significativa.
+En este ejemplo $p<0,05$, por lo tanto la correlación es significativa.
 
 La **homocedasticidad** implica que la varianza de los residuos se mantiene aproximadamente constante a lo largo de los valores de la variable independiente. Se puede evaluar gráficamente mediante la dispersión de los residuos respecto a los valores ajustados o a través de contrastes de hipótesis, como el **test de Breusch-Pagan**.
 
@@ -423,13 +423,13 @@ Tanto el test de hipótesis como los gráficos de cuantiles nos informan que las
 
 ### Ajuste del modelo
 
-Como vimos [**anteriormente**](mod_estadistico.qmd), la función `lm()` del paquete `stats` nos permite ajustar modelos de regresión lineal:
+Como vimos [**anteriormente**](02_mod_estadistico.qmd), la función `lm()` del paquete `stats` nos permite ajustar modelos de regresión lineal:
 
 ```{r}
 lm(tasa_mortalidad ~ mediana_ingresos, data = datos)
 ```
 
-En este caso, **Intercept** representa el valor de `mediana_ingresos` cuando `tasa_mortalidad` vale cero (Ordenada en el origen) y el coeficiente de `mediana_ingresos` representa la pendiente de la recta.
+En este caso, `Intercept` representa el valor de `mediana_ingresos` cuando `tasa_mortalidad` vale cero (ordenada al origen) y el coeficiente de `mediana_ingresos` representa la pendiente de la recta.
 
 Estos resultados obtenidos y aplicados en la fórmula del modelo simple quedarían así:
 
@@ -453,7 +453,7 @@ Podemos acceder a la salida del modelo mediante la función `summary()`:
 summary(modelo)
 ```
 
-La asociación entre la tasa de mortalidad por cáncer y la mediana de ingresos es estadísticamente significativa (*p* \< 0.001).
+La asociación entre la tasa de mortalidad por cáncer y la mediana de ingresos es estadísticamente significativa ($p < 0.001$).
 
 Todos los ajustes de modelos lineales que produce la función `lm()` tienen la forma de una lista.La manera de conocer su clase es `class()` y su estructura mediante `str()`
 
@@ -476,7 +476,7 @@ El **residuo** o **residual** de una estimación se define como la diferencia en
 
 1.  La **sumatoria del valor absoluto** de cada residual.
 
-2.  La **sumatoria del cuadrado** de cada residual (**RSS,** *Residual Sum of Squares*), basada en el método de losmínimos cuadrados, amplifica las desviaciones extremas y permite minimizar errores en la estimación de parámetros.
+2.  La **sumatoria del cuadrado** de cada residual (**RSS,** *Residual Sum of Squares*), basada en el método de los mínimos cuadrados, amplifica las desviaciones extremas y permite minimizar errores en la estimación de parámetros.
 
 Los residuales se almacenan en el objeto de regresión y pueden visualizarse mediante:
 
@@ -496,13 +496,13 @@ plot(modelo)
 
 Esta función genera cuatro gráficos automáticos:
 
--   **Residuals vs Fitted:** Permite evaluar la **linealidad**. La línea roja debería ser lo más horizontal posible y sin curvaturas pronunciadas. Si hay curvatura, podría indicar la necesidad de un término no lineal (cuadrático, logarítmico, etc.) o la omisión de una variable importante en el modelo.
+-   `Residuals vs Fitted`**:** Permite evaluar la **linealidad**. La línea roja debería ser lo más horizontal posible y sin curvaturas pronunciadas. Si hay curvatura, podría indicar la necesidad de un término no lineal (cuadrático, logarítmico, etc.) o la omisión de una variable importante en el modelo.
 
--   **Normal Q-Q:** Evalúa la **normalidad** de los residuos. Los puntos deberían ajustarse a la diagonal. Desviaciones importantes sugieren un incumplimiento del supuesto de normalidad.
+-   `Normal Q-Q`**:** Evalúa la **normalidad** de los residuos. Los puntos deberían ajustarse a la diagonal. Desviaciones importantes sugieren un incumplimiento del supuesto de normalidad.
 
--   **Scale-Location:** Indica si los residuos se distribuyen uniformemente a lo largo del rango de los predictores, verificando la **homocedasticidad**. Una línea aproximadamente horizontal con puntos dispersos de manera aleatoria es una buena señal.
+-   `Scale-Location`**:** Indica si los residuos se distribuyen uniformemente a lo largo del rango de los predictores, verificando la **homocedasticidad**. Una línea aproximadamente horizontal con puntos dispersos de manera aleatoria es una buena señal.
 
--   **Residuals vs Leverage:** Ayuda a identificar **valores influyentes**. Un punto extremo no necesariamente es influyente, pero aquellos fuera de las líneas rojas punteadas (altas puntuaciones de distancia de Cook) pueden estar afectando considerablemente el modelo.
+-   `Residuals vs Leverage`**:** Ayuda a identificar **valores influyentes**. Un punto extremo no necesariamente es influyente, pero aquellos fuera de las líneas rojas punteadas (altas puntuaciones de distancia de Cook) pueden estar afectando considerablemente el modelo.
 
 Otra opción para evaluar gráficamente los supuestos del modelo es la función `check_model()` del paquete `performance` , el cual forma parte del ecosistema `easystats` [@easystats]:
 
@@ -523,7 +523,7 @@ Para evaluar la linealidad se puede aplicar el test RESET de Ramsey, mediante la
 resettest(modelo)
 ```
 
-La hipótesis nula indica que las variables se relacionan de forma lineal; un *p*-valor menor a 0,05 sugiere lo contrario. En nuestro modelo, el valor *p* de `r round(resettest(modelo)$p.value, 3)` respalda la suposición de linealidad.
+La hipótesis nula indica que las variables se relacionan de forma lineal; un $p<0,05$ sugiere lo contrario. En nuestro modelo, el valor *p* de `r round(resettest(modelo)$p.value, 3)` respalda la suposición de linealidad.
 
 Otro supuesto fundamental es que los residuales deben distribuirse de forma normal (con media 0). Además del QQ-plot, se puede aplicar el test de Lilliefors:
 
@@ -533,7 +533,7 @@ lillie.test(modelo$residuals)
 
 Con un *p*-valor de `r round(lillie.test(modelo$residuals)$p.value, 3)` se confirma la normalidad.
 
-El test de Breusch-Pagan, implementado en `lmtest` y `performance`, evalúa si la varianza de los residuos es constante. Parte de la hipótesis nula de **homocedasticidad** o varianza constante en las perturbaciones y la enfrenta a la alternativa de varianza variable, por lo que es válido decir que cumple con el supuesto de homocedasticidad si el valor $p$ es mayor a 0,05:
+El test de Breusch-Pagan, implementado en `lmtest` y `performance`, evalúa si la varianza de los residuos es constante. Parte de la hipótesis nula de **homocedasticidad** o varianza constante en las perturbaciones y la enfrenta a la alternativa de varianza variable, por lo que es válido decir que cumple con el supuesto de homocedasticidad si el valor $p>0,05$:
 
 ```{r}
 # paquete lmtest
@@ -545,7 +545,7 @@ check_heteroscedasticity(modelo)
 
 Incluso cuando el modelo cumple todos los supuestos, es importante identificar observaciones atípicas o de alto *leverage*, ya que podrían condicionar el ajuste. Los valores atípicos u *outliers* son observaciones que no se ajustan bien al modelo, con residuos excesivamente grandes. Por otro lado, los puntos con alto *leverage* tienen valores extremos en los predictores, lo que los hace potencialmente influyentes.
 
-Para ello se pueden analizar los residuales estandarizados y los residuales estudentizados. Los **residuales estandarizados** se obtienen normalizando los residuales por su desviación estándar. Esta aproximación permite identificar valores atípicos que se alejan más de ±3 desviaciones estándar. Sin embargo, si un *outlier* influye lo suficiente en el modelo como para atraer la línea de regresión, su residual podría ser pequeño y pasar desapercibido. Una alternativa más robusta es utilizar los **residuales estudentizados**. Se trata de un proceso iterativo en el que se va excluyendo cada vez una observación $i$ distinta y se reajusta el modelo con las $n-1$ restantes. En cada proceso de exclusión y reajuste se calcula la diferencia ($d_i$) entre el valor predicho para $i$ habiendo y sin haber excluido esa observación. Finalmente, se normalizan las diferencias $d_i$ . Aquellos valores $d_i$ cuyo residual estudentizado supera ±3 suelen considerarse significativos.
+Para ello se pueden analizar los residuales estandarizados y los residuales estudentizados. Los **residuales estandarizados** se obtienen normalizando los residuales por su desviación estándar. Esta aproximación permite identificar valores atípicos que se alejan más de $\pm3$ desviaciones estándar. Sin embargo, si un *outlier* influye lo suficiente en el modelo como para atraer la línea de regresión, su residual podría ser pequeño y pasar desapercibido. Una alternativa más robusta es utilizar los **residuales estudentizados**. Se trata de un proceso iterativo en el que se va excluyendo cada vez una observación $i$ distinta y se reajusta el modelo con las $n-1$ restantes. En cada proceso de exclusión y reajuste se calcula la diferencia ($d_i$) entre el valor predicho para $i$ habiendo y sin haber excluido esa observación. Finalmente, se normalizan las diferencias $d_i$ . Aquellos valores $d_i$ cuyo residual estudentizado supera $\pm 3$ suelen considerarse significativos.
 
 Estos dos procesos sobre los residuales se pueden calcular en R mediante las funciones `rstandar()` y `rstudent()`:
 
@@ -558,7 +558,7 @@ residuales <- tibble(
 )
 ```
 
-Podemos visualizar la comparación de estos residuales mediante un gráfico de boxplots usando *facets*:
+Podemos visualizar la comparación de estos residuales mediante un *boxplot* usando *facets*:
 
 ```{r}
 residuales |> 
@@ -579,7 +579,7 @@ residuales |>
   theme_minimal()
 ```
 
-Si encontramos residuales con valores absolutos superiores a 3 en el gráfico de residuales estudentizado**s**, es recomendable investigarlos más a fondo. Podemos identificarlos con:
+Si encontramos residuales con valores absolutos superiores a 3 en el gráfico de residuales estudentizados, es recomendable investigarlos más a fondo. Podemos identificarlos con:
 
 ```{r}
 table(rstudent(modelo) > 3)
@@ -613,15 +613,15 @@ r2(modelo)
 
 El $R^2$ oscila entre 0 y 1, de modo que valores cercanos a 1 indican un buen ajuste del modelo lineal a los datos. Por otro lado, el $R^2$ ajustado penaliza la inclusión de variables independientes poco relevantes en la explicación de la variable dependiente, razón por la cual su valor es menor o igual al $R^2$. En nuestro ejemplo los valores de $R^2$ obtenidos nos indican que el modelo lineal simple no se ajusta demasiado bien a los datos. Esto significa que solamente un 25.1 % de la variación en la tasa de mortalidad por cáncer se explica únicamente por la mediana de ingresos como variable explicativa; el restante 74.9 % no se explica, lo que sugiere que agregar otras variables independientes podría mejorar el ajuste y, por ende, la confiabilidad de las predicciones.
 
-La salida de `summary()` también incluye un estadístico $F$ de Snedecor y su *p-*valor correspondiente, que se utilizan en el contraste ómnibus para evaluar, de forma global, la idoneidad del modelo. En nuestro ejemplo, el *p*-valor es inferior a 0.05, por lo que, al 95 % de confianza, se rechaza la hipótesis nula y se concluye que el modelo lineal es adecuado para el conjunto de datos. Cabe mencionar que, cuando el modelo de regresión tiene una única variable explicativa, este contraste es equivalente al contraste del parámetro $\beta_1​$.
+La salida de `summary()` también incluye un estadístico $F$ de Snedecor y su $p$*-*valor correspondiente, que se utilizan en el contraste ómnibus para evaluar, de forma global, la idoneidad del modelo. En nuestro ejemplo, $p>0,05$, por lo que, al 95 % de confianza, se rechaza la hipótesis nula y se concluye que el modelo lineal es adecuado para el conjunto de datos. Cabe mencionar que, cuando el modelo de regresión tiene una única variable explicativa, este contraste es equivalente al contraste del parámetro $\beta_1​$.
 
-Otra forma de verificar de manera independiente la significación del modelo es mediante la función `anova()`, que plantea el contraste de la regresión mediante el [**análisis de la varianza**](anova.qmd):
+Otra forma de verificar de manera independiente la significación del modelo es mediante la función `anova()`, que plantea el contraste de la regresión mediante el [**análisis de la varianza**](05_anova.qmd):
 
 ```{r}
 anova(modelo)
 ```
 
-La tabla de análisis de varianza muestra resultados coherentes con el bloque final de `summary(modelo)`, presentando un valor $F$ de `r summary(modelo)$fstatistic[1] %>% round(.,2)` y un *p*-valor significativo.
+La tabla de análisis de varianza muestra resultados coherentes con el bloque final de `summary(modelo)`, presentando un valor $F$ de `r summary(modelo)$fstatistic[1] %>% round(.,2)` y un $p$-valor significativo.
 
 ### Interpretación de resultados
 

@@ -6,6 +6,9 @@ bibliography: references.bib
 ```{r}
 #| echo: false
 source("../setup.R")
+
+# paquetes extra
+library(plotly)
 ```
 
 ## Introducción
@@ -98,7 +101,59 @@ $$
 
 En este caso, la relación podría representarse en un plano tridimensional (3D), donde los ejes corresponden a $X_1$, $X_2$ y la variable dependiente $Y$. En este plano, la superficie de ajuste es un plano que describe la relación entre las tres variables, y la orientación de dicho plano estará determinada por los coeficientes $\beta_1$ y $\beta_2$.
 
-![](images/rlm.png){fig-align="center"}
+```{r}
+#| echo: false
+
+# Sample data
+set.seed(123)
+
+data <- tibble(
+  x1 = rnorm(100), 
+  x2 = rnorm(100), 
+  y = 2 * x1 + 3 * x2 + rnorm(100)
+)
+
+error <- rnorm(100, mean = 0, sd = 0.5)
+
+# Fit multiple linear regression model
+model <- lm(y ~ x1 + x2, data = data)
+
+# Generate points for the plane
+x1_range <- range(data$x1)
+
+x2_range <- range(data$x2)
+
+x1_grid <- seq(x1_range[1], x1_range[2], length.out = 20)
+
+x2_grid <- seq(x2_range[1], x2_range[2], length.out = 20)
+
+grid <- expand.grid(x1 = x1_grid, x2 = x2_grid)
+
+grid$y <- predict(model, newdata = grid)
+
+# Plot
+plot_ly(data = data, 
+        x = ~ x1, 
+        y = ~ x2, 
+        z = ~ y) |>
+  
+  add_markers(error_x = list(array = error), 
+              error_y = list(array = error),
+              showlegend = F) |> 
+  
+  
+  add_surface(x = ~ x1_grid, 
+              y = ~ x2_grid,
+              z = ~ matrix(grid$y, 
+                           nrow = length(x1_grid), 
+                           ncol = length(x2_grid)),
+              showscale = F, 
+              opacity = .75) |>
+
+  layout(scene = list(xaxis = list(title = "X1"),
+                      yaxis = list(title = "X2"),
+                      zaxis = list(title = "Y")))
+```
 
 En forma similar a la RLS, la interpretación de cada parámetro $\beta$ de la regresión es:
 
@@ -174,21 +229,21 @@ lm(V23 ~ ., data = data) |>
 
 En la salida obtenida, encontramos varios términos clave para interpretar:
 
--   **Estimate**: muestra los coeficientes estimados ($\beta$) para el intercepto ($\beta_0$) y para cada una de las variables explicativas ($\beta_i$).
+-   `Estimate`: muestra los coeficientes estimados ($\beta$) para el intercepto ($\beta_0$) y para cada una de las variables explicativas ($\beta_i$).
 
--   **Std. Error**: el error estándar de cada coeficiente estimado $\beta$.
+-   `Std. Error`: el error estándar de cada coeficiente estimado $\beta$.
 
--   **t-value**: los valores del test t para cada coeficiente, que evalúan si los coeficientes son significativamente diferentes de cero.
+-   `t-value`: los valores del test $t$ para cada coeficiente, que evalúan si los coeficientes son significativamente diferentes de cero.
 
--   **Pr(\>\|t\|)**: los valores p asociados a los test t para cada coeficiente.
+-   `Pr(>|t|)`: los valores $p$ asociados a los test $t$ para cada coeficiente.
 
--   **Residual standard error**: el error estándar de los residuales.
+-   `Residual standard error`: el error estándar de los residuales.
 
--   **Multiple R-squared**: el coeficiente de determinación $R^2$ múltiple, que indica qué proporción de la variabilidad de la variable dependiente es explicada por el modelo.
+-   `Multiple R-squared`: el coeficiente de determinación $R^2$ múltiple, que indica qué proporción de la variabilidad de la variable dependiente es explicada por el modelo.
 
--   **Adjusted R-squared**: el coeficiente de determinación ajustado, que penaliza por la inclusión de variables que no mejoran el modelo.
+-   `Adjusted R-squared`: el coeficiente de determinación ajustado, que penaliza por la inclusión de variables que no mejoran el modelo.
 
--   **F-statistic**: el resultado del test F global, que evalúa la significancia del modelo en su conjunto, junto con su valor *p*.
+-   `F-statistic`: el resultado del test $F$ global, que evalúa la significancia del modelo en su conjunto, junto con su valor $p$.
 
 ### Test F parcial
 
@@ -198,11 +253,11 @@ $$
 H_0 = \beta_1 = \beta_2 = ... \beta_n = 0  \\H_1 = \exists\beta_i \neq 0
 $$
 
-Donde $H_0$ indica que todos los coeficientes de las variables independientes son cero, y $H_1$ implica que al menos uno de los coeficientes es diferente de cero. Este test evalúa la contribución de cada variable al modelo, es decir, si la inclusión de esa variable mejora significativamente la explicación de la variabilidad de $Y$. En modelos de regresión lineales generalizados (GLM), el test de Wald cumple esta misma función, mientras que en los modelos de regresión lineales múltiplos, el test F parcial cumple el mismo rol.
+Donde $H_0$ indica que todos los coeficientes de las variables independientes son cero, y $H_1$ implica que al menos uno de los coeficientes es diferente de cero. Este test evalúa la contribución de cada variable al modelo, es decir, si la inclusión de esa variable mejora significativamente la explicación de la variabilidad de $Y$. En modelos de regresión lineales generalizados (GLM), el test de Wald cumple esta misma función, mientras que en los modelos de regresión lineales múltiplos, el test $F$ parcial cumple el mismo rol.
 
 ### Varianza residual
 
-Al igual que en el [análisis de la varianza (ANOVA)](anova.qmd) y en la [regresión lineal simple](reg_lineal.qmd), podemos descomponer la variabilidad de la variable dependiente $Y$ en dos componentes:
+Al igual que en la [**regresión lineal simple**](04_reg_lineal.qmd)y el [**análisis de la varianza (ANOVA)**](05_anova.qmd), podemos descomponer la variabilidad de la variable dependiente $Y$ en dos componentes:
 
 1.  Variabilidad explicada por el modelo.
 
@@ -244,7 +299,7 @@ tibble(
 
 ### Test F global
 
-El test F global compara el modelo de regresión ajustado con el modelo nulo (sin variables independientes) y evalúa el efecto conjunto de todas las variables independientes. Su fórmula es:
+El test $F$ global compara el modelo de regresión ajustado con el modelo nulo (sin variables independientes) y evalúa el efecto conjunto de todas las variables independientes. Su fórmula es:
 
 $$ 
 F = CMR/CME 
@@ -266,7 +321,7 @@ $$ R^2_a = 1 - \bigg [ \frac{n-1}{n-(k+1)}\bigg]\frac{SCE}{SCT}=1-\bigg[\frac{n-
 
 Como el término $1 - R^2$ es constante y $n$ es mayor que $k$, a medida que agregamos variables, el cociente entre paréntesis crece, lo que hace que la penalización por agregar variables no significativas también aumente. Esto hace que el $R^2$ ajustado sea una medida más fiable de la calidad del modelo.
 
-::: {.callout-caution appearance="simple"}
+::: {.callout-warning appearance="simple"}
 Cuando tenemos que elegir el mejor modelo será necesario utilizar distintos criterios para compararlos y basar nuestra decisión en elegir el modelo que mejor explique la variación de $Y$ con el menor número de variables independientes, el modelo más simple y efectivo, también llamado el modelo más **parsimonioso**.
 :::
 
@@ -448,7 +503,7 @@ $$
 y-\hat{y}=e~(residuo~ o ~error~ residual)
 $$
 
-El planteamiento habitual es considerar que, como dijimos inicialmente, los valores de $Y$ tienen una distribución normal según los valores de $X_1$, $X_2$,... $X_k$., entonces, los residuos también tendrán una distribución normal. Los residuos tienen unidades de medida y, por tanto no se puede determinar si es grande o pequeño a simple vista. Para solucionar este problema se define el residuo estandarizado como el cociente entre el residuo y su desvío standard. Se considera que un residuo tiene un valor alto, y por lo tanto puede influir negativamente en el análisis, si su residuo estandarizado es mayor a 3 en valor absoluto. También se trabaja con los residuos tipificados o con los residuos estudentizados.
+El planteamiento habitual es considerar que, como dijimos inicialmente, los valores de $Y$ tienen una distribución normal según los valores de $X_1$, $X_2$,... $X_k$., entonces, los residuos también tendrán una distribución normal. Los residuos tienen unidades de medida y, por tanto no se puede determinar si es grande o pequeño a simple vista. Para solucionar este problema se define el residuo estandarizado como el cociente entre el residuo y su desvío estandar. Se considera que un residuo tiene un valor alto, y por lo tanto puede influir negativamente en el análisis, si su residuo estandarizado es mayor a 3 en valor absoluto. También se trabaja con los residuos tipificados o con los residuos estudentizados.
 
 ### Normalidad
 
@@ -472,7 +527,7 @@ Este estadístico mide la distancia de un punto a la media de la distribución. 
 
 ### Distancia de Cook
 
-Es una medida de cómo influye la observación *i*-ésima sobre la estimación de $\beta$ al ser retirada del conjunto de datos. Una distancia de Cook grande significa que una observación tiene un peso grande en la estimación de $\beta$. Son puntos influyentes las observaciones que presenten
+Es una medida de cómo influye la observación $i$-ésima sobre la estimación de $\beta$ al ser retirada del conjunto de datos. Una distancia de Cook grande significa que una observación tiene un peso grande en la estimación de $\beta$. Son puntos influyentes las observaciones que presenten
 
 $$ D_i=\frac{4}{n-p-2}  $$
 
@@ -482,7 +537,7 @@ La hipótesis de independencia de los residuos la realizaremos mediante el contr
 
 ## Ejemplo práctico en R
 
-En el documento [Introducción al modelado estadístico](mod_estadistico.qmd) vimos como generar en R una fórmula para una regresión lineal simple:
+En el documento [**Introducción al modelado estadístico**](02_mod_estadistico.qmd) vimos como generar en R una fórmula para un modelo lineal simple:
 
 $$ variable \ dependiente \; \sim variable  \ independiente $$
 
@@ -490,7 +545,7 @@ Para generar fórmulas que contengan más de una variable independiente o predic
 
 $$ variable \ dependiente \ \sim var\_indepen\_1 \ + \ var\_indepen\_2 \ + \; \dots \ + \ var\_indepen\_n $$
 
-Si luego de la `~` incluímos **un punto** como notación de "todas", estamos creando un *modelo saturado* con todas las variables incluidas dentro del dataframe:
+Si luego de la `~` incluímos **un punto** como notación de "todas", estamos creando un *modelo saturado* con todas las variables incluidas dentro del *dataframe*:
 
 ```{r}
 #| eval: false
@@ -553,7 +608,7 @@ datos |>
   ggcorr(label = T)
 ```
 
-Como habíamos observado en el capítulo sobre [covarianza y correlación](covarianza_correlacion.qmd), la `tasa_mortalidad` tiene correlación negativa moderada con `mediana_ingresos`, también que existe una correlación negativa fuerte entre `pct_pobreza` y `mediana_ingresos` y moderada con `pct_salud_publica`.
+Como habíamos observado en el capítulo sobre [**covarianza y correlación**](03_covarianza_correlacion.qmd), la `tasa_mortalidad` tiene correlación negativa moderada con `mediana_ingresos`, también que existe una correlación negativa fuerte entre `pct_pobreza` y `mediana_ingresos` y moderada con `pct_salud_publica`.
 
 ### Estrategia de construcción del modelo
 
@@ -617,15 +672,15 @@ compare_performance(mod_full,
 
 Las métricas comunes extraídas de los objetos de regresión, presentadas en una tabla, son:
 
--   **AIC**: Criterio de información de Akaike
+-   `AIC`: Criterio de información de Akaike
 
--   **BIC**: Criterio de información bayesiano
+-   `BIC`: Criterio de información bayesiano
 
--   **R2**: Coeficiente de determinación $R^2$
+-   `R2`: Coeficiente de determinación $R^2$
 
--   **R2 (adj.)**: Coeficiente de determinación ajustado
+-   `R2 (adj.)`: Coeficiente de determinación ajustado
 
--   **RMSE**: Error cuadrático medio
+-   `RMSE:` Error cuadrático medio
 
 También podemos ordenar los modelos de mejor a peor con el argumento `rank = TRUE`:
 
@@ -636,7 +691,7 @@ compare_performance(mod_full,
                     rank = TRUE)
 ```
 
-Podemos ver que el modelo saturado tiene un menor AIC y performance global que los modelos univariados.
+Podemos ver que el modelo saturado tiene un menor AIC y *performance* global que los modelos univariados.
 
 ### Colinealidad
 
@@ -652,7 +707,7 @@ Cuando hemos intuido que tenemos multicolinealidad y queremos comprobar, el paqu
 check_collinearity(mod_full)
 ```
 
-Los resultados del ejemplo muestra VIF de entre 1.28 y 2.52 (no hay colinealidad). Recordemos que el umbral de detección parte de valores cercanos a 5 y un VIF $\geq$ 10 indicaría que el modelo de regresión lineal presenta un grado de multicolinealidad preocupante.
+Los resultados del ejemplo muestra VIF de entre 1.28 y 2.52 (no hay colinealidad). Recordemos que el umbral de detección parte de valores cercanos a 5 y un $VIF \geq 10$ indicaría que el modelo de regresión lineal presenta un grado de multicolinealidad preocupante.
 
 ### Análisis de residuales
 
@@ -702,7 +757,7 @@ gvlma(mod_full)
 summary(mod_full)
 ```
 
-El modelo `mod_full` es capaz de explicar el 29,8% de la variabilidad observada en la tasa de mortalidad por cáncer en estos condados ($R^2_{ajustado}$: 0,2975). El test F global muestra que es significativo (*p*-valor \< 0.001).
+El modelo `mod_full` es capaz de explicar el 29,8% de la variabilidad observada en la tasa de mortalidad por cáncer en estos condados ($R^2_{ajustado} = 0,2975$). El test $F$ global muestra que es significativo ($p< 0,001$).
 
 Los coeficientes se pueden interpretar como:
 
@@ -727,8 +782,8 @@ step(object = modelo, direction = c("both", "backward", "forward"))
 
 donde:
 
--   **object**: es el modelo inicial de regresión lineal (nulo o saturado).
--   **direction**: es la dirección que indicamos. Puede ser "*forward*", "*backward*" o "*both*" (predeterminado, si no se define).
+-   `object`: es el modelo inicial de regresión lineal (nulo o saturado).
+-   `direction`: es la dirección que indicamos. Puede ser `"forward"`, `"backward"` o `"both"` (predeterminado, si no se define).
 
 Generalmente conviene partir del modelo saturado y utilizar la dirección por defecto, donde se usan ambas direcciones.
 
@@ -760,9 +815,13 @@ Para evitar estos inconvenientes, es recomendable usar métodos alternativos de 
 
 -   **Selección de variables por AIC o BIC** (Criterio de Información Bayesiano).
 
--   **Regularización** por regresión LASSO (*Least Absolute Shrinkage and Selection Operator*), que penaliza los coeficientes de las variables menos importantes, favoreciendo modelos más simples y generalizables. Para conocer más sobre este método pueden entrar [aquí](https://towardsdatascience.com/stopping-stepwise-why-stepwise-selection-is-bad-and-what-you-should-use-instead-90818b3f52df).
+-   **Regularización** por regresión LASSO (*Least Absolute Shrinkage and Selection Operator*), que penaliza los coeficientes de las variables menos importantes, favoreciendo modelos más simples y generalizables. Para conocer más sobre este método pueden entrar al siguiente enlace:
 
--   **Árboles de decisión** (*random forest* y *gradient boosting),* herramientas de aprendizaje automático que permiten manejar automáticamente la selección de variables con menor probabilidad de sobreajuste. Para conocer más sobre este método pueden entrar [aquí](https://www.ibm.com/es-es/think/topics/decision-trees).
+    ➡️ [**Stopping stepwise**](https://www.lexjansen.com/pnwsug/2008/DavidCassell-StoppingStepwise.pdf)
+
+-   **Árboles de decisión** (*random forest* y *gradient boosting),* herramientas de aprendizaje automático que permiten manejar automáticamente la selección de variables con menor probabilidad de sobreajuste. Para conocer más sobre este método pueden entrar al siguiente enlace:
+
+    ➡️ [**Decision trees**](https://www.ibm.com/es-es/think/topics/decision-trees)
 
 Estos dos últimos métodos escapan al alcance del curso. Sin embargo, invitamos a quienes tengan interés a explorar las múltiples posibilidades que ofrecen, en particular al momento de analizar datasets grandes y con múltiples variables explicativas.
 

@@ -74,10 +74,10 @@ library(samplingbook)
 
 Calculamos el tamaño muestral en base a los siguientes argumentos:
 
--   **e**: número positivo que especifica la precisión que es la mitad del ancho del intervalo de confianza
--   **p**: proporción esperada de eventos con dominio entre los valores 0 y 1.
--   **N**: número entero positivo para el tamaño de la población. El valor predeterminado es `Inf`, lo que significa que los cálculos se realizan sin *corrección de población finita*.
--   **level**: nivel de confianza para los intervalos de confianza. El valor predeterminado es 95%.
+-   `e`: número positivo que especifica la precisión que es la mitad del ancho del intervalo de confianza
+-   `p:` proporción esperada de eventos con dominio entre los valores 0 y 1.
+-   `N`: número entero positivo para el tamaño de la población. El valor predeterminado es `Inf`, lo que significa que los cálculos se realizan sin *corrección de población finita*.
+-   `level`: nivel de confianza para los intervalos de confianza. El valor predeterminado es 95%.
 
 ```{r}
 sample.size.prop(e = 0.02, P = 0.102, N = 600000, level = 0.95)

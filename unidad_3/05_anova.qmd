@@ -129,7 +129,7 @@ class(datos$estado)
 levels(datos$estado)
 ```
 
-Graficamos la distribución de la variable dependiente mediante un histograma y un boxplot:
+Graficamos la distribución de la variable dependiente mediante un histograma y un *boxplot*:
 
 ```{r}
 # histograma
@@ -232,11 +232,11 @@ bartlett.test(tasa_mortalidad ~ estado, # utiliza sintaxis fórmula
               data = datos) 
 ```
 
-La variable respuesta cumple con el supuesto de homocedasticidad (*p* = 0.438).
+La variable respuesta cumple con el supuesto de homocedasticidad ($p = 0.438$).
 
 ### Análisis de varianza
 
-Si bien podemos realizar un test ANOVA mediante la función `aov()` de R `base`, en el contexto de este curso utilizaremos la función `lm()` del paquete `stats` que usamos anteriormente para ajustar el modelo de [regresión lineal simple](reg_lineal.qmd):
+Si bien podemos realizar un test ANOVA mediante la función `aov()` de R `base`, en el contexto de este curso utilizaremos la función `lm()` del paquete `stats` que usamos anteriormente para ajustar el modelo de [**regresión lineal simple**](04_reg_lineal.qmd)**:**
 
 ```{r}
 lm(tasa_mortalidad ~ estado, data = datos)
@@ -252,7 +252,7 @@ modelo <- lm(tasa_mortalidad ~ estado, data = datos)
 anova(modelo)
 ```
 
-Los resultados del test F nos muestran un *p* valor de 0,003, sugiriendo que al menos dos grupos son diferentes entre sí.
+Los resultados del test F nos muestran un $p = 0,003$, sugiriendo que al menos dos grupos son diferentes entre sí.
 
 ### Comparaciones múltiples
 
@@ -305,7 +305,7 @@ El rombo del medio representa la media marginal para cada grupo y el rectángulo
 
 ### Bondad de ajuste
 
-El tamaño de efecto comúnmente utilizado para el caso de ANOVA es *eta cuadrado*, que se calcula haciendo el cociente de la suma de cuadrados del efecto sobre la suma de cuadrados total.
+El tamaño de efecto comúnmente utilizado para el caso de ANOVA es $\eta^2$ (*eta-cuadrado)*, que se calcula como el cociente de la suma de cuadrados del efecto sobre la suma de cuadrados total.
 
 ```{r}
 anova(modelo)
@@ -363,7 +363,7 @@ pwr.anova.test(k = k, n = neff, f = eta2, sig.level = 0.05)
 
 ### Análisis de residuales
 
-Para poder dar por válidos los resultados del ANOVA es necesario verificar que se satisfacen las condiciones analizando los residuos del modelo. Para ello, usaremos el mismo procedimiento que vimos para la [regresión lineal simple](reg_lineal.qmd).
+Para poder dar por válidos los resultados del ANOVA es necesario verificar que se satisfacen las condiciones analizando los residuos del modelo. Para ello, usaremos el mismo procedimiento que vimos para la [**regresión lineal simple**](04_reg_lineal.qmd).
 
 Método gráfico con paquete `performance`:
 
@@ -391,9 +391,9 @@ check_outliers(modelo)
 
 ## Conclusión
 
-Se ha realizado un ANOVA de una vía para comparar la tasa de mortalidad por cáncer en seis estados de Estados Unidos. Se encontraron diferencias estadísticamente significativas entre las medias de los grupos (F = 3,71, *p* = 0.003). El eta-cuadrado fue de 0.091, lo que indica que el estado de residencia explica un 9.1% de la varianza total en los valores de la tasa de mortalidad por cáncer. La potencia de la prueba estadística para un nivel de significancia de 0,05 % fue del 5.7%.
+Se ha realizado un ANOVA de una vía para comparar la tasa de mortalidad por cáncer en seis estados de Estados Unidos. Se encontraron diferencias estadísticamente significativas entre las medias de los grupos ($F = 3,71, p = 0.003$). El *eta-cuadrado* fue de 0.091, lo que indica que el estado de residencia explica un 9.1% de la varianza total en los valores de la tasa de mortalidad por cáncer. La potencia de la prueba estadística fue del 5.7%.
 
-Se realizó la prueba post hoc de Tukey HSD y se encontró que media de mortalidad para el estado de Maine fue estadísticamente superiror respecto de los estados de Massachusetts, New York y New Jersey (*p* \< 0.05).
+Se realizó la prueba post hoc de Tukey HSD y se encontró que media de mortalidad para el estado de Maine fue estadísticamente superiror respecto de los estados de Massachusetts, New York y New Jersey ($p < 0.05$).
 
 ::: {.hidden .only-html}
 @agresti2015

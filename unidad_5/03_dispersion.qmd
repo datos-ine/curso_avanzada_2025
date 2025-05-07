@@ -29,7 +29,7 @@ $$
 
 Para detectar si un modelo tiene sobredispersión, se puede calcular el **ratio de dispersión**, que es el cociente entre la devianza del modelo y los grados de libertad. Un ratio significativamente mayor que 1 indica sobredispersión.
 
-En R, la función `check_overdispersion()` del paquete `performance` evalúa el ratio de dispersión en un modelo. En el [ejemplo de regresión Poisson](reg_poisson.qmd) el cociente del modelo final era cercano a 1, lo cual indicaba que no existía evidencia de sobredispersión y la distribución seleccionada ajustaba bien los datos.
+En R, la función `check_overdispersion()` del paquete `performance` evalúa el ratio de dispersión en un modelo. En el [**ejemplo de regresión Poisson**](02_reg_poisson.qmd) el cociente del modelo final era cercano a 1, lo cual indicaba que no existía evidencia de sobredispersión y la distribución seleccionada ajustaba bien los datos.
 
 Veamos ahora un ejemplo de datos con sobredispersión a partir de los casos de dengue reportados en los departamentos de la Costa Atlántica de la provincia de Buenos Aires (PBA)[^1] entre las semanas epidemiológicas 1 y 20 de 2024[^2]. Los mismos se encuentran en el archivo "`dengue_costa.txt`".
 
@@ -102,7 +102,7 @@ $$
 Var(Y) < \mu
 $$
 
-Para detectar si un modelo tiene subdispersión también se usa el **ratio de dispersión**. Donde un ratio significativamente menor que 1 indica subdispersión.
+Para detectar si un modelo tiene subdispersión también se usa el ***ratio*** **de dispersión**. Donde un *ratio* significativamente menor que 1 indica subdispersión.
 
 ## Control de la sobredispersión y subdispersión
 
@@ -245,7 +245,7 @@ La salida de estos modelos se divide en tres partes que incluyen:
 Existen diversas soluciones para tratar la sobredispersión, subdispersión y exceso de ceros en modelos de conteo. En este documento, nos enfocamos en las estrategias más comunes que pueden ser abordadas mediante modelos lineales generalizados utilizando el paquete `glmmTMB`.
 
 | Problema | Modelo |
-|----|----|
+|------------------------------------|------------------------------------|
 | Sobredispersión | `glmmTMB(formula, family = nbinom2)` |
 | Subdispersión | `glmmTMB(formula, family = compois)` |
 | Sobredispersión + Exceso de Ceros | `glmmTMB(formula, family = nbinom2, zi = ~1)` |

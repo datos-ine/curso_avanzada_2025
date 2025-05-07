@@ -103,7 +103,7 @@ Como podemos apreciar, tenemos muchas posibilidades para contemplar. En este cap
 
 La manera usual de evaluación de la asociación en estudios de grupos múltiples es mediante modelos lineales de regresión, de hecho algunos autores se refieren a estos estudios como "Estudios de correlación". Dependiendo del diseño y la distribución de los datos se pueden emplear otros modelos no lineales o no aditivos. Como las tasas de morbilidad y mortalidad en las regiones geográficas que se comparan comúnmente son eventos raros o que ocurren a bajas frecuencias, éstos semejan una distribución Poisson; así que la regresión de Poisson también puede ser usada.
 
-En este capítulo abordaremos a modo de introducción el [**modelo lineal general**](mod_estadistico.qmd), la [**covarianza y correlación,**](covarianza_correlacion.qmd) para luego entender los modelos de [**regresión lineal simple**](reg_lineal.qmd)**, [análisis de la varianza](anova.qmd)** y [**regresión lineal múltiple**](reg_lineal_multiple.qmd), ampliamente usados en el análisis de los estudios ecológicos, aunque no exclusivos de ellos.
+En este capítulo abordaremos a modo de introducción el [**modelo lineal general**](02_mod_estadistico.qmd), la [**covarian**](covarianza_correlacion.qmd)[**z**](03_covarianza_correlacion.qmd)[**a y correlación,**](covarianza_correlacion.qmd) para luego entender los modelos de [**regresión lineal simple**](04_reg_lineal.qmd)**, [análisis de la varianza](05_anova.qmd)** y [**regresión lineal múltiple**](07_reg_lineal_multiple.qmd), ampliamente usados en el análisis de los estudios ecológicos, aunque no exclusivos de ellos.
 
 ::: hidden
 @ballesterdíez2003
