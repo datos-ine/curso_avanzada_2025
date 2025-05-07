@@ -255,7 +255,7 @@ tibble(
 
 ## Paquetes
 
-Existen dos formas principales de descargar paquetes: directamente desde RStudio o desde el [sitio web de CRAN](https://cran.r-project.org/web/packages/), descargándolos como archivos comprimidos. Si el equipo cuenta con conexión a Internet, lo más práctico es realizar la descarga directamente desde RStudio. En cambio, si no se dispone de acceso permanente a la red, es posible descargar los paquetes desde otro equipo y luego transferirlos como archivos `.zip` o `.tar.gz` al equipo donde se encuentra instalado R.
+Existen dos formas principales de descargar paquetes: directamente desde RStudio o desde el [**sitio web de CRAN**](https://cran.r-project.org/web/packages/), descargándolos como archivos comprimidos. Si el equipo cuenta con conexión a Internet, lo más práctico es realizar la descarga directamente desde RStudio. En cambio, si no se dispone de acceso permanente a la red, es posible descargar los paquetes desde otro equipo y luego transferirlos como archivos `.zip` o `.tar.gz` al equipo donde se encuentra instalado R.
 
 Cuando accedemos al sitio web de CRAN y buscamos un paquete específico, encontraremos información útil como una breve descripción del paquete, el número de versión, la fecha de publicación, el nombre del autor, documentación asociada y enlaces de descarga específicos para cada sistema operativo.
 
@@ -343,4 +343,4 @@ Adoptar buenas prácticas desde el inicio mejora la reproducibilidad, facilita e
 
 Una guía de estilo ampliamente recomendada —aunque no oficial— es la de `tidyverse`. Incluye ejemplos concretos de buenas y malas prácticas para nombrar variables, manejar líneas largas, usar sangrías, entre otros aspectos. Al [**final de la unidad**](hoja_estilo.qmd) incluimos una versión resumida de la misma, pero puede consultarse completa en:
 
-➡️ <https://style.tidyverse.org/>
+➡️ [**https://style.tidyverse.org/**](https://style.tidyverse.org/){.uri}

@@ -192,8 +192,8 @@ author:
     orcid: 0000-0002-7346-5701
   - name: Andrea Silva
     orcid: 0000-0002-4791-9706
-  - name: Tamara Ricardo
-    orcid: 0000-0002-0921-2611
+  # - name: Tamara Ricardo
+  #   orcid: 0000-0002-0921-2611
   
 # Tipo de editor
 editor: visual

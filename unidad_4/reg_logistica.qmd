@@ -80,9 +80,6 @@ dat_exp |>
   labs(y = "F(x)", title = "Función de distribución") +
   
   theme_minimal()
-
-# limpia environment
-rm(list = setdiff(ls(), "pal"))
 ```
 
 La **regresión logística** se utiliza en los casos en que la variable dependiente es binaria, mientras que las variables independientes pueden ser de cualquier tipo (categóricas, dicotómicas, numéricas discretas o continuas). En vez de la ecuación de la recta, ahora tenemos otra ecuación que expresa la variable respuesta ($Y$) en función de la/las variables independientes. Esta ecuación, en realidad, expresa la probabilidad de que ocurra un hecho en función de ciertas variables que se presumen relevantes.

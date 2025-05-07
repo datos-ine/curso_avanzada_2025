@@ -23,7 +23,7 @@ Dado que elaborar la distribución muestral es una tarea dificultosa si la pobla
 
 ## Intervalos de Confianza (IC)
 
-Una forma eficaz de abordar la inferencia estadística es a través de los **intervalos de confianza (IC)**, ya que, aunque son procedimientos inferenciales, están estrechamente vinculados con la estadística descriptiva.
+Una forma eficaz de abordar la inferencia estadística es a través de los **intervalos de confianza (IC)**, ya que, aunque son procedimientos inferenciales, están estrechamente vinculados con la estadística descriptiva.
 
 Supongamos que queremos estimar la **media de colesterol** de la población de Mar del Plata. Sería inviable medir el colesterol de cada habitante, por lo que optamos por tomar una muestra de, por ejemplo, 100, 200 o 300 individuos (más adelante veremos cómo determinar el tamaño adecuado de la muestra). Debemos recordar que diferentes muestras producirán en general medias diferentes. Existe, por tanto, un grado de incertidumbre asociado. Si hiciéramos una estimación puntual, obtendríamos un solo valor, pero sin información sobre su variabilidad. No sabríamos qué tan cerca o lejos está nuestra estimación ($\bar{x}$) de la verdadera media poblacional ($\mu$).
 
@@ -47,7 +47,7 @@ donde:
     SE = \frac{\sigma}{\sqrt{n}} 
     $$
 
-    ​Donde $\sigma$ es la desviación estándar poblacional y $n$ el tamaño de la muestra. Si se estima un IC para una proporción, el error estándar es:
+    Donde $\sigma$ es la desviación estándar poblacional y $n$ el tamaño de la muestra. Si se estima un IC para una proporción, el error estándar es:
 
     $$ 
     SE = \sqrt{\frac{\hat{p}(1 - \hat{p})}{n}} 
@@ -396,7 +396,7 @@ Los componentes básicos de cualquier test de contraste de hipótesis son:
 
     -   Esto significa que si el valor $p \leq \alpha$, es posible rechazar $H_0$; mientras que si $p > \alpha$, no es posible rechazar la hipótesis nula.
 
-    Por ejemplo, si en un test de contraste de dos proporciones se obtiene un estadístico $Z= 3,034$ y un valor $p = 0.0024$, esto significa que la probabilidad de obtener un valor de $Z$ de 3.034 o mayor, suponiendo que $H_0$​ es cierta, es del 0.24%. Dado que este valor es mucho menor que un nivel de significación del 5% (o incluso del 1%), se rechaza $H_0$ y se concluye que la diferencia observada es estadísticamente significativa. En otras palabras, si bajo un supuesto dado, la probabilidad de un suceso observado particular es excepcionalmente pequeña, concluimos que el supuesto probablemente es incorrecto (*regla del suceso infrecuente*).
+    Por ejemplo, si en un test de contraste de dos proporciones se obtiene un estadístico $Z= 3,034$ y un valor $p = 0.0024$, esto significa que la probabilidad de obtener un valor de $Z$ de 3.034 o mayor, suponiendo que $H_0$ es cierta, es del 0.24%. Dado que este valor es mucho menor que un nivel de significación del 5% (o incluso del 1%), se rechaza $H_0$ y se concluye que la diferencia observada es estadísticamente significativa. En otras palabras, si bajo un supuesto dado, la probabilidad de un suceso observado particular es excepcionalmente pequeña, concluimos que el supuesto probablemente es incorrecto (*regla del suceso infrecuente*).
 
 ### Tipos de contrastes
 
