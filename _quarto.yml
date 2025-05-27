@@ -28,7 +28,7 @@ website:
           - text: "Unidad 1: Introducción a R"
             href: unidad_1/01_intro_R.qmd
           - text: "Unidad 2: Estudios transversales"
-            # href: unidad_2/01_est_epidemiologicos.qmd
+            href: unidad_2/01_est_epidemiologicos.qmd
           - text: "Unidad 3: Estudios ecológicos"
             # href: unidad_3/01_est_ecologicos.qmd
           - text: "Unidad 4: Estudios de casos y controles"
@@ -78,16 +78,16 @@ website:
           - unidad_1/04_analisis_exploratorio.qmd
           - unidad_1/05_hoja_estilo.qmd
           
-      # - section: "Unidad 2"
-      #   icon: file-earmark-bar-graph
-        # contents:
-          # - unidad_2/01_est_epidemiologicos.qmd
-          # - unidad_2/02_est_transversales.qmd
-          # - unidad_2/03_inferencia.qmd
-          # - unidad_2/04_normalidad_heterocedasticidad.qmd
-          # - unidad_2/05_muestreo.qmd
-          # - unidad_2/06_fun_condicionales.qmd
-          # - unidad_2/07_IC_complejos.qmd
+      - section: "Unidad 2"
+        icon: file-earmark-bar-graph
+        contents: 
+          - unidad_2/01_est_epidemiologicos.qmd
+          - unidad_2/02_est_transversales.qmd
+          - unidad_2/03_inferencia.qmd
+          - unidad_2/04_normalidad_heterocedasticidad.qmd
+          - unidad_2/05_muestreo.qmd
+          - unidad_2/06_fun_condicionales.qmd
+          - unidad_2/07_IC_complejos.qmd
           
       # - section: "Unidad 3"
       #   icon: file-earmark-bar-graph
