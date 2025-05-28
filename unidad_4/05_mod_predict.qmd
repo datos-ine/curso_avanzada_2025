@@ -1,0 +1,14 @@
+---
+title: "Modelos predictivos"
+author: 
+  - name: Andrea Silva
+    orcid: 0000-0002-4791-9706
+bibliography: references.bib
+---
+
+```{r}
+#| echo: false
+source("../setup.R")
+```
+
+# En construcción
