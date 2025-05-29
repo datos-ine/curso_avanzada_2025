@@ -726,7 +726,7 @@ Score (logrank) test = 38.43  on 4 df,   p=9e-08</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>Surv(tiempo, status) ~ fase + decr + deag + sexo
-&lt;environment: 0x000001bd7aea7e98&gt;</code></pre>
+&lt;environment: 0x000001ece4f9edd0&gt;</code></pre>
 </div>
 </div>
 <p>En general, el criterio que se utiliza para “sacar” variables del modelo, es sacar aquellas cuyo <span class="math inline">\(\beta\)</span> haya resultado no significativo. En el caso de <code>m3</code> serían los <span class="math inline">\(\beta\)</span> correspondientes a las variables <code>sexo</code> y <code>fase</code>.</p>
@@ -815,7 +815,7 @@ Score (logrank) test = 38.43  on 3 df,   p=2e-08</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>Surv(tiempo, status) ~ fase + decr + deag
-&lt;environment: 0x000001bd6f4033c0&gt;</code></pre>
+&lt;environment: 0x000001ecdd766af0&gt;</code></pre>
 </div>
 </div>
 <p>Saco <code>fase</code>, dado que su coeficiente resultó no significativo.</p>
@@ -1743,7 +1743,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/\/");
+      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
