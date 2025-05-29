@@ -91,13 +91,13 @@ website:
           
       - section: "Unidad 3 **(disponible a partir del 30/06/25)**"
         icon: file-earmark-bar-graph
-        contents:
+        # contents:
         # - unidad_3/01_est_ecologicos.qmd
         # - unidad_3/02_mod_estadistico.qmd
         # - unidad_3/03_covarianza_correlacion.qmd
         # - unidad_3/04_reg_lineal.qmd
         # - unidad_3/05_anova.qmd
-        # - unidad_3/06_confusion_interaccion.qmd # revisar: da error al renderizar
+        # - unidad_3/06_confusion_interaccion.qmd
         # - unidad_3/07_reg_lineal_multiple.qmd
           
       - section: "Unidad 4 **(disponible a partir del 04/08/25)**"
