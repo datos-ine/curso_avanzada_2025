@@ -109,7 +109,10 @@ ul.task-list li input[type="checkbox"] {
     <a class="dropdown-item" href="./unidad_2/01_est_epidemiologicos.html">
  <span class="dropdown-text">Unidad 2: Estudios transversales</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 3: Estudios ecológicos</li>
+        <li>
+    <a class="dropdown-item" href="./unidad_3/01_est_ecologicos.html">
+ <span class="dropdown-text">Unidad 3: Estudios ecológicos</span></a>
+  </li>  
         <li class="dropdown-header">Unidad 4: Estudios de casos y controles</li>
         <li class="dropdown-header">Unidad 5: Estudios de cohortes</li>
         <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
@@ -285,9 +288,55 @@ ul.task-list li input[type="checkbox"] {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 3 **(disponible a partir del 30/06/25)**</span></span>
+ <span class="menu-text">Unidad 3</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidad_3/01_est_ecologicos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios ecológicos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidad_3/02_mod_estadistico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción al modelado estadístico</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidad_3/03_covarianza_correlacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Covarianza y correlación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidad_3/04_reg_lineal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión lineal simple</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidad_3/05_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de la varianza (ANOVA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">unidad_3/06_confusion_interaccion.qmd</span>
+  </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./unidad_3/07_reg_lineal_multiple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión lineal múltiple</span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
@@ -578,7 +627,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/");
+      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

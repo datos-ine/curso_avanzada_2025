@@ -180,7 +180,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_2/01_est_epidemiologicos.html">
  <span class="dropdown-text">Unidad 2: Estudios transversales</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 3: Estudios ecológicos</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_3/01_est_ecologicos.html">
+ <span class="dropdown-text">Unidad 3: Estudios ecológicos</span></a>
+  </li>  
         <li class="dropdown-header">Unidad 4: Estudios de casos y controles</li>
         <li class="dropdown-header">Unidad 5: Estudios de cohortes</li>
         <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
@@ -350,10 +353,56 @@ window.Quarto = {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 3 **(disponible a partir del 30/06/25)**</span></span>
+ <span class="menu-text">Unidad 3</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/01_est_ecologicos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios ecológicos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/02_mod_estadistico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Introducción al modelado estadístico</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/03_covarianza_correlacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Covarianza y correlación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/04_reg_lineal.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión lineal simple</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/05_anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de la varianza (ANOVA)</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+ <span class="menu-text">unidad_3/06_confusion_interaccion.qmd</span>
   </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/07_reg_lineal_multiple.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión lineal múltiple</span></a>
+  </div>
+</li>
+      </ul>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
@@ -975,23 +1024,23 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod_cond1c</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="vklsrxkduc" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vklsrxkduc table {
+<div id="soeiaawbzk" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#soeiaawbzk table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vklsrxkduc thead, #vklsrxkduc tbody, #vklsrxkduc tfoot, #vklsrxkduc tr, #vklsrxkduc td, #vklsrxkduc th {
+#soeiaawbzk thead, #soeiaawbzk tbody, #soeiaawbzk tfoot, #soeiaawbzk tr, #soeiaawbzk td, #soeiaawbzk th {
   border-style: none;
 }
 
-#vklsrxkduc p {
+#soeiaawbzk p {
   margin: 0;
   padding: 0;
 }
 
-#vklsrxkduc .gt_table {
+#soeiaawbzk .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1017,12 +1066,12 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-left-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_caption {
+#soeiaawbzk .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vklsrxkduc .gt_title {
+#soeiaawbzk .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1034,7 +1083,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-bottom-width: 0;
 }
 
-#vklsrxkduc .gt_subtitle {
+#soeiaawbzk .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1046,7 +1095,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-top-width: 0;
 }
 
-#vklsrxkduc .gt_heading {
+#soeiaawbzk .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1058,13 +1107,13 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-right-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_bottom_border {
+#soeiaawbzk .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_col_headings {
+#soeiaawbzk .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1079,7 +1128,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-right-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_col_heading {
+#soeiaawbzk .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1099,7 +1148,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   overflow-x: hidden;
 }
 
-#vklsrxkduc .gt_column_spanner_outer {
+#soeiaawbzk .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1111,15 +1160,15 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 4px;
 }
 
-#vklsrxkduc .gt_column_spanner_outer:first-child {
+#soeiaawbzk .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vklsrxkduc .gt_column_spanner_outer:last-child {
+#soeiaawbzk .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vklsrxkduc .gt_column_spanner {
+#soeiaawbzk .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1131,11 +1180,11 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   width: 100%;
 }
 
-#vklsrxkduc .gt_spanner_row {
+#soeiaawbzk .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vklsrxkduc .gt_group_heading {
+#soeiaawbzk .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1161,7 +1210,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   text-align: left;
 }
 
-#vklsrxkduc .gt_empty_group_heading {
+#soeiaawbzk .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1176,15 +1225,15 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   vertical-align: middle;
 }
 
-#vklsrxkduc .gt_from_md > :first-child {
+#soeiaawbzk .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vklsrxkduc .gt_from_md > :last-child {
+#soeiaawbzk .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vklsrxkduc .gt_row {
+#soeiaawbzk .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1203,7 +1252,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   overflow-x: hidden;
 }
 
-#vklsrxkduc .gt_stub {
+#soeiaawbzk .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1216,7 +1265,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vklsrxkduc .gt_stub_row_group {
+#soeiaawbzk .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1230,15 +1279,15 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   vertical-align: top;
 }
 
-#vklsrxkduc .gt_row_group_first td {
+#soeiaawbzk .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vklsrxkduc .gt_row_group_first th {
+#soeiaawbzk .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vklsrxkduc .gt_summary_row {
+#soeiaawbzk .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1248,16 +1297,16 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vklsrxkduc .gt_first_summary_row {
+#soeiaawbzk .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_first_summary_row.thick {
+#soeiaawbzk .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vklsrxkduc .gt_last_summary_row {
+#soeiaawbzk .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1267,7 +1316,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-bottom-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_grand_summary_row {
+#soeiaawbzk .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1277,7 +1326,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vklsrxkduc .gt_first_grand_summary_row {
+#soeiaawbzk .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1287,7 +1336,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-top-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_last_grand_summary_row_top {
+#soeiaawbzk .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1297,11 +1346,11 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-bottom-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_striped {
+#soeiaawbzk .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vklsrxkduc .gt_table_body {
+#soeiaawbzk .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1310,7 +1359,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-bottom-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_footnotes {
+#soeiaawbzk .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1324,7 +1373,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-right-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_footnote {
+#soeiaawbzk .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1333,7 +1382,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vklsrxkduc .gt_sourcenotes {
+#soeiaawbzk .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1347,7 +1396,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-right-color: #D3D3D3;
 }
 
-#vklsrxkduc .gt_sourcenote {
+#soeiaawbzk .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1355,72 +1404,72 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vklsrxkduc .gt_left {
+#soeiaawbzk .gt_left {
   text-align: left;
 }
 
-#vklsrxkduc .gt_center {
+#soeiaawbzk .gt_center {
   text-align: center;
 }
 
-#vklsrxkduc .gt_right {
+#soeiaawbzk .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vklsrxkduc .gt_font_normal {
+#soeiaawbzk .gt_font_normal {
   font-weight: normal;
 }
 
-#vklsrxkduc .gt_font_bold {
+#soeiaawbzk .gt_font_bold {
   font-weight: bold;
 }
 
-#vklsrxkduc .gt_font_italic {
+#soeiaawbzk .gt_font_italic {
   font-style: italic;
 }
 
-#vklsrxkduc .gt_super {
+#soeiaawbzk .gt_super {
   font-size: 65%;
 }
 
-#vklsrxkduc .gt_footnote_marks {
+#soeiaawbzk .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vklsrxkduc .gt_asterisk {
+#soeiaawbzk .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vklsrxkduc .gt_indent_1 {
+#soeiaawbzk .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vklsrxkduc .gt_indent_2 {
+#soeiaawbzk .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vklsrxkduc .gt_indent_3 {
+#soeiaawbzk .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vklsrxkduc .gt_indent_4 {
+#soeiaawbzk .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vklsrxkduc .gt_indent_5 {
+#soeiaawbzk .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vklsrxkduc .katex-display {
+#soeiaawbzk .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vklsrxkduc div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#soeiaawbzk div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1723,7 +1772,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/");
+      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
