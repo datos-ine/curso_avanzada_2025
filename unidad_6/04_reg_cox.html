@@ -358,7 +358,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 3</span></a>
+ <span class="menu-text">Unidad 3 <strong>(disponible a partir del 30/06/25)</strong></span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -395,8 +395,11 @@ window.Quarto = {
   </div>
 </li>
           <li class="sidebar-item">
- <span class="menu-text">unidad_3/06_confusion_interaccion.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_3/06_confusion_interaccion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Confusión e interacción</span></a>
+  </div>
+</li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../unidad_3/07_reg_lineal_multiple.html" class="sidebar-item-text sidebar-link">
@@ -775,7 +778,7 @@ Score (logrank) test = 38.43  on 4 df,   p=9e-08</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>Surv(tiempo, status) ~ fase + decr + deag + sexo
-&lt;environment: 0x000001e7c4177ae8&gt;</code></pre>
+&lt;environment: 0x0000014355106068&gt;</code></pre>
 </div>
 </div>
 <p>En general, el criterio que se utiliza para “sacar” variables del modelo, es sacar aquellas cuyo <span class="math inline">\(\beta\)</span> haya resultado no significativo. En el caso de <code>m3</code> serían los <span class="math inline">\(\beta\)</span> correspondientes a las variables <code>sexo</code> y <code>fase</code>.</p>
@@ -864,7 +867,7 @@ Score (logrank) test = 38.43  on 3 df,   p=2e-08</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>Surv(tiempo, status) ~ fase + decr + deag
-&lt;environment: 0x000001e7b8587778&gt;</code></pre>
+&lt;environment: 0x000001434958ae48&gt;</code></pre>
 </div>
 </div>
 <p>Saco <code>fase</code>, dado que su coeficiente resultó no significativo.</p>
@@ -1792,7 +1795,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/\/");
+      var filterRegex = new RegExp("https:\/\/datos-ine\.github\.io\/curso_avanzada_2025\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

@@ -5,8 +5,7 @@
 <meta name="generator" content="quarto-1.6.42">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Christian Ballejo">
-<meta name="author" content="Andrea Silva">
-<title>Estudios de casos y controles – Curso Epidemiología - Nivel Avanzado</title>
+<title>Confusión e interacción – Curso Epidemiología - Nivel Avanzado</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -47,6 +46,8 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../unidad_3/07_reg_lineal_multiple.html" rel="next">
+<link href="../unidad_3/05_anova.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -207,7 +208,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Estudios de casos y controles</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_3/01_est_ecologicos.html">Unidad 3 <strong>(disponible a partir del 30/06/25)</strong></a></li><li class="breadcrumb-item"><a href="../unidad_3/06_confusion_interaccion.html">Confusión e interacción</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -361,7 +362,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../unidad_3/06_confusion_interaccion.html" class="sidebar-item-text sidebar-link">
+  <a href="../unidad_3/06_confusion_interaccion.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Confusión e interacción</span></a>
   </div>
 </li>
@@ -396,19 +397,24 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contenidos</h2>
    
   <ul>
-<li>
-<a href="#introducci%C3%B3n" id="toc-introducción" class="nav-link active" data-scroll-target="#introducci%C3%B3n">Introducción</a>
+<li><a href="#introducci%C3%B3n" id="toc-introducción" class="nav-link active" data-scroll-target="#introducci%C3%B3n">Introducción</a></li>
+  <li>
+<a href="#confusi%C3%B3n" id="toc-confusión" class="nav-link" data-scroll-target="#confusi%C3%B3n">Confusión</a>
   <ul class="collapse">
-<li><a href="#selecci%C3%B3n-de-los-controles" id="toc-selección-de-los-controles" class="nav-link" data-scroll-target="#selecci%C3%B3n-de-los-controles">Selección de los controles</a></li>
+<li><a href="#manejo-de-la-confusi%C3%B3n" id="toc-manejo-de-la-confusión" class="nav-link" data-scroll-target="#manejo-de-la-confusi%C3%B3n">Manejo de la confusión</a></li>
   </ul>
 </li>
-  <li><a href="#clasificaci%C3%B3n-de-los-estudios-de-casos-y-controles" id="toc-clasificación-de-los-estudios-de-casos-y-controles" class="nav-link" data-scroll-target="#clasificaci%C3%B3n-de-los-estudios-de-casos-y-controles">Clasificación de los estudios de casos y controles</a></li>
-  <li><a href="#an%C3%A1lisis-de-estudios-de-casos-y-controles" id="toc-análisis-de-estudios-de-casos-y-controles" class="nav-link" data-scroll-target="#an%C3%A1lisis-de-estudios-de-casos-y-controles">Análisis de estudios de casos y controles</a></li>
+  <li>
+<a href="#interacci%C3%B3n-o-modificaci%C3%B3n-de-efecto" id="toc-interacción-o-modificación-de-efecto" class="nav-link" data-scroll-target="#interacci%C3%B3n-o-modificaci%C3%B3n-de-efecto">Interacción o modificación de efecto</a>
+  <ul class="collapse">
+<li><a href="#limitaciones-de-los-t%C3%A9rminos-de-interacci%C3%B3n" id="toc-limitaciones-de-los-términos-de-interacción" class="nav-link" data-scroll-target="#limitaciones-de-los-t%C3%A9rminos-de-interacci%C3%B3n">Limitaciones de los términos de interacción</a></li>
+  </ul>
+</li>
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title">Estudios de casos y controles</h1>
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_3/01_est_ecologicos.html">Unidad 3 <strong>(disponible a partir del 30/06/25)</strong></a></li><li class="breadcrumb-item"><a href="../unidad_3/06_confusion_interaccion.html">Confusión e interacción</a></li></ol></nav><div class="quarto-title">
+<h1 class="title">Confusión e interacción</h1>
 </div>
 
 
@@ -416,10 +422,9 @@ window.Quarto = {
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Autores/as</div>
+    <div class="quarto-title-meta-heading">Autor/a</div>
     <div class="quarto-title-meta-contents">
              <p>Christian Ballejo <a href="https://orcid.org/0000-0002-7346-5701" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
-             <p>Andrea Silva <a href="https://orcid.org/0000-0002-4791-9706" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
           </div>
   </div>
     
@@ -430,91 +435,260 @@ window.Quarto = {
 
 
 </header><section id="introducción" class="level2"><h2 class="anchored" data-anchor-id="introducción">Introducción</h2>
-<p>Un estudio de casos y controles (CC) es un estudio analítico observacional que comienza con la identificación de dos grupos:</p>
+<p>Antes de comenzar a construir modelos de <a href="../unidad_3/07_reg_lineal_multiple.html"><strong>regresión lineal múltiple</strong></a>, es necesario repasar algunos conceptos fundamentales…</p>
+<p>Los estudios epidemiológicos suelen partir de modelos teóricos conocidos y vinculados con el problema de investigación. Las variables recolectadas se definen en la etapa de diseño del estudio, cada una cumpliendo un rol específico. Generalmente, se identifican dos variables principales y excluyentes: la exposición (variable independiente) y el resultado (variable dependiente). Una vez seleccionadas la variable dependiente e independiente, las demás variables medidas o no medidas en el estudio se denominan <strong>covariables</strong>.</p>
+<p>Dentro del proceso salud-enfermedad, las covariables pueden asumir diversos roles, como confusoras, mediadoras de efecto, intermedias, colisionadoras, exposiciones en competencia, entre otros. Algunos de estos roles suelen estar definidos previamente por la literatura; otros pueden surgir o ser identificados durante el análisis.</p>
+</section><section id="confusión" class="level2"><h2 class="anchored" data-anchor-id="confusión">Confusión</h2>
+<p>Una variable de confusión distorsiona la medida de asociación entre las variables principales del estudio. En presencia de confusión, pueden observarse los siguientes escenarios:</p>
 <ul>
-<li><p>Casos: individuos que presentan algún evento particular de salud.</p></li>
-<li><p>Controles: individuos que no presentan el evento.</p></li>
+<li><p><strong>Asociación espuria:</strong> Efecto observado donde en realidad no existe.</p></li>
+<li><p><strong>Confusión positiva:</strong> Exageración o atenuación de una asociación real.</p></li>
+<li><p><strong>Confusión negativa:</strong> Inversión del sentido de una asociación real.</p></li>
 </ul>
-<p>El objetivo es comparar la frecuencia de exposición a un factor de interés entre ambos grupos. La hipótesis subyacente es que si la exposición es más frecuente en los casos que en los controles, podría tratarse de un <strong>factor de riesgo</strong>. En cambio, si la exposición es menos frecuente en los casos, podría actuar como un <strong>factor protector</strong>.</p>
-<p>Los principales aspectos metodológicos a tener en cuenta para llevar adelante un estudio de casos y controles son:</p>
+<p>Según <span class="citation" data-cites="gordis2017">Gordis (<a href="#ref-gordis2017" role="doc-biblioref">2017</a>)</span>, en un estudio que evalúa si la exposición (<span class="math inline">\(X\)</span>) causa un resultado (<span class="math inline">\(Y\)</span>), se dice que un tercer factor (<span class="math inline">\(Z\)</span>) es una variable de confusión si cumple con los siguientes criterios:</p>
 <ul>
-<li>Definición precisa de la variable dependiente (evento de interés).</li>
-<li>Definición de las variables independientes (factores de exposición).</li>
-<li>Criterios de selección de los casos (fuente y definición).</li>
-<li>Criterios de selección de los controles (fuente y criterios de inclusión/exclusión).</li>
-<li>Análisis estadístico.</li>
+<li><p><span class="math inline">\(Z\)</span> es un factor de riesgo conocido para <span class="math inline">\(Y\)</span>.</p></li>
+<li><p><span class="math inline">\(Z\)</span> está asociado con la exposición <span class="math inline">\(X\)</span>, pero no es un resultado de <span class="math inline">\(X\)</span>.</p></li>
 </ul>
-<p>Es fundamental tener criterios precisos para la definición de caso. Los criterios pueden estar basados en resultados de pruebas de laboratorio o pueden estar basados en la historia clínica o en encuestas.</p>
-<p>Según la definición de casos, se diferencian dos tipos importantes de estudios de casos y controles:</p>
+<p>Para conceptualizar este y otros mecanismos, es útil utilizar gráficos acíclicos dirigidos (DAGs, por sus siglas en inglés). Estos diagramas representan las relaciones causales sin formar ciclos cerrados y conectan variables mediante flechas dirigidas.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/DAG1.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<p>Para quienes necesiten profundizar, se recomienda leer el artículo:</p>
+<p>➡️ De Irala, J., et al.&nbsp;(2001). ¿Qué es una variable de confusión? <em>Medicina Clínica</em>, <em>117</em>(10), 377–385. <a href="https://doi.org/10.1016/S0025-7753(01)72121-5" class="uri">https://doi.org/10.1016/S0025-7753(01)72121-5</a></p>
+<section id="manejo-de-la-confusión" class="level3"><h3 class="anchored" data-anchor-id="manejo-de-la-confusión">Manejo de la confusión</h3>
+<p>Dentro de las estrategias para manejar la confusión, podemos pensar en dos momentos:</p>
 <ul>
-<li><p><strong>Estudios de casos y controles con casos incidentes</strong>: Incluyen solo casos nuevos de la enfermedad durante el período de estudio.</p></li>
-<li><p><strong>Estudios de casos y controles con casos prevalentes</strong>: Consideran todos los individuos que tienen la enfermedad en un momento determinado.</p></li>
-</ul>
-<p>Algunos autores consideran los estudios de CC como una estrategia alternativa para estudiar una cohorte. Esto permite diferenciar dos enfoques:</p>
+<li>A la hora de diseñar y llevar a cabo el estudio:
 <ul>
-<li>
-<strong>Casos en cohortes de densidad de incidencia</strong>: Los casos se reclutan conforme aparecen (incidentes). Este enfoque es útil cuando la exposición tiene períodos de latencia prolongados.</li>
-<li>
-<strong>Casos en cohortes de incidencia acumulada</strong>: Los casos se seleccionan al final del estudio, con un período de seguimiento previamente definido.</li>
+<li>Emparejamiento individual.</li>
+<li>Emparejamiento de grupo.</li>
 </ul>
-<section id="selección-de-los-controles" class="level3"><h3 class="anchored" data-anchor-id="selección-de-los-controles">Selección de los controles</h3>
-<p>La fuente de los controles quedará definida en la medida en que se definan claramente los criterios de selección de casos, así como la población hipotética de origen. Algunos puntos a considerar son los siguientes:</p>
-<ol type="a">
-<li>Los controles deben seleccionarse de la misma base poblacional (de la cohorte hipotética) de donde se originaron los casos. Si uno de estos controles desarrollara el evento en cuestión, pasaría a formar parte del grupo de los casos. Esto último implica que los controles estuvieron en riesgo de desarrollar el evento en forma simultánea a los casos.</li>
-<li>Los controles deben seleccionarse independientemente de su condición de expuestos o no expuestos.</li>
-<li>La probabilidad de selección para los controles debe ser proporcional al tiempo que el sujeto estuvo en riesgo de desarrollar el evento o enfermedad en estudio.</li>
-<li>Para minimizar confusión, se pueden emparejar controles con casos en función de variables confusoras.</li>
-<li>Los procedimientos para medir la exposición, deben ser los mismos, tanto en casos como en controles.</li>
-</ol>
-<p>Las fuentes de controles pueden incluir población general, hospitales, vecindarios, registros de mortalidad, entre otros.</p>
-</section></section><section id="clasificación-de-los-estudios-de-casos-y-controles" class="level2"><h2 class="anchored" data-anchor-id="clasificación-de-los-estudios-de-casos-y-controles">Clasificación de los estudios de casos y controles</h2>
-<p>En los últimos tiempos, se ha profundizado en los aspectos metodológicos de los estudios de casos y controles; y también se ha clarificado la estrecha relación que existe con los estudios de cohorte, lo que ha permitido el desarrollo de diferentes variantes. Describiremos brevemente algunas de ellas a continuación:</p>
+</li>
+<li>Al momento de analizar los datos:
 <ul>
-<li><p><strong>Estudios caso-cohorte</strong>. En esta variante, la definición de casos y controles se encuentra anidada en una cohorte fija, se utiliza un enfoque de incidencia acumulada.</p></li>
-<li><p><strong>Estudios de casos y controles anidado o de grupo de riesgo</strong>. Es similar al anterior, sólo que se trata de una cohorte dinámica, y un enfoque de densidad de incidencia.</p></li>
-<li><p><strong>Estudios caso-autocontrol</strong>. Esta variante utiliza al mismo sujeto que se consideró como caso, como su propio control. Este tipo de estrategia se suele utilizar para exposiciones que son de corta duración y que cambian en el tiempo y con eventos que son fáciles de detectar.</p></li>
-<li><p><strong>Estudios de mortalidad proporcional</strong>. Tanto los casos como los controles se obtienen de los registros de mortalidad poblacionales. <em>Rothman</em> dice que este tipo de controles son aceptables, sólo si la distribución de la exposición entre los grupos es similar a la que presenta la base poblacional.</p></li>
-<li><p><strong>Estudios de caso-caso</strong>. En esta estrategia se compara la historia de exposición en subgrupos de casos. En el caso de enfermedades infecciosas, es posible conformar diversos subgrupos de enfermedad, partiendo de datos de vigilancia epidemiológica.</p></li>
+<li>Estratificación.</li>
+<li>Ajuste estadístico.</li>
 </ul>
-<p>Quienes desean profundizar estos tópicos sobre el diseño de los CyC, pueden leer el capítulo correspondiente de <em>“Epidemiología. Diseño y análisis de estudios”</em> de <span class="citation" data-cites="hernández-ávila2011">Hernández-Ávila (<a href="#ref-hern%C3%A1ndez-%C3%A1vila2011" role="doc-biblioref">2011</a>)</span> . Comenzaremos ahora con la parte de análisis de estos diseños.</p>
-</section><section id="análisis-de-estudios-de-casos-y-controles" class="level2"><h2 class="anchored" data-anchor-id="análisis-de-estudios-de-casos-y-controles">Análisis de estudios de casos y controles</h2>
-<p>En estudios de CC, la medida de asociación principal es el <strong>odds ratio (OR)</strong> de la exposición. Este se calcula comparando la frecuencia de exposición entre casos y controles:</p>
+</li>
+</ul>
+<p>El ajuste estadístico, característico de los análisis multivariados, permite estimar el efecto específico de cada variable independiente sobre la dependiente, controlando por las demás variables.</p>
+<p>Un criterio comúnmente aceptado es que un factor se considera confusor si su ajuste provoca un cambio de al menos el 10% en la magnitud de la asociación. Por ejemplo, edad y sexo son variables frecuentemente confusoras en estudios epidemiológicos y generalmente son pocos los trabajos que no presentan datos ajustados por estas covariables..</p>
+<p>En este curso utilizaremos la <a href="../unidad_3/07_reg_lineal_multiple.html"><strong>regresión lineal múltiple</strong></a> y los modelos lineales generalizados para manejar la confusión, ajustando por múltiples covariables. A continuación, se ejemplifica gráficamente con un diagrama de dispersión.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="06_confusion_interaccion_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>La recta de regresión muestra una correlación positiva entre los valores de las variables, <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span>, con una ecuación de la forma:</p>
 <p><span class="math display">\[
-OR = \frac{Odds~exposición~casos}{Odds~exposición~controles}
+\hat{y} = \beta_0 + \beta_1x_1 + \epsilon
 \]</span></p>
-<p>El modelo multivariado a utilizar para estudios de casos y controles no apareados es la <a href="../unidad_4/02_reg_logistica.html"><strong>regresión logística</strong></a>, que desarrollaremos a continuación. Por otro lado, los estudios de casos y controles apareados se analizan mediante modelos de <a href="../unidad_4/04_reg_logistica_cond.html"><strong>regresión logística condicional</strong></a>, los cuales abordaremos brevemente al final de la unidad.</p>
-<div class="hidden">
-<p><span class="citation" data-cites="escuelasanidad">Escuela Nacional de Sanidad (ENS). Instituto de Salud Carlos III. Ministerio de Ciencias e Innovación. Madrid (<a href="#ref-escuelasanidad" role="doc-biblioref">2009</a>)</span></p>
-<p><span class="citation" data-cites="field2014">Field, Miles, y Field (<a href="#ref-field2014" role="doc-biblioref">2014</a>)</span></p>
-<p><span class="citation" data-cites="ortegacalvo2002">Ortega Calvo y Cayuela Domínguez (<a href="#ref-ortegacalvo2002" role="doc-biblioref">2002</a>)</span></p>
-<p><span class="citation" data-cites="rothman2012">Rothman (<a href="#ref-rothman2012" role="doc-biblioref">2012</a>)</span></p>
-<p><span class="citation" data-cites="silvaayçaguer1995">Silva Ayçaguer (<a href="#ref-silvaay%C3%A7aguer1995" role="doc-biblioref">1995</a>)</span></p>
-<p><span class="citation" data-cites="thompson1994">Thompson (<a href="#ref-thompson1994" role="doc-biblioref">1994</a>)</span></p>
+<p>La salida en R de este modelo se vería de la siguiente forma:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x, data = datos_conf)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-7.4701 -2.4124 -0.0179  2.5926  6.9821 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.45017    1.13262   2.163   0.0354 *  
+x            0.77889    0.09642   8.078 1.45e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 3.559 on 49 degrees of freedom
+Multiple R-squared:  0.5712,    Adjusted R-squared:  0.5624 
+F-statistic: 65.26 on 1 and 49 DF,  p-value: 1.45e-10</code></pre>
 </div>
+</div>
+<p>El intercepto (<span class="math inline">\(\beta_0\)</span>) es 2,45 y la pendiente (<span class="math inline">\(\beta_1\)</span>) es 0,78, explicando el 56% de la variabilidad de <span class="math inline">\(Y\)</span> (<span class="math inline">\(R^2\)</span> = 0,56). En la ecuación podemos representarlo como:</p>
+<p><span class="math display">\[
+\hat{y} = 2.45 + 0.78x_1 + \epsilon
+\]</span></p>
+<p>Ahora incorporemos la covariable <span class="math inline">\(Z\)</span>, con categorías <strong>A</strong> y <strong>B</strong>, que sospechamos tiene un rol de confusión en el modelo teórico.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="06_confusion_interaccion_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>El gráfico de dispersión muestra que hay una diferencia entre las rectas de regresión que se mantiene prácticamente constante (paralelas) en todo su desarrollo. Esa distancia medida en valores de <span class="math inline">\(Y\)</span> es <span class="math inline">\(\beta_2\)</span>:</p>
+<p><span class="math display">\[
+\hat{y} = \beta_0 + \beta_1x_1 + \beta_2x_2 + \epsilon
+\]</span></p>
+<p>Visto en resultados de consola:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x + z, data = datos_conf)
+
+Residuals:
+   Min     1Q Median     3Q    Max 
+-7.958 -1.502 -0.225  1.840  5.652 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  0.65684    1.00484   0.654    0.516    
+x            0.65260    0.08372   7.795 4.49e-10 ***
+zB           4.55436    0.93258   4.884 1.20e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.939 on 48 degrees of freedom
+Multiple R-squared:  0.7135,    Adjusted R-squared:  0.7016 
+F-statistic: 59.77 on 2 and 48 DF,  p-value: 9.347e-14</code></pre>
+</div>
+</div>
+<p>El coeficiente <span class="math inline">\(\beta_1\)</span> de la variable independiente principal (<span class="math inline">\(X\)</span>) varió al incorporar la nueva variable (<span class="math inline">\(Z\)</span>), pasando de 0,78 (cruda) a 0,65 (ajustada), es decir que disminuyó casi un 20%. A la vez, la covariable tiene una relación significativa con la variable dependiente (<span class="math inline">\(Y\)</span>) y el modelo aumenta el <span class="math inline">\(R^2\)</span> ajustado a 0,70.</p>
+<p>Entonces podemos ver que la regresión multiple ajustó el efecto de <span class="math inline">\(X\)</span> sobre <span class="math inline">\(Y\)</span>, teniendo en cuenta el efecto confusor de <span class="math inline">\(Z\)</span> que sospechabamos. El valor de <span class="math inline">\(Y\)</span> ahora es 0,66 (<span class="math inline">\(\beta_0\)</span>) + 0,65* el valor de <code>x</code> (<span class="math inline">\(\beta_1*x\)</span>) mientras <span class="math inline">\(Z\)</span> es igual al nivel de referencia <strong>A</strong>, en cambio <span class="math inline">\(Y\)</span> vale 0,66 (<span class="math inline">\(\beta_0\)</span>) + 0,65* el valor de <span class="math inline">\(X\)</span> (<span class="math inline">\(\beta_1*x\)</span>) + 4,55 (<span class="math inline">\(\beta_2\)</span>) cuando <span class="math inline">\(Z\)</span> es igual a <strong>B</strong>.</p>
+</section></section><section id="interacción-o-modificación-de-efecto" class="level2"><h2 class="anchored" data-anchor-id="interacción-o-modificación-de-efecto">Interacción o modificación de efecto</h2>
+<p><span class="citation" data-cites="macmahon1972">MacMahon (<a href="#ref-macmahon1972" role="doc-biblioref">1972</a>)</span> definió la interacción de la siguiente manera:</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><em>“Cuando la incidencia de la enfermedad en presencia de dos o más factores de riesgo difiere de la incidencia que sería previsible por sus efectos individuales”</em></p>
+</div>
+</div>
+</div>
+<p>Esto puede manifestarse como:</p>
+<ul>
+<li><p><strong>Sinergismo (interacción positiva):</strong> El efecto combinado es mayor que la suma de sus efectos individuales.</p></li>
+<li><p><strong>Antagonismo (interacción negativa):</strong> El efecto combinado es menor.</p></li>
+</ul>
+<p>La modificación del efecto ocurre cuando la magnitud de la asociación entre la exposición (<span class="math inline">\(X\)</span>) y el resultado (<span class="math inline">\(Y\)</span>) varía según los niveles de una tercera variable (<span class="math inline">\(Z\)</span>).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="images/dag_int.svg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%"></p>
+</figure>
+</div>
+<p>Para quienes tengan interés en profundizar el tema, pueden leer el artículo:</p>
+<p>➡️ De Irala, J., et al.&nbsp;(2001). ¿Qué es una variable modificadora del efecto? <em>Medicina Clínica</em>, <em>117</em>(8), 297–302. <a href="https://doi.org/10.1016/S0025-7753(01)72092-1" class="uri">https://doi.org/10.1016/S0025-7753(01)72092-1</a></p>
+<p>Para identificar la interacción en regresión lineal múltiple, se incluyen términos de interacción (<span class="math inline">\(X * Z\)</span>), que representan una nueva variable con efectos multiplicativos. El término de interacción implica el exceso de la variabilidad de los datos que no puede ser explicada por la suma de las variables consideradas.</p>
+<p>En cursos anteriores de Epidemiología se estudió que, frente a un modificador de efecto (ME) lo más adecuado era presentar las medidas de asociación según los estratos formados por las categorías de la variable ME (no estimar una medida ajustada para ambos estratos, como se hace en caso de variables confusoras).</p>
+<p>Un ejemplo similar al recién mostrado para la confusión, pero para la interacción podría ser:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="06_confusion_interaccion_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span class="math display">\[\hat{y} = \beta_0 + \beta_1x_1 + \epsilon\]</span></p>
+<p>Partimos de esta relación entre <span class="math inline">\(X\)</span> e <span class="math inline">\(Y\)</span> representada por la recta de la ecuación con los valores de la siguiente tabla:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x, data = datos_int)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-9.8410 -3.8804  0.3709  3.2871  8.4102 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   4.0035     1.4065   2.847   0.0062 ** 
+x             0.5419     0.1132   4.789 1.31e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4.554 on 55 degrees of freedom
+Multiple R-squared:  0.2943,    Adjusted R-squared:  0.2814 
+F-statistic: 22.93 on 1 and 55 DF,  p-value: 1.307e-05</code></pre>
+</div>
+</div>
+<p>El intercepto (<span class="math inline">\(\beta_0\)</span>) es de 4,0 y el coeficiente <span class="math inline">\(\beta_1\)</span> (pendiente) significativo de 0,54.</p>
+<p>Ahora incorporemos la covariable <span class="math inline">\(Z\)</span>, con categorías <strong>A</strong> y <strong>B</strong>, que sospechamos tiene un rol de interacción.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="06_confusion_interaccion_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>El gráfico de dispersión muestra que hay una diferencia entre las rectas de regresión que tienen distintas pendientes según el valor de <span class="math inline">\(X\)</span>. Esa diferencia no es aditiva y pasa a ser multiplicativa y da lugar a la ecuación:</p>
+<p><span class="math display">\[
+\hat{y} = \beta_0 + \beta_1x_1 + \beta_2x_2 + \beta_3x_1x_2 + \epsilon
+\]</span></p>
+<p>Visto en resultados de consola:</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = y ~ x * z, data = datos_int)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-4.1427 -1.8739 -0.4598  1.3199  5.2230 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  2.77269    0.91587   3.027 0.003804 ** 
+x            0.22708    0.07719   2.942 0.004830 ** 
+zB           2.49329    1.51850   1.642 0.106522    
+x:zB         0.45574    0.12213   3.732 0.000465 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 2.364 on 53 degrees of freedom
+Multiple R-squared:  0.8168,    Adjusted R-squared:  0.8064 
+F-statistic: 78.75 on 3 and 53 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<p>El término de interacción es significativo, aunque la variable <span class="math inline">\(Z\)</span> por sí misma no lo sea, lo que implica que la significancia se encuentra asociada específicamente a uno de los niveles de <span class="math inline">\(Z\)</span> (en este caso, la categoría B). Dado que no es posible separar los niveles de <span class="math inline">\(Z\)</span>, esta variable debe permanecer en el modelo. Además, la inclusión del término de interacción mejora el <span class="math inline">\(R^2\)</span> ajustado del modelo, que pasa de 0,28 a 0,80. Esto demuestra que, cuando la interacción es significativa, la significancia estadística de los efectos simples de las variables <span class="math inline">\(X\)</span> y <span class="math inline">\(Z\)</span> se vuelve menos relevante.</p>
+<p>El modelo ajustado para <span class="math inline">\(Y\)</span> es el siguiente:</p>
+<ul>
+<li>Para <span class="math inline">\(Z = A\)</span>:</li>
+</ul>
+<p><span class="math display">\[
+y = 2,77 + 0,23 x
+\]</span></p>
+<ul>
+<li>Para <span class="math inline">\(Z = B\)</span>:</li>
+</ul>
+<p><span class="math display">\[
+2,77 + 0,23x + 2,49 + 0,46x
+\]</span></p>
+<p>Esto muestra una interacción sinérgica entre la categoría B de la variable <span class="math inline">\(Z\)</span> y la variable <span class="math inline">\(X\)</span>, reflejada en el efecto sobre <span class="math inline">\(Y\)</span>. La pendiente de la recta para <span class="math inline">\(Z = B\)</span> es mayor que para <span class="math inline">\(Z = A\)</span>, lo que indica que el efecto de <span class="math inline">\(X\)</span> sobre <span class="math inline">\(Y\)</span> varía según el nivel de <span class="math inline">\(Z\)</span>.</p>
+<section id="limitaciones-de-los-términos-de-interacción" class="level3"><h3 class="anchored" data-anchor-id="limitaciones-de-los-términos-de-interacción">Limitaciones de los términos de interacción</h3>
+<p>Aunque el análisis de interacción en modelos lineales generales es una herramienta útil para explorar relaciones complejas entre variables, es importante ser consciente de sus limitaciones y asumirlas en el diseño, análisis e interpretación de los resultados. Entre ellas encontramos:</p>
+<ul>
+<li><p><strong>Linealidad y Simplicidad del Modelo:</strong> El modelo lineal general asume relaciones lineales entre las variables, pero las interacciones a veces no muestran linealidad.</p></li>
+<li><p><strong>Sobreajuste en Modelos con Múltiples Interacciones:</strong> La inclusión de muchos términos de interacción, puede sobreajustar el modelo y dificultar su interpretación y generalización.</p></li>
+<li><p><strong>Colinealidad:</strong> La colinealidad entre las variables independientes puede ser exacerbada al incluir términos de interacción, lo que dificultaría la identificación de relaciones significativas.</p></li>
+<li><p><strong>Pérdida de Potencia Estadística:</strong> Al incluir términos de interacción, el número de parámetros a estimar aumenta, reduciendo los grados de libertad y pudiendo disminuir la potencia estadística.</p></li>
+<li><p><strong>Dificultades en la Interpretación:</strong> Los coeficientes de interacción pueden ser difíciles de interpretar, especialmente cuando las variables son continuas.</p></li>
+<li><p><strong>Heterogeneidad de Efectos:</strong> Los términos de interacción pueden no capturar variaciones en los efectos entre subgrupos específicos.</p></li>
+<li><p><strong>Errores de Especificación del Modelo:</strong> Si las interacciones relevantes no se incluyen o se modelan incorrectamente, el modelo puede estar mal especificado.</p></li>
+<li><p><strong>Sensibilidad a la Codificación de las Variables:</strong> La codificación de variables categóricas puede influir en la interpretación de los coeficientes de interacción.</p></li>
+<li><p><strong>Limitaciones Computacionales:</strong> En grandes conjuntos de datos o modelos complejos, la inclusión de múltiples interacciones puede aumentar significativamente la carga computacional y los recursos necesarios.</p></li>
+</ul>
 
 
 
-</section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-escuelasanidad" class="csl-entry" role="listitem">
-Escuela Nacional de Sanidad (ENS). Instituto de Salud Carlos III. Ministerio de Ciencias e Innovación. Madrid. 2009. <em>Manual docente de la Escuela Nacional de Sanidad: Método Epidemiológico</em>.
+</section></section><a onclick="window.scrollTo(0, 0); return false;" role="button" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Volver arriba</a><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">Referencias</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-gordis2017" class="csl-entry" role="listitem">
+Gordis, Leon. 2017. <em>Epidemiologia</em>. Thieme Revinter Publicações LTDA.
 </div>
-<div id="ref-field2014" class="csl-entry" role="listitem">
-Field, Andy, Jeremy Miles, y Zoë Field. 2014. <em>Discovering statistics using R</em>. Repr. Los Angeles, CA, USA: Sage.
-</div>
-<div id="ref-hernández-ávila2011" class="csl-entry" role="listitem">
-Hernández-Ávila, Mauricio. 2011. <em>Epidemiología: diseño y análisis de estudios</em>. Buenos Aires: Editorial Médica Panamericana.
-</div>
-<div id="ref-ortegacalvo2002" class="csl-entry" role="listitem">
-Ortega Calvo, Manuel, y Aurelio Cayuela Domínguez. 2002. <span>«Regresión logística no condicionada y tamaño de muestra: una revisión bibliográfica»</span>. <em>Revista Española de Salud Pública</em> 76: 85-93.
-</div>
-<div id="ref-rothman2012" class="csl-entry" role="listitem">
-Rothman, Kenneth J. 2012. <em>Epidemiology: an introduction</em>. 2. ed. New York, NY: Oxford Univ. Press.
-</div>
-<div id="ref-silvaayçaguer1995" class="csl-entry" role="listitem">
-Silva Ayçaguer, Luis Carlos. 1995. <span>«Excursión a la regresión logística en ciencias de la salud»</span>. <em>Madrid: Díaz de Santos</em>.
-</div>
-<div id="ref-thompson1994" class="csl-entry" role="listitem">
-Thompson, W. D. 1994. <span>«Statistical analysis of case-control studies»</span>. <em>Epidemiologic Reviews</em> 16 (1): 33-50. <a href="https://doi.org/10.1093/oxfordjournals.epirev.a036143">https://doi.org/10.1093/oxfordjournals.epirev.a036143</a>.
+<div id="ref-macmahon1972" class="csl-entry" role="listitem">
+MacMahon, B. 1972. <span>«Concepts of multiple factors»</span>. <em>Multiple factors in the causation of environmentally induced disease. Academic Press, New York</em>.
 </div>
 </div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reutilización</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-nc/4.0/deed.es">CC BY-NC 4.0</a></div></div></section></div></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
@@ -1076,7 +1250,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="../unidad_3/05_anova.html" class="pagination-link" aria-label="Análisis de la varianza (ANOVA)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Análisis de la varianza (ANOVA)</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../unidad_3/07_reg_lineal_multiple.html" class="pagination-link" aria-label="Regresión lineal múltiple">
+        <span class="nav-page-text">Regresión lineal múltiple</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">
