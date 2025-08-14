@@ -30,9 +30,9 @@ website:
           - text: "Unidad 2: Estudios transversales"
             href: unidad_2/01_est_epidemiologicos.qmd
           - text: "Unidad 3: Estudios ecológicos"
-            # href: unidad_3/01_est_ecologicos.qmd
+            href: unidad_3/01_est_ecologicos.qmd
           - text: "Unidad 4: Estudios de casos y controles"
-            # href: unidad_4/01_est_caso_control.qmd
+            href: unidad_4/01_est_caso_control.qmd
           - text: "Unidad 5: Estudios de cohortes"
             # href: unidad_5/01_est_cohortes.qmd
           - text: "Unidad 6: Estudios experimentales"
@@ -89,34 +89,34 @@ website:
           - unidad_2/06_fun_condicionales.qmd
           - unidad_2/07_IC_complejos.qmd
           
-      - section: "Unidad 3 **(disponible a partir del 30/06/25)**"
+      - section: "Unidad 3"
         icon: file-earmark-bar-graph
-        # contents:
-        # - unidad_3/01_est_ecologicos.qmd
-        # - unidad_3/02_mod_estadistico.qmd
-        # - unidad_3/03_covarianza_correlacion.qmd
-        # - unidad_3/04_reg_lineal.qmd
-        # - unidad_3/05_anova.qmd
-        # - unidad_3/06_confusion_interaccion.qmd
-        # - unidad_3/07_reg_lineal_multiple.qmd
+        contents:
+        - unidad_3/01_est_ecologicos.qmd
+        - unidad_3/02_mod_estadistico.qmd
+        - unidad_3/03_covarianza_correlacion.qmd
+        - unidad_3/04_reg_lineal.qmd
+        - unidad_3/05_anova.qmd
+        - unidad_3/06_confusion_interaccion.qmd
+        - unidad_3/07_reg_lineal_multiple.qmd
           
-      - section: "Unidad 4 **(disponible a partir del 04/08/25)**"
+      - section: "Unidad 4"
         icon: file-earmark-bar-graph
-        # contents:
-        # - unidad_4/01_est_caso_control.qmd
-        # - unidad_4/02_reg_logistica.qmd
-        # - unidad_4/03_sep_datos.qmd
-        # - unidad_4/04_reg_logistica_cond.qmd
+        contents:
+        - unidad_4/01_est_caso_control.qmd
+        - unidad_4/02_reg_logistica.qmd
+        - unidad_4/03_sep_datos.qmd
+        - unidad_4/04_reg_logistica_cond.qmd
         # - unidad_4/05_mod_predict.qmd
           
-      - section: "Unidad 5 **(disponible a partir del 08/09/25)**"
+      - section: "Unidad 5 (disponible a partir del 08/09/25)"
         icon: file-earmark-bar-graph
         # contents:
         # - unidad_5/01_est_cohortes.qmd
         # - unidad_5/02_reg_poisson.qmd
         # - unidad_5/03_dispersion.qmd
           
-      - section: "Unidad 6 **(disponible a partir del 06/10/25)**"
+      - section: "Unidad 6 (disponible a partir del 06/10/25)"
         icon: file-earmark-bar-graph
         # contents:
         # - unidad_6/01_est_experimentales.qmd

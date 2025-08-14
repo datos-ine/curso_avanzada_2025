@@ -125,7 +125,7 @@ $$
 Para $x=0$
 
 $$
-Odds_{evento/expuestos}=e^{(\alpha)}
+Odds_{evento/no~expuestos}=e^{(\alpha)}
 $$
 
 Entonces, si queremos calcular el *odds-ratio* (OR):
@@ -582,7 +582,7 @@ mod4 <- glm(camina ~ lacto_180,
             family = binomial)
 ```
 
-Se calcula el *Likelihood Ratio test* de cada uno de ellos.
+Se calcula el *Likelihood Ratio* de cada uno de ellos.
 
 ```{r}
 mod1$null.deviance - mod1$deviance  
@@ -702,6 +702,10 @@ compare_performance(mod4, mod5_1, mod6,
                     metrics = "AIC", 
                     rank = TRUE)
 ```
+
+En este caso, observarán que la función `compare_performance()` utiliza el indicador *AIC weights* en lugar del AIC. Los *AIC weights* cuantifican, de forma relativa, la calidad de un modelo dentro de un conjunto de modelos candidatos. Representan Refleja la probabilidad relativa de que un modelo sea el mejor entre un conjunto de modelos candidatos. Su cálculo se basa en la comparación de los valores de AIC de todos los modelos comparados.
+
+Por este motivo, su interpretación es inversa a la del AIC: cuanto mayor es el valor del *AIC weight*, mayor es la probabilidad de que ese modelo sea el más adecuado entre los considerados.
 
 ### Calidad de ajuste
 
