@@ -371,7 +371,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_4/01_est_caso_control.html">
  <span class="dropdown-text">Unidad 4: Estudios de casos y controles</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 5: Estudios de cohortes</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
+ <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
+  </li>  
         <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
     </ul>
   </li>
@@ -635,9 +638,34 @@ window.Quarto = {
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></span>
+ <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/01_est_cohortes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios de cohortes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/02_reg_poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Poisson</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/03_dispersion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dispersión de datos</span></a>
+  </div>
+</li>
+      </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
@@ -716,22 +744,6 @@ window.Quarto = {
 </header>
 
 
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>package 'jpeg' successfully unpacked and MD5 sums checked
-package 'exactRankTests' successfully unpacked and MD5 sums checked
-package 'KMsurv' successfully unpacked and MD5 sums checked
-package 'km.ci' successfully unpacked and MD5 sums checked
-package 'gridtext' successfully unpacked and MD5 sums checked
-package 'maxstat' successfully unpacked and MD5 sums checked
-package 'survMisc' successfully unpacked and MD5 sums checked
-package 'ggtext' successfully unpacked and MD5 sums checked
-package 'survminer' successfully unpacked and MD5 sums checked
-
-The downloaded binary packages are in
-    C:\Users\user\AppData\Local\Temp\RtmpG4Oi92\downloaded_packages</code></pre>
-</div>
-</div>
 <section id="funciones-básicas" class="level2">
 <h2 class="anchored" data-anchor-id="funciones-básicas">Funciones básicas</h2>
 <p>En el análisis de supervivencia, se busca modelar una variable aleatoria continua y no negativa, denotada por <span class="math inline">\(T\)</span>, que representa el “<em>tiempo hasta un evento determinado</em>” para cada individuo del estudio. A continuación, se describen sus cuatro funciones fundamentales.</p>
@@ -1655,13 +1667,13 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 <p>El Centro de Trasplante de Médula Ósea del Instituto Nacional del Cáncer de Brasil, entre 1986 y 1998 realizó 96 trasplantes de médula ósea para tratamiento de LMC. El análisis de los datos de esta cohorte tuvo como objetivo identificar factores que pudieran estar relacionados con el pronóstico, ya sea para orientar intervenciones profilácticas o terapéuticas que mejoren los resultados, o para evaluar la conveniencia de alternativas terapéuticas en subgrupos de alto riesgo.</p>
 <p>Existen numerosas librerías para el análisis de supervivencia, nosotros aquí usaremos los paquetes <code>survival</code> <span class="citation" data-cites="survival">(<a href="#ref-survival" role="doc-biblioref">Therneau 2024</a>)</span> y <code>survminer</code><span class="citation" data-cites="survminer">(<a href="#ref-survminer" role="doc-biblioref">Kassambara, Kosinski, y Biecek 2024</a>)</span>, este último provee funciones que facilitan el análisis y la visualización de datos de supervivencia. Comenzamos cargando los paquetes:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survival)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(survminer)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>A continuación cargamos los datos y exploramos su estructura:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"datos/tmo.txt"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"datos/tmo.txt"</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Las variables presentes en el conjunto de datos son las siguientes:</p>
 <ul>
@@ -1678,10 +1690,10 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 <p>Nos centraremos en la construcción de objetos de supervivencia a partir de <strong>datos con censura a la derecha</strong>, ya que es el tipo más común en estudios longitudinales. En este tipo de censura, solo necesitamos dos argumentos para <code>Surv()</code>. Para explorar otras formas de censura (por ejemplo, censura por intervalo o truncamiento), se recomienda consultar la documentación del paquete <code>survival</code>.</p>
 <p>Generamos el objeto de supervivencia usando las variables <code>tiempo</code> y <code>status</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>global <span class="ot">&lt;-</span> <span class="fu">Surv</span>(<span class="at">time =</span> datos<span class="sc">$</span>tiempo, <span class="at">event =</span> datos<span class="sc">$</span>status)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Explorar el objeto de supervivencia</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>global</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>global <span class="ot">&lt;-</span> <span class="fu">Surv</span>(<span class="at">time =</span> datos<span class="sc">$</span>tiempo, <span class="at">event =</span> datos<span class="sc">$</span>status)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Explorar el objeto de supervivencia</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>global</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1000+   39   434    69   672    98  1000+  415   261    65  1000+ 1000+
 [13] 1000+  347   453   281  1000+  185  1000+   79  1000+ 1000+  475  1000+
@@ -1696,10 +1708,10 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 <p>Al llamar el objeto, veremos que algunas observaciones aparecen con el símbolo <code>+</code>, indicando que han sido <strong>censuradas</strong> a la derecha.</p>
 <p>La función <code>survfit()</code> crea curvas de supervivencia a partir de una fórmula. A continuación, ajustaremos un modelo Kaplan-Meier para estimar la curva de supervivencia global:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>KM <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Explorar el modelo de supervivencia</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>KM</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>KM <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Explorar el modelo de supervivencia</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>KM</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: survfit(formula = global ~ 1)
 
@@ -1719,8 +1731,8 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 </ul>
 <p>El objeto <code>KM</code> contiene información detallada: número de observaciones, cantidad de eventos observados, mediana del tiempo de supervivencia y su intervalo de confianza. Además, al tratarse de un objeto de tipo lista, podemos acceder a información adicional con los siguiente comandos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devuelve las estimaciones de Kaplan-Meier a cada t_i</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>surv</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># devuelve las estimaciones de Kaplan-Meier a cada t_i</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>surv</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.9895833 0.9687500 0.9583333 0.9479167 0.9375000 0.9270833 0.9164272
  [8] 0.9057711 0.8951149 0.8844588 0.8738027 0.8631466 0.8524904 0.8418343
@@ -1734,8 +1746,8 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 [64] 0.4555369 0.4392677 0.4392677 0.4392677 0.4392677 0.4392677 0.4392677
 [71] 0.4392677 0.4392677</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {t_i}</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>time </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {t_i}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>time </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]   31   32   39   40   48   54   63   65   69   70   71   74   76   78   79
 [16]   83   84   89   98  100  101  104  110  120  128  139  149  162  185  200
@@ -1743,21 +1755,21 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 [46]  371  383  415  425  427  434  445  452  453  468  475  487  489  522  531
 [61]  536  571  586  587  672  753  774  846  865  907  980 1000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {Y_i}</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>n.risk </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {Y_i}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>n.risk </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 96 95 93 92 91 90 87 86 85 84 83 82 81 80 79 78 77 76 75 74 73 72 71 70 69
 [26] 68 67 66 65 64 63 62 61 60 59 58 57 56 55 54 53 52 51 50 49 48 47 46 45 44
 [51] 43 41 40 39 38 37 36 35 34 33 32 31 30 29 28 27 26 25 24 23 22 21</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {d_i}</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>n.event </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># {d_i}</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>n.event </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 1 1 1 1 0 1 1 1 1 1 1 1 1 1 1 0 0 0 1 1
 [39] 1 1 0 0 1 0 1 1 0 1 1 1 2 0 0 1 0 1 0 0 1 0 0 0 1 0 1 0 0 0 0 0 0 0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># error estándar de las estimaciones de  K-M a {t_i}</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>std.err </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># error estándar de las estimaciones de  K-M a {t_i}</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>std.err </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.01047135 0.01833089 0.02128141 0.02392372 0.02635231 0.02862321
  [7] 0.03086977 0.03301123 0.03506847 0.03705709 0.03898920 0.04087437
@@ -1772,8 +1784,8 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 [61] 0.11475018 0.11475018 0.11965379 0.11965379 0.12505911 0.12505911
 [67] 0.12505911 0.12505911 0.12505911 0.12505911 0.12505911 0.12505911</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimaciones puntuales inferiores (alternativamente, $upper)</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>lower</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># estimaciones puntuales inferiores (alternativamente, $upper)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>KM<span class="sc">$</span>lower</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.9694806 0.9345627 0.9191827 0.9044952 0.8903077 0.8765055 0.8626241
  [8] 0.8490226 0.8356578 0.8224974 0.8095165 0.7966952 0.7840176 0.7714705
@@ -1790,7 +1802,7 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 </div>
 <p>También puede obtenerse un resumen completo mediante:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(KM)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(KM)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: survfit(formula = global ~ 1)
 
@@ -1846,7 +1858,7 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 </div>
 <p>Para graficar la función de supervivencia usaremos la función <code>ggsurvplot()</code> del paquete <code>survminer</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(KM, <span class="at">data =</span> datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(KM, <span class="at">data =</span> datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1862,11 +1874,11 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 <p>Comenzaremos evaluando las curvas de Kaplan Meier en forma visual, y las completaremos con la información del log-rank test, que nos permite comparar dos funciones de supervivencia.</p>
 <p>Definimos la función de supervivencia para <code>sexo</code>, usando el objeto de supervivencia creado anteriormente:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>kmsex <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> sexo, <span class="at">data =</span> datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>kmsex <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> sexo, <span class="at">data =</span> datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Graficamos la curva de supervivencia:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(kmsex, <span class="at">data =</span> datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(kmsex, <span class="at">data =</span> datos)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1877,9 +1889,9 @@ Tasa\;de\;incidencia=\frac{numero\; de\; eventos}{\sum tiempo-persona \; en\;seg
 </div>
 <p>Para comparar ambas funciones de supervivencia se debe ejecutar la función <code>survdiff()</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>logrank <span class="ot">&lt;-</span> <span class="fu">survdiff</span>(global <span class="sc">~</span> sexo, <span class="at">data =</span> datos)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>logrank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>logrank <span class="ot">&lt;-</span> <span class="fu">survdiff</span>(global <span class="sc">~</span> sexo, <span class="at">data =</span> datos)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>logrank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 survdiff(formula = global ~ sexo, data = datos)
@@ -1957,23 +1969,23 @@ sexo=M 57       32     29.6     0.201     0.508
 <p>Hagamos lo mismo para las restantes variables del ejemplo:</p>
 <p>Enfermedad injerto aguda:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de supervivencia</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>kmdeag <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> deag, <span class="at">data =</span> datos)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar curvas de supervivencia</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  kmdeag, </span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> datos, </span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">1</span>,                  </span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#A36267"</span>, <span class="st">"#515A79"</span>),</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>,          </span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="cn">TRUE</span>,              </span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table =</span> <span class="cn">TRUE</span>,        </span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.col =</span> <span class="st">"strata"</span>,</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"NO"</span>, <span class="st">"SI"</span>),    </span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.height =</span> <span class="fl">0.25</span>, </span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()      </span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de supervivencia</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>kmdeag <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> deag, <span class="at">data =</span> datos)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar curvas de supervivencia</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  kmdeag, </span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> datos, </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">1</span>,                  </span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#A36267"</span>, <span class="st">"#515A79"</span>),</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>,          </span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="cn">TRUE</span>,              </span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table =</span> <span class="cn">TRUE</span>,        </span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.col =</span> <span class="st">"strata"</span>,</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"NO"</span>, <span class="st">"SI"</span>),    </span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.height =</span> <span class="fl">0.25</span>, </span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()      </span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -1981,10 +1993,10 @@ sexo=M 57       32     29.6     0.201     0.508
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de log-rank</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>logrank <span class="ot">&lt;-</span> <span class="fu">survdiff</span>(global <span class="sc">~</span> deag, <span class="at">data =</span> datos)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>logrank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de log-rank</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>logrank <span class="ot">&lt;-</span> <span class="fu">survdiff</span>(global <span class="sc">~</span> deag, <span class="at">data =</span> datos)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>logrank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 survdiff(formula = global ~ deag, data = datos)
@@ -1998,23 +2010,23 @@ deag=si 35       26     12.8     13.50      18.8
 </div>
 <p>Enfermedad injerto crónica:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de supervivencia</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>kmdecr <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> decr, <span class="at">data =</span> datos)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar curvas de supervivencia</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(</span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  kmdecr, </span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> datos, </span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">1</span>,                  </span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#A36267"</span>, <span class="st">"#515A79"</span>),</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>,          </span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="cn">TRUE</span>,              </span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table =</span> <span class="cn">TRUE</span>,        </span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.col =</span> <span class="st">"strata"</span>,</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"NO"</span>, <span class="st">"SI"</span>),    </span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.height =</span> <span class="fl">0.25</span>, </span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()      </span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de supervivencia</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>kmdecr <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> decr, <span class="at">data =</span> datos)</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar curvas de supervivencia</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  kmdecr, </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> datos, </span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">1</span>,                  </span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#A36267"</span>, <span class="st">"#515A79"</span>),</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>,          </span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="cn">TRUE</span>,              </span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table =</span> <span class="cn">TRUE</span>,        </span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.col =</span> <span class="st">"strata"</span>,</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"NO"</span>, <span class="st">"SI"</span>),    </span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.height =</span> <span class="fl">0.25</span>, </span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()      </span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2022,10 +2034,10 @@ deag=si 35       26     12.8     13.50      18.8
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de log-rank</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>logrank <span class="ot">&lt;-</span> <span class="fu">survdiff</span>(global <span class="sc">~</span> decr, <span class="at">data =</span> datos)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>logrank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de log-rank</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>logrank <span class="ot">&lt;-</span> <span class="fu">survdiff</span>(global <span class="sc">~</span> decr, <span class="at">data =</span> datos)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>logrank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 survdiff(formula = global ~ decr, data = datos)
@@ -2039,23 +2051,23 @@ decr=si 51       18     33.3      7.04      22.6
 </div>
 <p>Fase de la leucemia:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de supervivencia</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>kmfase <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> fase, <span class="at">data =</span> datos)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar curvas de supervivencia</span></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>  kmfase, </span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> datos, </span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">1</span>,                  </span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#A36267"</span>, <span class="st">"#515A79"</span>, <span class="st">"#E99973"</span>),</span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>,          </span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="cn">TRUE</span>,              </span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table =</span> <span class="cn">TRUE</span>,        </span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.col =</span> <span class="st">"strata"</span>,</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"aguda"</span>, <span class="st">"cb"</span>, <span class="st">"crónica"</span>),    </span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.height =</span> <span class="fl">0.25</span>, </span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()      </span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Función de supervivencia</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>kmfase <span class="ot">&lt;-</span> <span class="fu">survfit</span>(global <span class="sc">~</span> fase, <span class="at">data =</span> datos)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generar curvas de supervivencia</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  kmfase, </span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> datos, </span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">1</span>,                  </span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#A36267"</span>, <span class="st">"#515A79"</span>, <span class="st">"#E99973"</span>),</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>,          </span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="cn">TRUE</span>,              </span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table =</span> <span class="cn">TRUE</span>,        </span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.col =</span> <span class="st">"strata"</span>,</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"aguda"</span>, <span class="st">"cb"</span>, <span class="st">"crónica"</span>),    </span>
+<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.height =</span> <span class="fl">0.25</span>, </span>
+<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()      </span>
+<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2063,10 +2075,10 @@ decr=si 51       18     33.3      7.04      22.6
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de log-rank</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>logrank <span class="ot">&lt;-</span> <span class="fu">survdiff</span>(global <span class="sc">~</span> fase, <span class="at">data =</span> datos)</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>logrank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Test de log-rank</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>logrank <span class="ot">&lt;-</span> <span class="fu">survdiff</span>(global <span class="sc">~</span> fase, <span class="at">data =</span> datos)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>logrank</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 survdiff(formula = global ~ fase, data = datos)
@@ -2094,20 +2106,20 @@ fase=crónica 70       29    38.77      2.46      12.0
 <p>Sin embargo, en otros escenarios —por ejemplo, cuando el evento es la aparición de una infección, una recaída o una complicación— la interpretación de la función de supervivencia puede no ser tan directa. En esos casos, puede ser más útil representar la <strong>función de riesgo acumulado</strong>, que muestra la acumulación del riesgo del evento a lo largo del tiempo.</p>
 <p>Una vez definidos los objetos de supervivencia, podemos utilizar la opción <code>fun = "cumhaz"</code> dentro de la función <code>ggsurvplot()</code> para graficar la función de riesgo acumulado:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  kmsex, </span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> datos, </span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun=</span> <span class="st">"cumhaz"</span>,</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">1</span>,                  </span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#A36267"</span>, <span class="st">"#515A79"</span>),</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>,          </span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="cn">TRUE</span>,              </span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table =</span> <span class="cn">TRUE</span>,        </span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.col =</span> <span class="st">"strata"</span>,</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"Femenino"</span>, <span class="st">"Masculino"</span>),    </span>
-<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.height =</span> <span class="fl">0.25</span>, </span>
-<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()      </span>
-<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsurvplot</span>(</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  kmsex, </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> datos, </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">fun=</span> <span class="st">"cumhaz"</span>,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">1</span>,                  </span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">palette =</span> <span class="fu">c</span>(<span class="st">"#A36267"</span>, <span class="st">"#515A79"</span>),</span>
+<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span>,          </span>
+<span id="cb35-8"><a href="#cb35-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">pval =</span> <span class="cn">TRUE</span>,              </span>
+<span id="cb35-9"><a href="#cb35-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table =</span> <span class="cn">TRUE</span>,        </span>
+<span id="cb35-10"><a href="#cb35-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.col =</span> <span class="st">"strata"</span>,</span>
+<span id="cb35-11"><a href="#cb35-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">legend.labs =</span> <span class="fu">c</span>(<span class="st">"Femenino"</span>, <span class="st">"Masculino"</span>),    </span>
+<span id="cb35-12"><a href="#cb35-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">risk.table.height =</span> <span class="fl">0.25</span>, </span>
+<span id="cb35-13"><a href="#cb35-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">ggtheme =</span> <span class="fu">theme_bw</span>()      </span>
+<span id="cb35-14"><a href="#cb35-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">

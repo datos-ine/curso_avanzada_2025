@@ -81,6 +81,7 @@ div.csl-indent {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../unidad_5/02_reg_poisson.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -354,7 +355,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_4/01_est_caso_control.html">
  <span class="dropdown-text">Unidad 4: Estudios de casos y controles</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 5: Estudios de cohortes</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
+ <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
+  </li>  
         <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
     </ul>
 </li>
@@ -409,7 +413,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Dispersión de datos</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_5/01_est_cohortes.html">Unidad 5 (disponible a partir del 08/09/25)</a></li><li class="breadcrumb-item"><a href="../unidad_5/03_dispersion.html">Dispersión de datos</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -612,10 +616,35 @@ window.Quarto = {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></span>
-  </li>
+ <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/01_est_cohortes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios de cohortes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/02_reg_poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Poisson</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/03_dispersion.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Dispersión de datos</span></a>
+  </div>
+</li>
+      </ul>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
@@ -644,7 +673,7 @@ window.Quarto = {
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_5/01_est_cohortes.html">Unidad 5 (disponible a partir del 08/09/25)</a></li><li class="breadcrumb-item"><a href="../unidad_5/03_dispersion.html">Dispersión de datos</a></li></ol></nav><div class="quarto-title">
 <h1 class="title">Dispersión de datos</h1>
 </div>
 
@@ -841,23 +870,23 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Si comparamos los coeficientes de este modelo con el de Poisson, observamos que son similares, pero los intervalos de confianza varían ligeramente debido al ajuste binomial negativo:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="gqisrggrgd" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gqisrggrgd table {
+<div id="eqabbijmtb" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#eqabbijmtb table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gqisrggrgd thead, #gqisrggrgd tbody, #gqisrggrgd tfoot, #gqisrggrgd tr, #gqisrggrgd td, #gqisrggrgd th {
+#eqabbijmtb thead, #eqabbijmtb tbody, #eqabbijmtb tfoot, #eqabbijmtb tr, #eqabbijmtb td, #eqabbijmtb th {
   border-style: none;
 }
 
-#gqisrggrgd p {
+#eqabbijmtb p {
   margin: 0;
   padding: 0;
 }
 
-#gqisrggrgd .gt_table {
+#eqabbijmtb .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -883,12 +912,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_caption {
+#eqabbijmtb .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gqisrggrgd .gt_title {
+#eqabbijmtb .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -900,7 +929,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-width: 0;
 }
 
-#gqisrggrgd .gt_subtitle {
+#eqabbijmtb .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -912,7 +941,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-top-width: 0;
 }
 
-#gqisrggrgd .gt_heading {
+#eqabbijmtb .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -924,13 +953,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_bottom_border {
+#eqabbijmtb .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_col_headings {
+#eqabbijmtb .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -945,7 +974,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_col_heading {
+#eqabbijmtb .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -965,7 +994,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   overflow-x: hidden;
 }
 
-#gqisrggrgd .gt_column_spanner_outer {
+#eqabbijmtb .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -977,15 +1006,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 4px;
 }
 
-#gqisrggrgd .gt_column_spanner_outer:first-child {
+#eqabbijmtb .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gqisrggrgd .gt_column_spanner_outer:last-child {
+#eqabbijmtb .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gqisrggrgd .gt_column_spanner {
+#eqabbijmtb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -997,11 +1026,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   width: 100%;
 }
 
-#gqisrggrgd .gt_spanner_row {
+#eqabbijmtb .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gqisrggrgd .gt_group_heading {
+#eqabbijmtb .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1027,7 +1056,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   text-align: left;
 }
 
-#gqisrggrgd .gt_empty_group_heading {
+#eqabbijmtb .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1042,15 +1071,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   vertical-align: middle;
 }
 
-#gqisrggrgd .gt_from_md > :first-child {
+#eqabbijmtb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gqisrggrgd .gt_from_md > :last-child {
+#eqabbijmtb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gqisrggrgd .gt_row {
+#eqabbijmtb .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1069,7 +1098,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   overflow-x: hidden;
 }
 
-#gqisrggrgd .gt_stub {
+#eqabbijmtb .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1082,7 +1111,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#gqisrggrgd .gt_stub_row_group {
+#eqabbijmtb .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1096,15 +1125,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   vertical-align: top;
 }
 
-#gqisrggrgd .gt_row_group_first td {
+#eqabbijmtb .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gqisrggrgd .gt_row_group_first th {
+#eqabbijmtb .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gqisrggrgd .gt_summary_row {
+#eqabbijmtb .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1114,16 +1143,16 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#gqisrggrgd .gt_first_summary_row {
+#eqabbijmtb .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_first_summary_row.thick {
+#eqabbijmtb .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gqisrggrgd .gt_last_summary_row {
+#eqabbijmtb .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1133,7 +1162,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_grand_summary_row {
+#eqabbijmtb .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1143,7 +1172,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#gqisrggrgd .gt_first_grand_summary_row {
+#eqabbijmtb .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1153,7 +1182,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_last_grand_summary_row_top {
+#eqabbijmtb .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1163,11 +1192,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_striped {
+#eqabbijmtb .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gqisrggrgd .gt_table_body {
+#eqabbijmtb .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1176,7 +1205,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_footnotes {
+#eqabbijmtb .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1190,7 +1219,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_footnote {
+#eqabbijmtb .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1199,7 +1228,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#gqisrggrgd .gt_sourcenotes {
+#eqabbijmtb .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1213,7 +1242,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#gqisrggrgd .gt_sourcenote {
+#eqabbijmtb .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1221,72 +1250,72 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
   padding-right: 5px;
 }
 
-#gqisrggrgd .gt_left {
+#eqabbijmtb .gt_left {
   text-align: left;
 }
 
-#gqisrggrgd .gt_center {
+#eqabbijmtb .gt_center {
   text-align: center;
 }
 
-#gqisrggrgd .gt_right {
+#eqabbijmtb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gqisrggrgd .gt_font_normal {
+#eqabbijmtb .gt_font_normal {
   font-weight: normal;
 }
 
-#gqisrggrgd .gt_font_bold {
+#eqabbijmtb .gt_font_bold {
   font-weight: bold;
 }
 
-#gqisrggrgd .gt_font_italic {
+#eqabbijmtb .gt_font_italic {
   font-style: italic;
 }
 
-#gqisrggrgd .gt_super {
+#eqabbijmtb .gt_super {
   font-size: 65%;
 }
 
-#gqisrggrgd .gt_footnote_marks {
+#eqabbijmtb .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gqisrggrgd .gt_asterisk {
+#eqabbijmtb .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gqisrggrgd .gt_indent_1 {
+#eqabbijmtb .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gqisrggrgd .gt_indent_2 {
+#eqabbijmtb .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gqisrggrgd .gt_indent_3 {
+#eqabbijmtb .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gqisrggrgd .gt_indent_4 {
+#eqabbijmtb .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gqisrggrgd .gt_indent_5 {
+#eqabbijmtb .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gqisrggrgd .katex-display {
+#eqabbijmtb .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gqisrggrgd div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#eqabbijmtb div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -2059,7 +2088,14 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino 
       }
     }
   });
-  </script>
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="../unidad_5/02_reg_poisson.html" class="pagination-link" aria-label="Regresión de Poisson">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Regresión de Poisson</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
 </div> <!-- /content -->
 <footer class="footer"><div class="nav-footer">
     <div class="nav-footer-left">

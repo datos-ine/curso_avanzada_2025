@@ -356,7 +356,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_4/01_est_caso_control.html">
  <span class="dropdown-text">Unidad 4: Estudios de casos y controles</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 5: Estudios de cohortes</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
+ <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
+  </li>  
         <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
     </ul>
 </li>
@@ -614,10 +617,35 @@ window.Quarto = {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></span>
-  </li>
+ <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/01_est_cohortes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios de cohortes</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/02_reg_poisson.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Poisson</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_5/03_dispersion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Dispersión de datos</span></a>
+  </div>
+</li>
+      </ul>
+</li>
         <li class="sidebar-item sidebar-item-section">
       <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
@@ -736,23 +764,23 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
 <span>                   exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_p.html">bold_p</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="movtiqckrg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#movtiqckrg table {
+<div id="mwcsaahuhx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#mwcsaahuhx table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#movtiqckrg thead, #movtiqckrg tbody, #movtiqckrg tfoot, #movtiqckrg tr, #movtiqckrg td, #movtiqckrg th {
+#mwcsaahuhx thead, #mwcsaahuhx tbody, #mwcsaahuhx tfoot, #mwcsaahuhx tr, #mwcsaahuhx td, #mwcsaahuhx th {
   border-style: none;
 }
 
-#movtiqckrg p {
+#mwcsaahuhx p {
   margin: 0;
   padding: 0;
 }
 
-#movtiqckrg .gt_table {
+#mwcsaahuhx .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -778,12 +806,12 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-left-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_caption {
+#mwcsaahuhx .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#movtiqckrg .gt_title {
+#mwcsaahuhx .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -795,7 +823,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-bottom-width: 0;
 }
 
-#movtiqckrg .gt_subtitle {
+#mwcsaahuhx .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -807,7 +835,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-top-width: 0;
 }
 
-#movtiqckrg .gt_heading {
+#mwcsaahuhx .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -819,13 +847,13 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-right-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_bottom_border {
+#mwcsaahuhx .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_col_headings {
+#mwcsaahuhx .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -840,7 +868,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-right-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_col_heading {
+#mwcsaahuhx .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -860,7 +888,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   overflow-x: hidden;
 }
 
-#movtiqckrg .gt_column_spanner_outer {
+#mwcsaahuhx .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -872,15 +900,15 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 4px;
 }
 
-#movtiqckrg .gt_column_spanner_outer:first-child {
+#mwcsaahuhx .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#movtiqckrg .gt_column_spanner_outer:last-child {
+#mwcsaahuhx .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#movtiqckrg .gt_column_spanner {
+#mwcsaahuhx .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -892,11 +920,11 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   width: 100%;
 }
 
-#movtiqckrg .gt_spanner_row {
+#mwcsaahuhx .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#movtiqckrg .gt_group_heading {
+#mwcsaahuhx .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -922,7 +950,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   text-align: left;
 }
 
-#movtiqckrg .gt_empty_group_heading {
+#mwcsaahuhx .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -937,15 +965,15 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   vertical-align: middle;
 }
 
-#movtiqckrg .gt_from_md > :first-child {
+#mwcsaahuhx .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#movtiqckrg .gt_from_md > :last-child {
+#mwcsaahuhx .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#movtiqckrg .gt_row {
+#mwcsaahuhx .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -964,7 +992,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   overflow-x: hidden;
 }
 
-#movtiqckrg .gt_stub {
+#mwcsaahuhx .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -977,7 +1005,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#movtiqckrg .gt_stub_row_group {
+#mwcsaahuhx .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -991,15 +1019,15 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   vertical-align: top;
 }
 
-#movtiqckrg .gt_row_group_first td {
+#mwcsaahuhx .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#movtiqckrg .gt_row_group_first th {
+#mwcsaahuhx .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#movtiqckrg .gt_summary_row {
+#mwcsaahuhx .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1009,16 +1037,16 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#movtiqckrg .gt_first_summary_row {
+#mwcsaahuhx .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_first_summary_row.thick {
+#mwcsaahuhx .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#movtiqckrg .gt_last_summary_row {
+#mwcsaahuhx .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1028,7 +1056,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-bottom-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_grand_summary_row {
+#mwcsaahuhx .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1038,7 +1066,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#movtiqckrg .gt_first_grand_summary_row {
+#mwcsaahuhx .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1048,7 +1076,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-top-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_last_grand_summary_row_top {
+#mwcsaahuhx .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1058,11 +1086,11 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-bottom-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_striped {
+#mwcsaahuhx .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#movtiqckrg .gt_table_body {
+#mwcsaahuhx .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1071,7 +1099,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-bottom-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_footnotes {
+#mwcsaahuhx .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1085,7 +1113,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-right-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_footnote {
+#mwcsaahuhx .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1094,7 +1122,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#movtiqckrg .gt_sourcenotes {
+#mwcsaahuhx .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1108,7 +1136,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-right-color: #D3D3D3;
 }
 
-#movtiqckrg .gt_sourcenote {
+#mwcsaahuhx .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1116,72 +1144,72 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#movtiqckrg .gt_left {
+#mwcsaahuhx .gt_left {
   text-align: left;
 }
 
-#movtiqckrg .gt_center {
+#mwcsaahuhx .gt_center {
   text-align: center;
 }
 
-#movtiqckrg .gt_right {
+#mwcsaahuhx .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#movtiqckrg .gt_font_normal {
+#mwcsaahuhx .gt_font_normal {
   font-weight: normal;
 }
 
-#movtiqckrg .gt_font_bold {
+#mwcsaahuhx .gt_font_bold {
   font-weight: bold;
 }
 
-#movtiqckrg .gt_font_italic {
+#mwcsaahuhx .gt_font_italic {
   font-style: italic;
 }
 
-#movtiqckrg .gt_super {
+#mwcsaahuhx .gt_super {
   font-size: 65%;
 }
 
-#movtiqckrg .gt_footnote_marks {
+#mwcsaahuhx .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#movtiqckrg .gt_asterisk {
+#mwcsaahuhx .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#movtiqckrg .gt_indent_1 {
+#mwcsaahuhx .gt_indent_1 {
   text-indent: 5px;
 }
 
-#movtiqckrg .gt_indent_2 {
+#mwcsaahuhx .gt_indent_2 {
   text-indent: 10px;
 }
 
-#movtiqckrg .gt_indent_3 {
+#mwcsaahuhx .gt_indent_3 {
   text-indent: 15px;
 }
 
-#movtiqckrg .gt_indent_4 {
+#mwcsaahuhx .gt_indent_4 {
   text-indent: 20px;
 }
 
-#movtiqckrg .gt_indent_5 {
+#mwcsaahuhx .gt_indent_5 {
   text-indent: 25px;
 }
 
-#movtiqckrg .katex-display {
+#mwcsaahuhx .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#movtiqckrg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#mwcsaahuhx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1574,23 +1602,23 @@ Number of Fisher Scoring iterations: 15</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">fit1</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fkfnzmduus" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#fkfnzmduus table {
+<div id="phpvyyixxf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#phpvyyixxf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#fkfnzmduus thead, #fkfnzmduus tbody, #fkfnzmduus tfoot, #fkfnzmduus tr, #fkfnzmduus td, #fkfnzmduus th {
+#phpvyyixxf thead, #phpvyyixxf tbody, #phpvyyixxf tfoot, #phpvyyixxf tr, #phpvyyixxf td, #phpvyyixxf th {
   border-style: none;
 }
 
-#fkfnzmduus p {
+#phpvyyixxf p {
   margin: 0;
   padding: 0;
 }
 
-#fkfnzmduus .gt_table {
+#phpvyyixxf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1616,12 +1644,12 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_caption {
+#phpvyyixxf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#fkfnzmduus .gt_title {
+#phpvyyixxf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1633,7 +1661,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-bottom-width: 0;
 }
 
-#fkfnzmduus .gt_subtitle {
+#phpvyyixxf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1645,7 +1673,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-top-width: 0;
 }
 
-#fkfnzmduus .gt_heading {
+#phpvyyixxf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1657,13 +1685,13 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_bottom_border {
+#phpvyyixxf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_col_headings {
+#phpvyyixxf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1678,7 +1706,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_col_heading {
+#phpvyyixxf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1698,7 +1726,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   overflow-x: hidden;
 }
 
-#fkfnzmduus .gt_column_spanner_outer {
+#phpvyyixxf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1710,15 +1738,15 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 4px;
 }
 
-#fkfnzmduus .gt_column_spanner_outer:first-child {
+#phpvyyixxf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#fkfnzmduus .gt_column_spanner_outer:last-child {
+#phpvyyixxf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#fkfnzmduus .gt_column_spanner {
+#phpvyyixxf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1730,11 +1758,11 @@ Number of Fisher Scoring iterations: 15</code></pre>
   width: 100%;
 }
 
-#fkfnzmduus .gt_spanner_row {
+#phpvyyixxf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#fkfnzmduus .gt_group_heading {
+#phpvyyixxf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1760,7 +1788,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   text-align: left;
 }
 
-#fkfnzmduus .gt_empty_group_heading {
+#phpvyyixxf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1775,15 +1803,15 @@ Number of Fisher Scoring iterations: 15</code></pre>
   vertical-align: middle;
 }
 
-#fkfnzmduus .gt_from_md > :first-child {
+#phpvyyixxf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fkfnzmduus .gt_from_md > :last-child {
+#phpvyyixxf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fkfnzmduus .gt_row {
+#phpvyyixxf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1802,7 +1830,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   overflow-x: hidden;
 }
 
-#fkfnzmduus .gt_stub {
+#phpvyyixxf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1815,7 +1843,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#fkfnzmduus .gt_stub_row_group {
+#phpvyyixxf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1829,15 +1857,15 @@ Number of Fisher Scoring iterations: 15</code></pre>
   vertical-align: top;
 }
 
-#fkfnzmduus .gt_row_group_first td {
+#phpvyyixxf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#fkfnzmduus .gt_row_group_first th {
+#phpvyyixxf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#fkfnzmduus .gt_summary_row {
+#phpvyyixxf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1847,16 +1875,16 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#fkfnzmduus .gt_first_summary_row {
+#phpvyyixxf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_first_summary_row.thick {
+#phpvyyixxf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#fkfnzmduus .gt_last_summary_row {
+#phpvyyixxf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1866,7 +1894,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_grand_summary_row {
+#phpvyyixxf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1876,7 +1904,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#fkfnzmduus .gt_first_grand_summary_row {
+#phpvyyixxf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1886,7 +1914,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_last_grand_summary_row_top {
+#phpvyyixxf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1896,11 +1924,11 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_striped {
+#phpvyyixxf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#fkfnzmduus .gt_table_body {
+#phpvyyixxf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1909,7 +1937,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_footnotes {
+#phpvyyixxf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1923,7 +1951,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_footnote {
+#phpvyyixxf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1932,7 +1960,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#fkfnzmduus .gt_sourcenotes {
+#phpvyyixxf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1946,7 +1974,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#fkfnzmduus .gt_sourcenote {
+#phpvyyixxf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1954,72 +1982,72 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#fkfnzmduus .gt_left {
+#phpvyyixxf .gt_left {
   text-align: left;
 }
 
-#fkfnzmduus .gt_center {
+#phpvyyixxf .gt_center {
   text-align: center;
 }
 
-#fkfnzmduus .gt_right {
+#phpvyyixxf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fkfnzmduus .gt_font_normal {
+#phpvyyixxf .gt_font_normal {
   font-weight: normal;
 }
 
-#fkfnzmduus .gt_font_bold {
+#phpvyyixxf .gt_font_bold {
   font-weight: bold;
 }
 
-#fkfnzmduus .gt_font_italic {
+#phpvyyixxf .gt_font_italic {
   font-style: italic;
 }
 
-#fkfnzmduus .gt_super {
+#phpvyyixxf .gt_super {
   font-size: 65%;
 }
 
-#fkfnzmduus .gt_footnote_marks {
+#phpvyyixxf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#fkfnzmduus .gt_asterisk {
+#phpvyyixxf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#fkfnzmduus .gt_indent_1 {
+#phpvyyixxf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#fkfnzmduus .gt_indent_2 {
+#phpvyyixxf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#fkfnzmduus .gt_indent_3 {
+#phpvyyixxf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#fkfnzmduus .gt_indent_4 {
+#phpvyyixxf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#fkfnzmduus .gt_indent_5 {
+#phpvyyixxf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#fkfnzmduus .katex-display {
+#phpvyyixxf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#fkfnzmduus div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#phpvyyixxf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
