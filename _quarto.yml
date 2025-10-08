@@ -36,7 +36,7 @@ website:
           - text: "Unidad 5: Estudios de cohortes"
             href: unidad_5/01_est_cohortes.qmd
           - text: "Unidad 6: Estudios experimentales"
-            # href: unidad_6/01_est_experimentales.qmd
+            href: unidad_6/01_est_experimentales.qmd
             
     right:
       - icon: cloud-download
@@ -109,20 +109,19 @@ website:
         - unidad_4/04_reg_logistica_cond.qmd
         # - unidad_4/05_mod_predict.qmd
           
-      - section: "Unidad 5 (disponible a partir del 08/09/25)"
+      - section: "Unidad 5"
         icon: file-earmark-bar-graph
         contents:
         - unidad_5/01_est_cohortes.qmd
         - unidad_5/02_reg_poisson.qmd
-        - unidad_5/03_dispersion.qmd
-          
-      - section: "Unidad 6 (disponible a partir del 06/10/25)"
+        - unidad_5/03_dispersion.qmd          
+      - section: "Unidad 6"
         icon: file-earmark-bar-graph
-        # contents:
-        # - unidad_6/01_est_experimentales.qmd
-        # - unidad_6/02_analisis_superv.qmd
-        # - unidad_6/03_metodos_analisis_sup.qmd
-        # - unidad_6/04_reg_cox.qmd
+        contents:
+        - unidad_6/01_est_experimentales.qmd
+        - unidad_6/02_analisis_superv.qmd
+        - unidad_6/03_metodos_analisis_sup.qmd
+        - unidad_6/04_reg_cox.qmd
   
   # Botón de anterior/siguiente
   page-navigation: true

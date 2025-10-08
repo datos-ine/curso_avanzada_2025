@@ -262,15 +262,20 @@ Podemos visualizar la incidencia de muertes ajustadas por periodo y grupo de eda
 ```{r}
 #| echo: false
 ### Creo tabla
-datos |> 
+tab <- datos |> 
   count(periodo, grupo_edad, wt = muertes) |> 
   left_join(personas_anios) |> 
   mutate(incidencia = round(n/p.a*10000,2)) |> 
-  select(-n, -p.a) |> 
+  select(-n, -p.a)
   
-  ## Creo gráfico
-  ggplot(aes(x = periodo, y = incidencia, 
-             color = grupo_edad, group = grupo_edad)) +
+### Creo gráfico
+tab |>
+  ggplot(
+      aes(x = periodo, 
+             y = incidencia, 
+             color = grupo_edad, 
+             group = grupo_edad)
+  )+
   geom_point() +
   geom_line(lwd = 1) +
   labs(title = "Incidencia de muertes (mortalidad) por edad y período") +
