@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Christian Ballejo">
 <meta name="author" content="Andrea Silva">
@@ -87,18 +87,19 @@ div.csl-indent {
 <link href="../unidad_3/03_covarianza_correlacion.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-07e4c1cdef0c383c709f3a7c70e6b9d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5764afd99fd0ec2ffdb51851d8106ba1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -111,7 +112,7 @@ div.csl-indent {
     "s"
   ],
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -144,7 +145,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -332,6 +333,10 @@ window.Quarto = {
 <i class="bi bi-x-lg quarto-announcement-action"></i>
 </div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -362,7 +367,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
  <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_6/01_est_experimentales.html">
+ <span class="dropdown-text">Unidad 6: Estudios experimentales</span></a>
+  </li>  
     </ul>
 </li>
 </ul>
@@ -425,7 +433,11 @@ window.Quarto = {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Buscar"></div>
         </div>
@@ -622,7 +634,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+ <span class="menu-text">Unidad 5</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -649,10 +661,41 @@ window.Quarto = {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 6 (disponible a partir del 06/10/25)</span></span>
-  </li>
+ <span class="menu-text">Unidad 6</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/01_est_experimentales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios Experimentales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/02_analisis_superv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/03_metodos_analisis_sup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Métodos para el análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/04_reg_cox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Cox</span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -820,7 +863,7 @@ R^2 = \frac{SCR}{SCT} = 1 - \frac{SCE}{SCT}
 <p>Para llevar a cabo el análisis en R y presentar las funciones y paquetes que nos pueden ayudar en la tarea vamos a trabajar con el set de datos <code>cancer_USA.txt</code> que utilizamos para el ejemplo de <a href="../unidad_3/03_covarianza_correlacion.html">covarianza y correlación</a>.</p>
 <p>Comenzaremos por cargar los paquetes necesarios para el análisis:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Tablas de coeficientes</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Tablas de coeficientes</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary">gtsummary</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Chequeo de supuestos</span></span>
@@ -832,15 +875,15 @@ R^2 = \frac{SCR}{SCT} = 1 - \frac{SCE}{SCT}
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/thomasp85/scico">scico</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Manejo de datos</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cargamos los datos y revisamos la estructura de la tabla:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carga datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carga datos</span></span>
 <span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/cancer_USA.txt"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Explora datos</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 213
 Columns: 10
@@ -862,7 +905,7 @@ $ pct_desempleo      &lt;dbl&gt; 5.3, 5.8, 6.1, 6.9, 5.0, 5.9, 5.2, 5.6, 6.5, 5.
 <p>La <strong>independencia</strong> (o ausencia de autocorrelación) puede determinarse, en gran medida, a partir del conocimiento sobre la fuente de los datos y su método de recolección. Sin embargo, siempre es recomendable verificarla en los residuales del modelo.</p>
 <p>La <strong>linealidad</strong> se refiere a la relación entre las variables <code>tasa_mortalidad</code> y <code>mediana_ingresos</code>. Para comprobarla, se puede utilizar un diagrama de dispersión:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mediana_ingresos</span>, y <span class="op">=</span> <span class="va">tasa_mortalidad</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
@@ -870,7 +913,7 @@ $ pct_desempleo      &lt;dbl&gt; 5.3, 5.8, 6.1, 6.9, 5.0, 5.9, 5.2, 5.6, 6.5, 5.
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"#502345"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># tema</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04_reg_lineal_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -880,7 +923,7 @@ $ pct_desempleo      &lt;dbl&gt; 5.3, 5.8, 6.1, 6.9, 5.0, 5.9, 5.2, 5.6, 6.5, 5.
 </div>
 <p>Observamos en el gráfico una clara relación inversa entre las variables, dado que los condados donde las personas tienen mayores ingresos la mortalidad por cáncer es menor y viceversa. Podemos dibujar la recta de regresión lineal sobre el diagrama de dispersión adicionando una capa más al gráfico mediante <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> e indicando <code>method = "lm"</code> como método. Además de la recta se puede ver el intervalo de confianza (zona gris alrededor de ella).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">mediana_ingresos</span>, y <span class="op">=</span> <span class="va">tasa_mortalidad</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span> <span class="co"># diagrama de dispersión</span></span>
@@ -890,7 +933,7 @@ $ pct_desempleo      &lt;dbl&gt; 5.3, 5.8, 6.1, 6.9, 5.0, 5.9, 5.2, 5.6, 6.5, 5.
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span>, color <span class="op">=</span> <span class="st">"#1B0D33"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># cambia color de fondo</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04_reg_lineal_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -900,15 +943,15 @@ $ pct_desempleo      &lt;dbl&gt; 5.3, 5.8, 6.1, 6.9, 5.0, 5.9, 5.2, 5.6, 6.5, 5.
 </div>
 <p>Usaremos la función <code><a href="https://rdrr.io/r/stats/cor.html">cor()</a></code> para estimar la correlación entre las dos variables:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">mediana_ingresos</span>, <span class="va">datos</span><span class="op">$</span><span class="va">tasa_mortalidad</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">mediana_ingresos</span>, <span class="va">datos</span><span class="op">$</span><span class="va">tasa_mortalidad</span>,</span>
+<span>    method <span class="op">=</span> <span class="st">"pearson"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.5041398</code></pre>
 </div>
 </div>
 <p>El valor es negativo, lo que confirma lo observado en la nube de puntos anterior. Para poder descartar que esta <strong>correlación negativa</strong> se debe al azar, debemos calcular su significancia:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">mediana_ingresos</span>, <span class="va">datos</span><span class="op">$</span><span class="va">tasa_mortalidad</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/cor.test.html">cor.test</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">mediana_ingresos</span>, <span class="va">datos</span><span class="op">$</span><span class="va">tasa_mortalidad</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -927,7 +970,7 @@ sample estimates:
 <p>La <strong>homocedasticidad</strong> implica que la varianza de los residuos se mantiene aproximadamente constante a lo largo de los valores de la variable independiente. Se puede evaluar gráficamente mediante la dispersión de los residuos respecto a los valores ajustados o a través de contrastes de hipótesis, como el <strong>test de Breusch-Pagan</strong>.</p>
 <p>Finalmente, la <strong>normalidad</strong> de los residuos se puede evaluar mediante el <strong>test de Lilliefors</strong>, disponible en el paquete <code>nortest</code> <span class="citation" data-cites="nortest">(<a href="#ref-nortest" role="doc-biblioref">Gross y Ligges 2015</a>)</span>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/nortest/man/lillie.test.html">lillie.test</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">tasa_mortalidad</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/nortest/man/lillie.test.html">lillie.test</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">tasa_mortalidad</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Lilliefors (Kolmogorov-Smirnov) normality test
@@ -938,7 +981,7 @@ D = 0.042152, p-value = 0.4707</code></pre>
 </div>
 <p>También se puede verificar gráficamente con un <strong>QQ plot</strong>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>sample <span class="op">=</span> <span class="va">tasa_mortalidad</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># añade qqplot</span></span>
@@ -951,7 +994,7 @@ D = 0.042152, p-value = 0.4707</code></pre>
 <span>       y <span class="op">=</span> <span class="st">"Sample Quantiles"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># modifico color de fondo</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04_reg_lineal_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -963,7 +1006,7 @@ D = 0.042152, p-value = 0.4707</code></pre>
 </section><section id="ajuste-del-modelo" class="level3"><h3 class="anchored" data-anchor-id="ajuste-del-modelo">Ajuste del modelo</h3>
 <p>Como vimos <a href="../unidad_3/02_mod_estadistico.html"><strong>anteriormente</strong></a>, la función <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> del paquete <code>stats</code> nos permite ajustar modelos de regresión lineal:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">mediana_ingresos</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">mediana_ingresos</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -984,11 +1027,11 @@ Coefficients:
 \]</span></p>
 <p>Guardamos el modelo como un objeto:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">mediana_ingresos</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">tasa_mortalidad</span> <span class="op">~</span> <span class="va">mediana_ingresos</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Podemos acceder a la salida del modelo mediante la función <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1013,11 +1056,11 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 <p>La asociación entre la tasa de mortalidad por cáncer y la mediana de ingresos es estadísticamente significativa (<span class="math inline">\(p &lt; 0.001\)</span>).</p>
 <p>Todos los ajustes de modelos lineales que produce la función <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> tienen la forma de una lista.La manera de conocer su clase es <code><a href="https://rdrr.io/r/base/class.html">class()</a></code> y su estructura mediante <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "lm"</code></pre>
 </div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 12
  $ coefficients : Named num [1:2] 201.41284 -0.00052
@@ -1080,9 +1123,9 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 </div>
 <p>La función <code><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression()</a></code> del paquete <code>gtsummary</code> <span class="citation" data-cites="gtsummary">(<a href="#ref-gtsummary" role="doc-biblioref">Sjoberg et&nbsp;al. 2021</a>)</span>, nos permite generar una tabla con los coeficientes del modelo. El nivel de confianza puede ajustarse con el argumento <code>conf.level</code> y el argumento <code>intercept</code> muestra u oculta el intercepto:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">modelo</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">modelo</span>, </span>
 <span>               intercept <span class="op">=</span> <span class="cn">T</span>, </span>
-<span>               conf.level <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>               conf.level <span class="op">=</span> <span class="fl">.95</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="osncjrvket" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
 <style>#osncjrvket table {
@@ -1533,7 +1576,7 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
   height: 0px !important;
 }
 </style>
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <thead><tr class="gt_col_headings header">
 <th id="label" class="gt_col_heading gt_columns_bottom_border gt_left" data-quarto-table-cell-role="th" scope="col"><strong>Characteristic</strong></th>
 <th id="estimate" class="gt_col_heading gt_columns_bottom_border gt_center" data-quarto-table-cell-role="th" scope="col"><strong>Beta</strong></th>
@@ -1554,7 +1597,7 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 <td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes"><tr class="odd">
+<tfoot><tr class="gt_sourcenotes odd">
 <td colspan="4" class="gt_sourcenote">Abbreviation: CI = Confidence Interval</td>
 </tr></tfoot>
 </table>
@@ -1569,13 +1612,13 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 </ol>
 <p>Los residuales se almacenan en el objeto de regresión y pueden visualizarse mediante:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">resid</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cuanto mayor sea la <strong>sumatoria de los cuadrados de los residuales</strong>, menor será la precisión con la que el modelo predice el valor de la variable dependiente a partir de la variable predictora.</p>
 <p>Un análisis gráfico resulta muy útil para evaluar los supuestos del modelo. Aplicando la función <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> al objeto de regresión:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04_reg_lineal_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1592,7 +1635,7 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 </ul>
 <p>Otra opción para evaluar gráficamente los supuestos del modelo es la función <code>check_model()</code> del paquete <code>performance</code> , el cual forma parte del ecosistema <code>easystats</code> <span class="citation" data-cites="easystats">(<a href="#ref-easystats" role="doc-biblioref">Lüdecke et&nbsp;al. 2022</a>)</span>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_model</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_model</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04_reg_lineal_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1602,8 +1645,8 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 </div>
 <p>Podemos elegir que gráficos visualizar usando el argumento <code>check</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_model</span><span class="op">(</span><span class="va">modelo</span>, check <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"normality"</span>,<span class="st">"qq"</span>, <span class="st">"linearity"</span>,</span>
-<span>                              <span class="st">"homogeneity"</span>, <span class="st">"outliers"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_model</span><span class="op">(</span><span class="va">modelo</span>, check <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"normality"</span>,<span class="st">"qq"</span>, <span class="st">"linearity"</span>,</span>
+<span>                              <span class="st">"homogeneity"</span>, <span class="st">"outliers"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04_reg_lineal_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1613,7 +1656,7 @@ F-statistic:  71.9 on 1 and 211 DF,  p-value: 3.938e-15</code></pre>
 </div>
 <p>Para evaluar la linealidad se puede aplicar el test RESET de Ramsey, mediante la función <code><a href="https://rdrr.io/pkg/lmtest/man/resettest.html">resettest()</a></code> del paquete <code>lmtest</code> <span class="citation" data-cites="lmtest">(<a href="#ref-lmtest" role="doc-biblioref">Zeileis y Hothorn 2002a</a>)</span>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/resettest.html">resettest</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/resettest.html">resettest</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     RESET test
@@ -1625,7 +1668,7 @@ RESET = 0.82653, df1 = 2, df2 = 209, p-value = 0.439</code></pre>
 <p>La hipótesis nula indica que las variables se relacionan de forma lineal; un <span class="math inline">\(p&lt;0,05\)</span> sugiere lo contrario. En nuestro modelo, el valor <em>p</em> de 0.439 respalda la suposición de linealidad.</p>
 <p>Otro supuesto fundamental es que los residuales deben distribuirse de forma normal (con media 0). Además del QQ-plot, se puede aplicar el test de Lilliefors:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/nortest/man/lillie.test.html">lillie.test</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">$</span><span class="va">residuals</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/nortest/man/lillie.test.html">lillie.test</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">$</span><span class="va">residuals</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Lilliefors (Kolmogorov-Smirnov) normality test
@@ -1637,8 +1680,8 @@ D = 0.05804, p-value = 0.07821</code></pre>
 <p>Con un <em>p</em>-valor de 0.078 se confirma la normalidad.</p>
 <p>El test de Breusch-Pagan, implementado en <code>lmtest</code> y <code>performance</code>, evalúa si la varianza de los residuos es constante. Parte de la hipótesis nula de <strong>homocedasticidad</strong> o varianza constante en las perturbaciones y la enfrenta a la alternativa de varianza variable, por lo que es válido decir que cumple con el supuesto de homocedasticidad si el valor <span class="math inline">\(p&gt;0,05\)</span>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># paquete lmtest</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/bptest.html">bptest</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># paquete lmtest</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/lmtest/man/bptest.html">bptest</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     studentized Breusch-Pagan test
@@ -1646,8 +1689,8 @@ D = 0.05804, p-value = 0.07821</code></pre>
 data:  modelo
 BP = 2.5078, df = 1, p-value = 0.1133</code></pre>
 </div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># paquete performance</span></span>
-<span><span class="fu">check_heteroscedasticity</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># paquete performance</span></span>
+<span><span class="fu">check_heteroscedasticity</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>OK: Error variance appears to be homoscedastic (p = 0.087).</code></pre>
 </div>
@@ -1656,16 +1699,16 @@ BP = 2.5078, df = 1, p-value = 0.1133</code></pre>
 <p>Para ello se pueden analizar los residuales estandarizados y los residuales estudentizados. Los <strong>residuales estandarizados</strong> se obtienen normalizando los residuales por su desviación estándar. Esta aproximación permite identificar valores atípicos que se alejan más de <span class="math inline">\(\pm3\)</span> desviaciones estándar. Sin embargo, si un <em>outlier</em> influye lo suficiente en el modelo como para atraer la línea de regresión, su residual podría ser pequeño y pasar desapercibido. Una alternativa más robusta es utilizar los <strong>residuales estudentizados</strong>. Se trata de un proceso iterativo en el que se va excluyendo cada vez una observación <span class="math inline">\(i\)</span> distinta y se reajusta el modelo con las <span class="math inline">\(n-1\)</span> restantes. En cada proceso de exclusión y reajuste se calcula la diferencia (<span class="math inline">\(d_i\)</span>) entre el valor predicho para <span class="math inline">\(i\)</span> habiendo y sin haber excluido esa observación. Finalmente, se normalizan las diferencias <span class="math inline">\(d_i\)</span> . Aquellos valores <span class="math inline">\(d_i\)</span> cuyo residual estudentizado supera <span class="math inline">\(\pm 3\)</span> suelen considerarse significativos.</p>
 <p>Estos dos procesos sobre los residuales se pueden calcular en R mediante las funciones <code>rstandar()</code> y <code><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Creación del dataset de residuales</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Creación del dataset de residuales</span></span>
 <span><span class="va">residuales</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  residuales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/residuals.html">residuals</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span>,</span>
 <span>  resid_normalizados <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstandard</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span>,</span>
 <span>  resid_estudentizados <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Podemos visualizar la comparación de estos residuales mediante un <em>boxplot</em> usando <em>facets</em>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">residuales</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">residuales</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
 <span>  <span class="co"># Pasa a formato long</span></span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -1680,7 +1723,7 @@ BP = 2.5078, df = 1, p-value = 0.1133</code></pre>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">tipo</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># subdivide en facets</span></span>
 <span>  </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04_reg_lineal_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1690,7 +1733,7 @@ BP = 2.5078, df = 1, p-value = 0.1133</code></pre>
 </div>
 <p>Si encontramos residuales con valores absolutos superiores a 3 en el gráfico de residuales estudentizados, es recomendable investigarlos más a fondo. Podemos identificarlos con:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/influence.measures.html">rstudent</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 FALSE 
@@ -1699,7 +1742,7 @@ FALSE
 </div>
 <p>Para evaluar la influencia de observaciones, se utiliza la <strong>distancia de Cook</strong>, que combina la magnitud del residual y el <em>leverage</em>. Valores superiores a 1 se consideran generalmente influyentes. Esto se puede visualizar mediante:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modelo</span>, which <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">modelo</span>, which <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="04_reg_lineal_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1710,7 +1753,7 @@ FALSE
 <p>Al observar el gráfico, se debe prestar especial atención a los puntos situados en las esquinas superior e inferior, es decir, aquellos que aparecen fuera de las líneas discontinuas rojas. Estos puntos suelen presentar altas puntuaciones en la distancia de Cook, lo que indica que pueden influir significativamente en los resultados de la regresión.</p>
 <p>Además, el paquete <code>performance</code> incluye la función <code>check_outliers()</code> para detectar valores atípicos según su distancia de Cook:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_outliers</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_outliers</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>OK: No outliers detected.
 - Based on the following method and threshold: cook (0.7).
@@ -1722,7 +1765,7 @@ FALSE
 <p>Una vez ajustado un modelo, es necesario verificar su eficiencia, ya que, aun siendo la línea que mejor se ajusta a las observaciones entre todas las posibles, el modelo puede resultar inadecuado. Entre las medidas más utilizadas para evaluar la calidad del ajuste se encuentran el error estándar de los residuales, el test <span class="math inline">\(F\)</span> y el coeficiente de determinación <span class="math inline">\(R^2\)</span>. Estos valores aparecen al final de la salida de la función <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, donde se pueden identificar el RSE (<em>Residual Standard Error</em>), el <span class="math inline">\(R^2\)</span> (<em>Multiple R-squared</em>) y el <span class="math inline">\(R^2\)</span> ajustado (<em>Adjusted R-squared</em>).</p>
 <p>Podemos acceder al valor de <span class="math inline">\(R^2\)</span> del modelo usando la función <code>r2()</code> del paquete <code>performance</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">r2</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">r2</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># R2 for Linear Regression
        R2: 0.254
@@ -1733,7 +1776,7 @@ FALSE
 <p>La salida de <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> también incluye un estadístico <span class="math inline">\(F\)</span> de Snedecor y su <span class="math inline">\(p\)</span><em>-</em>valor correspondiente, que se utilizan en el contraste ómnibus para evaluar, de forma global, la idoneidad del modelo. En nuestro ejemplo, <span class="math inline">\(p&gt;0,05\)</span>, por lo que, al 95 % de confianza, se rechaza la hipótesis nula y se concluye que el modelo lineal es adecuado para el conjunto de datos. Cabe mencionar que, cuando el modelo de regresión tiene una única variable explicativa, este contraste es equivalente al contraste del parámetro <span class="math inline">\(\beta_1​\)</span>.</p>
 <p>Otra forma de verificar de manera independiente la significación del modelo es mediante la función <code><a href="https://rdrr.io/r/stats/anova.html">anova()</a></code>, que plantea el contraste de la regresión mediante el <a href="../unidad_3/05_anova.html"><strong>análisis de la varianza</strong></a>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/anova.html">anova</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1870,13 +1913,14 @@ Zeileis, Achim, y Torsten Hothorn. 2002a. <span>«Diagnostic Checking in Regress
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

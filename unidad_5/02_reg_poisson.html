@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Christian Ballejo">
 <meta name="author" content="Andrea Silva">
@@ -87,18 +87,19 @@ div.csl-indent {
 <link href="../unidad_5/01_est_cohortes.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-07e4c1cdef0c383c709f3a7c70e6b9d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5764afd99fd0ec2ffdb51851d8106ba1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -111,7 +112,7 @@ div.csl-indent {
     "s"
   ],
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -144,7 +145,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -332,6 +333,10 @@ window.Quarto = {
 <i class="bi bi-x-lg quarto-announcement-action"></i>
 </div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -362,7 +367,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
  <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_6/01_est_experimentales.html">
+ <span class="dropdown-text">Unidad 6: Estudios experimentales</span></a>
+  </li>  
     </ul>
 </li>
 </ul>
@@ -416,7 +424,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_5/01_est_cohortes.html">Unidad 5 (disponible a partir del 08/09/25)</a></li><li class="breadcrumb-item"><a href="../unidad_5/02_reg_poisson.html">Regresión de Poisson</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_5/01_est_cohortes.html">Unidad 5</a></li><li class="breadcrumb-item"><a href="../unidad_5/02_reg_poisson.html">Regresión de Poisson</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
@@ -425,7 +433,11 @@ window.Quarto = {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Buscar"></div>
         </div>
@@ -622,7 +634,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+ <span class="menu-text">Unidad 5</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -649,10 +661,41 @@ window.Quarto = {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 6 (disponible a partir del 06/10/25)</span></span>
-  </li>
+ <span class="menu-text">Unidad 6</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/01_est_experimentales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios Experimentales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/02_analisis_superv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/03_metodos_analisis_sup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Métodos para el análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/04_reg_cox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Cox</span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -677,7 +720,7 @@ window.Quarto = {
   </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_5/01_est_cohortes.html">Unidad 5 (disponible a partir del 08/09/25)</a></li><li class="breadcrumb-item"><a href="../unidad_5/02_reg_poisson.html">Regresión de Poisson</a></li></ol></nav><div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../unidad_5/01_est_cohortes.html">Unidad 5</a></li><li class="breadcrumb-item"><a href="../unidad_5/02_reg_poisson.html">Regresión de Poisson</a></li></ol></nav><div class="quarto-title">
 <h1 class="title">Regresión de Poisson</h1>
 </div>
 
@@ -757,11 +800,11 @@ ln(d)=ln(n)+\alpha+\beta_1x_1+\beta_2x_2+\dots+\beta_nx_n
 <p>En la práctica, esto significa que el modelo ajustado con errores de Poisson y una función de enlace logarítmica linealiza la relación entre la variable respuesta (conteos) y las variables independientes, permitiendo una interpretación clara y coherente de los resultados.</p>
 <p>Como es de imaginar utilizaremos la misma función general <code><a href="https://rdrr.io/r/stats/glm.html">glm()</a></code>, cambiando los argumentos en familia y enlace. La sintaxis básica de esta función, contenida en el paquete <code>stats</code> de R, es:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">formula</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">poisson</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">formula</span>, family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html">poisson</a></span><span class="op">(</span>link <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Dado que el enlace logarítmico es el predeterminado para la familia de Poisson, podemos omitir su especificación:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">formula</span>, family <span class="op">=</span> <span class="va">poisson</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">formula</span>, family <span class="op">=</span> <span class="va">poisson</span>, data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>donde:</p>
 <ul>
@@ -777,7 +820,7 @@ variable\_dependiente \sim variable\_indepen_1 + variable\_indepen_2 +\dots+ var
 </ul>
 <p>Para obtener un resumen de los resultados del modelo se utiliza la función <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El resumen del objeto de regresión de Poisson incluye:</p>
 <ul>
@@ -803,22 +846,22 @@ variable\_dependiente \sim variable\_indepen_1 + variable\_indepen_2 +\dots+ var
 <p>Para ilustrar las funciones y la metodología de análisis en R, utilizaremos el archivo de datos “<code>cohorte_ocupacional.txt</code>”, que contiene resultados de un estudio de cohortes que investiga la asociación entre las muertes respiratorias y la exposición al arsénico en la industria, ajustando por varios otros factores de riesgo.</p>
 <p>Comenzaremos activando los paquetes necesarios:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># chequeo de supuestos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># chequeo de supuestos</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://easystats.github.io/easystats/">easystats</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># tablas regresión</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary">gtsummary</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># manejo de datos</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cargamos la base de datos y exploramos su estructura:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">### Carga datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">### Carga datos</span></span>
 <span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/cohorte_ocupacional.txt"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">### Explora datos</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 114
 Columns: 6
@@ -840,42 +883,42 @@ $ arsenico     &lt;chr&gt; "&lt;1 año", "1-4 años", "5-14 años", "15+ años",
 </ul>
 <p>Las variables <code>grupo_edad</code>, <code>periodo</code>, <code>comienzo</code> y <code>arsenico</code> son de tipo carácter y debemos convertirlas a factor. Podemos hacer esto manualmente para cada variable, o usar el comando <code><a href="https://dplyr.tidyverse.org/reference/across.html">across()</a></code> que permite modificar varias columnas a la vez:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html">across</a></span><span class="op">(</span>.cols <span class="op">=</span> <span class="va">grupo_edad</span><span class="op">:</span><span class="va">arsenico</span>, </span>
-<span>                .fns <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                .fns <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">as.factor</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Revisemos como quedaron los niveles de cada factor:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># grupo etario</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">grupo_edad</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># grupo etario</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">grupo_edad</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "40-49" "50-59" "60-69" "70-79"</code></pre>
 </div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># periodo</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">periodo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># periodo</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">periodo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1938-1949" "1950-1959" "1960-1969" "1970-1977"</code></pre>
 </div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># comienzo</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">comienzo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># comienzo</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">comienzo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "&lt; 1925"      "1925 y post"</code></pre>
 </div>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># arsenico</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">arsenico</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># arsenico</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">arsenico</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "&lt;1 año"    "1-4 años"  "15+ años"  "5-14 años"</code></pre>
 </div>
 </div>
 <p>Ahora vamos a explorar los datos de la base organizando la información de persona-años por edad y período:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Creo tabla</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Creo tabla</span></span>
 <span><span class="va">datos</span>  <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">periodo</span>, <span class="va">grupo_edad</span>, wt <span class="op">=</span> <span class="va">persona_anio</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">grupo_edad</span>, values_from <span class="op">=</span> <span class="va">n</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  </span>
 <span>  <span class="co"># formato de tabla</span></span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   periodo   `40-49` `50-59` `60-69` `70-79`
@@ -888,7 +931,7 @@ $ arsenico     &lt;chr&gt; "&lt;1 año", "1-4 años", "5-14 años", "15+ años",
 </div>
 <p>Ahora hacemos lo mismo para el número de muertes y calculamos la incidencia por 10000 personas-año para cada celda:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Creo objeto para personas-años</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Creo objeto para personas-años</span></span>
 <span><span class="va">personas_anios</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">periodo</span>, <span class="va">grupo_edad</span>,</span>
 <span>        wt <span class="op">=</span> <span class="va">persona_anio</span>,</span>
@@ -901,7 +944,7 @@ $ arsenico     &lt;chr&gt; "&lt;1 año", "1-4 años", "5-14 años", "15+ años",
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>incidencia <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Round.html">round</a></span><span class="op">(</span><span class="va">n</span><span class="op">/</span><span class="va">p.a</span><span class="op">*</span><span class="fl">10000</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">n</span>, <span class="op">-</span><span class="va">p.a</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
-<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 3
    periodo   grupo_edad incidencia
@@ -938,15 +981,15 @@ $ arsenico     &lt;chr&gt; "&lt;1 año", "1-4 años", "5-14 años", "15+ años",
 <p>Dado que en este ejemplo nos interesa modelar la tasa de incidencia vamos a necesitar incorporar dentro del modelo un termino de desplazamiento (en inglés <em>“offset”</em>).</p>
 <p>Creamos el modelo saturado para trazar iteraciones <em>backward</em>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">muertes</span> <span class="op">~</span> <span class="va">periodo</span> <span class="op">+</span> <span class="va">grupo_edad</span> <span class="op">+</span> <span class="va">arsenico</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">modelo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">muertes</span> <span class="op">~</span> <span class="va">periodo</span> <span class="op">+</span> <span class="va">grupo_edad</span> <span class="op">+</span> <span class="va">arsenico</span>, </span>
 <span>              offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">persona_anio</span><span class="op">)</span>,</span>
 <span>              family <span class="op">=</span> <span class="va">poisson</span>,</span>
-<span>              data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>              data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>El término <code>offset = log(persona_anio)</code> en el modelo de regresión de Poisson permite que la variable <code>persona_anio</code> actúe como el denominador en el cálculo de las tasas de mortalidad. La transformación logarítmica es necesaria porque la función de enlace del modelo de Poisson es el logaritmo.</p>
 <p>Para obtener un resumen del modelo ajustado, utilizamos la función <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code>, que proporciona una visión detallada de los resultados del modelo:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -981,7 +1024,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </section><section id="bondad-de-ajuste" class="level3"><h3 class="anchored" data-anchor-id="bondad-de-ajuste">Bondad de ajuste</h3>
 <p>Para evaluar la bondad de ajuste del modelo y verificar la presencia de sobredispersión, podemos utilizar la función <code>check_overdispersion()</code> del paquete <code>performance</code>. Esta función ayuda a identificar si los errores del modelo presentan una dispersión excesiva en comparación con la esperada bajo la distribución de Poisson:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_overdispersion</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_overdispersion</span><span class="op">(</span><span class="va">modelo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Overdispersion test
 
@@ -994,7 +1037,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </section><section id="selección-de-variables-explicativas" class="level3"><h3 class="anchored" data-anchor-id="selección-de-variables-explicativas">Selección de variables explicativas</h3>
 <p>Para mejorar el modelo anterior y asegurarnos de que incluimos solo las variables significativas, procederemos a eliminar variables una por una en una primera ronda de iteración mediante un proceso <em>backwards</em> manual.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) arsénico</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) arsénico</span></span>
 <span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">muertes</span> <span class="op">~</span> <span class="va">periodo</span> <span class="op">+</span> <span class="va">grupo_edad</span>, </span>
 <span>            offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">persona_anio</span><span class="op">)</span>,</span>
 <span>              family <span class="op">=</span> <span class="va">poisson</span>,</span>
@@ -1010,11 +1053,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <span><span class="va">mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">muertes</span> <span class="op">~</span> <span class="va">grupo_edad</span> <span class="op">+</span> <span class="va">arsenico</span>, </span>
 <span>            offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">persona_anio</span><span class="op">)</span>,</span>
 <span>              family <span class="op">=</span> <span class="va">poisson</span>,</span>
-<span>              data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span>     </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>              data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span>     </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Para comparar los modelos podemos usar la función <code>compare_perfomance()</code> del paquete <code>performance</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod1</span>, <span class="va">mod2</span>, <span class="va">mod3</span>, metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod1</span>, <span class="va">mod2</span>, <span class="va">mod3</span>, metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -1028,7 +1071,7 @@ mod3 |   glm | 355.0 (&gt;.999) | 374.2 (&gt;.999) |           0.926 | 1.595</co
 <p>Buscamos el menor AIC, que en este caso es <code>mod3</code> (modelo con variables <code>grupo_edad</code> y <code>arsenico</code>).</p>
 <p>En la segunda fase de iteración partimos de este modelo y quitamos otra variable, lo que signica en nuestro ejemplo construir regresiones simples:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) arsénico</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) arsénico</span></span>
 <span><span class="va">mod4.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">muertes</span> <span class="op">~</span> <span class="va">grupo_edad</span>, </span>
 <span>              offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">persona_anio</span><span class="op">)</span>,</span>
 <span>              family <span class="op">=</span> <span class="va">poisson</span>,</span>
@@ -1038,11 +1081,11 @@ mod3 |   glm | 355.0 (&gt;.999) | 374.2 (&gt;.999) |           0.926 | 1.595</co
 <span><span class="va">mod4.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">muertes</span> <span class="op">~</span> <span class="va">arsenico</span>, </span>
 <span>              offset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="va">persona_anio</span><span class="op">)</span>,</span>
 <span>              family <span class="op">=</span> <span class="va">poisson</span>,</span>
-<span>              data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>              data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Volvemos a comparar:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod3</span>, <span class="va">mod4.1</span>, <span class="va">mod4.2</span>, metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod3</span>, <span class="va">mod4.1</span>, <span class="va">mod4.2</span>, metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -1055,7 +1098,7 @@ mod4.2 |   glm | 537.9 (&lt;.001) | 548.8 (&lt;.001) |           0.451 | 3.416</
 </div>
 <p>El mejor modelo continúa siendo <code>mod3</code>, por lo que vamos a probar su bondad de ajuste:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_overdispersion</span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_overdispersion</span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Overdispersion test
 
@@ -1066,7 +1109,7 @@ mod4.2 |   glm | 537.9 (&lt;.001) | 548.8 (&lt;.001) |           0.451 | 3.416</
 </div>
 <p>El <em>p</em> valor del test confirma un buen ajuste. Procedemos a chequear significancia de las variables explicativas:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod3</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1096,25 +1139,25 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 <p>Todos los niveles de las variables son significativos respecto a sus niveles de referencia:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod3</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod3</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="aulajtkrdl" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#aulajtkrdl table {
+<div id="nuerxdloti" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nuerxdloti table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#aulajtkrdl thead, #aulajtkrdl tbody, #aulajtkrdl tfoot, #aulajtkrdl tr, #aulajtkrdl td, #aulajtkrdl th {
+#nuerxdloti thead, #nuerxdloti tbody, #nuerxdloti tfoot, #nuerxdloti tr, #nuerxdloti td, #nuerxdloti th {
   border-style: none;
 }
 
-#aulajtkrdl p {
+#nuerxdloti p {
   margin: 0;
   padding: 0;
 }
 
-#aulajtkrdl .gt_table {
+#nuerxdloti .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1140,12 +1183,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_caption {
+#nuerxdloti .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#aulajtkrdl .gt_title {
+#nuerxdloti .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1157,7 +1200,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-width: 0;
 }
 
-#aulajtkrdl .gt_subtitle {
+#nuerxdloti .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1169,7 +1212,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-width: 0;
 }
 
-#aulajtkrdl .gt_heading {
+#nuerxdloti .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1181,13 +1224,13 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_bottom_border {
+#nuerxdloti .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_col_headings {
+#nuerxdloti .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1202,7 +1245,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_col_heading {
+#nuerxdloti .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1222,7 +1265,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#aulajtkrdl .gt_column_spanner_outer {
+#nuerxdloti .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1234,15 +1277,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 4px;
 }
 
-#aulajtkrdl .gt_column_spanner_outer:first-child {
+#nuerxdloti .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#aulajtkrdl .gt_column_spanner_outer:last-child {
+#nuerxdloti .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#aulajtkrdl .gt_column_spanner {
+#nuerxdloti .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1254,11 +1297,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   width: 100%;
 }
 
-#aulajtkrdl .gt_spanner_row {
+#nuerxdloti .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#aulajtkrdl .gt_group_heading {
+#nuerxdloti .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1284,7 +1327,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   text-align: left;
 }
 
-#aulajtkrdl .gt_empty_group_heading {
+#nuerxdloti .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1299,15 +1342,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: middle;
 }
 
-#aulajtkrdl .gt_from_md > :first-child {
+#nuerxdloti .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#aulajtkrdl .gt_from_md > :last-child {
+#nuerxdloti .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#aulajtkrdl .gt_row {
+#nuerxdloti .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1326,7 +1369,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#aulajtkrdl .gt_stub {
+#nuerxdloti .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1339,7 +1382,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#aulajtkrdl .gt_stub_row_group {
+#nuerxdloti .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1353,15 +1396,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: top;
 }
 
-#aulajtkrdl .gt_row_group_first td {
+#nuerxdloti .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#aulajtkrdl .gt_row_group_first th {
+#nuerxdloti .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#aulajtkrdl .gt_summary_row {
+#nuerxdloti .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1371,16 +1414,16 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#aulajtkrdl .gt_first_summary_row {
+#nuerxdloti .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_first_summary_row.thick {
+#nuerxdloti .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#aulajtkrdl .gt_last_summary_row {
+#nuerxdloti .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1390,7 +1433,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_grand_summary_row {
+#nuerxdloti .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1400,7 +1443,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#aulajtkrdl .gt_first_grand_summary_row {
+#nuerxdloti .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1410,7 +1453,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_last_grand_summary_row_top {
+#nuerxdloti .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1420,11 +1463,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_striped {
+#nuerxdloti .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#aulajtkrdl .gt_table_body {
+#nuerxdloti .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1433,7 +1476,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_footnotes {
+#nuerxdloti .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1447,7 +1490,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_footnote {
+#nuerxdloti .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1456,7 +1499,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#aulajtkrdl .gt_sourcenotes {
+#nuerxdloti .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1470,7 +1513,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#aulajtkrdl .gt_sourcenote {
+#nuerxdloti .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1478,76 +1521,76 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#aulajtkrdl .gt_left {
+#nuerxdloti .gt_left {
   text-align: left;
 }
 
-#aulajtkrdl .gt_center {
+#nuerxdloti .gt_center {
   text-align: center;
 }
 
-#aulajtkrdl .gt_right {
+#nuerxdloti .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#aulajtkrdl .gt_font_normal {
+#nuerxdloti .gt_font_normal {
   font-weight: normal;
 }
 
-#aulajtkrdl .gt_font_bold {
+#nuerxdloti .gt_font_bold {
   font-weight: bold;
 }
 
-#aulajtkrdl .gt_font_italic {
+#nuerxdloti .gt_font_italic {
   font-style: italic;
 }
 
-#aulajtkrdl .gt_super {
+#nuerxdloti .gt_super {
   font-size: 65%;
 }
 
-#aulajtkrdl .gt_footnote_marks {
+#nuerxdloti .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#aulajtkrdl .gt_asterisk {
+#nuerxdloti .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#aulajtkrdl .gt_indent_1 {
+#nuerxdloti .gt_indent_1 {
   text-indent: 5px;
 }
 
-#aulajtkrdl .gt_indent_2 {
+#nuerxdloti .gt_indent_2 {
   text-indent: 10px;
 }
 
-#aulajtkrdl .gt_indent_3 {
+#nuerxdloti .gt_indent_3 {
   text-indent: 15px;
 }
 
-#aulajtkrdl .gt_indent_4 {
+#nuerxdloti .gt_indent_4 {
   text-indent: 20px;
 }
 
-#aulajtkrdl .gt_indent_5 {
+#nuerxdloti .gt_indent_5 {
   text-indent: 25px;
 }
 
-#aulajtkrdl .katex-display {
+#nuerxdloti .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#aulajtkrdl div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nuerxdloti div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -1622,7 +1665,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <td class="gt_row gt_center" headers="p.value">0.004</td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes"><tr class="odd">
+<tfoot><tr class="gt_sourcenotes odd">
 <td colspan="4" class="gt_sourcenote">Abbreviations: CI = Confidence Interval, IRR = Incidence Rate Ratio</td>
 </tr></tfoot>
 </table>
@@ -1631,7 +1674,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 <p>Traducidos a riesgo, mediante la exponenciación de los coeficientes, observamos que los diferentes categorías de años de exposición al arsénico no varían entre sí. Esto nos hace pensar que puede valer la pena agruparlo en solo dos niveles:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Recategoriza arsénico</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Recategoriza arsénico</span></span>
 <span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>arsenico_cat <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html">if_else</a></span><span class="op">(</span></span>
 <span>    <span class="va">arsenico</span> <span class="op">==</span> <span class="st">"&lt;1 año"</span>, <span class="st">"&lt;1 año"</span>, <span class="st">"1+ años"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -1644,7 +1687,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <span>               data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Compara modelos</span></span>
-<span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod3</span>, <span class="va">mod5</span>, metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod3</span>, <span class="va">mod5</span>, metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -1656,7 +1699,7 @@ mod5 |   glm | 353.8 (0.650) | 367.5 (0.966) |           0.924 | 1.613</code></p
 </div>
 <p>El <code>mod5</code> tiene mejor <em>performance</em> que el modelo anterior. Chequeamos sobredispersión:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_overdispersion</span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">check_overdispersion</span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Overdispersion test
 
@@ -1668,7 +1711,7 @@ mod5 |   glm | 353.8 (0.650) | 367.5 (0.966) |           0.924 | 1.613</code></p
 <p>El ajuste continúa siendo bueno.</p>
 <p>Chequeamos significancia:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod5</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1697,25 +1740,25 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <p>Las variables incluídas son significativas.</p>
 <p>En esta etapa, aceptaríamos el <code>mod5</code> como el mejor modelo, ya que tiene el AIC más pequeño entre todos los modelos que hemos probado.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="wxydiwrrsf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#wxydiwrrsf table {
+<div id="yetfjmdlgt" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#yetfjmdlgt table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#wxydiwrrsf thead, #wxydiwrrsf tbody, #wxydiwrrsf tfoot, #wxydiwrrsf tr, #wxydiwrrsf td, #wxydiwrrsf th {
+#yetfjmdlgt thead, #yetfjmdlgt tbody, #yetfjmdlgt tfoot, #yetfjmdlgt tr, #yetfjmdlgt td, #yetfjmdlgt th {
   border-style: none;
 }
 
-#wxydiwrrsf p {
+#yetfjmdlgt p {
   margin: 0;
   padding: 0;
 }
 
-#wxydiwrrsf .gt_table {
+#yetfjmdlgt .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1741,12 +1784,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_caption {
+#yetfjmdlgt .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#wxydiwrrsf .gt_title {
+#yetfjmdlgt .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1758,7 +1801,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-width: 0;
 }
 
-#wxydiwrrsf .gt_subtitle {
+#yetfjmdlgt .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1770,7 +1813,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-width: 0;
 }
 
-#wxydiwrrsf .gt_heading {
+#yetfjmdlgt .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1782,13 +1825,13 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_bottom_border {
+#yetfjmdlgt .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_col_headings {
+#yetfjmdlgt .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1803,7 +1846,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_col_heading {
+#yetfjmdlgt .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1823,7 +1866,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#wxydiwrrsf .gt_column_spanner_outer {
+#yetfjmdlgt .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1835,15 +1878,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 4px;
 }
 
-#wxydiwrrsf .gt_column_spanner_outer:first-child {
+#yetfjmdlgt .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#wxydiwrrsf .gt_column_spanner_outer:last-child {
+#yetfjmdlgt .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#wxydiwrrsf .gt_column_spanner {
+#yetfjmdlgt .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1855,11 +1898,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   width: 100%;
 }
 
-#wxydiwrrsf .gt_spanner_row {
+#yetfjmdlgt .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#wxydiwrrsf .gt_group_heading {
+#yetfjmdlgt .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1885,7 +1928,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   text-align: left;
 }
 
-#wxydiwrrsf .gt_empty_group_heading {
+#yetfjmdlgt .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1900,15 +1943,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: middle;
 }
 
-#wxydiwrrsf .gt_from_md > :first-child {
+#yetfjmdlgt .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#wxydiwrrsf .gt_from_md > :last-child {
+#yetfjmdlgt .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#wxydiwrrsf .gt_row {
+#yetfjmdlgt .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1927,7 +1970,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#wxydiwrrsf .gt_stub {
+#yetfjmdlgt .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1940,7 +1983,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wxydiwrrsf .gt_stub_row_group {
+#yetfjmdlgt .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1954,15 +1997,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: top;
 }
 
-#wxydiwrrsf .gt_row_group_first td {
+#yetfjmdlgt .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#wxydiwrrsf .gt_row_group_first th {
+#yetfjmdlgt .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#wxydiwrrsf .gt_summary_row {
+#yetfjmdlgt .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1972,16 +2015,16 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wxydiwrrsf .gt_first_summary_row {
+#yetfjmdlgt .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_first_summary_row.thick {
+#yetfjmdlgt .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#wxydiwrrsf .gt_last_summary_row {
+#yetfjmdlgt .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1991,7 +2034,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_grand_summary_row {
+#yetfjmdlgt .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2001,7 +2044,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wxydiwrrsf .gt_first_grand_summary_row {
+#yetfjmdlgt .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2011,7 +2054,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_last_grand_summary_row_top {
+#yetfjmdlgt .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2021,11 +2064,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_striped {
+#yetfjmdlgt .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#wxydiwrrsf .gt_table_body {
+#yetfjmdlgt .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2034,7 +2077,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_footnotes {
+#yetfjmdlgt .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2048,7 +2091,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_footnote {
+#yetfjmdlgt .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2057,7 +2100,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wxydiwrrsf .gt_sourcenotes {
+#yetfjmdlgt .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2071,7 +2114,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#wxydiwrrsf .gt_sourcenote {
+#yetfjmdlgt .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2079,76 +2122,76 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#wxydiwrrsf .gt_left {
+#yetfjmdlgt .gt_left {
   text-align: left;
 }
 
-#wxydiwrrsf .gt_center {
+#yetfjmdlgt .gt_center {
   text-align: center;
 }
 
-#wxydiwrrsf .gt_right {
+#yetfjmdlgt .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#wxydiwrrsf .gt_font_normal {
+#yetfjmdlgt .gt_font_normal {
   font-weight: normal;
 }
 
-#wxydiwrrsf .gt_font_bold {
+#yetfjmdlgt .gt_font_bold {
   font-weight: bold;
 }
 
-#wxydiwrrsf .gt_font_italic {
+#yetfjmdlgt .gt_font_italic {
   font-style: italic;
 }
 
-#wxydiwrrsf .gt_super {
+#yetfjmdlgt .gt_super {
   font-size: 65%;
 }
 
-#wxydiwrrsf .gt_footnote_marks {
+#yetfjmdlgt .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#wxydiwrrsf .gt_asterisk {
+#yetfjmdlgt .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#wxydiwrrsf .gt_indent_1 {
+#yetfjmdlgt .gt_indent_1 {
   text-indent: 5px;
 }
 
-#wxydiwrrsf .gt_indent_2 {
+#yetfjmdlgt .gt_indent_2 {
   text-indent: 10px;
 }
 
-#wxydiwrrsf .gt_indent_3 {
+#yetfjmdlgt .gt_indent_3 {
   text-indent: 15px;
 }
 
-#wxydiwrrsf .gt_indent_4 {
+#yetfjmdlgt .gt_indent_4 {
   text-indent: 20px;
 }
 
-#wxydiwrrsf .gt_indent_5 {
+#yetfjmdlgt .gt_indent_5 {
   text-indent: 25px;
 }
 
-#wxydiwrrsf .katex-display {
+#yetfjmdlgt .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#wxydiwrrsf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#yetfjmdlgt div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -2211,7 +2254,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes"><tr class="odd">
+<tfoot><tr class="gt_sourcenotes odd">
 <td colspan="4" class="gt_sourcenote">Abbreviations: CI = Confidence Interval, IRR = Incidence Rate Ratio</td>
 </tr></tfoot>
 </table>
@@ -2225,13 +2268,13 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </section><section id="densidad-de-incidencia" class="level3"><h3 class="anchored" data-anchor-id="densidad-de-incidencia">Densidad de incidencia</h3>
 <p>Para calcular la densidad de incidencia esperada en una población específica, utilizamos el modelo ajustado. Por ejemplo, para una población de 100.000 personas de entre 40 y 49 años expuestas al arsénico durante menos de un año, podemos usar el modelo <code>mod5</code>. En R, esto se hace creando un nuevo conjunto de datos con las características deseadas y utilizando la función <code><a href="https://rdrr.io/r/stats/predict.html">predict()</a></code> para obtener la tasa de incidencia ajustada:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Genera nuevos datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Genera nuevos datos</span></span>
 <span><span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>grupo_edad <span class="op">=</span> <span class="st">"40-49"</span>,</span>
 <span>                  arsenico_cat <span class="op">=</span> <span class="st">"&lt;1 año"</span>,</span>
 <span>                  persona_anio <span class="op">=</span> <span class="fl">100000</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Predice datos</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">mod5</span>, newdata <span class="op">=</span> <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/predict.html">predict</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">mod5</span>, newdata <span class="op">=</span> <span class="va">newdata</span>, type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       1 
 3.325736 </code></pre>
@@ -2246,7 +2289,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <p>Comparar la densidad de incidencia entre dos grupos de sujetos por su estado de exposición es más justo que comparar los riesgos crudos. La relación entre las densidades de incidencia de dos grupos se denomina <strong>razón de densidades de incidencia</strong> (<strong>RDI</strong>), que es una forma mejorada de riesgo relativo.</p>
 <p>En el <code>mod5</code>, para calcular la razón de densidad de incidencia entre los sujetos expuestos al arsénico durante uno o más años frente a los expuestos durante menos de un año, podemos dividir la incidencia entre los primeros por la del segundo grupo.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Genera nuevos datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co">## Genera nuevos datos</span></span>
 <span><span class="va">newdata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>grupo_edad <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="st">"40-49"</span>, <span class="fl">2</span><span class="op">)</span>,</span>
 <span>                  arsenico_cat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"&lt;1 año"</span>, <span class="st">"1+ años"</span><span class="op">)</span>,</span>
 <span>                  persona_anio <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">100000</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -2257,7 +2300,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <span><span class="co">## Razón densidad de incidencia</span></span>
 <span><span class="va">rdi.arsenico</span> <span class="op">&lt;-</span> <span class="va">di</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">/</span> <span class="va">di</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span></span>
 <span></span>
-<span><span class="va">rdi.arsenico</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">rdi.arsenico</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       2 
 2.249864 </code></pre>
@@ -2267,26 +2310,26 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <p>A continuación, se calculan las respuestas o densidades de incidencia de las dos condiciones.</p>
 <p>La RDI se obtiene luego de la división de las densidades de incidencia para arsenico_cat = “&lt;1 año” con <code>arsenico_cat = "1+ años"</code>. Una forma más corta de obtenerla es mediante el coeficiente de la variable específica <code>arsenico</code>, utilizando R <code>base</code> o el paquete <code>gtsummary</code>.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span>,                </span>
-<span>               include <span class="op">=</span> <span class="st">"arsenico_cat"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span>,                </span>
+<span>               include <span class="op">=</span> <span class="st">"arsenico_cat"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="dsyjwcfbxh" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#dsyjwcfbxh table {
+<div id="nmnmwitnos" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nmnmwitnos table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#dsyjwcfbxh thead, #dsyjwcfbxh tbody, #dsyjwcfbxh tfoot, #dsyjwcfbxh tr, #dsyjwcfbxh td, #dsyjwcfbxh th {
+#nmnmwitnos thead, #nmnmwitnos tbody, #nmnmwitnos tfoot, #nmnmwitnos tr, #nmnmwitnos td, #nmnmwitnos th {
   border-style: none;
 }
 
-#dsyjwcfbxh p {
+#nmnmwitnos p {
   margin: 0;
   padding: 0;
 }
 
-#dsyjwcfbxh .gt_table {
+#nmnmwitnos .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -2312,12 +2355,12 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_caption {
+#nmnmwitnos .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#dsyjwcfbxh .gt_title {
+#nmnmwitnos .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -2329,7 +2372,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-width: 0;
 }
 
-#dsyjwcfbxh .gt_subtitle {
+#nmnmwitnos .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -2341,7 +2384,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-width: 0;
 }
 
-#dsyjwcfbxh .gt_heading {
+#nmnmwitnos .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -2353,13 +2396,13 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_bottom_border {
+#nmnmwitnos .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_col_headings {
+#nmnmwitnos .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2374,7 +2417,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_col_heading {
+#nmnmwitnos .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2394,7 +2437,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#dsyjwcfbxh .gt_column_spanner_outer {
+#nmnmwitnos .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2406,15 +2449,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 4px;
 }
 
-#dsyjwcfbxh .gt_column_spanner_outer:first-child {
+#nmnmwitnos .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#dsyjwcfbxh .gt_column_spanner_outer:last-child {
+#nmnmwitnos .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#dsyjwcfbxh .gt_column_spanner {
+#nmnmwitnos .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -2426,11 +2469,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   width: 100%;
 }
 
-#dsyjwcfbxh .gt_spanner_row {
+#nmnmwitnos .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#dsyjwcfbxh .gt_group_heading {
+#nmnmwitnos .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2456,7 +2499,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   text-align: left;
 }
 
-#dsyjwcfbxh .gt_empty_group_heading {
+#nmnmwitnos .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -2471,15 +2514,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: middle;
 }
 
-#dsyjwcfbxh .gt_from_md > :first-child {
+#nmnmwitnos .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#dsyjwcfbxh .gt_from_md > :last-child {
+#nmnmwitnos .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#dsyjwcfbxh .gt_row {
+#nmnmwitnos .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2498,7 +2541,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   overflow-x: hidden;
 }
 
-#dsyjwcfbxh .gt_stub {
+#nmnmwitnos .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2511,7 +2554,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#dsyjwcfbxh .gt_stub_row_group {
+#nmnmwitnos .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -2525,15 +2568,15 @@ Number of Fisher Scoring iterations: 5</code></pre>
   vertical-align: top;
 }
 
-#dsyjwcfbxh .gt_row_group_first td {
+#nmnmwitnos .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#dsyjwcfbxh .gt_row_group_first th {
+#nmnmwitnos .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#dsyjwcfbxh .gt_summary_row {
+#nmnmwitnos .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2543,16 +2586,16 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#dsyjwcfbxh .gt_first_summary_row {
+#nmnmwitnos .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_first_summary_row.thick {
+#nmnmwitnos .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#dsyjwcfbxh .gt_last_summary_row {
+#nmnmwitnos .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2562,7 +2605,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_grand_summary_row {
+#nmnmwitnos .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -2572,7 +2615,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#dsyjwcfbxh .gt_first_grand_summary_row {
+#nmnmwitnos .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2582,7 +2625,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_last_grand_summary_row_top {
+#nmnmwitnos .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -2592,11 +2635,11 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_striped {
+#nmnmwitnos .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#dsyjwcfbxh .gt_table_body {
+#nmnmwitnos .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -2605,7 +2648,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_footnotes {
+#nmnmwitnos .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2619,7 +2662,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_footnote {
+#nmnmwitnos .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -2628,7 +2671,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#dsyjwcfbxh .gt_sourcenotes {
+#nmnmwitnos .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -2642,7 +2685,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#dsyjwcfbxh .gt_sourcenote {
+#nmnmwitnos .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -2650,76 +2693,76 @@ Number of Fisher Scoring iterations: 5</code></pre>
   padding-right: 5px;
 }
 
-#dsyjwcfbxh .gt_left {
+#nmnmwitnos .gt_left {
   text-align: left;
 }
 
-#dsyjwcfbxh .gt_center {
+#nmnmwitnos .gt_center {
   text-align: center;
 }
 
-#dsyjwcfbxh .gt_right {
+#nmnmwitnos .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#dsyjwcfbxh .gt_font_normal {
+#nmnmwitnos .gt_font_normal {
   font-weight: normal;
 }
 
-#dsyjwcfbxh .gt_font_bold {
+#nmnmwitnos .gt_font_bold {
   font-weight: bold;
 }
 
-#dsyjwcfbxh .gt_font_italic {
+#nmnmwitnos .gt_font_italic {
   font-style: italic;
 }
 
-#dsyjwcfbxh .gt_super {
+#nmnmwitnos .gt_super {
   font-size: 65%;
 }
 
-#dsyjwcfbxh .gt_footnote_marks {
+#nmnmwitnos .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#dsyjwcfbxh .gt_asterisk {
+#nmnmwitnos .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#dsyjwcfbxh .gt_indent_1 {
+#nmnmwitnos .gt_indent_1 {
   text-indent: 5px;
 }
 
-#dsyjwcfbxh .gt_indent_2 {
+#nmnmwitnos .gt_indent_2 {
   text-indent: 10px;
 }
 
-#dsyjwcfbxh .gt_indent_3 {
+#nmnmwitnos .gt_indent_3 {
   text-indent: 15px;
 }
 
-#dsyjwcfbxh .gt_indent_4 {
+#nmnmwitnos .gt_indent_4 {
   text-indent: 20px;
 }
 
-#dsyjwcfbxh .gt_indent_5 {
+#nmnmwitnos .gt_indent_5 {
   text-indent: 25px;
 }
 
-#dsyjwcfbxh .katex-display {
+#nmnmwitnos .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#dsyjwcfbxh div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nmnmwitnos div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -2752,7 +2795,7 @@ Number of Fisher Scoring iterations: 5</code></pre>
 <td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes"><tr class="odd">
+<tfoot><tr class="gt_sourcenotes odd">
 <td colspan="4" class="gt_sourcenote">Abbreviations: CI = Confidence Interval, IRR = Incidence Rate Ratio</td>
 </tr></tfoot>
 </table>
@@ -2761,8 +2804,8 @@ Number of Fisher Scoring iterations: 5</code></pre>
 </div>
 <p>También podemos mostrar la salida mediante un gráfico usando el ecosistema de paquetes <code>easystats</code>, tal como vimos en la <a href="../unidad_4/02_reg_logistica.html"><strong>unidad anterior</strong></a>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">model_parameters</span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">model_parameters</span><span class="op">(</span><span class="va">mod5</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="02_reg_poisson_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2882,13 +2925,14 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

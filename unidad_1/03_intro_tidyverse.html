@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Christian Ballejo">
 <meta name="author" content="Tamara Ricardo">
@@ -86,18 +86,19 @@ div.csl-indent {
 <link href="../unidad_1/02_intro_RStudio.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-07e4c1cdef0c383c709f3a7c70e6b9d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5764afd99fd0ec2ffdb51851d8106ba1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -110,7 +111,7 @@ div.csl-indent {
     "s"
   ],
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -307,6 +308,10 @@ div.csl-indent {
 <i class="bi bi-x-lg quarto-announcement-action"></i>
 </div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -337,7 +342,10 @@ div.csl-indent {
     <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
  <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_6/01_est_experimentales.html">
+ <span class="dropdown-text">Unidad 6: Estudios experimentales</span></a>
+  </li>  
     </ul>
 </li>
 </ul>
@@ -400,7 +408,11 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Buscar"></div>
         </div>
@@ -597,7 +609,7 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+ <span class="menu-text">Unidad 5</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -624,10 +636,41 @@ div.csl-indent {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 6 (disponible a partir del 06/10/25)</span></span>
-  </li>
+ <span class="menu-text">Unidad 6</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/01_est_experimentales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios Experimentales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/02_analisis_superv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/03_metodos_analisis_sup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Métodos para el análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/04_reg_cox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Cox</span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -730,30 +773,30 @@ div.csl-indent {
 <p>Uno de los objetivos de los desarrolladores fue dotar a la sintaxis de estos paquetes de una <strong>gramática</strong> clara: funciones cuyos nombres y argumentos permiten construir “<em>frases</em>” que sean semánticamente comprensibles. Un ejemplo de esto se ve en el paquete <code>dplyr</code>, donde la mayoría de las funciones son verbos en inglés como <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, lo que facilita su lectura y comprensión.</p>
 <p>El paquete <code>tidyverse</code> (versión 2.0.0) puede instalarse desde el repositorio oficial CRAN mediante el menú <em>Packages</em> de RStudio, o ejecutando el siguiente código:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Una vez instalado, se activa mediante:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Al activarlo, se muestra un mensaje con la versión instalada, la lista de paquetes que se cargan automáticamente y posibles conflictos de nombres entre funciones. Esto es habitual cuando se utilizan múltiples paquetes, ya que algunas funciones pueden llamarse igual. Por ejemplo, la función <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> existe tanto en el paquete <code>stats</code> como en <code>dplyr</code>. Al cargar <code>tidyverse</code>, R avisa de esta superposición:</p>
 <p><code>✖️dplyr::filter() masks stats::filter()</code></p>
 <p>Cuando necesitamos asegurarnos de que estamos usando la función de un paquete específico, se recomienda usar la notación <code>::</code>, por ejemplo:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Función filter() del paquete stats</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Función filter() del paquete stats</span></span>
 <span><span class="fu">stats</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Función filter() del paquete tidyverse</span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Una estrategia útil cuando trabajamos con varios paquetes es cargar <code>tidyverse</code> al final de la lista de paquetes, para que sus funciones sobrescriban las de otros paquetes si fuese necesario:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">stats</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Los paquetes que se instalan con la versión actual de <code>tidyverse</code> pueden consultarse ejecutando:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://tidyverse.tidyverse.org/reference/tidyverse_packages.html">tidyverse_packages</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://tidyverse.tidyverse.org/reference/tidyverse_packages.html">tidyverse_packages</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "broom"         "conflicted"    "cli"           "dbplyr"       
  [5] "dplyr"         "dtplyr"        "forcats"       "ggplot2"      
@@ -797,11 +840,11 @@ div.csl-indent {
 </ul>
 <p>Para crear un objeto <em>tibble</em> manualmente usamos el siguiente código:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  nombre <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Ana"</span>, <span class="st">"Luis"</span>, <span class="st">"María"</span><span class="op">)</span>,</span>
 <span>  edad <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">34</span>, <span class="fl">28</span>, <span class="fl">45</span><span class="op">)</span>,</span>
 <span>  altura <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1.65</span>, <span class="fl">1.80</span>, <span class="fl">1.70</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="tuberías-con-magrittr" class="level2"><h2 class="anchored" data-anchor-id="tuberías-con-magrittr">Tuberías con <code>magrittr</code>
 </h2>
@@ -818,7 +861,7 @@ div.csl-indent {
 </div>
 <p>A continuación, mostramos un ejemplo comparativo de cómo cambia la sintaxis usando el dataset incorporado en R <code>mtcars</code>, que contiene datos sobre autos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       mpg      cyl     disp        hp     drat       wt
 Mazda RX4         4.582576 2.449490 12.64911 10.488088 1.974842 1.618641
@@ -839,13 +882,13 @@ Valiant           4.496665  1  0 1.732051 1.000000</code></pre>
 <p>En la línea de código anterior estamos pidiendo mostrar la cabecera (6 primeras observaciones de la tabla de datos) de la raíz cuadrada de los valores de la tabla <code>mtcars</code>, en formato del lenguaje clásico (anidado).</p>
 <p>Ahora activamos <code>magrittr</code> y ejecutamos la línea anterior en formato tubería:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Activa paquete</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Activa paquete</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># Formato tubería</span></span>
 <span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       mpg      cyl     disp        hp     drat       wt
 Mazda RX4         4.582576 2.449490 12.64911 10.488088 1.974842 1.618641
@@ -865,10 +908,10 @@ Valiant           4.496665  1  0 1.732051 1.000000</code></pre>
 </div>
 <p>Podemos hacer lo mismo con la tubería nativa de R sin activar ningún paquete (revisar que esté activada desde <code>Tools &gt; Global Options</code>):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Tubería nativa</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Tubería nativa</span></span>
 <span><span class="va">mtcars</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                       mpg      cyl     disp        hp     drat       wt
 Mazda RX4         4.582576 2.449490 12.64911 10.488088 1.974842 1.618641
@@ -941,13 +984,13 @@ Valiant           4.496665  1  0 1.732051 1.000000</code></pre>
 <li><p>Vienen incluidas dentro de <code>tidyverse</code> pero también pueden usarse de forma independiente:</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org">readr</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readr.tidyverse.org">readr</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>A modo de ejemplo, leeremos un archivo sin cabecera separado por comas bajo el nombre <code>datos</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"datos/ejemplo-datos.csv"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"datos/ejemplo-datos.csv"</span>, </span>
 <span>                  col_names <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
-<span><span class="va">datos</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">datos</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
      X1 X2       X3       X4    X5        
@@ -960,9 +1003,9 @@ Valiant           4.496665  1  0 1.732051 1.000000</code></pre>
 </div>
 <p>Leemos el mismo archivo con cabecera y separado por punto y comas, bajo el nombre <code>info</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/ejemplo-datos-header.csv"</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">info</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/ejemplo-datos-header.csv"</span>,</span>
 <span>                  col_names <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="va">info</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">info</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
    Iden Apellido Nombre   Sexo  FNac      
@@ -981,7 +1024,7 @@ Valiant           4.496665  1  0 1.732051 1.000000</code></pre>
 <p>Al leer un archivo, <code>readr</code> intenta adivinar automáticamente el tipo de dato de cada columna (<em>parse</em>). Si no hay cabecera, los nombres de columna serán <code>X1</code>, <code>X2</code>, etc.</p>
 <p>Podemos inspeccionar la estructura de un <em>dataframe</em> con <code><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">info</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">info</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 4
 Columns: 5
@@ -1002,10 +1045,10 @@ $ FNac     &lt;date&gt; 1958-12-24, 1954-01-21, 1993-06-27, 1965-06-21</code></p
 <p>Por ejemplo, columnas con enteros pueden aparecer como <code>&lt;dbl&gt;</code> si se interpretan como <code>double</code>, y las fechas como <code>&lt;date&gt;</code>.</p>
 <p>Agregamos unos argumentos más y ejemplificamos la sintaxis con <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim()</a></code> para leer un archivo con cabecera compleja (la tabla comienza en la fila 9) separado por caracteres <code>|</code> (<em>pipes</em>).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span><span class="st">"ejemplo-datos-header-skip.txt"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span><span class="st">"ejemplo-datos-header-skip.txt"</span>, </span>
 <span>           col_names <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>           skip <span class="op">=</span> <span class="fl">8</span>, </span>
-<span>           delim <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>           delim <span class="op">=</span> <span class="st">"|"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <blockquote class="blockquote">
 <p><strong>Importante:</strong> No olvides asignar la lectura a un nombre para guardar el <em>dataframe</em> dentro del entorno de trabajo (por ejemplo: <code>datos &lt;-</code>).</p>
@@ -1024,7 +1067,7 @@ $ FNac     &lt;date&gt; 1958-12-24, 1954-01-21, 1993-06-27, 1965-06-21</code></p
 </ul>
 <p>Los argumentos son generales y para el caso del último más extensos, dado que hay que definir cual es el separador que deseamos en el archivo. Podemos consultarlos con el siguiente código:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html">args</a></span><span class="op">(</span><span class="va">write_delim</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html">args</a></span><span class="op">(</span><span class="va">write_delim</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (x, file, delim = " ", na = "NA", append = FALSE, col_names = !append, 
     quote = c("needed", "all", "none"), escape = c("double", 
@@ -1035,11 +1078,11 @@ NULL</code></pre>
 </div>
 <p>Por ejemplo para exportar un conjunto de datos en texto plano al que denominaremos “<code>ejemplo.csv</code><strong>“</strong> con separador <strong>punto y coma</strong> y <strong>cabecera incluida</strong> podemos hacer:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_delim</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">datos</span>, file <span class="op">=</span> <span class="st">"ejemplo.csv"</span>, delim <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_delim</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">datos</span>, file <span class="op">=</span> <span class="st">"ejemplo.csv"</span>, delim <span class="op">=</span> <span class="st">";"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>o más sencillo, usando la función específica <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv2()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv2</a></span><span class="op">(</span><span class="va">datos</span>, <span class="st">"ejemplo.csv"</span><span class="op">)</span> <span class="co"># define cabecera y separador ;</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv2</a></span><span class="op">(</span><span class="va">datos</span>, <span class="st">"ejemplo.csv"</span><span class="op">)</span> <span class="co"># define cabecera y separador ;</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section></section><section id="lectura-de-hojas-de-cálculo-con-readxl" class="level3"><h3 class="anchored" data-anchor-id="lectura-de-hojas-de-cálculo-con-readxl">Lectura de hojas de cálculo con <code>readxl</code>
 </h3>
@@ -1052,9 +1095,9 @@ NULL</code></pre>
 <p>Una primera función útil es <code><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets()</a></code>, que permite conocer y listar los nombres de las hojas contenidas en un archivo Excel (también llamado libro o <em>workbook</em>).</p>
 <p>Por ejemplo, supongamos que tenemos un archivo denominado “<code>datos.xlsx</code><strong>“</strong> y queremos saber por cuantas hojas está compuesto y que nombre tienen:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span> <span class="co"># hay que activarlo independientemente de tidyverse</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span> <span class="co"># hay que activarlo independientemente de tidyverse</span></span>
 <span></span>
-<span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"datos/datos.xlsx"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://readxl.tidyverse.org/reference/excel_sheets.html">excel_sheets</a></span><span class="op">(</span><span class="st">"datos/datos.xlsx"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "diabetes"   "vigilancia" "mortalidad"</code></pre>
 </div>
@@ -1062,7 +1105,7 @@ NULL</code></pre>
 <p>Esto devuelve, por ejemplo, tres hojas: <code>"diabetes"</code>, <code>"vigilancia"</code> y <code>"mortalidad"</code>.</p>
 <p>Para leer una de estas hojas utilizamos la función <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel()</a></code>, cuyos argumentos principales son:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html">args</a></span><span class="op">(</span><span class="va">read_excel</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/args.html">args</a></span><span class="op">(</span><span class="va">read_excel</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>function (path, sheet = NULL, range = NULL, col_names = TRUE, 
     col_types = NULL, na = "", trim_ws = TRUE, skip = 0, n_max = Inf, 
@@ -1081,12 +1124,12 @@ NULL</code></pre>
 <p>Al ejecutar <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel()</a></code>, internamente se utiliza la función <code><a href="https://readxl.tidyverse.org/reference/excel_format.html">excel_format()</a></code> para detectar si el archivo es <code>.xls</code> o <code>.xlsx</code>, y luego se aplica la función específica para cada caso: <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_xls()</a></code> o <code><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_xlsx()</a></code>. Estas funciones también pueden usarse directamente si se desea.</p>
 <p>Supongamos ahora que queremos leer la hoja llamada <code>"diabetes"</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diabetes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"datos/datos.xlsx"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">diabetes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"datos/datos.xlsx"</span>, </span>
 <span>                       sheet <span class="op">=</span> <span class="st">"diabetes"</span>,</span>
 <span>                       col_names <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># mostramos las 6 primeras observaciones</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">diabetes</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">diabetes</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 8
     A1C  hba1 GLUCB   SOG Tol_Glucosa    DM    SM  HOMA
@@ -1103,12 +1146,12 @@ NULL</code></pre>
 <p>Como <code>readxl</code> forma parte del ecosistema <code>tidyverse</code> el formato de salida es un <em>tibble</em>. En este caso de 23 observaciones por 8 variables.</p>
 <p>Ahora leamos la segunda hoja de nombre <code>"vigilancia"</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vigilancia</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"datos/datos.xlsx"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">vigilancia</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"datos/datos.xlsx"</span>, </span>
 <span>                         sheet <span class="op">=</span> <span class="fl">2</span>, </span>
 <span>                         col_names <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># mostramos las 6 primeras observaciones</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">vigilancia</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">vigilancia</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 9
    ...1 ...2        ...3      ...4  ...5  ...6  ...7 ...8  ...9                 
@@ -1124,13 +1167,13 @@ NULL</code></pre>
 <p>En este caso, en lugar del nombre de la hoja usamos un <code>2</code> que es su ubicación y especificamos <code>col_names = FALSE</code> porque el conjunto de datos no tiene cabecera. <code>readxl</code> asignará nombres genéricos como <code>...1</code>, <code>...2</code>, etc.</p>
 <p>Finalmente leamos la última hoja disponible del archivo:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mortalidad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"datos/datos.xlsx"</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mortalidad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"datos/datos.xlsx"</span>, </span>
 <span>                         sheet <span class="op">=</span> <span class="st">"mortalidad"</span>,</span>
 <span>                         col_names <span class="op">=</span> <span class="cn">T</span>, </span>
 <span>                         skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># mostramos las 6 primeras observaciones</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mortalidad</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">mortalidad</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 10
   grupo_edad grupo.I.1.1 grupo.II.1.1 grupo.III.1.1 grupo.I.2.1 grupo.II.2.1
@@ -1191,7 +1234,7 @@ NULL</code></pre>
 <p><code>dplyr</code> está incluído en el núcleo base de <em>tidyverse</em>, por lo que se encuentra disponible si tenemos activado a este último.</p>
 <p>También se puede activar en forma independiente:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section><section id="conjunto-de-datos-para-ejemplo" class="level3"><h3 class="anchored" data-anchor-id="conjunto-de-datos-para-ejemplo">Conjunto de datos para ejemplo</h3>
 <p>Para visualizar y comprender el funcionamiento de estos “verbos” de manipulación, resulta muy útil contar con ejemplos concretos. Por eso, en esta unidad trabajaremos con un conjunto de datos que nos permitirá practicar el uso de las funciones del paquete.</p>
@@ -1200,11 +1243,11 @@ NULL</code></pre>
 </blockquote>
 <p>Uno de los archivos incluidos, “<code>noti-vih.csv</code>”, contiene registros de notificaciones de VIH por jurisdicción en Argentina correspondientes a los años 2015 y 2016.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># asignamos la lectura a datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># asignamos la lectura a datos</span></span>
 <span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"datos/noti-vih.csv"</span><span class="op">)</span> </span>
 <span></span>
 <span><span class="co"># mostramos las 6 primeras observaciones</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   jurisdiccion   año casos      pob
@@ -1223,8 +1266,8 @@ NULL</code></pre>
 <p>A continuación, exploramos algunas formas útiles de seleccionar variables:</p>
 <p>Seleccionar todas las variables excepto <code>pob</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">pob</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">pob</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 3
    jurisdiccion   año casos
@@ -1244,8 +1287,8 @@ NULL</code></pre>
 </div>
 <p>Otra forma para el mismo resultado anterior (mediante el operador rango <code>:</code>):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">jurisdiccion</span><span class="op">:</span><span class="va">casos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">jurisdiccion</span><span class="op">:</span><span class="va">casos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 3
    jurisdiccion   año casos
@@ -1265,8 +1308,8 @@ NULL</code></pre>
 </div>
 <p>Seleccionar solamente las variables <code>jurisdiccion</code> y <code>casos</code><em>:</em></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">jurisdiccion</span>, <span class="va">casos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">jurisdiccion</span>, <span class="va">casos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 2
    jurisdiccion casos
@@ -1286,8 +1329,8 @@ NULL</code></pre>
 </div>
 <p>Lo mismo que el ejemplo anterior, pero usando la posición de las columnas:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 2
    jurisdiccion casos
@@ -1307,8 +1350,8 @@ NULL</code></pre>
 </div>
 <p>Mover la variable <code>año</code> al inicio y mantener todas las demás:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="st">"año"</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="st">"año"</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 4
      año jurisdiccion casos      pob
@@ -1342,8 +1385,8 @@ NULL</code></pre>
 <p>En cambio, <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> permite cambiar el nombre de una o más variables sin eliminar las demás. Solo se modifican los nombres indicados, y el resto del conjunto de datos permanece sin cambios.</p>
 <p>Ejemplo: renombrar la variable <code>pob</code> como <code>población</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="st">"población"</span> <span class="op">=</span> <span class="va">pob</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span><span class="st">"población"</span> <span class="op">=</span> <span class="va">pob</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 4
    jurisdiccion   año casos población
@@ -1366,8 +1409,8 @@ NULL</code></pre>
 <p>La función <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> permite seleccionar filas de un conjunto de datos, produciendo un subconjunto de observaciones.</p>
 <p>Veamos un ejemplo sencillo con nuestros datos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">jurisdiccion</span> <span class="op">==</span> <span class="st">"Tucuman"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">jurisdiccion</span> <span class="op">==</span> <span class="st">"Tucuman"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   jurisdiccion   año casos     pob
@@ -1379,7 +1422,7 @@ NULL</code></pre>
 <p>Utiliza los mismos operadores de comparación propios del lenguaje R:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<table class="table table-condensed table-hover caption-top table-sm table-striped small">
 <thead><tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Operador</th>
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Descripción</th>
@@ -1428,7 +1471,7 @@ NULL</code></pre>
 <p>Lo mismo con los operadores lógicos que se utilizan como conectores entre las expresiones:</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<table class="table table-condensed table-hover caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<table class="table table-condensed table-hover caption-top table-sm table-striped small">
 <thead><tr class="header">
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Operador</th>
 <th data-quarto-table-cell-role="th" style="text-align: left; position: sticky; top: 0; background-color: #FFFFFF; color: white !important; background-color: rgba(47, 46, 78, 255) !important;">Descripción</th>
@@ -1465,8 +1508,8 @@ NULL</code></pre>
 <p>Cuando usamos múltiples argumentos separados por coma dentro de <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>, estas se combinan con un operador <strong>AND</strong> implícito, es decir, cada expresión debe ser verdadera para que la fila sea incluida en la salida.</p>
 <p>Por ejemplo, filtramos las observaciones que cumplan que <code>casos</code> sea mayor a 100 <strong>y</strong> que <code>pob</code> sea menor a 1.000.000:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">casos</span> <span class="op">&gt;</span> <span class="fl">100</span>, <span class="va">pob</span> <span class="op">&lt;</span> <span class="fl">1000000</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">casos</span> <span class="op">&gt;</span> <span class="fl">100</span>, <span class="va">pob</span> <span class="op">&lt;</span> <span class="fl">1000000</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 7 × 4
   jurisdiccion   año casos    pob
@@ -1482,9 +1525,9 @@ NULL</code></pre>
 </div>
 <p>Para combinar condiciones dentro de una misma variable usamos el operador OR (<code>|</code>) o, de forma más práctica, <code>%in%</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Con OR</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Con OR</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">jurisdiccion</span> <span class="op">==</span> <span class="st">"Buenos Aires"</span> <span class="op">|</span> <span class="va">jurisdiccion</span> <span class="op">==</span> <span class="st">"La Pampa"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">jurisdiccion</span> <span class="op">==</span> <span class="st">"Buenos Aires"</span> <span class="op">|</span> <span class="va">jurisdiccion</span> <span class="op">==</span> <span class="st">"La Pampa"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   jurisdiccion   año casos      pob
@@ -1494,9 +1537,9 @@ NULL</code></pre>
 3 La Pampa      2015    57   343373
 4 La Pampa      2016    67   345361</code></pre>
 </div>
-<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Con %in%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Con %in%</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">jurisdiccion</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Buenos Aires"</span>, <span class="st">"La Pampa"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">jurisdiccion</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Buenos Aires"</span>, <span class="st">"La Pampa"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   jurisdiccion   año casos      pob
@@ -1509,8 +1552,8 @@ NULL</code></pre>
 </div>
 <p>En el siguiente ejemplo, filtramos observaciones del año 2016 con más de 200 casos. El uso de <code>&amp;</code> es equivalente al uso de coma:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">año</span> <span class="op">==</span> <span class="st">"2016"</span> <span class="op">&amp;</span> <span class="va">casos</span> <span class="op">&gt;</span> <span class="fl">200</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">año</span> <span class="op">==</span> <span class="st">"2016"</span> <span class="op">&amp;</span> <span class="va">casos</span> <span class="op">&gt;</span> <span class="fl">200</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   jurisdiccion   año casos      pob
@@ -1525,8 +1568,8 @@ NULL</code></pre>
 </div>
 <p>Por último, podemos usar <code><a href="https://rdrr.io/r/base/Logic.html">xor()</a></code> para seleccionar observaciones que cumplan <strong>solo una</strong> de las condiciones, pero no ambas. Por ejemplo, el siguiente filtro selecciona registros donde el año sea 2016 ó los casos sean mayores a 200, pero no ambos al mismo tiempo (es decir que no se den ambos en <code>TRUE</code>):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Logic.html">xor</a></span><span class="op">(</span><span class="va">año</span> <span class="op">==</span> <span class="st">"2016"</span>, <span class="va">casos</span> <span class="op">&gt;</span> <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Logic.html">xor</a></span><span class="op">(</span><span class="va">año</span> <span class="op">==</span> <span class="st">"2016"</span>, <span class="va">casos</span> <span class="op">&gt;</span> <span class="fl">200</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 25 × 4
    jurisdiccion   año casos      pob
@@ -1549,8 +1592,8 @@ NULL</code></pre>
 <p>La función <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code> se utiliza para ordenar las filas de un conjunto de datos de acuerdo a una o varias columnas/variables. Por defecto, el ordenamiento es ascendente alfanumérico.</p>
 <p>Ordenamos la tabla por la variable <code>pob</code> (forma ascendente predeterminada):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">pob</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">pob</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 4
    jurisdiccion       año casos    pob
@@ -1570,8 +1613,8 @@ NULL</code></pre>
 </div>
 <p>Para ordenar en forma descendente podemos utilizar <code><a href="https://dplyr.tidyverse.org/reference/desc.html">desc()</a></code> dentro de los argumentos de <code><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">pob</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">pob</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 4
    jurisdiccion   año casos      pob
@@ -1591,8 +1634,8 @@ NULL</code></pre>
 </div>
 <p>Podemos combinar ordenamientos. Por ejemplo, en forma alfabética ascendente para <em>jusrisdiccion</em> y luego numérica descendente para <em>casos</em>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">jurisdiccion</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">casos</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">jurisdiccion</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">casos</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 4
    jurisdiccion   año casos      pob
@@ -1615,10 +1658,10 @@ NULL</code></pre>
 <p>Esta función nos permite transformar variables dentro de un conjunto de datos. A menudo tendremos la necesidad de modificar variables existentes o crear nuevas variables a partir de las ya disponibles. La función <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> nos ofrece una forma clara y eficiente de realizar este tipo de operaciones.</p>
 <p>Por ejemplo, podríamos querer calcular tasas crudas para cada jurisdicción y año, en función del número de casos y de la población total:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    tasa <span class="op">=</span> <span class="va">casos</span><span class="op">/</span><span class="va">pob</span><span class="op">*</span><span class="fl">100000</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 5
    jurisdiccion   año casos      pob  tasa
@@ -1639,11 +1682,11 @@ NULL</code></pre>
 <p>En este caso, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> calcula la tasa cruda por 100.000 habitantes e incorpora una nueva variable (<code>tasa</code>) con los resultados correspondientes a cada observación.</p>
 <p>También se pueden construir múltiples variables en la misma expresión, solamente separadas por comas:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    tasaxcien_mil <span class="op">=</span> <span class="va">casos</span><span class="op">/</span><span class="va">pob</span><span class="op">*</span><span class="fl">100000</span>,</span>
 <span>    tasaxdiez_mil <span class="op">=</span> <span class="va">casos</span><span class="op">/</span><span class="va">pob</span><span class="op">*</span><span class="fl">10000</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 6
    jurisdiccion   año casos      pob tasaxcien_mil tasaxdiez_mil
@@ -1663,11 +1706,11 @@ NULL</code></pre>
 </div>
 <p>Si deseamos que estas nuevas variables se incorporen de forma permanente al conjunto de datos (y no solo se muestren en la consola), debemos utilizar el operador de asignación <code>&lt;-</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    tasaxcien_mil <span class="op">=</span> <span class="va">casos</span><span class="op">/</span><span class="va">pob</span><span class="op">*</span><span class="fl">100000</span>,</span>
 <span>    tasaxdiez_mil <span class="op">=</span> <span class="va">casos</span><span class="op">/</span><span class="va">pob</span><span class="op">*</span><span class="fl">10000</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Un aspecto fundamental es que las funciones utilizadas dentro de <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> deben estar <em>vectorizadas</em>: deben aceptar un vector de entrada y devolver otro vector del mismo tamaño como salida.</p>
 <p>Existen muchas funciones que se pueden utilizar dentro de <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>. A continuación se presentan algunas útiles:</p>
@@ -1684,11 +1727,11 @@ NULL</code></pre>
 <p>La función <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> o <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarize()</a></code> se utiliza para calcular resúmenes estadísticos a partir de una o más variables de un conjunto de datos.</p>
 <p>Por ejemplo, podemos calcular el promedio y el total de casos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
 <span>    promedio_casos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">casos</span><span class="op">)</span>, </span>
 <span>    casos_totales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">casos</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   promedio_casos casos_totales
@@ -1699,12 +1742,12 @@ NULL</code></pre>
 <p>Su uso es muy interesante cuando la combinamos con <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> (función que detallaremos luego). Esta situación permite estratificar los resultados por grupos específicos.</p>
 <p>Por ejemplo, podemos agrupar el por año y simultáneamente aplicar el mismo <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> anterior:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">año</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span></span>
 <span>    promedio_casos <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">casos</span><span class="op">)</span>, </span>
 <span>    casos_totales <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">casos</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
     año promedio_casos casos_totales
@@ -1747,9 +1790,9 @@ NULL</code></pre>
 <p>Al aplicar <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>, el conjunto de datos se estructura internamente en subgrupos definidos por las variables indicadas. Las funciones que se apliquen a continuación (por ejemplo, <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> o <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>) se ejecutarán dentro de cada grupo de forma independiente.</p>
 <p>Por ejemplo, podemos calcular las tasas crudas por 100.000 habitantes para cada combinación de jurisdicción y año:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">jurisdiccion</span>, <span class="va">año</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>tasa <span class="op">=</span> <span class="va">casos</span><span class="op">/</span><span class="va">pob</span><span class="op">*</span><span class="fl">100000</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>tasa <span class="op">=</span> <span class="va">casos</span><span class="op">/</span><span class="va">pob</span><span class="op">*</span><span class="fl">100000</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 3
 # Groups:   jurisdiccion [24]
@@ -1771,10 +1814,10 @@ NULL</code></pre>
 <p>En la mayoría de estos ejemplos, la salida es directa, es decir, no construimos nuevos objetos. Sin embargo, en muchas situaciones vamos a necesitar conservar los resultados obtenidos, asignándolos a un nuevo objeto.</p>
 <p>Además, si en algún momento aplicamos <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> y luego queremos continuar trabajando con los datos sin agrupamientos, podemos utilizar la función <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup()</a></code>, que elimina la estructura de agrupamiento:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">jurisdiccion</span>, <span class="va">año</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>tasa <span class="op">=</span> <span class="va">casos</span> <span class="op">/</span> <span class="va">pob</span> <span class="op">*</span> <span class="fl">100000</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">ungroup</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 48 × 3
    jurisdiccion   año  tasa
@@ -1800,11 +1843,11 @@ NULL</code></pre>
 <p>Obtener una nueva tabla con las tasas crudas de casos notificados de VIH, por año y jurisdicción, <strong>mayores a 20 por 100.000 habitantes</strong>, ordenadas de <strong>mayor a menor</strong>.</p>
 </blockquote>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>                                  <span class="co"># siempre partimos de los datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>                                  <span class="co"># siempre partimos de los datos</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">año</span>, <span class="va">jurisdiccion</span><span class="op">)</span> <span class="op">|&gt;</span>          <span class="co"># agrupamos</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>tasa <span class="op">=</span> <span class="va">casos</span><span class="op">/</span><span class="va">pob</span><span class="op">*</span><span class="fl">100000</span><span class="op">)</span> <span class="op">|&gt;</span>   <span class="co"># resumimos</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">tasa</span> <span class="op">&gt;</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span>                    <span class="co"># filtramos</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">tasa</span><span class="op">)</span><span class="op">)</span>                     <span class="co"># ordenamos   </span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">tasa</span><span class="op">)</span><span class="op">)</span>                     <span class="co"># ordenamos   </span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
 # Groups:   año [2]
@@ -1824,8 +1867,8 @@ NULL</code></pre>
 <p>Esta función permite contar rápidamente los valores únicos de una o más variables en un conjunto de datos. Es especialmente útil para crear tablas de frecuencias absolutas, que posteriormente pueden ser usadas para calcular frecuencias relativas.</p>
 <p>Un ejemplo básico de su uso es contar las observaciones por cada valor único de la variable <code>jurisdiccion</code> en el conjunto de datos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">jurisdiccion</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb84"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html">count</a></span><span class="op">(</span><span class="va">jurisdiccion</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 24 × 2
    jurisdiccion     n
@@ -1892,11 +1935,11 @@ NULL</code></pre>
 </ul>
 <p>Antes de comenzar a mostrar cómo se usan estos componentes en un gráfico, leemos la base de datos de ejemplo “<code>facultad.csv</code>”, que contiene datos ficticios sobre ingresantes a una facultad (por ejemplo, sexo, edad, talla y peso). Usaremos este conjunto de datos para ilustrar los ejemplos gráficos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Cargar datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb86"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Cargar datos</span></span>
 <span><span class="va">facultad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"datos/facultad.csv"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Mostramos las 6 primeras observaciones</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">facultad</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">facultad</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 18
      hc sexo   edad ant_diabetes ant_tbc ant_cancer ant_obesidad ant_ecv ant_ht
@@ -1916,9 +1959,9 @@ NULL</code></pre>
 <p>Es importante notar que <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> crea una nueva capa vinculada a las variables que se desean mapear, y también agrega automáticamente leyendas cuando corresponde. Al incorporar <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> dentro del llamado a <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>, estamos compartiendo la información estética con todas las capas del gráfico. Si deseamos que esa información sólo esté en una de las capas, debemos usar <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> en la capa correspondiente.</p>
 <p>Veamos cómo funciona y cuáles son sus implicancias:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># solo la capa estética aes()</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">talla</span>, y <span class="op">=</span> <span class="va">peso</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">talla</span>, y <span class="op">=</span> <span class="va">peso</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-52-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1928,12 +1971,12 @@ NULL</code></pre>
 </div>
 <p>Este código genera un gráfico vacío que contiene únicamente los ejes especificados (<code>peso</code> y <code>talla</code>), pero aún no muestra los datos. Para visualizar los puntos, debemos agregar una capa geométrica usando <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> y enlazarla con el símbolo <code>+</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># mapeo estético</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">talla</span>, y <span class="op">=</span> <span class="va">peso</span><span class="op">)</span><span class="op">)</span>  <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># agregamos la capa geométrica de puntos</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span>                    </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span>                    </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-53-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1943,12 +1986,12 @@ NULL</code></pre>
 </div>
 <p>Podemos diferenciar los puntos según sexo incorporando la variable <code>sexo</code> como argumento del color dentro de <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb90"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># mapeo estético</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">talla</span>, y <span class="op">=</span> <span class="va">peso</span>, color <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span>  <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># agregamos la capa geométrica de puntos</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span>  </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span>  </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-54-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1958,7 +2001,7 @@ NULL</code></pre>
 </div>
 <p>También es posible superponer otras capas geométricas. Por ejemplo, podemos agregar rectas de regresión para cada grupo según <code>sexo</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># mapeo estético</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">talla</span>, y <span class="op">=</span> <span class="va">peso</span>, color <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span>  <span class="op">+</span> </span>
 <span>  </span>
@@ -1966,7 +2009,7 @@ NULL</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span>  <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># agregamos una segunda capa geométrica para la recta de regresión</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-55-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -1977,7 +2020,7 @@ NULL</code></pre>
 <p>La función <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> permite aplicar distintos métodos de suavizado o ajuste. En este caso usamos <code>"lm"</code> para mostrar la recta de regresión lineal entre <code>talla</code> y <code>peso</code>, junto con sus intervalos de confianza.</p>
 <p>A continuación, veremos las diferencias entre incluir <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> en <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> (aplicando el mapeo a todo el gráfico) o colocarlo solo dentro de alguna capa geométrica específica:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb92"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="co"># mapeo estético</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">talla</span>, y <span class="op">=</span> <span class="va">peso</span><span class="op">)</span><span class="op">)</span>  <span class="op">+</span> </span>
 <span>  </span>
@@ -1985,7 +2028,7 @@ NULL</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span>  <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># agregamos una segunda capa geométrica para la recta de regresión</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-56-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2006,44 +2049,44 @@ NULL</code></pre>
 <p>Todas estas funciones pueden aplicarse sobre los mismos datos, y su uso depende del objetivo del análisis.</p>
 <p>A continuación, algunos ejemplos para visualizar la relación entre <code>sexo</code> y <code>talla</code> utilizando distintas capas geométricas:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Gráfico de puntos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Gráfico de puntos</span></span>
 <span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, y <span class="op">=</span> <span class="va">talla</span>, color <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="co"># capa geométrica de puntos</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-57-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Boxplot</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Boxplot</span></span>
 <span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, y <span class="op">=</span> <span class="va">talla</span>, color <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="co"># capa geométrica de boxplot</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span>            </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span>            </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-57-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Entramado de puntos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Entramado de puntos</span></span>
 <span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, y <span class="op">=</span> <span class="va">talla</span>, color <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="co"># capa geométrica jitter (entramado de puntos)</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-57-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Gráfico de violín</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb96"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Gráfico de violín</span></span>
 <span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, y <span class="op">=</span> <span class="va">talla</span>, color <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="co"># capa geométrica de violin</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_violin.html">geom_violin</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-57-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2058,14 +2101,14 @@ NULL</code></pre>
 <p>Todas las funciones relacionadas con escalas comienzan con el prefijo <code>scale_</code>, seguido del atributo que queremos modificar (por ejemplo, <code>scale_fill_</code> para cambiar el color de relleno).</p>
 <p>A continuación, mostramos algunos ejemplos aplicados sobre el conjunto de datos <code>facultad</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb97"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, y <span class="op">=</span> <span class="va">talla</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># capa geométrica boxplot</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># paleta de naranjas</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Oranges"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Oranges"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-58-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2076,14 +2119,14 @@ NULL</code></pre>
 <p>En este ejemplo aplicamos una capa <code><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer()</a></code> con la paleta de colores <code>"Oranges"</code> que se vincula con el argumento <code>fill</code> de <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> y definen los colores del <em>boxplot</em>.</p>
 <p>Otra alternativa es aplicar una escala de grises mediante <code><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html">scale_fill_grey()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb98"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, y <span class="op">=</span> <span class="va">talla</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># capa geométrica boxplot</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># paleta en escala de grises</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html">scale_fill_grey</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">0.4</span>, end <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_grey.html">scale_fill_grey</a></span><span class="op">(</span>start <span class="op">=</span> <span class="fl">0.4</span>, end <span class="op">=</span> <span class="fl">0.8</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-59-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2096,14 +2139,14 @@ NULL</code></pre>
 </blockquote>
 <p>También podemos modificar las escalas de los ejes. Por ejemplo, invertir el eje X con <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_reverse()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">talla</span>, y <span class="op">=</span> <span class="va">peso</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># capa geométrica de puntos</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># invierte el eje x</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_reverse</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_reverse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-60-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2114,7 +2157,7 @@ NULL</code></pre>
 <p>La inclusión de <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_reverse()</a></code> provoca la variable <code>talla</code> se muestre en orden descendente, de mayor a menor.</p>
 <p>Por último, podemos personalizar los cortes del eje Y utilizando <code><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous()</a></code>. Por ejemplo, en el <em>boxplot</em> pintado en escala de grises, definimos que el eje Y comienza en 130cm y termina en 200cm, con cortes cada 5cm y etiquetas cada 10cm:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb100"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, y <span class="op">=</span> <span class="va">talla</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># capa geométrica boxplot</span></span>
@@ -2125,7 +2168,7 @@ NULL</code></pre>
 <span>  </span>
 <span>  <span class="co"># puntos de corte del eje Y</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">130</span>, <span class="fl">200</span><span class="op">)</span>,       <span class="co"># límites</span></span>
-<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">130</span>, <span class="fl">200</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="co"># nro de etiquetas</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                     breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">130</span>, <span class="fl">200</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="co"># nro de etiquetas</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-61-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2139,12 +2182,12 @@ NULL</code></pre>
 <p>Estas transformaciones pueden formar parte de las funciones geométricas, como ocurre en los histogramas, o agregarse como capas independientes mediante funciones <code>stat_</code>.</p>
 <p>Por ejemplo, en los histogramas podemos definir la cantidad de intervalos (o “clases”) a través del argumento <code>bins</code>, que forma parte de <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">edad</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># capa geométrica histograma</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>bins <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges</a></span><span class="op">(</span><span class="va">facultad</span><span class="op">$</span><span class="va">edad</span><span class="op">)</span>, </span>
-<span>                 fill <span class="op">=</span> <span class="st">"Blue"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                 fill <span class="op">=</span> <span class="st">"Blue"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-62-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2155,7 +2198,7 @@ NULL</code></pre>
 <p>En este caso, utilizamos la regla de Sturges —a través de la función <code><a href="https://rdrr.io/r/grDevices/nclass.html">nclass.Sturges()</a></code>— para determinar automáticamente la cantidad de clases para la variable <code>edad</code>.</p>
 <p>También podemos superponer al gráfico transformaciones estadísticas como capas adicionales. Por ejemplo, si deseamos agregar la media de <code>talla</code> en cada grupo de <code>sexo</code> sobre un <em>boxplot</em>, utilizamos <code><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb102"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">sexo</span>, y <span class="op">=</span> <span class="va">talla</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  </span>
 <span>  <span class="co"># capa geométrica boxplot</span></span>
@@ -2169,7 +2212,7 @@ NULL</code></pre>
 <span>               color <span class="op">=</span> <span class="st">"darkred"</span>, </span>
 <span>               geom <span class="op">=</span> <span class="st">"point"</span>, </span>
 <span>               shape <span class="op">=</span> <span class="fl">18</span>, </span>
-<span>               size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>               size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-63-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2188,7 +2231,7 @@ NULL</code></pre>
 </ul>
 <p>Retomemos el gráfico de dispersión entre <code>talla</code> y <code>peso</code>, y generemos paneles separados para cada nivel de la variable <code>sexo</code> con <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">talla</span>, y <span class="op">=</span> <span class="va">peso</span>, color <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
@@ -2196,7 +2239,7 @@ NULL</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># separa en paneles por sexo</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sexo</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">sexo</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-64-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2206,7 +2249,7 @@ NULL</code></pre>
 </div>
 <p>Usaremos <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code> para crear una matriz de histogramas producto del cruce de las variables <code>fuma</code> y <code>sexo</code>. Dentro de la cuadrícula graficaremos histogramas de la variable <code>peso</code> coloreados por <code>sexo</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb104"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">peso</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># capa geométrica histograma</span></span>
@@ -2216,7 +2259,7 @@ NULL</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># separa en paneles por sexo y fuma</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">sexo</span> <span class="op">~</span> <span class="va">fuma</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">sexo</span> <span class="op">~</span> <span class="va">fuma</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-65-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2230,7 +2273,7 @@ NULL</code></pre>
 </h3>
 <p>En algunas ocasiones, puede ser útil modificar el sistema de coordenadas predeterminado del gráfico. Por ejemplo, para invertir los ejes y presentar un gráfico de barras en disposición horizontal:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
@@ -2241,7 +2284,7 @@ NULL</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_brewer.html">scale_fill_brewer</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set2"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># invierte disposición de ejes</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span>   </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span>   </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-66-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2254,7 +2297,7 @@ NULL</code></pre>
 <p><code>ggplot2</code> incluye un conjunto de temas gráficos predefinidos que permiten modificar el aspecto general del gráfico. El tema por defecto es <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_gray()</a></code>, pero puede cambiarse agregando una capa <code>theme_*()</code> dentro del gráfico.</p>
 <p>Repetimos el gráfico anterior, esta vez utilizando el tema blanco y negro (<code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw()</a></code>):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb106"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
@@ -2268,7 +2311,7 @@ NULL</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># tema en blanco y negro</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_bw</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-67-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2278,7 +2321,7 @@ NULL</code></pre>
 </div>
 <p>También podemos aplicar un tema de fondo oscuro con <code><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_dark()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
@@ -2292,7 +2335,7 @@ NULL</code></pre>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  </span>
 <span>  <span class="co"># tema con fondo oscuro</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_dark</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_dark</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-68-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2307,16 +2350,16 @@ NULL</code></pre>
 </div>
 <p>Además del aspecto general del gráfico, es posible agregar títulos, subtítulos y etiquetas de ejes con la función <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code>. Por ejemplo:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb108"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="st">"Etiqueta X"</span>, </span>
 <span>  y <span class="op">=</span> <span class="st">"Etiqueta Y"</span>, </span>
 <span>  title <span class="op">=</span> <span class="st">"Título del gráfico"</span>, </span>
 <span>  subtitle <span class="op">=</span> <span class="st">"Subtítulo del gráfico"</span></span>
-<span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>También se pueden ajustar detalles del texto, como tipo de fuente o tamaño, mediante la función <code><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">facultad</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">sexo</span>, fill <span class="op">=</span> <span class="va">sexo</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># capa geométrica barras</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -2329,7 +2372,7 @@ NULL</code></pre>
 <span>       title <span class="op">=</span> <span class="st">"Distribución de sexo"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="co"># modifica el estilo de fuente del título</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>plot.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">element_text</a></span><span class="op">(</span>face <span class="op">=</span> <span class="st">"italic"</span>, </span>
-<span>                                  size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                                  size <span class="op">=</span> <span class="fl">16</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure"><p><img src="03_intro_tidyverse_files/figure-html/unnamed-chunk-70-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
@@ -2353,7 +2396,7 @@ NULL</code></pre>
 </ul>
 <p>El paquete se instala mediante el menú <strong>Packages</strong> de RStudio o ejecutando:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"esquisse"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb110"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"esquisse"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Luego se puede acceder a la aplicación por medio del acceso Addins:</p>
 <div class="quarto-figure quarto-figure-center">
@@ -2362,11 +2405,11 @@ NULL</code></pre>
 </div>
 <p>o ejecutando en consola:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">esquisser</span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb111"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">esquisser</span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>También se puede agregar el nombre de la tabla de datos dentro de los paréntesis</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">esquisser</span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb112"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">esquisser</span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Para más detalles, se puede consultar la <a href="https://cran.r-project.org/web/packages/esquisse/vignettes/get-started.html">viñeta</a> del paquete disponible en CRAN o en su <a href="https://github.com/dreamRs/esquisse">repositorio de GitHub</a>.</p>
 </section><section id="otras-extensiones-de-ggplot2" class="level3"><h3 class="anchored" data-anchor-id="otras-extensiones-de-ggplot2">Otras extensiones de ggplot2</h3>
@@ -2500,13 +2543,14 @@ Wickham, Hadley, Jim Hester, y Jennifer Bryan. 2024. <span>«readr: Read Rectang
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -3,7 +3,6 @@
 ### recomienda instalarlos todos de una vez apretando el botón Source, de lo
 ### contrario ejecutar solamente las líneas de aquellos que no estén instalados.
 
-
 # Unidad 1 ----------------------------------------------------------------
 install.packages("tidyverse", dependencies = TRUE)
 
@@ -63,7 +62,6 @@ install.packages("MatchIt", dependencies = TRUE)
 install.packages("epiR", dependencies = TRUE)
 
 install.packages("flextable", dependencies = TRUE)
-
 
 
 # Unidad 5 ----------------------------------------------------------------
