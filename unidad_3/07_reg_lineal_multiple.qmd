@@ -73,7 +73,7 @@ normal_dens$section <- rep(levels(dat$section), each = 50)
 ggplot() +
   
   geom_smooth(data = dat, mapping = aes(x = x, y = y),
-              method = "lm", se = F, color = "grey5") +
+              method = "lm", se = FALSE, color = "grey5") +
   
   geom_line(data = normal_dens,
             aes(x = x, y = y, color = section),
@@ -84,11 +84,11 @@ ggplot() +
   scale_x_continuous(breaks = c(11, 24, 36, 46),
                      labels = c("X1", "X2", "X3", "X4")) +
   
-  annotate(geom = "text", x = 40, y = 100, 
-           label = expression(y  == alpha + beta*x)) +
+  geom_text(aes(x = 40, y = 100, label = "y == alpha + beta * x"), parse = TRUE) +
   
   theme_minimal() +
   theme(legend.position = "none")
+
 ```
 
 La representación gráfica de la recta de ajuste en la regresión lineal múltiple se realiza en un espacio de dimensión $K + 1$, donde $K$ es el número de variables independientes. En el caso de la regresión lineal simple (RLS), la relación se puede representar fácilmente en un plano bidimensional (2D). Sin embargo, a medida que aumentamos el número de variables independientes, la representación gráfica se vuelve más compleja, ya que requerimos más dimensiones, lo que dificulta visualizar el modelo en el espacio.

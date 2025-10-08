@@ -101,78 +101,84 @@ En cualquier distribución normal:
 El siguiente gráfico ilustra lo explicado anteriormente:
 
 ```{r}
-#| echo: false 
-# Define región crítica 
-crit_n <- limitRange <- function(fun, min, max) {   
-  function(x) {     
-    y <- fun(x)     
-    y[x < min  |  x > max] <- NA     
-    return(y)   
-  }}  
+#| echo: false
+# Define región crítica
+crit_n <- limitRange <- function(fun, min, max) {
+  function(x) {
+    y <- fun(x)
+    y[x < min | x > max] <- NA
+    return(y)
+  }
+}
 
-# Gráfico base 
-g1 <- tibble(x = c(-4, 4)) |>    
-  
-  # plot     
-  ggplot(mapping = aes(x = x)) +      
-  # curva normal  
-  stat_function(fun = dnorm, linewidth = .8, color = pal[1]) +      
-  # Región crítica 95%   
-  geom_vline(xintercept = -1.96, lty = 2) +      
-  geom_vline(xintercept = 1.96, lty = 2) +      
-  # Tema   
-  theme_minimal() +    
-  theme(axis.text.x = element_text(face = "bold",                                     size = 11,                                    
-                                   angle = 60))  
-## Gráfico región crítica 
-g1 +   
-  # Sombreado   
-  stat_function(fun = crit_n(dnorm, min = -1, max = 1),     
-                geom = "area",      
-                fill = pal[2],     
-                alpha = 0.4) +      
-  
-  # Región crítica 68%   
-  annotate(geom = "text",            
-           label = "68%",            
-           x = 0, y = .2) +      
-  geom_vline(xintercept = -1, lty = 2) +      
-  geom_vline(xintercept = 1, lty = 2) +     
-  
-  # Región crítica 95%    
-  annotate(geom = "text",            
-           label = "95%",            
-           x = 0, y = .475) +      
-  
-  annotate("segment", x = -1.96, xend = 1.96, y = .45,     
-           arrow = arrow(type = "closed",                    
-                         ends = "both",                   
-                         length = unit(.1, "inches"))) +    
-  
-  # Región crítica 99%   
-  annotate(geom = "text",            
-           label = "99%",            
-           x = 0, y = .55) +      
-  annotate("segment", x = -2.58, xend = 2.58, y = .525,      
-           arrow = arrow(type = "closed",                   
-                         ends = "both",                   
-                         length = unit(.1, "inches"))) +
-  
-  geom_vline(xintercept = -2.58, lty = 2) +     
-  geom_vline(xintercept = 2.58, lty = 2) +      
-  
-  # Etiquetas   
-  scale_x_continuous(breaks = c(-Inf, -2.58, -1.96, -1,                                  0, 1, 1.96, 2.58, Inf),                     
-                     labels = c("",                                 
-                                expression(mu - 2.58 * sigma),  
-                                expression(mu - 1.96 * sigma),  
-                                expression(mu - sigma),           
-                                expression(mu),           
-                                expression(mu + sigma),       
-                                expression(mu + 1.96 * sigma),                                 
-                                expression(mu + 2.58 * sigma),  
-                                "")) +     
-  # Títulos   
+# Gráfico base
+g1 <- tibble(x = c(-4, 4)) |>
+
+  # plot
+  ggplot(mapping = aes(x = x)) +
+  # curva normal
+  stat_function(fun = dnorm, linewidth = .8, color = pal[1]) +
+  # Región crítica 95%
+  geom_vline(xintercept = -1.96, lty = 2) +
+  geom_vline(xintercept = 1.96, lty = 2) +
+  # Tema
+  theme_minimal() +
+  theme(axis.text.x = element_text(face = "bold", size = 11, angle = 60))
+## Gráfico región crítica
+g1 +
+  # Sombreado
+  stat_function(
+    fun = crit_n(dnorm, min = -1, max = 1),
+    geom = "area",
+    fill = pal[2],
+    alpha = 0.4
+  ) +
+
+  # Región crítica 68%
+  annotate(geom = "text", label = "68%", x = 0, y = .2) +
+  geom_vline(xintercept = -1, lty = 2) +
+  geom_vline(xintercept = 1, lty = 2) +
+
+  # Región crítica 95%
+  annotate(geom = "text", label = "95%", x = 0, y = .475) +
+
+  annotate(
+    "segment",
+    x = -1.96,
+    xend = 1.96,
+    y = .45,
+    arrow = arrow(type = "closed", ends = "both", length = unit(.1, "inches"))
+  ) +
+
+  # Región crítica 99%
+  annotate(geom = "text", label = "99%", x = 0, y = .55) +
+  annotate(
+    "segment",
+    x = -2.58,
+    xend = 2.58,
+    y = .525,
+    arrow = arrow(type = "closed", ends = "both", length = unit(.1, "inches"))
+  ) +
+
+  geom_vline(xintercept = -2.58, lty = 2) +
+  geom_vline(xintercept = 2.58, lty = 2) +
+
+  # Etiquetas
+  scale_x_continuous(
+    breaks = c(-Inf, -2.58, -1.96, -1, 0, 1, 1.96, 2.58, Inf),
+    labels = c(
+      "",
+      expression(mu - 2.58 * sigma),
+      expression(mu - 1.96 * sigma),
+      expression(mu - sigma),
+      expression(mu),
+      expression(mu + sigma),
+      expression(mu + 1.96 * sigma),
+      expression(mu + 2.58 * sigma),
+      ""
+    )
+  ) +
+  # Títulos
   labs(x = "", y = "")
 ```
 
@@ -185,76 +191,63 @@ Aproximadamente el **95%** de estos intervalos tendrán sus centros dentro del i
 ```{r}
 #| echo: false
 # Gráfico
-g1 + 
-  # Región crítica 95% 
-  annotate(geom = "text",            
-           label = "(1 - alpha) == 0.95",           
-           parse = T,            
-           x = 0, y = .2) + 
-  
-  # x1   
-  geom_vline(xintercept = 1, 
-             lty = 3, 
-             color = pal[2]) +     
-  
-  # x3   
-  geom_vline(xintercept = 1.25, 
-             lty = 3, 
-             color = pal[3]) +      
-  
-  # x5   
-  geom_vline(xintercept = 1.75, 
-             lty = 3, 
-             color = pal[4]) +      
-  
-  # mu   
-  geom_vline(xintercept = 0, 
-             lty = 2) + 
-  
-  # x2   
-  geom_vline(xintercept = -1.5, 
-             lty = 3, 
-             color = pal[5]) +      
-  
-  # x4   
-  geom_vline(xintercept = -1.25, 
-             lty = 3, 
-             color = pal[6]) + 
-  
-  # Anotaciones texto   
-  annotate("segment", x = -1.96, xend = 0, y = .05,
-           arrow = arrow(type = "closed", 
-                         ends = "both",   
-                         length = unit(.1, "inches"))) +    
-  
-  annotate(geom = "text",            
-           label = expression(2*sigma*bar(x)),  
-           x = -1, y = .075) +         
-  
-  annotate("segment", x = 1.96, xend = 0, y = .05,     
-           arrow = arrow(type = "closed",                    
-                         ends = "both",                   
-                         length = unit(.1, "inches"))) +    
-  
-  annotate(geom = "text",            
-           label = expression(2*sigma*bar(x)),            
-           x = 1, y = .075) +       
-  
-  # Etiquetas   
-  scale_x_continuous(breaks = c(-Inf, -1.96, -1.5, -1.25, 0, 
-                                1, 1.25, 1.75, 1.96, Inf),   
-                     labels = c("",
-                                expression(alpha/2),  
-                                expression(bar(x)[2]),  
-                                expression(bar(x)[4]),  
-                                expression(mu),  
-                                expression(bar(x)[1]),
-                                expression(bar(x)[3]),  
-                                expression(bar(x)[5]),
-                                expression(alpha/2), 
-                                "")) +      
-  
-  # Títulos   
+g1 +
+  annotate(
+    geom = "text",
+    label = "(1 - alpha) == 0.95",
+    parse = TRUE,
+    x = 0,
+    y = .2
+  ) +
+  geom_vline(xintercept = 1, lty = 3, color = pal[2]) +
+  geom_vline(xintercept = 1.25, lty = 3, color = pal[3]) +
+  geom_vline(xintercept = 1.75, lty = 3, color = pal[4]) +
+  geom_vline(xintercept = 0, lty = 2) +
+  geom_vline(xintercept = -1.5, lty = 3, color = pal[5]) +
+  geom_vline(xintercept = -1.25, lty = 3, color = pal[6]) +
+  annotate(
+    "segment",
+    x = -1.96,
+    xend = 0,
+    y = .05,
+    arrow = arrow(type = "closed", ends = "both", length = unit(.1, "inches"))
+  ) +
+  annotate(
+    geom = "text",
+    label = "2*sigma*bar(x)",
+    parse = TRUE,
+    x = -1,
+    y = .075
+  ) +
+  annotate(
+    "segment",
+    x = 1.96,
+    xend = 0,
+    y = .05,
+    arrow = arrow(type = "closed", ends = "both", length = unit(.1, "inches"))
+  ) +
+  annotate(
+    geom = "text",
+    label = "2*sigma*bar(x)",
+    parse = TRUE,
+    x = 1,
+    y = .075
+  ) +
+  scale_x_continuous(
+    breaks = c(-Inf, -1.96, -1.5, -1.25, 0, 1, 1.25, 1.75, 1.96, Inf),
+    labels = c(
+      "",
+      expression(alpha / 2),
+      expression(bar(x)[2]),
+      expression(bar(x)[4]),
+      expression(mu),
+      expression(bar(x)[1]),
+      expression(bar(x)[3]),
+      expression(bar(x)[5]),
+      expression(alpha / 2),
+      ""
+    )
+  ) +
   labs(x = expression(bar(x)), y = "")
 ```
 

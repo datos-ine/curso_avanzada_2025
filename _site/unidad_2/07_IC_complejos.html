@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Christian Ballejo">
 <title>Intervalos de confianza en muestras complejas – Curso Epidemiología - Nivel Avanzado</title>
@@ -85,18 +85,19 @@ div.csl-indent {
 <link href="../unidad_2/06_fun_condicionales.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-07e4c1cdef0c383c709f3a7c70e6b9d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5764afd99fd0ec2ffdb51851d8106ba1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -109,7 +110,7 @@ div.csl-indent {
     "s"
   ],
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -305,6 +306,10 @@ div.csl-indent {
 <i class="bi bi-x-lg quarto-announcement-action"></i>
 </div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -335,7 +340,10 @@ div.csl-indent {
     <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
  <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_6/01_est_experimentales.html">
+ <span class="dropdown-text">Unidad 6: Estudios experimentales</span></a>
+  </li>  
     </ul>
 </li>
 </ul>
@@ -398,7 +406,11 @@ div.csl-indent {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Buscar"></div>
         </div>
@@ -595,7 +607,7 @@ div.csl-indent {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+ <span class="menu-text">Unidad 5</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -622,10 +634,41 @@ div.csl-indent {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 6 (disponible a partir del 06/10/25)</span></span>
-  </li>
+ <span class="menu-text">Unidad 6</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/01_est_experimentales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios Experimentales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/02_analisis_superv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/03_metodos_analisis_sup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Métodos para el análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/04_reg_cox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Cox</span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -700,13 +743,13 @@ div.csl-indent {
 <p>Las funciones que lo integran utilizan en sus argumentos la sintaxis fórmula preferentemente y no son compatibles con el universo “ordenado” de <code>tidyverse</code>. Con el objetivo de hacer compatible estas funciones crearon un paquete “<em>wrapper</em>” (envoltorio) llamado <code>srvyr</code> <span class="citation" data-cites="srvyr">(<a href="#ref-srvyr" role="doc-biblioref">Freedman Ellis y Schneider 2024</a>)</span>, que incorpora sintaxis <em>tidy</em>, haciendo uso de tuberías y funciones tales como <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, entre otras.</p>
 <p>El primer paso para trabajar con las funciones de <code>srvyr</code> es crear un objeto con la información relacionada con el diseño muestral. Esta tarea se realiza con la función <code><a href="http://gdfe.co/srvyr/reference/as_survey_design.html">as_survey_design()</a></code> que tiene estos argumentos principales:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>                      </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span>                      </span>
 <span>  <span class="fu">as_survey_design</span><span class="op">(</span>ids <span class="op">=</span> <span class="va">...</span>, </span>
 <span>                   strata <span class="op">=</span> <span class="va">...</span>, </span>
 <span>                   variables <span class="op">=</span> <span class="va">...</span>,</span>
 <span>                   fpc <span class="op">=</span> <span class="va">...</span>,</span>
 <span>                   nest <span class="op">=</span> <span class="cn">F</span>,</span>
-<span>                   weights <span class="op">=</span> <span class="va">...</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                   weights <span class="op">=</span> <span class="va">...</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>donde:</p>
 <ul>
@@ -715,10 +758,10 @@ div.csl-indent {
 </ul>
 <p>Usualmente, se declara a partir de una variable. Por ejemplo, si la variable <code>estrato</code> define los estratos, sería,</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">as_survey_design</span><span class="op">(</span><span class="va">...</span>, </span>
 <span>                   strata <span class="op">=</span> <span class="va">estrato</span>, </span>
-<span>                   <span class="va">...</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                   <span class="va">...</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><p><code>variables</code>: Variables que se incluirán en el diseño. El valor predeterminado es todas las variables de datos.</p></li>
@@ -732,15 +775,15 @@ div.csl-indent {
 <p>El diseño de muestreo tuvo dos etapas (selección de escuelas y luego de divisiones al azar) para producir una muestra representativa de alumnos de 1º a 5º año de educación media a nivel nacional (8º EGB a 3º polimodal en el caso de la provincia de Buenos Aires) y provincial. Se relevaron 523 escuelas en todo el país y se encuestaron 57.095 alumnos de los cuales se analizaron 56.981 cuestionarios correspondientes a las edades de 13 a 17 años, con una tasa de respuesta global de 63%. Se puede acceder a sus datos abiertos en <a href="http://datos.salud.gob.ar/dataset/base-de-datos-de-la-3-encuesta-mundial-de-salud-escolar-emse-con-resultados-nacionales-argentina">EMSE 2018</a></p>
 <p>Activamos los paquetes necesarios:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://gdfe.co/srvyr/">srvyr</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://gdfe.co/srvyr/">srvyr</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Leemos el archivo de datos “<code>EMSE.txt</code>” con:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/EMSE.txt"</span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2</a></span><span class="op">(</span><span class="st">"datos/EMSE.txt"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># dimensiones de la tabla de datos</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 56,981
 Columns: 14
@@ -763,8 +806,8 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>El dataframe importado consta de <em>14 variables y 56.981 observaciones</em>.</p>
 <p>Calculamos el total de la muestra expandida:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>total_expandido <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>total_expandido <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   total_expandido
@@ -794,23 +837,23 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 </ul>
 <p>Para facilitar el análisis, vamos a renombrar nuestras variables de interés usando la función <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code> de <code>tidyverse</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html">rename</a></span><span class="op">(</span>sexo <span class="op">=</span> <span class="va">texto_q2</span>,</span>
 <span>         grado <span class="op">=</span> <span class="va">texto_q3</span>,</span>
 <span>         estatura_m <span class="op">=</span> <span class="va">q4</span>,</span>
 <span>         peso_kg <span class="op">=</span> <span class="va">q5</span>,</span>
 <span>         hambre <span class="op">=</span> <span class="va">texto_q6</span>,</span>
-<span>         idea_suicida <span class="op">=</span> <span class="va">texto_qn24</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>         idea_suicida <span class="op">=</span> <span class="va">texto_qn24</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>A partir de las variables cuantitativas <code>estatura_m</code> y <code>peso_kg</code> vamos a construir una nueva variable llamada <code>imc</code> (Índice de Masa Corporal) :</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="co"># IMC: peso sobre talla al cuadrado</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>imc <span class="op">=</span> <span class="va">peso_kg</span><span class="op">/</span><span class="op">(</span><span class="va">estatura_m</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>imc <span class="op">=</span> <span class="va">peso_kg</span><span class="op">/</span><span class="op">(</span><span class="va">estatura_m</span><span class="op">)</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Ahora podemos comenzar a definir el objeto de diseño muestral:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/as_survey_design.html">as_survey_design</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">psu</span>, <span class="co"># conglomerados</span></span>
 <span>                   variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">record</span>, <span class="va">psu</span>, <span class="va">stratum</span>, <span class="va">weight</span>,</span>
 <span>                                 <span class="va">q2</span>, <span class="va">sexo</span>, <span class="va">q3</span>, <span class="va">grado</span>, </span>
@@ -818,7 +861,7 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <span>                                 <span class="va">qn24</span>, <span class="va">idea_suicida</span><span class="op">)</span>, <span class="co"># variables</span></span>
 <span>                   strata <span class="op">=</span> <span class="va">stratum</span>, <span class="co"># estratos</span></span>
 <span>                   weights <span class="op">=</span> <span class="va">weight</span>, <span class="co"># ponderación</span></span>
-<span>                   nest <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># anidación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                   nest <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># anidación</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Una vez que tenemos creado el objeto <strong><em>“survey.design”</em></strong>, que en nuestro ejemplo se denomina <code>d</code>, podemos avanzar en el calculo de las estimaciones.</p>
 <p>Si bien podemos manipular datos dentro de este formato de diseño utilizando algunas de las funciones de <code>tidyverse</code> como <code><a href="https://dplyr.tidyverse.org/reference/select.html">select()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> y <code><a href="https://dplyr.tidyverse.org/reference/rename.html">rename()</a></code>, lo conveniente es modificar previamente la estructura de la tabla de datos, ya sea para crear una nueva variable, como hicimos recién con IMC o cambiar una existente y luego generar el objeto con el diseño muestral para poder hacer uso de esos cambios en las estimaciones.</p>
@@ -845,11 +888,11 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 </ul>
 <p>Aplicamos la función con todas las posibles salidas de varianza sobre la variable de <code>imc</code> dentro de <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> de <code>tidyverse</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>imc <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_mean</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imc</span>,</span>
 <span>              na.rm <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>              vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"se"</span>, <span class="st">"ci"</span>, <span class="st">"var"</span>, <span class="st">"cv"</span><span class="op">)</span>,</span>
-<span>              level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>              level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
     imc imc_se imc_low imc_upp imc_var  imc_cv
@@ -861,10 +904,10 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>Como nos informan que hubo no respuesta en la encuesta y las faltantes de información en altura y/o peso provoca observaciones perdidas en la variable IMC, vamos a ver cuantos de estos valores perdidos tenemos en la variable.</p>
 <p>Si deseamos calcular totales, es decir a cuantos estudiantes representa estos valores perdidos podemos usar la función <code><a href="http://gdfe.co/srvyr/reference/survey_total.html">survey_total()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">imc</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>  <span class="co"># filtramos los NA en IMC</span></span>
 <span>  </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>imc_na <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_total.html">survey_total</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>imc_na <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_total.html">survey_total</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
    imc_na imc_na_low imc_na_upp
@@ -875,11 +918,11 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>Hay aproximadamente 976.104 IC 95% (87.820-1.074.088) estudiantes sin valor en la variable <code>imc</code> del total de la población de 2.637.546 (un 37 %).</p>
 <p>Si en lugar de la media quisiéramos la mediana podemos cambiar la función y usar <code><a href="http://gdfe.co/srvyr/reference/survey_quantile.html">survey_median()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>imc <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_quantile.html">survey_median</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imc</span>,</span>
 <span>              na.rm <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>              vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"se"</span>, <span class="st">"ci"</span>, <span class="st">"var"</span>, <span class="st">"cv"</span><span class="op">)</span>,</span>
-<span>              level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>              level <span class="op">=</span> <span class="fl">0.95</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
     imc imc_se imc_low imc_upp imc_var  imc_cv
@@ -889,11 +932,11 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 </div>
 <p>Podemos estratificar estas estimaciones haciendo uso del <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>, por ejemplo con la variable <code>sexo</code> del estudiante:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span>  <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>media_imc <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_mean</a></span><span class="op">(</span><span class="va">imc</span>, </span>
 <span>                                    vartype <span class="op">=</span> <span class="st">"ci"</span>, </span>
-<span>                                    na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                                    na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   sexo         media_imc media_imc_low media_imc_upp
@@ -905,13 +948,13 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 </div>
 <p>Como hay datos perdidos en la variable sexo nos aparece una categoría más en los grupos de los resultados. Al estar vacía en las estimaciones (evidentemente son “no respuestas” completas) podemos deshacernos de esa línea con un <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sexo</span> <span class="op">!=</span> <span class="st">"Dato perdido"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># o filter(!is.na(q2))</span></span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sexo</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>media_imc <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_mean</a></span><span class="op">(</span><span class="va">imc</span>, </span>
 <span>                                    vartype <span class="op">=</span> <span class="st">"ci"</span>, </span>
-<span>                                    na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                                    na.rm <span class="op">=</span> <span class="cn">T</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   sexo      media_imc media_imc_low media_imc_upp
@@ -924,9 +967,9 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>Otra variable de la encuesta es la respuesta a la pregunta <em>“Durante los últimos 30 días ¿con qué frecuencia te quedaste con hambre porque no había suficiente comida en tu hogar?”</em>. Las categorías válidas fueron: Nunca, Rara vez, Algunas veces, Casi siempre, Siempre y Dato perdido si no hubo respuesta.</p>
 <p>Para abordar estas variables cualitativas donde queremos obtener proporciones el paquete tiene la función <code><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop()</a></code> que se utiliza declarando la variable de interés en un <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> previo:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hambre</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="co"># variable para la estimación</span></span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_hambre <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> <span class="co"># usamos 100 para %</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_hambre <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> <span class="co"># usamos 100 para %</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   hambre        prop_hambre prop_hambre_low prop_hambre_upp
@@ -942,16 +985,16 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>El resultado muestra las categorías desordenadas en relación a lo que significa cada una respecto a la definición de la pregunta, es decir a la ordinalidad de la variable, aunque si está ordenada respecto a la forma en que lo hace el lenguaje R (alfabético).</p>
 <p>Para darle el orden adecuado, deberíamos convertir la variable <code>hambre</code> a <em>factor</em> y declarar correctamente sus niveles. Conviene hacer esto previo a la creación del objeto de diseño pero el paquete también lo permite una vez creado:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>hambre <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">hambre</span>,</span>
 <span>                         <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Nunca"</span>, <span class="st">"Rara vez"</span>, <span class="st">"Algunas veces"</span>,</span>
-<span>                           <span class="st">"Casi siempre"</span>, <span class="st">"Siempre"</span>, <span class="st">"Dato perdido"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                           <span class="st">"Casi siempre"</span>, <span class="st">"Siempre"</span>, <span class="st">"Dato perdido"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Repetimos el código anterior:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">hambre</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_hambre <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_hambre <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   hambre        prop_hambre prop_hambre_low prop_hambre_upp
@@ -967,9 +1010,9 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>El ordenamiento de las categorías ahora es el correcto producto de la transformación a factor.</p>
 <p>Para estratificar estas proporciones lo único que debemos hacer es incorporar la variable de agrupamiento dentro del <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">hambre</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_hambre <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_hambre <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 5
 # Groups:   sexo [3]
@@ -998,9 +1041,9 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>Este esquema de agrupamientos o estratificaciones se anidan en el orden en que se declaran dentro del <code><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by()</a></code> siendo la última variable la de estimación. Por ende, los porcentajes también salen anidados, tomando como denominador para el calculo del 100 % al total de cada categoría de <code>sexo</code> en el ejemplo anterior.</p>
 <p>También podemos hacer que para el calculo de los porcentajes se tome como denominador el total general de la siguiente forma:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="fu"><a href="http://gdfe.co/srvyr/reference/interact.html">interact</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">hambre</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_hambre <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_hambre <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 18 × 5
    sexo         hambre        prop_hambre prop_hambre_low prop_hambre_upp
@@ -1035,9 +1078,9 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 </ul>
 <p>Otra función útil es <code><a href="http://gdfe.co/srvyr/reference/survey_tally.html">survey_count()</a></code> que estima el conteo poblacional de las observaciones según categoría:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_tally.html">survey_count</a></span><span class="op">(</span><span class="va">hambre</span>,</span>
-<span>               vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>               vartype <span class="op">=</span> <span class="st">"ci"</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 4
   hambre               n    n_low    n_upp
@@ -1057,10 +1100,10 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>Las funciones del paquete <code>srvyr</code> maneja estos detalles sin ningún esfuerzo especial por parte del analista siempre y cuando utilice la muestra completa para definir el objeto de diseño de la encuesta pero no asegura que los resultados tengan la calidad necesaria.</p>
 <p>Mostremos el código entonces:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_suicidio <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> </span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_suicidio <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span> </span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   idea_suicida prop_suicidio prop_suicidio_low prop_suicidio_upp
@@ -1073,12 +1116,12 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 </div>
 <p>Seleccionamos una subpoblación correspondiente a los estudiantes de “<em>3er año/12vo grado nivel Polimodal o 5to año nivel Secundario</em>” (código 5 de <code>q3</code>):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">q3</span> <span class="op">==</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_suicidio <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_suicidio <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   idea_suicida prop_suicidio prop_suicidio_low prop_suicidio_upp
@@ -1093,11 +1136,11 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>Agregamos a los resultados algo importante, que va a garantizar la calidad de la estimaciones y evitar estar informando valores poco confiables para los cuales el muestreo quizás no esté preparado. Este es el <strong>coeficiente de variación</strong> (CV). Comparativamente vamos a encontrar valores más elevados de CV, en la medida que se agreguen filtros o agrupamientos anidados que reduzcan la muestra de la estimación.</p>
 <p>Que pasa si filtramos y nos quedamos además solo con las mujeres que respondieron que se quedaron con hambre “algunas veces” en los últimos 30 días:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">q3</span> <span class="op">==</span> <span class="fl">5</span>, <span class="va">sexo</span> <span class="op">==</span> <span class="st">"Femenino"</span>, <span class="va">hambre</span> <span class="op">==</span> <span class="st">"Algunas veces"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_suicidio <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>prop_suicidio <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_prop</a></span><span class="op">(</span>vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">*</span><span class="fl">100</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   idea_suicida prop_suicidio prop_suicidio_low prop_suicidio_upp
@@ -1110,9 +1153,9 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 </div>
 <p>Los CV de las estimaciones siguen creciendo, por ejemplo en el caso de la respuesta <strong>Si</strong> a un 12,6 % en comparación de la población completa que era de 1,6 %. Este aumento tiene que ver sobre todo con el tamaño muestral que nos queda luego de tantos filtros:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Total muestra</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Total muestra</span></span>
 <span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
-<span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_tally.html">survey_count</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_tally.html">survey_count</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   idea_suicida        n   n_se
@@ -1121,10 +1164,10 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 2 No           2026726. 56584.
 3 Si            553935. 21644.</code></pre>
 </div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subgrupo seleccionado</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subgrupo seleccionado</span></span>
 <span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">q3</span> <span class="op">==</span> <span class="fl">5</span>, <span class="va">sexo</span> <span class="op">==</span> <span class="st">"Femenino"</span>, <span class="va">hambre</span> <span class="op">==</span> <span class="st">"Algunas veces"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_tally.html">survey_count</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_tally.html">survey_count</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   idea_suicida      n  n_se
@@ -1137,11 +1180,11 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>Solo 6.347 estudiantes expandidos que respondieron que <strong>Si</strong> sobre los 553.934 totales que lo hicieron. Y cuantos respecto a la muestra sin expandir?</p>
 <p>Podemos verlo así:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Total muestra</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Total muestra</span></span>
 <span><span class="va">d</span> <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/unweighted.html">unweighted</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/unweighted.html">unweighted</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   idea_suicida     n
@@ -1150,13 +1193,13 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 2 No           43666
 3 Si           11962</code></pre>
 </div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subgrupo seleccionado</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Subgrupo seleccionado</span></span>
 <span><span class="va">d</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">q3</span> <span class="op">==</span> <span class="fl">5</span>, <span class="va">sexo</span> <span class="op">==</span> <span class="st">"Femenino"</span>, <span class="va">hambre</span> <span class="op">==</span> <span class="st">"Algunas veces"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">idea_suicida</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/unweighted.html">unweighted</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/unweighted.html">unweighted</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html">n</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   idea_suicida     n
@@ -1171,7 +1214,7 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <p>En este punto vamos a comparar estimaciones en función de construir objetos de diseños muestrales diferentes sobre la misma base de datos.</p>
 <p>Diseño complejo y pesos (igual al ejemplo anterior):</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_complejo</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_complejo</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/as_survey_design.html">as_survey_design</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">psu</span>, <span class="co"># conglomerados</span></span>
 <span>                   variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">record</span>, <span class="va">psu</span>, <span class="va">stratum</span>, <span class="va">weight</span>,</span>
 <span>                                 <span class="va">q2</span>, <span class="va">sexo</span>, <span class="va">q3</span>, <span class="va">grado</span>, </span>
@@ -1179,11 +1222,11 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <span>                                 <span class="va">qn24</span>, <span class="va">idea_suicida</span><span class="op">)</span>, <span class="co"># variables</span></span>
 <span>                   strata <span class="op">=</span> <span class="va">stratum</span>, <span class="co"># estratos</span></span>
 <span>                   weights <span class="op">=</span> <span class="va">weight</span>, <span class="co"># ponderación</span></span>
-<span>                   nest <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># anidación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                   nest <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># anidación</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Diseño sin pesos ni estratos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_simple</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_simple</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/as_survey_design.html">as_survey_design</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">psu</span>, <span class="co"># conglomerados</span></span>
 <span>                   variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">record</span>, <span class="va">psu</span>, <span class="va">stratum</span>, <span class="va">weight</span>,</span>
 <span>                                 <span class="va">q2</span>, <span class="va">sexo</span>, <span class="va">q3</span>, <span class="va">grado</span>, </span>
@@ -1191,11 +1234,11 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <span>                                 <span class="va">qn24</span>, <span class="va">idea_suicida</span><span class="op">)</span>, <span class="co"># variables</span></span>
 <span>                   strata <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># estratos</span></span>
 <span>                   weights <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># ponderación</span></span>
-<span>                   nest <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># anidación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                   nest <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># anidación</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Diseño con pesos y sin estratos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_ponde</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_ponde</span> <span class="op">&lt;-</span> <span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="http://gdfe.co/srvyr/reference/as_survey_design.html">as_survey_design</a></span><span class="op">(</span>ids <span class="op">=</span> <span class="va">psu</span>, <span class="co"># conglomerados</span></span>
 <span>                   variables <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">record</span>, <span class="va">psu</span>, <span class="va">stratum</span>, <span class="va">weight</span>,</span>
 <span>                                 <span class="va">q2</span>, <span class="va">sexo</span>, <span class="va">q3</span>, <span class="va">grado</span>, </span>
@@ -1203,35 +1246,35 @@ $ weight     &lt;dbl&gt; 457.09, 457.09, 261.44, 550.90, 457.09, 550.90, 274.43,
 <span>                                 <span class="va">qn24</span>, <span class="va">idea_suicida</span><span class="op">)</span>, <span class="co"># variables</span></span>
 <span>                   strata <span class="op">=</span> <span class="cn">NULL</span>, <span class="co"># estratos</span></span>
 <span>                   weights <span class="op">=</span> <span class="va">weight</span>, <span class="co"># ponderación</span></span>
-<span>                   nest <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># anidación</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                   nest <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="co"># anidación</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Tenemos tres diseños distintos: un diseño complejo basado en conglomerados, estratos y pesos, un diseño sólo con pesos y un diseño simple sin estratos ni ponderación. Sabemos que el primero es el diseño “real” con el que se llevó a cabo la recolección de los datos.</p>
 <p>Ahora volvamos a la variable <code>imc</code> para estimar su media en cada diseño:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_complejo</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_complejo</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>media_IMC <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_mean</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imc</span>,</span>
 <span>                                    na.rm <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>                                    vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                                    vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   media_IMC media_IMC_low media_IMC_upp media_IMC_cv
       &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
 1  22.13994      21.96900      22.31089  0.003923691</code></pre>
 </div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_simple</span>  <span class="op">|&gt;</span>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_simple</span>  <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>media_IMC <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_mean</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imc</span>,</span>
 <span>                                    na.rm <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>                                    vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                                    vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   media_IMC media_IMC_low media_IMC_upp media_IMC_cv
       &lt;dbl&gt;         &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
 1  22.23472      22.16037      22.30906  0.001669130</code></pre>
 </div>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_ponde</span>  <span class="op">|&gt;</span>  </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d_ponde</span>  <span class="op">|&gt;</span>  </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>media_IMC <span class="op">=</span> <span class="fu"><a href="http://gdfe.co/srvyr/reference/survey_mean.html">survey_mean</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">imc</span>,</span>
 <span>                                    na.rm <span class="op">=</span> <span class="cn">T</span>,</span>
-<span>                                    vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                                    vartype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"ci"</span>, <span class="st">"cv"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   media_IMC media_IMC_low media_IMC_upp media_IMC_cv
@@ -1356,13 +1399,14 @@ Sakshaug, Joseph W., y Brady T. West. 2014. <span>«Important Considerations Whe
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

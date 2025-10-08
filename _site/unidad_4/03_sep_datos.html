@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Tamara Ricardo">
 <title>Separación de datos binomiales – Curso Epidemiología - Nivel Avanzado</title>
@@ -85,18 +85,19 @@ div.csl-indent {
 <link href="../unidad_4/02_reg_logistica.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-07e4c1cdef0c383c709f3a7c70e6b9d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5764afd99fd0ec2ffdb51851d8106ba1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -109,7 +110,7 @@ div.csl-indent {
     "s"
   ],
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -142,7 +143,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -330,6 +331,10 @@ window.Quarto = {
 <i class="bi bi-x-lg quarto-announcement-action"></i>
 </div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -360,7 +365,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
  <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_6/01_est_experimentales.html">
+ <span class="dropdown-text">Unidad 6: Estudios experimentales</span></a>
+  </li>  
     </ul>
 </li>
 </ul>
@@ -423,7 +431,11 @@ window.Quarto = {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Buscar"></div>
         </div>
@@ -620,7 +632,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+ <span class="menu-text">Unidad 5</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -647,10 +659,41 @@ window.Quarto = {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 6 (disponible a partir del 06/10/25)</span></span>
-  </li>
+ <span class="menu-text">Unidad 6</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/01_est_experimentales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios Experimentales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/02_analisis_superv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/03_metodos_analisis_sup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Métodos para el análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/04_reg_cox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Cox</span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -709,17 +752,17 @@ window.Quarto = {
 <p>Tomemos como ejemplo la base “<code>covid_cancer.txt</code>”, que contiene datos de un estudio de casos y controles realizado en la ciudad de Santa Fe, Argentina en pacientes con cáncer hospitalizados por formas severas de COVID-19<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
 <p>Cargamos paquetes necesarios:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary">gtsummary</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary">gtsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cargamos datos:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carga datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carga datos</span></span>
 <span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span><span class="st">"datos/covid_cancer.txt"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Explora datos</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 79
 Columns: 13
@@ -756,31 +799,31 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
 </ul>
 <p>Nuestra variable dependiente es si el/la paciente falleció a causa del COVID-19. Comenzaremos por ajustar modelos de regresión logística univariados para evaluar qué variables explicativas están asociadas significativamente a la variable dependiente:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Regresiones logísticas simples</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Regresiones logísticas simples</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_uvregression.html">tbl_uvregression</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">fallecido</span>,</span>
 <span>                   method <span class="op">=</span> <span class="va">glm</span>,</span>
 <span>                   method.args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span>,</span>
 <span>                   exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_p.html">bold_p</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/bold_p.html">bold_p</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="mwcsaahuhx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#mwcsaahuhx table {
+<div id="exnbnalwoi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#exnbnalwoi table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#mwcsaahuhx thead, #mwcsaahuhx tbody, #mwcsaahuhx tfoot, #mwcsaahuhx tr, #mwcsaahuhx td, #mwcsaahuhx th {
+#exnbnalwoi thead, #exnbnalwoi tbody, #exnbnalwoi tfoot, #exnbnalwoi tr, #exnbnalwoi td, #exnbnalwoi th {
   border-style: none;
 }
 
-#mwcsaahuhx p {
+#exnbnalwoi p {
   margin: 0;
   padding: 0;
 }
 
-#mwcsaahuhx .gt_table {
+#exnbnalwoi .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -806,12 +849,12 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-left-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_caption {
+#exnbnalwoi .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#mwcsaahuhx .gt_title {
+#exnbnalwoi .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -823,7 +866,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-bottom-width: 0;
 }
 
-#mwcsaahuhx .gt_subtitle {
+#exnbnalwoi .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -835,7 +878,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-top-width: 0;
 }
 
-#mwcsaahuhx .gt_heading {
+#exnbnalwoi .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -847,13 +890,13 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-right-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_bottom_border {
+#exnbnalwoi .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_col_headings {
+#exnbnalwoi .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -868,7 +911,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-right-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_col_heading {
+#exnbnalwoi .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -888,7 +931,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   overflow-x: hidden;
 }
 
-#mwcsaahuhx .gt_column_spanner_outer {
+#exnbnalwoi .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -900,15 +943,15 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 4px;
 }
 
-#mwcsaahuhx .gt_column_spanner_outer:first-child {
+#exnbnalwoi .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#mwcsaahuhx .gt_column_spanner_outer:last-child {
+#exnbnalwoi .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#mwcsaahuhx .gt_column_spanner {
+#exnbnalwoi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -920,11 +963,11 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   width: 100%;
 }
 
-#mwcsaahuhx .gt_spanner_row {
+#exnbnalwoi .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#mwcsaahuhx .gt_group_heading {
+#exnbnalwoi .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -950,7 +993,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   text-align: left;
 }
 
-#mwcsaahuhx .gt_empty_group_heading {
+#exnbnalwoi .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -965,15 +1008,15 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   vertical-align: middle;
 }
 
-#mwcsaahuhx .gt_from_md > :first-child {
+#exnbnalwoi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mwcsaahuhx .gt_from_md > :last-child {
+#exnbnalwoi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mwcsaahuhx .gt_row {
+#exnbnalwoi .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -992,7 +1035,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   overflow-x: hidden;
 }
 
-#mwcsaahuhx .gt_stub {
+#exnbnalwoi .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1005,7 +1048,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#mwcsaahuhx .gt_stub_row_group {
+#exnbnalwoi .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1019,15 +1062,15 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   vertical-align: top;
 }
 
-#mwcsaahuhx .gt_row_group_first td {
+#exnbnalwoi .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#mwcsaahuhx .gt_row_group_first th {
+#exnbnalwoi .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#mwcsaahuhx .gt_summary_row {
+#exnbnalwoi .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1037,16 +1080,16 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#mwcsaahuhx .gt_first_summary_row {
+#exnbnalwoi .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_first_summary_row.thick {
+#exnbnalwoi .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#mwcsaahuhx .gt_last_summary_row {
+#exnbnalwoi .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1056,7 +1099,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-bottom-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_grand_summary_row {
+#exnbnalwoi .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1066,7 +1109,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#mwcsaahuhx .gt_first_grand_summary_row {
+#exnbnalwoi .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1076,7 +1119,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-top-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_last_grand_summary_row_top {
+#exnbnalwoi .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1086,11 +1129,11 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-bottom-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_striped {
+#exnbnalwoi .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#mwcsaahuhx .gt_table_body {
+#exnbnalwoi .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1099,7 +1142,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-bottom-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_footnotes {
+#exnbnalwoi .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1113,7 +1156,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-right-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_footnote {
+#exnbnalwoi .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1122,7 +1165,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#mwcsaahuhx .gt_sourcenotes {
+#exnbnalwoi .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1136,7 +1179,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   border-right-color: #D3D3D3;
 }
 
-#mwcsaahuhx .gt_sourcenote {
+#exnbnalwoi .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1144,76 +1187,76 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
   padding-right: 5px;
 }
 
-#mwcsaahuhx .gt_left {
+#exnbnalwoi .gt_left {
   text-align: left;
 }
 
-#mwcsaahuhx .gt_center {
+#exnbnalwoi .gt_center {
   text-align: center;
 }
 
-#mwcsaahuhx .gt_right {
+#exnbnalwoi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mwcsaahuhx .gt_font_normal {
+#exnbnalwoi .gt_font_normal {
   font-weight: normal;
 }
 
-#mwcsaahuhx .gt_font_bold {
+#exnbnalwoi .gt_font_bold {
   font-weight: bold;
 }
 
-#mwcsaahuhx .gt_font_italic {
+#exnbnalwoi .gt_font_italic {
   font-style: italic;
 }
 
-#mwcsaahuhx .gt_super {
+#exnbnalwoi .gt_super {
   font-size: 65%;
 }
 
-#mwcsaahuhx .gt_footnote_marks {
+#exnbnalwoi .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#mwcsaahuhx .gt_asterisk {
+#exnbnalwoi .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#mwcsaahuhx .gt_indent_1 {
+#exnbnalwoi .gt_indent_1 {
   text-indent: 5px;
 }
 
-#mwcsaahuhx .gt_indent_2 {
+#exnbnalwoi .gt_indent_2 {
   text-indent: 10px;
 }
 
-#mwcsaahuhx .gt_indent_3 {
+#exnbnalwoi .gt_indent_3 {
   text-indent: 15px;
 }
 
-#mwcsaahuhx .gt_indent_4 {
+#exnbnalwoi .gt_indent_4 {
   text-indent: 20px;
 }
 
-#mwcsaahuhx .gt_indent_5 {
+#exnbnalwoi .gt_indent_5 {
   text-indent: 25px;
 }
 
-#mwcsaahuhx .katex-display {
+#exnbnalwoi .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#mwcsaahuhx div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#exnbnalwoi div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 20%">
 <col style="width: 20%">
@@ -1470,7 +1513,7 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
 <td class="gt_row gt_center" headers="p.value">0.7</td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes"><tr class="odd">
+<tfoot><tr class="gt_sourcenotes odd">
 <td colspan="5" class="gt_sourcenote">Abbreviations: CI = Confidence Interval, OR = Odds Ratio</td>
 </tr></tfoot>
 </table>
@@ -1480,56 +1523,56 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
 <p>Al ejecutar este código aparecerá el siguiente mensaje de advertencia: <code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code>. Esto indica que todas o alguna de las variables explicativas provoca separación parcial de los datos.</p>
 <p>Al observar la tabla generada, notamos que las variables <code>disnea</code>, <code>neumonia_severa</code>, <code>inf_secundaria</code>, <code>asist_resp</code> y <code>tr_quimioterapia</code> presentan intervalos de confianza excesivamente amplios, lo que sugiere la presencia de separación parcial. Si generamos tablas de 2x2 de cada variable explicativa en función de la variable <code>fallecido</code>, podemos visualizar este fenómeno:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># disnea</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># disnea</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">disnea</span>, <span class="va">fallecido</span>, </span>
 <span>        show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> disnea     0     1
      No 91.2%  8.8%
      Sí 52.9% 47.1%</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># neumonía severa</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># neumonía severa</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">neumonia_severa</span>, <span class="va">fallecido</span>, </span>
 <span>        show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> neumonia_severa     0     1
               No 90.3%  9.7%
               Sí 52.9% 47.1%</code></pre>
 </div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># infección secundaria</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># infección secundaria</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">inf_secundaria</span>, <span class="va">fallecido</span>, </span>
 <span>        show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> inf_secundaria     0     1
              No 86.2% 13.8%
              Sí 42.9% 57.1%</code></pre>
 </div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># asistencia respiratoria</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># asistencia respiratoria</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">asist_resp</span>, <span class="va">fallecido</span>, </span>
 <span>        show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> asist_resp     0     1
          No 88.9% 11.1%
          Sí 57.1% 42.9%</code></pre>
 </div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># quimioterapia</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># quimioterapia</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">tr_quimioterapia</span>, <span class="va">fallecido</span>, </span>
 <span>        show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> tr_quimioterapia     0     1
                No 92.9%  7.1%
@@ -1539,23 +1582,23 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
 <p>Estos análisis muestran que variables como <code>disnea</code>, <code>neumonia_severa</code>, <code>inf_secundaria</code>, <code>asist_resp</code> y <code>tr_quimioterapia</code> explican casi completamente la mortalidad por COVID-19 severo.</p>
 <p>Si evaluamos las variables <code>complicaciones</code> y <code>cancer_tipo</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># complicaciones</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># complicaciones</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">complicaciones</span>, <span class="va">fallecido</span>, </span>
 <span>        show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> complicaciones      0     1
              No 100.0%  0.0%
              Sí  42.9% 57.1%</code></pre>
 </div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># tipo de cáncer</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># tipo de cáncer</span></span>
 <span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">cancer_tipo</span>, <span class="va">fallecido</span>, </span>
 <span>        show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  cancer_tipo      0     1
  Hematológico 100.0%  0.0%
@@ -1565,12 +1608,12 @@ $ tr4_quimioterapia &lt;chr&gt; "Sí", "Sí", "Sí", "Sí", "Sí", "Sí", "No", 
 <p>Observamos que todos los pacientes sin complicaciones o con cáncer hematológico sobrevivieron, lo cual también indica separación parcial de los datos.</p>
 <p>Ahora, ajustemos un modelo para evaluar el efecto de la interacción entre el tipo de cáncer y haber recibido quimioterapia en los 30 días previos, controlando por la presencia de neumonía severa y asistencia respiratoria:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">fallecido</span> <span class="op">~</span> <span class="va">cancer_tipo</span> <span class="op">*</span> <span class="va">tr4_quimioterapia</span> <span class="op">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">fit1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">fallecido</span> <span class="op">~</span> <span class="va">cancer_tipo</span> <span class="op">*</span> <span class="va">tr4_quimioterapia</span> <span class="op">+</span> </span>
 <span>              <span class="va">neumonia_severa</span> <span class="op">+</span> <span class="va">asist_resp</span>, </span>
 <span>            data <span class="op">=</span> <span class="va">datos</span>, family <span class="op">=</span> <span class="va">binomial</span><span class="op">)</span></span>
 <span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">fit1</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1600,25 +1643,25 @@ Number of Fisher Scoring iterations: 15</code></pre>
 </div>
 <p>El resumen del modelo muestra el mensaje: <code>Coefficients: (1 not defined because of singularities)</code>, indicando que los errores estándar para el intercepto y <code>cancer_tipo</code> son muy grandes. Además, no se muestran los coeficientes ni el <em>p</em>-valor para la interacción. Esto se puede visualizar tabulando los coeficientes:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">fit1</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">fit1</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="phpvyyixxf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#phpvyyixxf table {
+<div id="odhnlowptq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#odhnlowptq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#phpvyyixxf thead, #phpvyyixxf tbody, #phpvyyixxf tfoot, #phpvyyixxf tr, #phpvyyixxf td, #phpvyyixxf th {
+#odhnlowptq thead, #odhnlowptq tbody, #odhnlowptq tfoot, #odhnlowptq tr, #odhnlowptq td, #odhnlowptq th {
   border-style: none;
 }
 
-#phpvyyixxf p {
+#odhnlowptq p {
   margin: 0;
   padding: 0;
 }
 
-#phpvyyixxf .gt_table {
+#odhnlowptq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1644,12 +1687,12 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-left-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_caption {
+#odhnlowptq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#phpvyyixxf .gt_title {
+#odhnlowptq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1661,7 +1704,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-bottom-width: 0;
 }
 
-#phpvyyixxf .gt_subtitle {
+#odhnlowptq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1673,7 +1716,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-top-width: 0;
 }
 
-#phpvyyixxf .gt_heading {
+#odhnlowptq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1685,13 +1728,13 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_bottom_border {
+#odhnlowptq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_col_headings {
+#odhnlowptq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1706,7 +1749,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_col_heading {
+#odhnlowptq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1726,7 +1769,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   overflow-x: hidden;
 }
 
-#phpvyyixxf .gt_column_spanner_outer {
+#odhnlowptq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1738,15 +1781,15 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 4px;
 }
 
-#phpvyyixxf .gt_column_spanner_outer:first-child {
+#odhnlowptq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#phpvyyixxf .gt_column_spanner_outer:last-child {
+#odhnlowptq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#phpvyyixxf .gt_column_spanner {
+#odhnlowptq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1758,11 +1801,11 @@ Number of Fisher Scoring iterations: 15</code></pre>
   width: 100%;
 }
 
-#phpvyyixxf .gt_spanner_row {
+#odhnlowptq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#phpvyyixxf .gt_group_heading {
+#odhnlowptq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1788,7 +1831,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   text-align: left;
 }
 
-#phpvyyixxf .gt_empty_group_heading {
+#odhnlowptq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1803,15 +1846,15 @@ Number of Fisher Scoring iterations: 15</code></pre>
   vertical-align: middle;
 }
 
-#phpvyyixxf .gt_from_md > :first-child {
+#odhnlowptq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#phpvyyixxf .gt_from_md > :last-child {
+#odhnlowptq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#phpvyyixxf .gt_row {
+#odhnlowptq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1830,7 +1873,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   overflow-x: hidden;
 }
 
-#phpvyyixxf .gt_stub {
+#odhnlowptq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1843,7 +1886,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#phpvyyixxf .gt_stub_row_group {
+#odhnlowptq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1857,15 +1900,15 @@ Number of Fisher Scoring iterations: 15</code></pre>
   vertical-align: top;
 }
 
-#phpvyyixxf .gt_row_group_first td {
+#odhnlowptq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#phpvyyixxf .gt_row_group_first th {
+#odhnlowptq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#phpvyyixxf .gt_summary_row {
+#odhnlowptq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1875,16 +1918,16 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#phpvyyixxf .gt_first_summary_row {
+#odhnlowptq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_first_summary_row.thick {
+#odhnlowptq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#phpvyyixxf .gt_last_summary_row {
+#odhnlowptq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1894,7 +1937,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_grand_summary_row {
+#odhnlowptq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1904,7 +1947,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#phpvyyixxf .gt_first_grand_summary_row {
+#odhnlowptq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1914,7 +1957,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-top-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_last_grand_summary_row_top {
+#odhnlowptq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1924,11 +1967,11 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_striped {
+#odhnlowptq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#phpvyyixxf .gt_table_body {
+#odhnlowptq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1937,7 +1980,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-bottom-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_footnotes {
+#odhnlowptq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1951,7 +1994,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_footnote {
+#odhnlowptq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1960,7 +2003,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#phpvyyixxf .gt_sourcenotes {
+#odhnlowptq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1974,7 +2017,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
   border-right-color: #D3D3D3;
 }
 
-#phpvyyixxf .gt_sourcenote {
+#odhnlowptq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1982,76 +2025,76 @@ Number of Fisher Scoring iterations: 15</code></pre>
   padding-right: 5px;
 }
 
-#phpvyyixxf .gt_left {
+#odhnlowptq .gt_left {
   text-align: left;
 }
 
-#phpvyyixxf .gt_center {
+#odhnlowptq .gt_center {
   text-align: center;
 }
 
-#phpvyyixxf .gt_right {
+#odhnlowptq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#phpvyyixxf .gt_font_normal {
+#odhnlowptq .gt_font_normal {
   font-weight: normal;
 }
 
-#phpvyyixxf .gt_font_bold {
+#odhnlowptq .gt_font_bold {
   font-weight: bold;
 }
 
-#phpvyyixxf .gt_font_italic {
+#odhnlowptq .gt_font_italic {
   font-style: italic;
 }
 
-#phpvyyixxf .gt_super {
+#odhnlowptq .gt_super {
   font-size: 65%;
 }
 
-#phpvyyixxf .gt_footnote_marks {
+#odhnlowptq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#phpvyyixxf .gt_asterisk {
+#odhnlowptq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#phpvyyixxf .gt_indent_1 {
+#odhnlowptq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#phpvyyixxf .gt_indent_2 {
+#odhnlowptq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#phpvyyixxf .gt_indent_3 {
+#odhnlowptq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#phpvyyixxf .gt_indent_4 {
+#odhnlowptq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#phpvyyixxf .gt_indent_5 {
+#odhnlowptq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#phpvyyixxf .katex-display {
+#odhnlowptq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#phpvyyixxf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#odhnlowptq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -2151,7 +2194,7 @@ Number of Fisher Scoring iterations: 15</code></pre>
 <td class="gt_row gt_center" headers="p.value"><br></td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes"><tr class="odd">
+<tfoot><tr class="gt_sourcenotes odd">
 <td colspan="4" class="gt_sourcenote">Abbreviations: CI = Confidence Interval, OR = Odds Ratio</td>
 </tr></tfoot>
 </table>
@@ -2161,11 +2204,11 @@ Number of Fisher Scoring iterations: 15</code></pre>
 <p>Recibirás advertencias como: <code>Warning: glm.fit: fitted probabilities numerically 0 or 1 occurred</code> y <code>Warning in regularize.values(x, y, ties, missing(ties), na.rm = na.rm) : collapsing to unique 'x' values</code>, lo que sugiere separación parcial de los datos.</p>
 <p>Para evaluar separación de estos datos, podemos crear una nueva variable que represente el cruce entre tipo de cáncer y quimioterapia usando la función <code><a href="https://forcats.tidyverse.org/reference/fct_cross.html">fct_cross()</a></code> de <code>tidyverse</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>tipo_ca_quim <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_cross.html">fct_cross</a></span><span class="op">(</span><span class="va">cancer_tipo</span>, <span class="va">tr4_quimioterapia</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">tipo_ca_quim</span>, <span class="va">fallecido</span>, show_na <span class="op">=</span> <span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_percentages.html">adorn_percentages</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    tipo_ca_quim      0     1
  Hematológico:No 100.0%  0.0%
@@ -2176,11 +2219,11 @@ Number of Fisher Scoring iterations: 15</code></pre>
 <p>Este análisis muestra que ninguno de los pacientes con cáncer hematológico recibió quimioterapia en los últimos 30 días, lo que también contribuye a la separación parcial.</p>
 <p>Finalmente, para evaluar la separación de datos de manera más formal, utilizamos el paquete <code>detectseparation</code> <span class="citation" data-cites="detectseparation">(<a href="#ref-detectseparation" role="doc-biblioref">Kosmidis, Schumacher, y Schwendinger 2022</a>)</span>. Ajustamos nuevamente el modelo con el argumento <code>method = "detect_separation"</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ikosmidis/detectseparation">detectseparation</a></span><span class="op">)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ikosmidis/detectseparation">detectseparation</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Tipo de cáncer</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">fallecido</span> <span class="op">~</span> <span class="va">cancer_tipo</span>, data <span class="op">=</span> <span class="va">datos</span>, family <span class="op">=</span> <span class="va">binomial</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"detect_separation"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>    method <span class="op">=</span> <span class="st">"detect_separation"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Implementation: ROI | Solver: lpsolve 
 Separation: TRUE 
@@ -2189,9 +2232,9 @@ Existence of maximum likelihood estimates
              -Inf               Inf 
 0: finite value, Inf: infinity, -Inf: -infinity</code></pre>
 </div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Neumonía severa</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Neumonía severa</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">fallecido</span> <span class="op">~</span> <span class="va">neumonia_severa</span>, data <span class="op">=</span> <span class="va">datos</span>, family <span class="op">=</span> <span class="va">binomial</span>,</span>
-<span>    method <span class="op">=</span> <span class="st">"detect_separation"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>    method <span class="op">=</span> <span class="st">"detect_separation"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Implementation: ROI | Solver: lpsolve 
 Separation: FALSE 
@@ -2200,12 +2243,12 @@ Existence of maximum likelihood estimates
                 0                 0 
 0: finite value, Inf: infinity, -Inf: -infinity</code></pre>
 </div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modelo con interacción</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Modelo con interacción</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span><span class="op">(</span><span class="va">fallecido</span> <span class="op">~</span> <span class="va">cancer_tipo</span> <span class="op">*</span> <span class="va">tr4_quimioterapia</span> <span class="op">+</span> </span>
 <span>              <span class="va">neumonia_severa</span> <span class="op">+</span> <span class="va">asist_resp</span>, </span>
 <span>            data <span class="op">=</span> <span class="va">datos</span>, </span>
 <span>            family <span class="op">=</span> <span class="va">binomial</span>,</span>
-<span>            method <span class="op">=</span> <span class="st">"detect_separation"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>            method <span class="op">=</span> <span class="st">"detect_separation"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Implementation: ROI | Solver: lpsolve 
 Separation: TRUE 
@@ -2316,13 +2359,14 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

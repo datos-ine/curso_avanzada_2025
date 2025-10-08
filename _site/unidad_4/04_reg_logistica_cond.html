@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.24">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Tamara Ricardo">
 <title>Regresión logística condicional – Curso Epidemiología - Nivel Avanzado</title>
@@ -85,18 +85,19 @@ div.csl-indent {
 <link href="../unidad_4/03_sep_datos.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-2fef5ea3f8957b3e4ecc936fc74692ca.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-07e4c1cdef0c383c709f3a7c70e6b9d5.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-1d50232a349bf5866b40feae0b5224b9.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-5764afd99fd0ec2ffdb51851d8106ba1.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-7f37111bf5c4e5a43f2ace64a446d538.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -109,7 +110,7 @@ div.csl-indent {
     "s"
   ],
   "language": {
-    "search-no-results-text": "Sin resultados",
+    "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
     "search-copy-link-title": "Copiar el enlace en la búsqueda",
     "search-hide-matches-text": "Ocultar resultados adicionales",
@@ -142,7 +143,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -330,6 +331,10 @@ window.Quarto = {
 <i class="bi bi-x-lg quarto-announcement-action"></i>
 </div>
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark"><div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -360,7 +365,10 @@ window.Quarto = {
     <a class="dropdown-item" href="../unidad_5/01_est_cohortes.html">
  <span class="dropdown-text">Unidad 5: Estudios de cohortes</span></a>
   </li>  
-        <li class="dropdown-header">Unidad 6: Estudios experimentales</li>
+        <li>
+    <a class="dropdown-item" href="../unidad_6/01_est_experimentales.html">
+ <span class="dropdown-text">Unidad 6: Estudios experimentales</span></a>
+  </li>  
     </ul>
 </li>
 </ul>
@@ -423,7 +431,11 @@ window.Quarto = {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="mt-2 flex-shrink-0 align-items-center">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+      <a href="../index.html" class="sidebar-logo-link">
+      </a>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Buscar"></div>
         </div>
@@ -620,7 +632,7 @@ window.Quarto = {
       <div class="sidebar-item-container"> 
             <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 5 (disponible a partir del 08/09/25)</span></a>
+ <span class="menu-text">Unidad 5</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Alternar sección">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -647,10 +659,41 @@ window.Quarto = {
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
-      <span class="sidebar-item-text sidebar-link text-start"><i class="bi bi-file-earmark-bar-graph" role="img">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true"><i class="bi bi-file-earmark-bar-graph" role="img">
 </i> 
- <span class="menu-text">Unidad 6 (disponible a partir del 06/10/25)</span></span>
-  </li>
+ <span class="menu-text">Unidad 6</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/01_est_experimentales.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Estudios Experimentales</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/02_analisis_superv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/03_metodos_analisis_sup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Métodos para el análisis de supervivencia</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../unidad_6/04_reg_cox.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Regresión de Cox</span></a>
+  </div>
+</li>
+      </ul>
+</li>
     </ul>
 </div>
 </nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
@@ -718,7 +761,7 @@ logit(p) = \alpha_1 + \alpha_2 z_2 + ... + \alpha_s z_s + \beta_1 x_1 + ... + \b
 <p>En R podemos ajustar modelos de regresión logística condicional usando la función <code><a href="https://rdrr.io/pkg/survival/man/clogit.html">clogit()</a></code> del paquete <code>survival</code> <span class="citation" data-cites="survival">(<a href="#ref-survival" role="doc-biblioref">Therneau 2024</a>)</span>.</p>
 <p>Cargamos los paquetes necesarios:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Análisis estadístico</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Análisis estadístico</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ddsjoberg/gtsummary">gtsummary</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival">survival</a></span><span class="op">)</span></span>
 <span></span>
@@ -731,18 +774,18 @@ logit(p) = \alpha_1 + \alpha_2 z_2 + ... + \alpha_s z_s + \beta_1 x_1 + ... + \b
 <span><span class="co"># Manejo y exploración de datos</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/skimr/">skimr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/sfirke/janitor">janitor</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Usaremos la base “<code>higado_graso.txt</code>” que contiene datos de un estudio de casos y controles apareados por sexo y edad para muertes por hígado graso no alcohólico:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carga datos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Carga datos</span></span>
 <span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim</a></span><span class="op">(</span><span class="st">"datos/higado_graso.txt"</span><span class="op">)</span><span class="op">|&gt;</span> </span>
 <span>  </span>
 <span>  <span class="co"># Cambia nivel de referencia de fib4</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>fib4_cat <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/fct_rev.html">fct_rev</a></span><span class="op">(</span><span class="va">fib4_cat</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Explora datos</span></span>
-<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html">glimpse</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 2,467
 Columns: 11
@@ -775,23 +818,23 @@ $ status       &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
 </ul>
 <p>Exploremos más en profundidad los datos usando la función <code><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl()</a></code> del paquete <code>janitor</code> y la función <code><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim()</a></code> del paquete <code>skimr</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Número de casos y controles</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Número de casos y controles</span></span>
 <span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">tipo</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://sfirke.github.io/janitor/reference/adorn_pct_formatting.html">adorn_pct_formatting</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> datos$tipo    n percent
           0 1685   68.3%
           1  782   31.7%</code></pre>
 </div>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Niveles fib4</span></span>
-<span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">fib4_cat</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Niveles fib4</span></span>
+<span><span class="fu"><a href="https://sfirke.github.io/janitor/reference/tabyl.html">tabyl</a></span><span class="op">(</span><span class="va">datos</span><span class="op">$</span><span class="va">fib4_cat</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> datos$fib4_cat    n   percent
     bajo riesgo 2109 0.8548845
     alto riesgo  358 0.1451155</code></pre>
 </div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Explora valores ausentes</span></span>
-<span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Explora valores ausentes</span></span>
+<span><span class="fu"><a href="https://docs.ropensci.org/skimr/reference/skim.html">skim</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <caption>Data summary</caption>
@@ -1027,14 +1070,14 @@ $ status       &lt;dbl&gt; 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
 <p>Las variables <code>p_sistolica</code> y <code>p_diastolica</code> tienen gran cantidad de valores ausentes, por lo que no serán consideradas para el análisis.</p>
 <p>Como no tenemos definido a que caso corresponde cada control, vamos a aparear casos y controles usando la función <code><a href="https://kosukeimai.github.io/MatchIt/reference/matchit.html">matchit()</a></code> del paquete <code>MatchIt</code> <span class="citation" data-cites="MatchIt">(<a href="#ref-MatchIt" role="doc-biblioref">Ho et&nbsp;al. 2011</a>)</span>, especificando que queremos dos controles por caso con el argumento <code>ratio = 2</code>:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Aparea casos y controles por sexo y edad</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Aparea casos y controles por sexo y edad</span></span>
 <span><span class="va">match</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://kosukeimai.github.io/MatchIt/reference/matchit.html">matchit</a></span><span class="op">(</span><span class="va">tipo</span> <span class="op">~</span> <span class="va">edad</span> <span class="op">+</span> <span class="va">sexo</span>, </span>
 <span>                 data <span class="op">=</span> <span class="va">datos</span>, </span>
 <span>                 exact <span class="op">=</span> <span class="st">"sexo"</span>,</span>
 <span>                 ratio <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Resumen del apareamiento</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">match</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">match</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1071,9 +1114,9 @@ Discarded       0       0</code></pre>
 </div>
 <p>Obtenemos los datos apareados:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://kosukeimai.github.io/MatchIt/reference/match_data.html">match.data</a></span><span class="op">(</span><span class="va">match</span>, drop.unmatched <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">datos</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://kosukeimai.github.io/MatchIt/reference/match_data.html">match.data</a></span><span class="op">(</span><span class="va">match</span>, drop.unmatched <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> </span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "id"           "tipo"         "edad"         "sexo"         "bmi"         
  [6] "hdl"          "p_sistolica"  "p_diastolica" "fib4_cat"     "fuma"        
@@ -1082,13 +1125,13 @@ Discarded       0       0</code></pre>
 </div>
 <p>Ajustamos el modelo de regresión logística condicional, usando la variable <code>subclass</code> como variable de estratificación:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mod_cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/clogit.html">clogit</a></span><span class="op">(</span><span class="va">status</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">hdl</span> <span class="op">+</span> <span class="va">fuma</span> <span class="op">+</span> <span class="va">fib4_cat</span> <span class="op">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">mod_cond</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/clogit.html">clogit</a></span><span class="op">(</span><span class="va">status</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">hdl</span> <span class="op">+</span> <span class="va">fuma</span> <span class="op">+</span> <span class="va">fib4_cat</span> <span class="op">+</span></span>
 <span>                     <span class="fu"><a href="https://rdrr.io/pkg/survival/man/strata.html">strata</a></span><span class="op">(</span><span class="va">subclass</span><span class="op">)</span>,</span>
-<span>                   data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                   data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Revisemos la salida del modelo:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_cond</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_cond</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = Surv(rep(1, 2346L), status) ~ bmi + hdl + fuma + 
@@ -1118,7 +1161,7 @@ Score (logrank) test = 28.23  on 4 df,   p=1e-05</code></pre>
 </div>
 <p>Probemos eliminar una de las variables explicativas no significativas a la vez:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) Tabaquismo</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) Tabaquismo</span></span>
 <span><span class="va">mod_cond1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/clogit.html">clogit</a></span><span class="op">(</span><span class="va">status</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">hdl</span> <span class="op">+</span> <span class="va">fib4_cat</span> <span class="op">+</span></span>
 <span>                     <span class="fu"><a href="https://rdrr.io/pkg/survival/man/strata.html">strata</a></span><span class="op">(</span><span class="va">subclass</span><span class="op">)</span>,</span>
 <span>                   data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
@@ -1131,13 +1174,13 @@ Score (logrank) test = 28.23  on 4 df,   p=1e-05</code></pre>
 <span><span class="co"># (-) HDL</span></span>
 <span><span class="va">mod_cond3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/clogit.html">clogit</a></span><span class="op">(</span><span class="va">status</span> <span class="op">~</span> <span class="va">bmi</span> <span class="op">+</span> <span class="va">fuma</span> <span class="op">+</span>  <span class="va">fib4_cat</span> <span class="op">+</span></span>
 <span>                     <span class="fu"><a href="https://rdrr.io/pkg/survival/man/strata.html">strata</a></span><span class="op">(</span><span class="va">sexo</span>, <span class="va">edad</span><span class="op">)</span>,</span>
-<span>                   data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                   data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Comparamos los modelos</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compara modelos</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compara modelos</span></span>
 <span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod_cond</span>, <span class="va">mod_cond1</span>, <span class="va">mod_cond2</span>, <span class="va">mod_cond3</span>,</span>
-<span>                    metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                    metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -1148,9 +1191,9 @@ mod_cond1 | clogit | 392.8 (0.548) | 410.0 (0.956) |           0.069 | 0.230
 mod_cond2 | clogit | 921.1 (&lt;.001) | 938.3 (&lt;.001) |           0.055 | 0.276
 mod_cond3 | clogit | 923.5 (&lt;.001) | 940.8 (&lt;.001) |           0.052 | 0.276</code></pre>
 </div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compara modelos y ordena según performance</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compara modelos y ordena según performance</span></span>
 <span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod_cond</span>, <span class="va">mod_cond1</span>, <span class="va">mod_cond2</span>, <span class="va">mod_cond3</span>,</span>
-<span>                    metrics <span class="op">=</span> <span class="st">"common"</span>, rank <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                    metrics <span class="op">=</span> <span class="st">"common"</span>, rank <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -1164,8 +1207,8 @@ mod_cond3 | clogit |           0.052 | 0.276 |   3.12e-116 |   5.45e-116 |      
 </div>
 <p>El modelo sin <code>fuma</code> tiene mejor <em>performance</em> que el modelo saturado:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Salida modelo condicional 1</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_cond1</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Salida modelo condicional 1</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_cond1</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = Surv(rep(1, 2346L), status) ~ bmi + hdl + fib4_cat + 
@@ -1190,7 +1233,7 @@ Likelihood ratio test= 26.33  on 3 df,   p=8e-06
 Wald test            = 24.56  on 3 df,   p=2e-05
 Score (logrank) test = 26.63  on 3 df,   p=7e-06</code></pre>
 </div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) BMI</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) BMI</span></span>
 <span><span class="va">mod_cond1a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/clogit.html">clogit</a></span><span class="op">(</span><span class="va">status</span> <span class="op">~</span> <span class="va">hdl</span> <span class="op">+</span> <span class="va">fib4_cat</span> <span class="op">+</span></span>
 <span>                     <span class="fu"><a href="https://rdrr.io/pkg/survival/man/strata.html">strata</a></span><span class="op">(</span><span class="va">subclass</span><span class="op">)</span>,</span>
 <span>                   data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
@@ -1202,7 +1245,7 @@ Score (logrank) test = 26.63  on 3 df,   p=7e-06</code></pre>
 <span></span>
 <span><span class="co"># Compara modelos y ordena según performance</span></span>
 <span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod_cond1</span>, <span class="va">mod_cond1a</span>, <span class="va">mod_cond1b</span>, </span>
-<span>                    metrics <span class="op">=</span> <span class="st">"common"</span>, rank <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                    metrics <span class="op">=</span> <span class="st">"common"</span>, rank <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -1212,8 +1255,8 @@ mod_cond1a | clogit |           0.069 | 0.230 |       0.492 |       0.601 |     
 mod_cond1  | clogit |           0.069 | 0.230 |       0.192 |       0.013 |            50.00%
 mod_cond1b | clogit |           0.066 | 0.230 |       0.316 |       0.386 |            32.90%</code></pre>
 </div>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Salida modelo condicional 1b</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_cond1b</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Salida modelo condicional 1b</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">mod_cond1b</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 coxph(formula = Surv(rep(1, 2346L), status) ~ bmi + fib4_cat + 
@@ -1236,14 +1279,14 @@ Likelihood ratio test= 25.32  on 2 df,   p=3e-06
 Wald test            = 23.74  on 2 df,   p=7e-06
 Score (logrank) test = 25.68  on 2 df,   p=3e-06</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) bmi</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># (-) bmi</span></span>
 <span><span class="va">mod_cond1c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/survival/man/clogit.html">clogit</a></span><span class="op">(</span><span class="va">status</span> <span class="op">~</span> <span class="va">fib4_cat</span> <span class="op">+</span></span>
 <span>                     <span class="fu"><a href="https://rdrr.io/pkg/survival/man/strata.html">strata</a></span><span class="op">(</span><span class="va">subclass</span><span class="op">)</span>,</span>
 <span>                   data <span class="op">=</span> <span class="va">datos</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compara modelos</span></span>
 <span><span class="fu">compare_performance</span><span class="op">(</span><span class="va">mod_cond1b</span>, <span class="va">mod_cond1c</span>,</span>
-<span>                    metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>                    metrics <span class="op">=</span> <span class="st">"common"</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Comparison of Model Performance Indices
 
@@ -1255,25 +1298,25 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
 </div>
 <p>Nos quedamos con el modelo que tiene solo <code>fib4_cat</code> como variable explicativa:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod_cond1c</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://www.danieldsjoberg.com/gtsummary/reference/tbl_regression.html">tbl_regression</a></span><span class="op">(</span><span class="va">mod_cond1c</span>, exponentiate <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="vnlcedgmqy" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#vnlcedgmqy table {
+<div id="ultyluyvkg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ultyluyvkg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#vnlcedgmqy thead, #vnlcedgmqy tbody, #vnlcedgmqy tfoot, #vnlcedgmqy tr, #vnlcedgmqy td, #vnlcedgmqy th {
+#ultyluyvkg thead, #ultyluyvkg tbody, #ultyluyvkg tfoot, #ultyluyvkg tr, #ultyluyvkg td, #ultyluyvkg th {
   border-style: none;
 }
 
-#vnlcedgmqy p {
+#ultyluyvkg p {
   margin: 0;
   padding: 0;
 }
 
-#vnlcedgmqy .gt_table {
+#ultyluyvkg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -1299,12 +1342,12 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-left-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_caption {
+#ultyluyvkg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#vnlcedgmqy .gt_title {
+#ultyluyvkg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -1316,7 +1359,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-bottom-width: 0;
 }
 
-#vnlcedgmqy .gt_subtitle {
+#ultyluyvkg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -1328,7 +1371,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-top-width: 0;
 }
 
-#vnlcedgmqy .gt_heading {
+#ultyluyvkg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -1340,13 +1383,13 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-right-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_bottom_border {
+#ultyluyvkg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_col_headings {
+#ultyluyvkg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1361,7 +1404,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-right-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_col_heading {
+#ultyluyvkg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1381,7 +1424,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   overflow-x: hidden;
 }
 
-#vnlcedgmqy .gt_column_spanner_outer {
+#ultyluyvkg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1393,15 +1436,15 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 4px;
 }
 
-#vnlcedgmqy .gt_column_spanner_outer:first-child {
+#ultyluyvkg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#vnlcedgmqy .gt_column_spanner_outer:last-child {
+#ultyluyvkg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#vnlcedgmqy .gt_column_spanner {
+#ultyluyvkg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1413,11 +1456,11 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   width: 100%;
 }
 
-#vnlcedgmqy .gt_spanner_row {
+#ultyluyvkg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#vnlcedgmqy .gt_group_heading {
+#ultyluyvkg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1443,7 +1486,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   text-align: left;
 }
 
-#vnlcedgmqy .gt_empty_group_heading {
+#ultyluyvkg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1458,15 +1501,15 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   vertical-align: middle;
 }
 
-#vnlcedgmqy .gt_from_md > :first-child {
+#ultyluyvkg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#vnlcedgmqy .gt_from_md > :last-child {
+#ultyluyvkg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#vnlcedgmqy .gt_row {
+#ultyluyvkg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1485,7 +1528,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   overflow-x: hidden;
 }
 
-#vnlcedgmqy .gt_stub {
+#ultyluyvkg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1498,7 +1541,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vnlcedgmqy .gt_stub_row_group {
+#ultyluyvkg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1512,15 +1555,15 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   vertical-align: top;
 }
 
-#vnlcedgmqy .gt_row_group_first td {
+#ultyluyvkg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#vnlcedgmqy .gt_row_group_first th {
+#ultyluyvkg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#vnlcedgmqy .gt_summary_row {
+#ultyluyvkg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1530,16 +1573,16 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vnlcedgmqy .gt_first_summary_row {
+#ultyluyvkg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_first_summary_row.thick {
+#ultyluyvkg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#vnlcedgmqy .gt_last_summary_row {
+#ultyluyvkg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1549,7 +1592,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-bottom-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_grand_summary_row {
+#ultyluyvkg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1559,7 +1602,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vnlcedgmqy .gt_first_grand_summary_row {
+#ultyluyvkg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1569,7 +1612,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-top-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_last_grand_summary_row_top {
+#ultyluyvkg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1579,11 +1622,11 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-bottom-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_striped {
+#ultyluyvkg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#vnlcedgmqy .gt_table_body {
+#ultyluyvkg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1592,7 +1635,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-bottom-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_footnotes {
+#ultyluyvkg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1606,7 +1649,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-right-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_footnote {
+#ultyluyvkg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1615,7 +1658,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vnlcedgmqy .gt_sourcenotes {
+#ultyluyvkg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1629,7 +1672,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   border-right-color: #D3D3D3;
 }
 
-#vnlcedgmqy .gt_sourcenote {
+#ultyluyvkg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1637,76 +1680,76 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
   padding-right: 5px;
 }
 
-#vnlcedgmqy .gt_left {
+#ultyluyvkg .gt_left {
   text-align: left;
 }
 
-#vnlcedgmqy .gt_center {
+#ultyluyvkg .gt_center {
   text-align: center;
 }
 
-#vnlcedgmqy .gt_right {
+#ultyluyvkg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#vnlcedgmqy .gt_font_normal {
+#ultyluyvkg .gt_font_normal {
   font-weight: normal;
 }
 
-#vnlcedgmqy .gt_font_bold {
+#ultyluyvkg .gt_font_bold {
   font-weight: bold;
 }
 
-#vnlcedgmqy .gt_font_italic {
+#ultyluyvkg .gt_font_italic {
   font-style: italic;
 }
 
-#vnlcedgmqy .gt_super {
+#ultyluyvkg .gt_super {
   font-size: 65%;
 }
 
-#vnlcedgmqy .gt_footnote_marks {
+#ultyluyvkg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#vnlcedgmqy .gt_asterisk {
+#ultyluyvkg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#vnlcedgmqy .gt_indent_1 {
+#ultyluyvkg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#vnlcedgmqy .gt_indent_2 {
+#ultyluyvkg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#vnlcedgmqy .gt_indent_3 {
+#ultyluyvkg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#vnlcedgmqy .gt_indent_4 {
+#ultyluyvkg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#vnlcedgmqy .gt_indent_5 {
+#ultyluyvkg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#vnlcedgmqy .katex-display {
+#ultyluyvkg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#vnlcedgmqy div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ultyluyvkg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
-<table class="gt_table caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<table class="gt_table caption-top table table-sm table-striped small" data-quarto-bootstrap="false">
 <colgroup>
 <col style="width: 25%">
 <col style="width: 25%">
@@ -1739,7 +1782,7 @@ mod_cond1c | clogit | 390.2 (0.687) | 396.0 (0.975) |           0.065 | 0.230</c
 <td class="gt_row gt_center" headers="p.value">&lt;0.001</td>
 </tr>
 </tbody>
-<tfoot class="gt_sourcenotes"><tr class="odd">
+<tfoot><tr class="gt_sourcenotes odd">
 <td colspan="4" class="gt_sourcenote">Abbreviations: CI = Confidence Interval, OR = Odds Ratio</td>
 </tr></tfoot>
 </table>
@@ -1835,13 +1878,14 @@ Wickham, Hadley, Mara Averick, Jennifer Bryan, Winston Chang, Lucy D’Agostino 
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

@@ -148,7 +148,7 @@ Gráficamente:
 
 ```{r}
 #| echo: false
-# Create a sample datosset with 7 points
+# Create a sample dataset with 7 points
 set.seed(123)
 datos <- tibble(
   x = c(1, 2, 3, 4, 5, 6, 7),
@@ -177,15 +177,16 @@ get_perpendicular_points <- function(x, y, coef) {
 # Calculate the perpendicular points
 perpendicular_points <- datos |>
   rowwise() |>
-  mutate(get_perpendicular_points(x, y, coef(model)))
+  mutate(get_perpendicular_points(x, y, coef(model))) |>
+  ungroup()
 
 # Combine the original datos with the perpendicular points
 datos <- datos |>
-  left_join(perpendicular_points)
+  left_join(perpendicular_points, by = c("x", "y", "fitted"))
 
 # Plot
 datos |> 
-ggplot(mapping = aes(x = x, y = y)) +
+  ggplot(mapping = aes(x = x, y = y)) +
   # add geoms
   geom_segment(mapping = aes(xend = x_proj, yend = y_proj), 
                linetype = "dashed", alpha = .5) +
@@ -199,14 +200,20 @@ ggplot(mapping = aes(x = x, y = y)) +
   scale_y_continuous(limits = c(0, max(datos$y) + 1),
                      labels = function(y) y * 1000) +
   
-  # add text labels
-  
+  # add text labels (usar parse = TRUE)
   annotate(geom = "text", x = 4, y = 2.5,
-           label = expression(hat(Y) == b[0] + b[1] * x)) +
+           label = "hat(Y) == b[0] + b[1] * x",
+           parse = TRUE) +
   annotate(geom = "text", x = 7.5, y = 4.1,
-           label = expression(y - hat(y) == e)) +
-  annotate(geom = "text", x = 7, y = 3, label = expression(y[7])) +
-  annotate(geom = "text", x = 7, y = 5, label = expression(hat(y)[7])) +
+           label = "y - hat(y) == e",
+           parse = TRUE) +
+  annotate(geom = "text", x = 7, y = 3,
+           label = "y[7]",
+           parse = TRUE) +
+  annotate(geom = "text", x = 7, y = 5,
+           label = "hat(y)[7]",
+           parse = TRUE) +
+  
   # theme
   theme_minimal()
 ```
